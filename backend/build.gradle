@@ -1,0 +1,59 @@
+allprojects {
+    apply plugin: 'maven'
+    apply plugin: 'jacoco'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+
+    group = 'com.zephyr'
+    version = '0.0.1-SNAPSHOT'
+
+    ext {
+        projectName = 'zephyr'
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+
+        maven { url "http://repo1.maven.org/maven2/" }
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
+}
+
+subprojects {
+    apply from: "${rootProject.projectDir}/backend/dependencies.gradle"
+    apply from: "${rootProject.projectDir}/backend/common.gradle"
+
+    apply plugin: 'java'
+
+    if (isNotUtil(it)) {
+        apply plugin: 'application'
+    }
+
+    sourceCompatibility = JavaVersion.VERSION_1_9
+    targetCompatibility = JavaVersion.VERSION_1_9
+
+    ext {
+        dockerBaseImage = 'openjdk:9-jre'
+        dockerMainteiner = 'Alexander Melashchenko <melalex490@gmail.com>'
+    }
+}
+
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.destination new File("${buildDir}/reports/jacoco/report.xml")
+        xml.enabled = true
+        html.enabled = false
+        csv.enabled = false
+    }
+}
+
+codeCoverageReport.dependsOn = subprojects*.test

@@ -1,0 +1,23 @@
+String getDockerTagVersion() {
+    project.hasProperty('tagVersion') ? project.property('tagVersion') : version
+}
+
+project.ext.getDockerTag = {
+    "melalex/${projectName}-${applicationName}:${getDockerTagVersion()}"
+}
+
+project.ext.getDockerUserName = {
+    project.findProperty('dockerUserName')
+}
+
+project.ext.getDockerPassword = {
+    project.findProperty('dockerPassword')
+}
+
+project.ext.isUtil = { Project candidate ->
+    utils.containsValue(candidate)
+}
+
+project.ext.isNotUtil = { Project candidate ->
+    return !isUtil(candidate)
+}

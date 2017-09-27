@@ -1,0 +1,90 @@
+ext {
+    springCloudVersion = 'Finchley.M2'
+    springBootVersion = '2.0.0.M3'
+
+    imports = [
+            springBootBom: "org.springframework.boot:spring-boot-dependencies:${springBootVersion}",
+            springCloudBom: "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    ]
+
+    utils = [
+            commons: project(':backend:util:commons'),
+            errors: project(':backend:util:errors'),
+            mapping: project(':backend:util:mapping'),
+            validation: project(':backend:util:validation'),
+    ]
+
+    lombokVersion = '1.16.16'
+    validationApiVersion = '2.0.0.Final'
+    jodaVersion = '2.9.9'
+    guavaVersion = '22.0'
+    apacheCommonsVersion = '3.6'
+    modelMapperVersion = '1.1.0'
+    beanutilsVersion = '1.9.3'
+    evoVersion = '1.2.2'
+    jUnitVersion = '4.12'
+    mockitoVersion = '2.9.0'
+    jsonpathVersion = '2.4.0'
+    embeddedMongodbVersion = '2.0.0'
+    rollbarVersion = '0.5.3'
+    slf4jVersion = '1.7.25'
+
+    librariesDependencies = [
+            lombok: "org.projectlombok:lombok:${lombokVersion}",
+            validationApi: "javax.validation:validation-api:${validationApiVersion}",
+            jodaTime: "joda-time:joda-time:${jodaVersion}",
+            guava: "com.google.guava:guava:${guavaVersion}",
+            apacheCommons: "org.apache.commons:commons-lang3:${apacheCommonsVersion}",
+            modelMapper: "org.modelmapper:modelmapper:${modelMapperVersion}",
+            beanUtils: "commons-beanutils:commons-beanutils:${beanutilsVersion}",
+            evo: "org.atteo:evo-inflector:${evoVersion}",
+            jUnit: "junit:junit:${jUnitVersion}",
+            mockito: "org.mockito:mockito-core:${mockitoVersion}",
+            jsonpath: "com.jayway.jsonpath:json-path:${jsonpathVersion}",
+            embeddedMongodb: "de.flapdoodle.embed:de.flapdoodle.embed.mongo:${embeddedMongodbVersion}",
+            rollbar: "com.rollbar:rollbar:${rollbarVersion}",
+            slf4j: "org.slf4j:slf4j-api:${slf4jVersion}",
+    ]
+
+    springDependencies = [
+            spring: 'org.springframework.boot:spring-boot-starter',
+            aop: 'org.springframework.boot:spring-boot-starter-aop',
+            web: 'org.springframework.boot:spring-boot-starter-web',
+            webFlux: 'org.springframework.boot:spring-boot-starter-webflux',
+            configurationProcessor: 'org.springframework.boot:spring-boot-configuration-processor',
+            mongodb: 'org.springframework.boot:spring-boot-starter-data-mongodb',
+            test: 'org.springframework.boot:spring-boot-starter-test',
+
+            hal: 'org.springframework.boot:spring-boot-starter-hateoas',
+            halBrowser: 'org.springframework.data:spring-data-rest-hal-browser',
+
+            cache: 'org.springframework.boot:spring-boot-starter-cache',
+            validation: 'org.springframework.boot:spring-boot-starter-validation',
+
+            acutator: 'org.springframework.boot:spring-boot-starter-actuator',
+            acutatorDocs: 'org.springframework.boot:spring-boot-actuator-docs',
+
+            vault: 'org.springframework.cloud:spring-cloud-starter-vault-config',
+            configServer: 'org.springframework.cloud:spring-cloud-config-server',
+            configClient: 'org.springframework.cloud:spring-cloud-starter-config',
+            configMonitor: 'org.springframework.cloud:spring-cloud-config-monitor',
+
+            discoveryServer: 'org.springframework.cloud:spring-cloud-starter-eureka-server',
+            discoveryClient: 'org.springframework.cloud:spring-cloud-starter-eureka',
+
+            security: 'org.springframework.boot:spring-boot-starter-security',
+            securityCloud: 'org.springframework.cloud:spring-cloud-starter-security',
+            securityOAuth2: 'org.springframework.cloud:spring-cloud-starter-oauth2',
+            securityTest: 'org.springframework.security:spring-security-test',
+
+            messaging: 'org.springframework.cloud:spring-cloud-starter-stream-rabbit',
+
+            turbine: 'org.springframework.cloud:spring-cloud-starter-turbine-amqp',
+            turbineStream: 'org.springframework.cloud:spring-cloud-starter-turbine-stream',
+
+            hystrix: 'org.springframework.cloud:spring-cloud-starter-hystrix',
+            hystrixDashboard: 'org.springframework.cloud:spring-cloud-starter-hystrix-dashboard',
+    ]
+
+    libraries = librariesDependencies + springDependencies
+}

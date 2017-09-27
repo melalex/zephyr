@@ -1,0 +1,13 @@
+dependencies {
+    compile libraries.apacheCommons
+    compile libraries.jodaTime
+    compile libraries.beanUtils
+    compile libraries.validationApi
+
+    compileOnly libraries.lombok
+
+    testCompile libraries.jUnit
+    testCompile libraries.mockito
+
+    testCompileOnly libraries.lombok
+}

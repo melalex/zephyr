@@ -1,0 +1,30 @@
+sudo: required
+
+services:
+  - docker
+
+language: java
+jdk:
+  - oraclejdk9
+
+before_install:
+  - chmod +x gradlew
+
+script:
+  - ./gradlew :backend:check
+  - ./gradlew :backend:codeCoverageReport
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+  - bash .travis/deploy_dockerhub.sh
+  - bash .travis/deploy_heroku.sh

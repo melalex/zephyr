@@ -1,0 +1,7 @@
+dependencies {
+    compile libraries.guava
+
+    compileOnly libraries.lombok
+
+    testCompile libraries.jUnit
+}

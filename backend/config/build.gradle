@@ -1,0 +1,59 @@
+import com.bmuschko.gradle.docker.DockerRemoteApiPlugin
+
+buildscript {
+    ext {
+        springBootVersion = '2.0.0.M3'
+        dockerVersion = '3.1.0'
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+
+        maven { url "http://repo1.maven.org/maven2/" }
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("com.bmuschko:gradle-docker-plugin:${dockerVersion}")
+    }
+}
+
+apply plugin: DockerRemoteApiPlugin
+apply plugin: 'com.bmuschko.docker-java-application'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+mainClassName = 'com.zephyr.config.ConfigApplication'
+
+dependencies {
+    compile libraries['security']
+
+    compile libraries['configServer']
+    compile libraries['configMonitor']
+    compile libraries['messaging']
+
+    testCompile libraries['securityTest']
+    testCompile libraries['test']
+}
+
+dependencyManagement {
+    imports {
+        mavenBom imports['springBootBom']
+        mavenBom imports['springCloudBom']
+    }
+}
+
+docker {
+    registryCredentials {
+        username = getDockerUserName()
+        password = getDockerPassword()
+    }
+    javaApplication {
+        baseImage = dockerBaseImage
+        maintainer = dockerMainteiner
+        port = 8888
+        tag = getDockerTag()
+    }
+}

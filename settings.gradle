@@ -1,2 +1,31 @@
 rootProject.name = 'zephyr'
 
+include 'frontend'
+include 'backend'
+
+include 'backend:auth'
+findProject(':backend:auth')?.name = 'auth'
+
+include 'backend:config'
+findProject(':backend:config')?.name = 'config'
+
+include 'backend:monitoring'
+findProject(':backend:monitoring')?.name = 'monitoring'
+
+include 'backend:registry'
+findProject(':backend:registry')?.name = 'registry'
+
+include 'backend:util'
+findProject(':backend:util')?.name = 'util'
+
+include 'backend:util:commons'
+findProject(':backend:util:commons')?.name = 'commons'
+
+include 'backend:util:errors'
+findProject(':backend:util:errors')?.name = 'errors'
+
+include 'backend:util:mapping'
+findProject(':backend:util:mapping')?.name = 'mapping'
+
+include 'backend:util:validation'
+findProject(':backend:util:validation')?.name = 'validation'
