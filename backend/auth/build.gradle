@@ -24,6 +24,7 @@ apply plugin: DockerRemoteApiPlugin
 apply plugin: 'com.bmuschko.docker-java-application'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'application'
 
 mainClassName = 'com.zephyr.auth.AuthApplication'
 

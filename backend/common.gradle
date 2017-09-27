@@ -13,11 +13,3 @@ project.ext.getDockerUserName = {
 project.ext.getDockerPassword = {
     project.findProperty('dockerPassword')
 }
-
-project.ext.isUtil = { Project candidate ->
-    utils.containsValue(candidate)
-}
-
-project.ext.isNotUtil = { Project candidate ->
-    return !isUtil(candidate)
-}

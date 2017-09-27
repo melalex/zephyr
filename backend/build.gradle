@@ -28,10 +28,6 @@ subprojects {
 
     apply plugin: 'java'
 
-    if (isNotUtil(it)) {
-        apply plugin: 'application'
-    }
-
     sourceCompatibility = JavaVersion.VERSION_1_9
     targetCompatibility = JavaVersion.VERSION_1_9
 

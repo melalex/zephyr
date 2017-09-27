@@ -24,26 +24,27 @@ apply plugin: DockerRemoteApiPlugin
 apply plugin: 'com.bmuschko.docker-java-application'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'application'
 
 mainClassName = 'com.zephyr.monitoring.MonitoringApplication'
 
 dependencies {
-    compile libraries['configClient']
-    compile libraries['discoveryServer']
+    compile libraries.configClient
+    compile libraries.discoveryServer
 
-    compile libraries['hystrixDashboard']
-    compile libraries['turbineStream']
+    compile libraries.hystrixDashboard
+    compile libraries.turbineStream
 
-    compile libraries['messaging']
+    compile libraries.messaging
 
-    testCompile libraries['test']
+    testCompile libraries.test
 
 }
 
 dependencyManagement {
     imports {
-        mavenBom imports['springBootBom']
-        mavenBom imports['springCloudBom']
+        mavenBom imports.springBootBom
+        mavenBom imports.springCloudBom
     }
 }
 

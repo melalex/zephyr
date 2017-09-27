@@ -29,5 +29,4 @@ public class UserPropertyMap extends PropertyMapSupport<User, UserDto> {
             }
         };
     }
-
 }

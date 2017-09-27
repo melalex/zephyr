@@ -19,7 +19,7 @@ ext {
     jodaVersion = '2.9.9'
     guavaVersion = '22.0'
     apacheCommonsVersion = '3.6'
-    modelMapperVersion = '1.1.0'
+    modelMapperVersion = '1.0.0'
     beanutilsVersion = '1.9.3'
     evoVersion = '1.2.2'
     jUnitVersion = '4.12'
@@ -35,7 +35,7 @@ ext {
             jodaTime: "joda-time:joda-time:${jodaVersion}",
             guava: "com.google.guava:guava:${guavaVersion}",
             apacheCommons: "org.apache.commons:commons-lang3:${apacheCommonsVersion}",
-            modelMapper: "org.modelmapper:modelmapper:${modelMapperVersion}",
+            modelMapper: "com.github.rozidan:modelmapper-spring-boot-starter:${modelMapperVersion}",
             beanUtils: "commons-beanutils:commons-beanutils:${beanutilsVersion}",
             evo: "org.atteo:evo-inflector:${evoVersion}",
             jUnit: "junit:junit:${jUnitVersion}",
