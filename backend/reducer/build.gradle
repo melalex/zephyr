@@ -26,29 +26,20 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'application'
 
-mainClassName = 'com.zephyr.auth.AuthApplication'
+mainClassName = 'com.zephyr.reducing.ReducingApplication'
 
 dependencies {
     compile libraries.webFlux
     compile libraries.acutator
     compile libraries.acutatorDocs
-    compile libraries.security
-    compile libraries.securityOAuth2
-    compile libraries.validation
     compile libraries.mongodb
     compile libraries.configClient
     compile libraries.discoveryClient
     compile libraries.messaging
 
-    compile utils.commons
-    compile utils.errors
-    compile utils.mapping
-
     compileOnly libraries.lombok
 
     testCompile libraries.test
-    testCompile libraries.jsonpath
-    testCompile libraries.securityTest
 }
 
 dependencyManagement {
@@ -66,7 +57,8 @@ docker {
     javaApplication {
         baseImage = dockerBaseImage
         maintainer = dockerMainteiner
-        port = 5000
+        port = 6000
         tag = getDockerTag()
     }
 }
+

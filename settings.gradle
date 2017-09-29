@@ -9,11 +9,23 @@ findProject(':backend:auth')?.name = 'auth'
 include 'backend:config'
 findProject(':backend:config')?.name = 'config'
 
+include 'backend:master'
+findProject(':backend:master')?.name = 'master'
+
 include 'backend:monitoring'
 findProject(':backend:monitoring')?.name = 'monitoring'
 
+include 'backend:rating'
+findProject(':backend:rating')?.name = 'rating'
+
+include 'backend:reducer'
+findProject(':backend:reducer')?.name = 'reducer'
+
 include 'backend:registry'
 findProject(':backend:registry')?.name = 'registry'
+
+include 'backend:scraper'
+findProject(':backend:scraper')?.name = 'scraper'
 
 include 'backend:util'
 findProject(':backend:util')?.name = 'util'
