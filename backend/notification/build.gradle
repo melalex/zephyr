@@ -26,7 +26,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'application'
 
-mainClassName = 'com.zephyr.master.MasterApplication'
+mainClassName = 'com.zephyr.notification.NotificationApplication'
 
 dependencies {
     compile libraries.webFlux
@@ -36,6 +36,8 @@ dependencies {
     compile libraries.configClient
     compile libraries.discoveryClient
     compile libraries.messaging
+
+    compile utils.commons
 
     compileOnly libraries.lombok
 
@@ -57,7 +59,7 @@ docker {
     javaApplication {
         baseImage = dockerBaseImage
         maintainer = dockerMainteiner
-        port = 7000
+        port = 9000
         tag = getDockerTag()
     }
 }

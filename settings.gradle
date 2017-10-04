@@ -9,11 +9,14 @@ findProject(':backend:auth')?.name = 'auth'
 include 'backend:config'
 findProject(':backend:config')?.name = 'config'
 
-include 'backend:master'
-findProject(':backend:master')?.name = 'master'
+include 'backend:dictionary'
+findProject(':backend:dictionary')?.name = 'dictionary'
 
 include 'backend:monitoring'
 findProject(':backend:monitoring')?.name = 'monitoring'
+
+include 'backend:notification'
+findProject(':backend:notification')?.name = 'notification'
 
 include 'backend:rating'
 findProject(':backend:rating')?.name = 'rating'

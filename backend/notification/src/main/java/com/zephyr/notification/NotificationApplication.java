@@ -1,12 +1,12 @@
-package com.zephyr.master;
+package com.zephyr.notification;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MasterApplication {
+public class NotificationApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MasterApplication.class, args);
+        SpringApplication.run(NotificationApplication.class, args);
     }
 }

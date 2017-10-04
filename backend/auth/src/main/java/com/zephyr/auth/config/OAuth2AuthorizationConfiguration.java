@@ -44,7 +44,7 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationServerConfigu
                     .secret(environment.getProperty("CUSTOMER_SERVICE_PASSWORD"))
                     .authorizedGrantTypes("client_credentials", "refresh_token")
                     .scopes("server");
-        // @formatter:off
+        // @formatter:on
     }
 
     @Override

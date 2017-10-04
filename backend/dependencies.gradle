@@ -29,7 +29,7 @@ ext {
     rollbarVersion = '0.5.3'
     slf4jVersion = '1.7.25'
 
-    librariesDependencies = [
+    def librariesDependencies = [
             lombok: "org.projectlombok:lombok:${lombokVersion}",
             validationApi: "javax.validation:validation-api:${validationApiVersion}",
             jodaTime: "joda-time:joda-time:${jodaVersion}",
@@ -46,13 +46,14 @@ ext {
             slf4j: "org.slf4j:slf4j-api:${slf4jVersion}",
     ]
 
-    springDependencies = [
+    def springDependencies = [
             spring: 'org.springframework.boot:spring-boot-starter',
             aop: 'org.springframework.boot:spring-boot-starter-aop',
             web: 'org.springframework.boot:spring-boot-starter-web',
             webFlux: 'org.springframework.boot:spring-boot-starter-webflux',
             configurationProcessor: 'org.springframework.boot:spring-boot-configuration-processor',
             mongodb: 'org.springframework.boot:spring-boot-starter-data-mongodb',
+            redis: 'org.springframework.data:spring-data-redis',
             test: 'org.springframework.boot:spring-boot-starter-test',
 
             hal: 'org.springframework.boot:spring-boot-starter-hateoas',
