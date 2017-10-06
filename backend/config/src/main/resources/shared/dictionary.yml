@@ -1,2 +1,6 @@
 server:
   port: 7000
+
+task:
+  updateRating:
+    cron: 0 0 0 1/1 * ? *

@@ -14,20 +14,20 @@ ext {
             validation: project(':backend:util:validation'),
     ]
 
-    lombokVersion = '1.16.16'
-    validationApiVersion = '2.0.0.Final'
-    jodaVersion = '2.9.9'
-    guavaVersion = '22.0'
-    apacheCommonsVersion = '3.6'
-    modelMapperVersion = '1.0.0'
-    beanutilsVersion = '1.9.3'
-    evoVersion = '1.2.2'
-    jUnitVersion = '4.12'
-    mockitoVersion = '2.9.0'
-    jsonpathVersion = '2.4.0'
-    embeddedMongodbVersion = '2.0.0'
-    rollbarVersion = '0.5.3'
-    slf4jVersion = '1.7.25'
+    def lombokVersion = '1.16.16'
+    def validationApiVersion = '2.0.0.Final'
+    def jodaVersion = '2.9.9'
+    def guavaVersion = '22.0'
+    def apacheCommonsVersion = '3.6'
+    def modelMapperVersion = '1.0.0'
+    def beanutilsVersion = '1.9.3'
+    def evoVersion = '1.2.2'
+    def jUnitVersion = '4.12'
+    def mockitoVersion = '2.9.0'
+    def jsonpathVersion = '2.4.0'
+    def embeddedMongodbVersion = '2.0.0'
+    def rollbarVersion = '0.5.3'
+    def slf4jVersion = '1.7.25'
 
     def librariesDependencies = [
             lombok: "org.projectlombok:lombok:${lombokVersion}",
