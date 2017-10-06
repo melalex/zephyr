@@ -36,7 +36,7 @@ public class DictionaryServiceImpl implements DictionaryService {
     }
 
     @Override
-    public Flux<Keyword> findAll(Sort sort) {
+    public Flux<Keyword> findAllForUpdate(Sort sort) {
         return dictionaryRepository
                 .findAll(sort)
                 .map(Dictionary::getKeyword);

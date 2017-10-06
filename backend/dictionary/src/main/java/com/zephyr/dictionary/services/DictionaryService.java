@@ -9,5 +9,5 @@ public interface DictionaryService {
 
     Flux<DictionaryDto> update(Flux<Keyword> keywords);
 
-    Flux<Keyword> findAll(Sort sort);
+    Flux<Keyword> findAllForUpdate(Sort sort);
 }

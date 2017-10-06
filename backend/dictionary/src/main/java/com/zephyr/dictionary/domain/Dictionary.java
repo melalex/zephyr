@@ -14,8 +14,8 @@ public class Dictionary {
     @Id
     private String id;
 
-    @Indexed
     private Keyword keyword;
     private DateTime lastHit;
+    private DateTime lastUpdate;
     private long hitsCount;
 }
