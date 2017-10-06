@@ -1,7 +1,7 @@
 package com.zephyr.auth.maps;
 
 import com.zephyr.auth.domain.User;
-import com.zephyr.auth.dto.UserDto;
+import com.zephyr.auth.service.dto.UserDto;
 import com.zephyr.mapping.decorators.ToSetConverter;
 import com.zephyr.mapping.support.impl.ConverterSupport;
 import com.zephyr.mapping.support.impl.PropertyMapSupport;

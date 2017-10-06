@@ -1,7 +1,6 @@
-package com.zephyr.auth.dto;
+package com.zephyr.auth.service.dto;
 
 import lombok.Data;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

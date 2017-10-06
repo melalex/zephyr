@@ -3,6 +3,7 @@ dependencies {
     compile libraries.jodaTime
     compile libraries.slf4j
     compile libraries.apacheCommons
+    compile libraries.reactor
 
     compileOnly libraries.lombok
 

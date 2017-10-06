@@ -1,7 +1,7 @@
 package com.zephyr.auth.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zephyr.auth.dto.UserDto;
+import com.zephyr.auth.service.dto.UserDto;
 import com.zephyr.auth.service.PrincipalService;
 import com.zephyr.auth.service.UserService;
 import com.sun.security.auth.UserPrincipal;

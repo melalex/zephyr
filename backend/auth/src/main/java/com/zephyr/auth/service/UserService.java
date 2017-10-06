@@ -1,6 +1,6 @@
 package com.zephyr.auth.service;
 
-import com.zephyr.auth.dto.UserDto;
+import com.zephyr.auth.service.dto.UserDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import reactor.core.publisher.Mono;
 

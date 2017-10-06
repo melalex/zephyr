@@ -1,7 +1,7 @@
 package com.zephyr.auth.service.impl;
 
 import com.zephyr.auth.domain.User;
-import com.zephyr.auth.dto.UserDto;
+import com.zephyr.auth.service.dto.UserDto;
 import com.zephyr.auth.repository.UserRepository;
 import com.zephyr.auth.service.UserService;
 import com.zephyr.mapping.mappers.ExtendedMapper;

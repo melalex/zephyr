@@ -1,6 +1,6 @@
 package com.zephyr.auth.controller;
 
-import com.zephyr.auth.dto.UserDto;
+import com.zephyr.auth.service.dto.UserDto;
 import com.zephyr.auth.service.PrincipalService;
 import com.zephyr.auth.service.UserService;
 import lombok.Setter;
