@@ -1,24 +1,23 @@
-package com.zephyr.dictionary.integration.source;
+package com.zephyr.dictionary.services.jobs;
 
-import com.zephyr.commons.data.Keyword;
 import com.zephyr.dictionary.domain.Dictionary;
 import com.zephyr.dictionary.integration.IntegrationProperties;
+import com.zephyr.dictionary.integration.gateways.UpdateRatingGateway;
 import com.zephyr.dictionary.repositories.DictionaryRepository;
 import com.zephyr.dictionary.services.sort.OrderProvider;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.integration.core.MessageSource;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.GenericMessage;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
 
+@Slf4j
 @Component
 @RefreshScope
-public class KeywordsSource implements MessageSource<Flux<Keyword>> {
+public class UpdateRatingJob {
     private static final int FIRST_PAGE = 0;
 
     @Setter(onMethod = @__(@Autowired))
@@ -30,15 +29,17 @@ public class KeywordsSource implements MessageSource<Flux<Keyword>> {
     @Setter(onMethod = @__(@Autowired))
     private OrderProvider orderProvider;
 
-    @Override
-    public Message<Flux<Keyword>> receive() {
-        return new GenericMessage<>(findAllForUpdate());
-    }
+    @Setter(onMethod = @__(@Autowired))
+    private UpdateRatingGateway updateRatingGateway;
 
-    private Flux<Keyword> findAllForUpdate() {
-        return dictionaryRepository
+    @Scheduled(cron = "${integration.updateRating.cron}")
+    public void perform() {
+        log.info("Performing UpdateRatingJob");
+
+        dictionaryRepository
                 .findAllForUpdate(properties.getRelevancePeriod(), createPageRequest())
-                .map(Dictionary::getKeyword);
+                .map(Dictionary::getKeyword)
+                .subscribe(updateRatingGateway::send);
     }
 
     private Pageable createPageRequest() {

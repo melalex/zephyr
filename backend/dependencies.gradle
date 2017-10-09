@@ -80,8 +80,8 @@ ext {
             securityOAuth2: 'org.springframework.cloud:spring-cloud-starter-oauth2',
             securityTest: 'org.springframework.security:spring-security-test',
 
-            integration: 'org.springframework.boot:spring-boot-starter-integration',
             messaging: 'org.springframework.cloud:spring-cloud-starter-stream-rabbit',
+            integration: 'org.springframework.boot:spring-boot-starter-integration',
 
             turbine: 'org.springframework.cloud:spring-cloud-starter-turbine-amqp',
             turbineStream: 'org.springframework.cloud:spring-cloud-starter-turbine-stream',
