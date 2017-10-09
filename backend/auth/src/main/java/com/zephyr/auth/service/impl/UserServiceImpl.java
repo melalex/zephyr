@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
         return userRepository
                 .findById(username)
                 .switchIfEmpty(throwUserNotExists(username))
-                .map(mapper.mapTo(UserDto.class))
+                .map(mapper.mapperFor(UserDto.class))
                 .block();
     }
 
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
                         : throwUserAlreadyExists()
                 )
                 .doOnNext(info(log, USER_CREATION_MESSAGE))
-                .map(mapper.mapTo(UserDto.class));
+                .map(mapper.mapperFor(UserDto.class));
     }
 
     private Mono<User> saveUser(UserDto dto) {

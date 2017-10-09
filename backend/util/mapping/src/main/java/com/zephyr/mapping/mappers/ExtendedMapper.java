@@ -12,7 +12,7 @@ public class ExtendedMapper {
     @Delegate
     private final ModelMapper modelMapper;
 
-    public <T, R> Function<T, R> mapTo(Class<R> clazz) {
+    public <T, R> Function<T, R> mapperFor(Class<R> clazz) {
         return v -> modelMapper.map(v, clazz);
     }
 }

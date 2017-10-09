@@ -9,7 +9,7 @@ import java.util.function.Function;
 @UtilityClass
 public class ReactorUtils {
 
-    public <T> Function<Flux<Mono<T>>, Flux<T>> joinAll() {
+    public <T> Function<Flux<Mono<T>>, Flux<T>> joiner() {
         return target -> {
             Flux<T> result = Flux.empty();
 
