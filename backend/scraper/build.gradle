@@ -30,7 +30,6 @@ mainClassName = 'com.zephyr.scraper.ScraperApplication'
 
 dependencies {
     compile libraries.configClient
-    compile libraries.integration
     compile libraries.messaging
 
     compileOnly libraries.lombok
@@ -42,6 +41,7 @@ dependencyManagement {
     imports {
         mavenBom imports.springBootBom
         mavenBom imports.springCloudBom
+        mavenBom imports.springBusBom
     }
 }
 

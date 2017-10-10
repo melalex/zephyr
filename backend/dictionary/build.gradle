@@ -37,6 +37,8 @@ dependencies {
     compile libraries.configClient
     compile libraries.discoveryClient
     compile libraries.messaging
+    compile libraries.hal
+    compile libraries.halBrowser
 
     compile utils.commons
     compile utils.mapping
@@ -50,6 +52,7 @@ dependencyManagement {
     imports {
         mavenBom imports.springBootBom
         mavenBom imports.springCloudBom
+        mavenBom imports.springBusBom
     }
 }
 

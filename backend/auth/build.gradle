@@ -55,6 +55,7 @@ dependencyManagement {
     imports {
         mavenBom imports.springBootBom
         mavenBom imports.springCloudBom
+        mavenBom imports.springBusBom
     }
 }
 

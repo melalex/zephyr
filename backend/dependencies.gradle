@@ -1,10 +1,12 @@
 ext {
-    springCloudVersion = 'Finchley.M2'
-    springBootVersion = '2.0.0.M3'
+    def springCloudVersion = 'Finchley.M2'
+    def springBootVersion = '2.0.0.M3'
+    def springBusVersion = '1.3.2.BUILD-SNAPSHOT'
 
     imports = [
             springBootBom: "org.springframework.boot:spring-boot-dependencies:${springBootVersion}",
-            springCloudBom: "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+            springCloudBom: "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}",
+            springBusBom: "org.springframework.cloud:spring-cloud-bus:${springBusVersion}"
     ]
 
     utils = [
@@ -50,8 +52,7 @@ ext {
 
     def springDependencies = [
             spring: 'org.springframework.boot:spring-boot-starter',
-            aop: 'org.springframework.boot:spring-boot-starter-aop',
-            web: 'org.springframework.boot:spring-boot-starter-web',
+            messaging: 'org.springframework.cloud:spring-cloud-starter-bus-amqp',
             webFlux: 'org.springframework.boot:spring-boot-starter-webflux',
             configurationProcessor: 'org.springframework.boot:spring-boot-configuration-processor',
             mongodb: 'org.springframework.boot:spring-boot-starter-data-mongodb',
@@ -79,9 +80,6 @@ ext {
             securityCloud: 'org.springframework.cloud:spring-cloud-starter-security',
             securityOAuth2: 'org.springframework.cloud:spring-cloud-starter-oauth2',
             securityTest: 'org.springframework.security:spring-security-test',
-
-            messaging: 'org.springframework.cloud:spring-cloud-starter-stream-rabbit',
-            integration: 'org.springframework.boot:spring-boot-starter-integration',
 
             turbine: 'org.springframework.cloud:spring-cloud-starter-turbine-amqp',
             turbineStream: 'org.springframework.cloud:spring-cloud-starter-turbine-stream',
