@@ -1,6 +1,6 @@
 package com.zephyr.auth.exceptions;
 
-import com.zephyr.errors.ErrorUtil;
+import com.zephyr.errors.utils.ErrorUtil;
 import com.zephyr.errors.domain.ErrorData;
 import com.zephyr.errors.exceptions.ParameterizedException;
 

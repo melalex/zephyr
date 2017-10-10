@@ -3,7 +3,7 @@ package com.zephyr.errors.domain;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.zephyr.errors.ErrorUtil;
+import com.zephyr.errors.utils.ErrorUtil;
 import lombok.Value;
 
 import java.io.Serializable;
@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.List;
 
 @Value
-@SuppressWarnings("unused, WeakerAccess")
 public class SubjectPath implements Serializable {
     private static final long serialVersionUID = -1335468596895051110L;
 

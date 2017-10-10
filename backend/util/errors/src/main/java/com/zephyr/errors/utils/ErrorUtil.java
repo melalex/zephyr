@@ -1,4 +1,4 @@
-package com.zephyr.errors;
+package com.zephyr.errors.utils;
 
 import com.google.common.base.CaseFormat;
 import com.zephyr.errors.domain.ErrorData;
@@ -15,13 +15,13 @@ public class ErrorUtil {
 
     public SubjectError firstError(@NonNull final ErrorData errorData) {
         if (errorData.getSubjectErrors().isEmpty()) {
-            throw new IllegalArgumentException("ErrorData must contains at least of SubjectError");
+            throw new IllegalArgumentException("ErrorData must contains at least one SubjectError");
         }
 
         return errorData.getSubjectErrors().get(0);
     }
 
     public String errorCode(@NonNull final Class<?> clazz) {
-        return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, clazz.getName());
+        return clazz.getName();
     }
 }

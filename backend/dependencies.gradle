@@ -53,11 +53,13 @@ ext {
     def springDependencies = [
             spring: 'org.springframework.boot:spring-boot-starter',
             messaging: 'org.springframework.cloud:spring-cloud-starter-bus-amqp',
-            webFlux: 'org.springframework.boot:spring-boot-starter-webflux',
             configurationProcessor: 'org.springframework.boot:spring-boot-configuration-processor',
             mongodb: 'org.springframework.boot:spring-boot-starter-data-mongodb',
             redis: 'org.springframework.data:spring-data-redis',
             test: 'org.springframework.boot:spring-boot-starter-test',
+
+            webFlux: 'org.springframework.boot:spring-boot-starter-webflux',
+            webFluxLib: 'org.springframework:spring-webflux',
 
             hal: 'org.springframework.boot:spring-boot-starter-hateoas',
             halBrowser: 'org.springframework.data:spring-data-rest-hal-browser',

@@ -1,15 +1,21 @@
-package com.zephyr.errors;
+package com.zephyr.errors.builders;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.zephyr.errors.domain.*;
+import com.zephyr.errors.exceptions.ParameterizedException;
 
 import java.util.List;
 
 @SuppressWarnings("unused, WeakerAccess")
-public final class ErrorDataBuilder {
+public final class ErrorDataBuilder<T extends ParameterizedException> {
+    private ExceptionPopulator<T> exceptionPopulator;
     private final List<SubjectError> subjectErrors = Lists.newLinkedList();
+
+    public ErrorDataBuilder(ExceptionPopulator<T> exceptionPopulator) {
+        this.exceptionPopulator = exceptionPopulator;
+    }
 
     private ErrorDataBuilder addSubjectError(final SubjectError subjectError) {
         subjectErrors.add(subjectError);
@@ -20,8 +26,8 @@ public final class ErrorDataBuilder {
         return new SubjectBuilder(this);
     }
 
-    public ErrorData build() {
-        return new ErrorData(subjectErrors);
+    public ExceptionPopulator<T> complete() {
+        return exceptionPopulator.onDataBuilt(new ErrorData(subjectErrors));
     }
 
     public static final class SubjectBuilder {
@@ -29,7 +35,7 @@ public final class ErrorDataBuilder {
 
         private SubjectPath path;
         private Actual actual;
-        private Expected expected;
+        private Filed filed;
         private Iterable<Object> payload;
 
         SubjectBuilder(final ErrorDataBuilder errorDataBuilder) {
@@ -50,8 +56,8 @@ public final class ErrorDataBuilder {
             return this;
         }
 
-        public SubjectBuilder expected(final Expected expected) {
-            this.expected = expected;
+        public SubjectBuilder expected(final Filed filed) {
+            this.filed = filed;
             return this;
         }
 
@@ -65,7 +71,7 @@ public final class ErrorDataBuilder {
         }
 
         public ErrorDataBuilder add() {
-            return errorDataBuilder.addSubjectError(new SubjectError(path, actual, expected, payload));
+            return errorDataBuilder.addSubjectError(new SubjectError(path, actual, filed, payload));
         }
     }
 

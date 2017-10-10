@@ -1,12 +1,11 @@
 package com.zephyr.errors.domain;
 
-import com.zephyr.errors.ErrorUtil;
+import com.zephyr.errors.utils.ErrorUtil;
 import lombok.Value;
 
 import java.io.Serializable;
 
 @Value
-@SuppressWarnings("unused, WeakerAccess")
 public class Actual implements Serializable {
     private static final long serialVersionUID = 3699816084045842912L;
 

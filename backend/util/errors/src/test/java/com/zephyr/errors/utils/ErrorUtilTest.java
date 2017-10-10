@@ -1,4 +1,4 @@
-package com.zephyr.errors;
+package com.zephyr.errors.utils;
 
 import org.junit.Test;
 

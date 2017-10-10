@@ -8,7 +8,6 @@ import lombok.Value;
 import java.io.Serializable;
 
 @Value
-@SuppressWarnings("unused")
 public class SubjectError implements Serializable {
     private static final long serialVersionUID = -5358302471268083113L;
 
@@ -17,13 +16,13 @@ public class SubjectError implements Serializable {
 
     private SubjectPath path;
     private Actual actual;
-    private Expected expected;
+    private Filed filed;
     private Iterable<Object> payload;
 
-    public SubjectError(final SubjectPath path, final Actual actual, final Expected expected, final Iterable<Object> payload) {
+    public SubjectError(final SubjectPath path, final Actual actual, final Filed filed, final Iterable<Object> payload) {
         this.path = path;
         this.actual = actual;
-        this.expected = expected;
+        this.filed = filed;
         this.payload = ImmutableList.copyOf(payload);
     }
 
@@ -35,6 +34,6 @@ public class SubjectError implements Serializable {
         return Joiner
                 .on(ERROR_CODE_SEPARATOR)
                 .skipNulls()
-                .join(ERROR_CODE_PREFIX, path.getFullPathCode(), actual.getValue(), expected.getValue());
+                .join(ERROR_CODE_PREFIX, path.getFullPathCode());
     }
 }
