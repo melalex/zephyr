@@ -36,8 +36,10 @@ dependencies {
     compile libraries.configClient
     compile libraries.discoveryClient
     compile libraries.messaging
+    compile libraries.adWords
 
     compile utils.commons
+    compile utils.errors
 
     compileOnly libraries.lombok
 

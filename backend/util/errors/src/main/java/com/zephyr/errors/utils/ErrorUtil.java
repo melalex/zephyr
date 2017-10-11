@@ -8,6 +8,8 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class ErrorUtil {
+    public static final String ERROR_CODE_PREFIX = "error";
+    public static final String ERROR_CODE_SEPARATOR = ".";
 
     public String toCamel(@NonNull final Enum<?> value) {
         return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, value.name());

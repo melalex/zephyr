@@ -31,6 +31,8 @@ ext {
     def rollbarVersion = '0.5.3'
     def slf4jVersion = '1.7.25'
     def reactorVersion = '3.1.0.RELEASE'
+    def jacksonVersion = '2.9.1'
+    def adWordsVersion = '3.9.0'
 
     def librariesDependencies = [
             lombok: "org.projectlombok:lombok:${lombokVersion}",
@@ -47,7 +49,9 @@ ext {
             embeddedMongodb: "de.flapdoodle.embed:de.flapdoodle.embed.mongo:${embeddedMongodbVersion}",
             rollbar: "com.rollbar:rollbar:${rollbarVersion}",
             slf4j: "org.slf4j:slf4j-api:${slf4jVersion}",
-            reactor: "io.projectreactor:reactor-core:${reactorVersion}"
+            reactor: "io.projectreactor:reactor-core:${reactorVersion}",
+            jackson: "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
+            adWords: "com.google.api-ads:ads-lib:${adWordsVersion}"
     ]
 
     def springDependencies = [

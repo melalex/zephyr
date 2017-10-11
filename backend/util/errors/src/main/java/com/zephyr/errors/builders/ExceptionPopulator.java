@@ -3,14 +3,14 @@ package com.zephyr.errors.builders;
 import com.zephyr.errors.domain.ErrorData;
 import com.zephyr.errors.exceptions.ParameterizedException;
 import com.zephyr.errors.utils.ErrorUtil;
+import reactor.core.publisher.Mono;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-@SuppressWarnings("unused, WeakerAccess")
 public final class ExceptionPopulator<T extends ParameterizedException> {
     private final T exception;
 
-    private int status = 500;
+    private int status = 400;
     private ErrorData data;
 
     public static <T extends ParameterizedException> ExceptionPopulator<T> of(T exception) {
@@ -30,7 +30,7 @@ public final class ExceptionPopulator<T extends ParameterizedException> {
         return new ErrorDataBuilder<>(this);
     }
 
-    public T build() {
+    public T populate() {
         checkNotNull(data);
 
         exception.setCode(ErrorUtil.errorCode(exception.getClass()));
@@ -40,8 +40,12 @@ public final class ExceptionPopulator<T extends ParameterizedException> {
         return exception;
     }
 
-    public T buildAndThrow() {
-        throw build();
+    public Mono<T> populateAsync() {
+        return Mono.error(populate());
+    }
+
+    public T populateAndThrow() {
+        throw populate();
     }
 
     ExceptionPopulator<T> onDataBuilt(ErrorData data) {

@@ -42,6 +42,7 @@ dependencies {
 
     compile utils.commons
     compile utils.mapping
+    compile utils.errors
 
     compileOnly libraries.lombok
 

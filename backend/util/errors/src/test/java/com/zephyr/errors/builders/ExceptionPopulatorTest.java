@@ -12,7 +12,7 @@ import java.util.Collections;
 import static org.junit.Assert.assertEquals;
 
 public class ExceptionPopulatorTest {
-    private static final int STATUS_CODE = 400;
+    private static final int STATUS_CODE = 500;
     private static final String EXCEPTION_CODE = "ParameterizedException";
     private static final String EXCEPTION_MESSAGE = "EXCEPTION_MESSAGE";
     private static final String PAYLOAD = "payload";
@@ -38,7 +38,7 @@ public class ExceptionPopulatorTest {
                         .add()
                     .complete()
                 .status(STATUS_CODE)
-                .build();
+                .populate();
         // @formatter:on
 
         assertEquals(EXPECTED_CODE, ErrorUtil.firstError(exception.getData()).getCode());
