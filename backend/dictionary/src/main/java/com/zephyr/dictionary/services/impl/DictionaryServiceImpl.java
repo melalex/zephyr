@@ -1,19 +1,20 @@
 package com.zephyr.dictionary.services.impl;
 
+import com.zephyr.commons.DataAccessUtils;
 import com.zephyr.commons.ReactorUtils;
-import com.zephyr.commons.data.Keyword;
+import com.zephyr.data.Keyword;
 import com.zephyr.dictionary.domain.Dictionary;
 import com.zephyr.dictionary.domain.factories.DictionaryFactory;
 import com.zephyr.dictionary.integration.gateways.NewKeywordGateway;
 import com.zephyr.dictionary.repositories.DictionaryRepository;
 import com.zephyr.dictionary.services.DictionaryService;
 import com.zephyr.dictionary.services.dto.DictionaryDto;
+import com.zephyr.errors.utils.ErrorUtil;
 import com.zephyr.mapping.mappers.ExtendedMapper;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -39,8 +40,7 @@ public class DictionaryServiceImpl implements DictionaryService {
     public Mono<DictionaryDto> findById(String id) {
         return dictionaryRepository.findById(id)
                 .map(mapper.mapperFor(DictionaryDto.class))
-                // TODO: change exception type
-                .switchIfEmpty(Mono.error(new RuntimeException()));
+                .switchIfEmpty(ErrorUtil.notFound(Dictionary.class.getName(), id));
     }
 
     @Override
@@ -51,8 +51,7 @@ public class DictionaryServiceImpl implements DictionaryService {
 
         Mono<Long> count = dictionaryRepository.count();
 
-        return Mono.zip(ReactorUtils.reduceToList(content), count)
-                .map(t -> new PageImpl<>(t.getT1(), pageable, t.getT2()));
+        return DataAccessUtils.toReactivePage(content, count, pageable);
     }
 
     @Override
@@ -61,8 +60,7 @@ public class DictionaryServiceImpl implements DictionaryService {
                 .map(mapper.mapperFor(DictionaryDto.class));
         Mono<Long> count = dictionaryRepository.count();
 
-        return Mono.zip(ReactorUtils.reduceToList(content), count)
-                .map(t -> new PageImpl<>(t.getT1(), pageable, t.getT2()));
+        return DataAccessUtils.toReactivePage(content, count, pageable);
     }
 
     @Override

@@ -40,11 +40,7 @@ public final class ExceptionPopulator<T extends ParameterizedException> {
         return exception;
     }
 
-    public Mono<T> populateAsync() {
-        return Mono.error(populate());
-    }
-
-    public T populateAndThrow() {
+    public void populateAndThrow() {
         throw populate();
     }
 

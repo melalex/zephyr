@@ -17,108 +17,118 @@ public final class ErrorDataBuilder<T extends ParameterizedException> {
         this.exceptionPopulator = exceptionPopulator;
     }
 
-    private ErrorDataBuilder addSubjectError(final SubjectError subjectError) {
+    private ErrorDataBuilder<T> addSubjectError(final SubjectError subjectError) {
         subjectErrors.add(subjectError);
         return this;
     }
 
-    public SubjectBuilder subjectError() {
-        return new SubjectBuilder(this);
+    public SubjectBuilder<T> subjectError() {
+        return new SubjectBuilder<>(this);
     }
 
     public ExceptionPopulator<T> complete() {
         return exceptionPopulator.onDataBuilt(new ErrorData(subjectErrors));
     }
 
-    public static final class SubjectBuilder {
-        private final ErrorDataBuilder errorDataBuilder;
+    public static final class SubjectBuilder<T extends ParameterizedException> {
+        private final ErrorDataBuilder<T> errorDataBuilder;
 
         private SubjectPath path;
         private Actual actual;
         private Filed filed;
         private Iterable<Object> payload;
 
-        SubjectBuilder(final ErrorDataBuilder errorDataBuilder) {
+        SubjectBuilder(final ErrorDataBuilder<T> errorDataBuilder) {
             this.errorDataBuilder = errorDataBuilder;
         }
 
-        public SubjectBuilder path(final SubjectPath path) {
+        public SubjectBuilder<T> path(final SubjectPath path) {
             this.path = path;
             return this;
         }
 
-        public SubjectPathBuilder path() {
-            return new SubjectPathBuilder(this);
+        public SubjectPathBuilder<T> path() {
+            return new SubjectPathBuilder<>(this);
         }
 
-        public SubjectBuilder actual(final Actual actual) {
+        public SubjectBuilder<T> actual(final Actual actual) {
             this.actual = actual;
             return this;
         }
 
-        public SubjectBuilder expected(final Filed filed) {
+        public SubjectBuilder<T> actual(final Object actual) {
+            this.actual = Actual.isA(actual);
+            return this;
+        }
+
+        public SubjectBuilder<T> field(final Filed filed) {
             this.filed = filed;
             return this;
         }
 
-        public SubjectBuilder payload(final Iterable<Object> payload) {
+        public SubjectBuilder<T> payload(final Iterable<Object> payload) {
             this.payload = ImmutableList.copyOf(payload);
             return this;
         }
 
-        public PayloadBuilder payload() {
-            return new PayloadBuilder(this);
+        public SubjectBuilder<T> payload(final Object payload) {
+            this.payload = ImmutableList.of(payload);
+            return this;
         }
 
-        public ErrorDataBuilder add() {
+        public PayloadBuilder<T> payload() {
+            return new PayloadBuilder<>(this);
+        }
+
+        public ErrorDataBuilder<T> add() {
             return errorDataBuilder.addSubjectError(new SubjectError(path, actual, filed, payload));
         }
     }
 
-    public static final class SubjectPathBuilder {
+    public static final class SubjectPathBuilder<T extends ParameterizedException> {
         private static final String ROOT_ASSERTION_MESSAGE = "root can't be null";
 
-        private final SubjectBuilder subjectBuilder;
+        private final SubjectBuilder<T> subjectBuilder;
 
         private String root;
         private final List<String> path = Lists.newLinkedList();
 
-        SubjectPathBuilder(final SubjectBuilder subjectBuilder) {
+        SubjectPathBuilder(final SubjectBuilder<T> subjectBuilder) {
             this.subjectBuilder = subjectBuilder;
         }
 
-        public SubjectPathBuilder root(final String root) {
+        public SubjectPathBuilder<T> root(final String root) {
             this.root = root;
             return this;
         }
 
-        public SubjectPathBuilder with(final String pathPart) {
+        public SubjectPathBuilder<T> with(final String pathPart) {
             path.add(pathPart);
             return this;
         }
 
-        public SubjectBuilder add() {
+        public SubjectBuilder<T> add() {
             Preconditions.checkNotNull(root, ROOT_ASSERTION_MESSAGE);
 
             return subjectBuilder.path(SubjectPath.valueOf(root).pathPart(path));
         }
     }
 
-    public static final class PayloadBuilder {
-        private final SubjectBuilder subjectBuilder;
+    public static final class PayloadBuilder<T extends ParameterizedException> {
+        private final SubjectBuilder<T> subjectBuilder;
 
         private final List<Object> payload = Lists.newLinkedList();
 
-        PayloadBuilder(final SubjectBuilder subjectBuilder) {
+        PayloadBuilder(final SubjectBuilder<T> subjectBuilder) {
             this.subjectBuilder = subjectBuilder;
         }
 
-        public PayloadBuilder with(final Object payload) {
+        public PayloadBuilder<T> with(final Object payload) {
             this.payload.add(payload);
             return this;
         }
 
-        public SubjectBuilder add() {
+        public SubjectBuilder<T> add() {
             return subjectBuilder.payload(payload);
         }
     }

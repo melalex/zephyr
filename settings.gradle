@@ -39,6 +39,9 @@ findProject(':backend:util')?.name = 'util'
 include 'backend:util:commons'
 findProject(':backend:util:commons')?.name = 'commons'
 
+include 'backend:util:data'
+findProject(':backend:util:data')?.name = 'data'
+
 include 'backend:util:errors'
 findProject(':backend:util:errors')?.name = 'errors'
 

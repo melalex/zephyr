@@ -2,7 +2,7 @@ import com.bmuschko.gradle.docker.DockerRemoteApiPlugin
 
 buildscript {
     ext {
-        springBootVersion = '2.0.0.M3'
+        springBootVersion = '2.0.0.M5'
         dockerVersion = '3.1.0'
     }
     repositories {
@@ -29,8 +29,14 @@ apply plugin: 'application'
 mainClassName = 'com.zephyr.scraper.ScraperApplication'
 
 dependencies {
+    compile libraries.spring
+    compile libraries.discoveryClient
     compile libraries.configClient
     compile libraries.messaging
+    compile libraries.jsoup
+    compile libraries.reactor
+
+    compile utils.data
 
     compileOnly libraries.lombok
 

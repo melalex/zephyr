@@ -1,6 +1,6 @@
 package com.zephyr.dictionary.domain;
 
-import com.zephyr.commons.data.Keyword;
+import com.zephyr.data.Keyword;
 import lombok.Data;
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;

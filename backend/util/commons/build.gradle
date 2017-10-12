@@ -1,13 +1,38 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.0.M5'
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+
+        maven { url "http://repo1.maven.org/maven2/" }
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'io.spring.dependency-management'
+
 dependencies {
     compile libraries.guava
-    compile libraries.jodaTime
-    compile libraries.slf4j
     compile libraries.apacheCommons
-    compile libraries.reactor
     compile libraries.validationApi
 
+    compileOnly libraries.slf4j
+    compileOnly libraries.reactor
+    compileOnly libraries.dataCommons
     compileOnly libraries.lombok
 
-    testCompile libraries.jUnit
-    testCompile libraries.mockito
+    testCompile libraries.test
+}
+
+dependencyManagement {
+    imports {
+        mavenBom imports.springBootBom
+    }
 }

@@ -19,7 +19,7 @@ public class ExceptionPopulatorTest {
     private static final String ROOT = "root";
     private static final String PATH_PART = "pathPart";
     private static final String ACTUAL = "actual";
-    private static final String EXPECTED = "expected";
+    private static final String EXPECTED = "field";
 
     private static final String EXPECTED_CODE = "error.root.pathPart";
 
@@ -34,7 +34,7 @@ public class ExceptionPopulatorTest {
                         .path(SubjectPath.valueOf(ROOT).pathPart(PATH_PART))
                         .payload(payload())
                         .actual(Actual.isA(ACTUAL))
-                        .expected(Filed.isA(EXPECTED))
+                        .field(Filed.isA(EXPECTED))
                         .add()
                     .complete()
                 .status(STATUS_CODE)

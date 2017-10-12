@@ -1,6 +1,6 @@
 package com.zephyr.dictionary.controllers.resources;
 
-import com.zephyr.commons.data.Keyword;
+import com.zephyr.data.Keyword;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.joda.time.DateTime;

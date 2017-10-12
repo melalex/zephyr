@@ -1,6 +1,6 @@
 package com.zephyr.dictionary.domain.factories;
 
-import com.zephyr.commons.data.Keyword;
+import com.zephyr.data.Keyword;
 import com.zephyr.dictionary.domain.Dictionary;
 import org.joda.time.DateTime;
 import org.springframework.data.domain.Example;

@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: KEYWORDS
+        output:
+          destination: SEARCH_RESULTS

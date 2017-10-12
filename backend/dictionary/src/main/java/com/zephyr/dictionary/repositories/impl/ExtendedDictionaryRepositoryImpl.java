@@ -1,6 +1,6 @@
 package com.zephyr.dictionary.repositories.impl;
 
-import com.zephyr.commons.data.Keyword;
+import com.zephyr.data.Keyword;
 import com.zephyr.dictionary.domain.Dictionary;
 import com.zephyr.dictionary.domain.factories.DictionaryFactory;
 import com.zephyr.dictionary.repositories.ExtendedDictionaryRepository;

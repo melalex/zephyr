@@ -1,6 +1,6 @@
 package com.zephyr.dictionary.integration;
 
-import com.zephyr.commons.data.Keyword;
+import com.zephyr.data.Keyword;
 import com.zephyr.dictionary.integration.gateways.NewKeywordGateway;
 import com.zephyr.dictionary.integration.gateways.UpdateRatingGateway;
 import org.reactivestreams.Publisher;

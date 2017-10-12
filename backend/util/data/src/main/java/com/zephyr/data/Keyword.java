@@ -1,4 +1,4 @@
-package com.zephyr.commons.data;
+package com.zephyr.data;
 
 import lombok.Data;
 

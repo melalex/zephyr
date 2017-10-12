@@ -1,6 +1,6 @@
 package com.zephyr.dictionary.repositories;
 
-import com.zephyr.commons.data.Keyword;
+import com.zephyr.data.Keyword;
 import com.zephyr.dictionary.domain.Dictionary;
 import org.joda.time.ReadablePeriod;
 import org.springframework.data.domain.Pageable;

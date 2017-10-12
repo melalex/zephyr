@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.NonNull;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebExceptionHandler;
 import reactor.core.publisher.Mono;
-import reactor.util.lang.NonNullApi;
 
 import javax.validation.ConstraintViolationException;
 import java.nio.charset.StandardCharsets;
@@ -22,7 +22,6 @@ import java.util.Locale;
 import java.util.Optional;
 
 @Slf4j
-@NonNullApi
 public class WebFluxExceptionHandler implements WebExceptionHandler {
     private static final String CONTENT_TYPE_HEADER_NAME = "Content-Type";
     private static final String CONTENT_TYPE_HEADER_VALUE = "application/json";
@@ -40,8 +39,9 @@ public class WebFluxExceptionHandler implements WebExceptionHandler {
     @Setter(onMethod = @__(@Autowired))
     private ProblemConverter<Throwable> unhandledExceptionConverter;
 
+    @NonNull
     @Override
-    public Mono<Void> handle(final ServerWebExchange exchange, final Throwable ex) {
+    public Mono<Void> handle(@NonNull final ServerWebExchange exchange, @NonNull final Throwable ex) {
         final Locale locale = LocaleContextHolder.getLocale();
 
         Problem problem;

@@ -1,6 +1,6 @@
 ext {
     def springCloudVersion = 'Finchley.M2'
-    def springBootVersion = '2.0.0.M3'
+    def springBootVersion = '2.0.0.M5'
     def springBusVersion = '1.3.2.BUILD-SNAPSHOT'
 
     imports = [
@@ -11,6 +11,7 @@ ext {
 
     utils = [
             commons: project(':backend:util:commons'),
+            data: project(':backend:util:data'),
             errors: project(':backend:util:errors'),
             mapping: project(':backend:util:mapping'),
             validation: project(':backend:util:validation'),
@@ -33,6 +34,8 @@ ext {
     def reactorVersion = '3.1.0.RELEASE'
     def jacksonVersion = '2.9.1'
     def adWordsVersion = '3.9.0'
+    def hibernateValidatorVersion = '6.0.2.Final'
+    def jsoupVersion = '1.10.3'
 
     def librariesDependencies = [
             lombok: "org.projectlombok:lombok:${lombokVersion}",
@@ -51,11 +54,14 @@ ext {
             slf4j: "org.slf4j:slf4j-api:${slf4jVersion}",
             reactor: "io.projectreactor:reactor-core:${reactorVersion}",
             jackson: "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
-            adWords: "com.google.api-ads:ads-lib:${adWordsVersion}"
+            adWords: "com.google.api-ads:ads-lib:${adWordsVersion}",
+            hibernateValidator: "org.hibernate:hibernate-validator:${hibernateValidatorVersion}",
+            jsoup: "org.jsoup:jsoup:${jsoupVersion}"
     ]
 
     def springDependencies = [
             spring: 'org.springframework.boot:spring-boot-starter',
+            dataCommons: 'org.springframework.data:spring-data-commons',
             messaging: 'org.springframework.cloud:spring-cloud-starter-bus-amqp',
             configurationProcessor: 'org.springframework.boot:spring-boot-configuration-processor',
             mongodb: 'org.springframework.boot:spring-boot-starter-data-mongodb',
