@@ -7,5 +7,6 @@ import java.util.Locale;
 @Data
 public class Keyword {
     private String word;
-    private Locale locale;
+    private String countryIso;
+    private String languageIso;
 }

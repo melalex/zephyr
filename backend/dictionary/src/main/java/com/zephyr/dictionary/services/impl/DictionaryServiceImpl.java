@@ -1,7 +1,6 @@
 package com.zephyr.dictionary.services.impl;
 
 import com.zephyr.commons.DataAccessUtils;
-import com.zephyr.commons.ReactorUtils;
 import com.zephyr.data.Keyword;
 import com.zephyr.dictionary.domain.Dictionary;
 import com.zephyr.dictionary.domain.factories.DictionaryFactory;
@@ -66,16 +65,14 @@ public class DictionaryServiceImpl implements DictionaryService {
     @Override
     public Flux<DictionaryDto> update(Flux<Keyword> keywords) {
         return Flux.zip(keywords, isExist(keywords))
-                .map(t -> updateKeyword(t.getT1(), t.getT2()))
-                .transform(ReactorUtils.joiner())
+                .flatMap(t -> updateKeyword(t.getT1(), t.getT2()))
                 .map(mapper.mapperFor(DictionaryDto.class));
     }
 
     private Flux<Boolean> isExist(Flux<Keyword> keywords) {
         return keywords
                 .map(dictionaryFactory::newDictionaryExample)
-                .map(dictionaryRepository::exists)
-                .transform(ReactorUtils.joiner());
+                .flatMap(dictionaryRepository::exists);
     }
 
     private Mono<Dictionary> updateKeyword(Keyword keyword, Boolean isPresent) {

@@ -6,3 +6,7 @@ spring:
           destination: KEYWORDS
         output:
           destination: SEARCH_RESULTS
+
+request:
+  timeout: 0
+  resultCount: 100
