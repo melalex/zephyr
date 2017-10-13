@@ -1,6 +1,6 @@
 spring:
   application:
-    name: dictionary
+    name: location
   cloud:
     config:
       uri: http://config:8888

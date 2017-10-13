@@ -1,0 +1,57 @@
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+
+ribbon:
+  ReadTimeout: 20000
+  ConnectTimeout: 20000
+
+zuul:
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
+
+  routes:
+    auth-service:
+        path: /auth/**
+        url: http://auth-service:5000
+        stripPrefix: false
+        sensitiveHeaders:
+
+    dictionary-service:
+        path: /dictionary/**
+        serviceId: dictionary-service
+        stripPrefix: false
+        sensitiveHeaders:
+
+    location-service:
+        path: /location/**
+        serviceId: location-service
+        stripPrefix: false
+        sensitiveHeaders:
+
+    notification-service:
+        path: /notifications/**
+        serviceId: notification-service
+        stripPrefix: false
+        sensitiveHeaders:
+
+    proposer-service:
+        path: /proposer/**
+        serviceId: proposer-service
+        stripPrefix: false
+        sensitiveHeaders:
+
+    rating-service:
+        path: /rating/**
+        serviceId: rating-service
+        stripPrefix: false
+        sensitiveHeaders:
+
+server:
+  port: 9500

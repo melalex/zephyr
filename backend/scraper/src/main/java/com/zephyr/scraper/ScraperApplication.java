@@ -13,6 +13,7 @@ import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
@@ -25,6 +26,7 @@ import reactor.core.publisher.Mono;
 import java.util.function.Function;
 
 @SpringBootApplication
+@EnableDiscoveryClient
 @EnableBinding(Processor.class)
 public class ScraperApplication {
 

@@ -12,6 +12,12 @@ findProject(':backend:config')?.name = 'config'
 include 'backend:dictionary'
 findProject(':backend:dictionary')?.name = 'dictionary'
 
+include 'backend:gateway'
+findProject(':backend:gateway')?.name = 'gateway'
+
+include 'backend:location'
+findProject(':backend:location')?.name = 'location'
+
 include 'backend:monitoring'
 findProject(':backend:monitoring')?.name = 'monitoring'
 
