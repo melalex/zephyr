@@ -30,6 +30,7 @@ mainClassName = 'com.zephyr.scraper.ScraperApplication'
 
 dependencies {
     compile libraries.spring
+    compile libraries.webFluxLib
     compile libraries.discoveryClient
     compile libraries.configClient
     compile libraries.messaging

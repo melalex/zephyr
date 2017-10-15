@@ -1,55 +1,61 @@
 package com.zephyr.scraper.loader.impl;
 
-import com.zephyr.data.Keyword;
-import com.zephyr.data.criteria.ProxyCriteria;
-import com.zephyr.data.enums.Protocol;
-import com.zephyr.scraper.clients.LocationServiceClient;
+import com.zephyr.scraper.config.ConfigurationManager;
+import com.zephyr.scraper.domain.Request;
+import com.zephyr.scraper.domain.Response;
+import com.zephyr.scraper.loader.PageLoader;
+import com.zephyr.scraper.loader.connector.ConnectorFactory;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-
-import java.util.Set;
 
 @Component
 @RefreshScope
-public class PageLoaderImpl extends AbstractPageLoader {
-    private static final int FIRST_PAGE = 0;
+public class PageLoaderImpl implements PageLoader {
+    private static final String ROOT = "/";
+    private static final String DO_NOT_TRACK = "DNT";
+    private static final String UPGRADE_INSECURE_REQUESTS = "Upgrade-Insecure-Requests";
+    private static final String USER_AGENT = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0";
+    private static final String ACCEPT = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
+    private static final String ENCODING = "gzip, deflate, br";
+    private static final String KEEP_ALIVE = "keep-alive";
+    private static final String TRUE = "1";
 
     @Setter(onMethod = @__(@Autowired))
-    private LocationServiceClient locationServiceClient;
+    private ConfigurationManager configurationManager;
 
-    @Value("${scraper.proxy.enabled}")
-    private boolean isUseProxy;
-
-    @Value("${scraper.proxy.requestSize}")
-    private int requestSize;
+    @Setter(onMethod = @__(@Autowired))
+    private ConnectorFactory connectorFactory;
 
     @Override
-    protected Mono<String> getHtml(Keyword keyword) {
-        if (isUseProxy) {
-            return locationServiceClient
-                    .findProxyByCriteria(newCriteria(keyword.getCountryIso()), newPageRequest())
-                    .map(p -> "");
-        }
+    public Mono<Response> load(Request request) {
+        String country = request.getKeyword().getCountryIso();
+        String language = request.getKeyword().getLanguageIso();
+        boolean useProxy = configurationManager.configFor(request.getProvider()).isUseProxy();
 
-        return Mono.empty();
-    }
-
-    private Pageable newPageRequest() {
-        return new PageRequest(FIRST_PAGE, requestSize);
-    }
-
-    private ProxyCriteria newCriteria(String countryIso) {
-        ProxyCriteria criteria = new ProxyCriteria();
-
-        criteria.setCountryIso(countryIso);
-        criteria.setProtocols(Set.of(Protocol.HTTPS));
-
-        return criteria;
+        // @formatter:off
+        return WebClient.builder()
+                    .clientConnector(connectorFactory.create(country, useProxy))
+                    .baseUrl(request.getUrl())
+                .build()
+                .get()
+                    .uri(ROOT, request.getParams())
+                    .header(HttpHeaders.USER_AGENT, USER_AGENT)
+                    .header(HttpHeaders.ACCEPT, ACCEPT)
+                    .header(HttpHeaders.ACCEPT_LANGUAGE, language)
+                    .header(HttpHeaders.ACCEPT_ENCODING, ENCODING)
+                    .header(HttpHeaders.REFERER, request.getUrl())
+                    .header(HttpHeaders.CONNECTION, KEEP_ALIVE)
+                    .header(HttpHeaders.UPGRADE, TRUE)
+                    .header(DO_NOT_TRACK, TRUE)
+                    .header(UPGRADE_INSECURE_REQUESTS, TRUE)
+                .retrieve()
+                .bodyToMono(String.class)
+                .map(h -> Response.of(request.getKeyword(), request.getProvider(), h));
+        // @formatter:on
     }
 }

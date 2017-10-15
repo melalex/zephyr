@@ -12,43 +12,28 @@ scraper:
     enabled: true
     linkSelector: "#rso > div > div > div > div > div > h3 > a"
     resultCount: 100
-      timeout: 0
-      proxy:
-        enabled: true
-        requestSize: 50
+    useProxy: true
 
   bing:
     enabled: true
     linkSelector: "#b_results > li > h2 > a"
     resultCount: 100
-      timeout: 0
-      proxy:
-        enabled: true
-        requestSize: 50
+    useProxy: true
 
   yahoo:
     enabled: true
     linkSelector: "#web > ol > li > div > div > h3 > a"
     resultCount: 100
-      timeout: 0
-      proxy:
-        enabled: true
-        requestSize: 50
+    useProxy: true
 
   yandex:
     enabled: true
     linkSelector: ".main__content > div > div > ul > li > div > h2 > a"
     resultCount: 100
-      timeout: 0
-      proxy:
-        enabled: true
-        requestSize: 50
+    useProxy: true
 
   duckduckgo:
     enabled: true
     linkSelector: "a.result__a"
     resultCount: 100
-      timeout: 0
-      proxy:
-        enabled: true
-        requestSize: 50
+    useProxy: true
