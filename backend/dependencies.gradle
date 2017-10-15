@@ -36,6 +36,7 @@ ext {
     def jacksonVersion = '2.9.1'
     def adWordsVersion = '3.9.0'
     def hibernateValidatorVersion = '6.0.2.Final'
+    def hateoasVersion = '0.23.0.RELEASE'
     def jsoupVersion = '1.10.3'
 
     def librariesDependencies = [
@@ -58,12 +59,14 @@ ext {
             jackson: "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
             adWords: "com.google.api-ads:ads-lib:${adWordsVersion}",
             hibernateValidator: "org.hibernate:hibernate-validator:${hibernateValidatorVersion}",
-            jsoup: "org.jsoup:jsoup:${jsoupVersion}"
+            hateoas: "org.springframework.hateoas:spring-hateoas:${hateoasVersion}",
+            jsoup: "org.jsoup:jsoup:${jsoupVersion}",
     ]
 
     def springDependencies = [
             spring: 'org.springframework.boot:spring-boot-starter',
             zuul: 'org.springframework.cloud:spring-cloud-starter-zuul',
+            feign: "org.springframework.cloud:spring-cloud-starter-feign",
             dataCommons: 'org.springframework.data:spring-data-commons',
             messaging: 'org.springframework.cloud:spring-cloud-starter-bus-amqp',
             configurationProcessor: 'org.springframework.boot:spring-boot-configuration-processor',

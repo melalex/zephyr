@@ -7,17 +7,14 @@ import com.zephyr.mapping.mappers.ExtendedMapper;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
-import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
+import org.springframework.hateoas.mvc.IdentifiableResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DictionaryAssembler extends ResourceAssemblerSupport<DictionaryDto, DictionaryResource> {
+public class DictionaryAssembler extends IdentifiableResourceAssemblerSupport<DictionaryDto, DictionaryResource> {
 
     @Setter(onMethod = @__(@Autowired))
-    private ExtendedMapper extendedMapper;
-
-    @Setter(onMethod = @__(@Autowired))
-    private EntityLinks entityLinks;
+    private ExtendedMapper mapper;
 
     public DictionaryAssembler() {
         super(DictionaryController.class, DictionaryResource.class);
@@ -25,11 +22,6 @@ public class DictionaryAssembler extends ResourceAssemblerSupport<DictionaryDto,
 
     @Override
     public DictionaryResource toResource(DictionaryDto entity) {
-        DictionaryResource resource = extendedMapper.map(entity, DictionaryResource.class);
-
-        resource.add(entityLinks.linkToSingleResource(DictionaryResource.class, entity.getId())
-                .withSelfRel());
-
-        return resource;
+        return mapper.map(entity, DictionaryResource.class);
     }
 }

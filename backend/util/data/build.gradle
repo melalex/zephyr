@@ -1,6 +1,7 @@
 dependencies {
-    compile libraries.hibernateValidator
     compile libraries.jodaTime
 
+    compileOnly libraries.hibernateValidator
+    compileOnly libraries.hateoas
     compileOnly libraries.lombok
 }

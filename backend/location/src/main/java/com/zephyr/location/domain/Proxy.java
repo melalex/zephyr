@@ -1,6 +1,6 @@
 package com.zephyr.location.domain;
 
-import com.zephyr.data.Protocol;
+import com.zephyr.data.enums.Protocol;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

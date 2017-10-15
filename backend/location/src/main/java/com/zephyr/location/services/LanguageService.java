@@ -1,11 +1,12 @@
 package com.zephyr.location.services;
 
-import com.zephyr.data.LanguageDto;
-import reactor.core.publisher.Flux;
+import com.zephyr.location.services.dto.LanguageDto;
+import org.springframework.data.domain.Page;
+import reactor.core.publisher.Mono;
 
 import java.util.Locale;
 
 public interface LanguageService {
 
-    Flux<LanguageDto> getSupportedLanguages(Locale locale);
+    Mono<Page<LanguageDto>> getSupportedLanguages(Locale locale);
 }

@@ -35,6 +35,9 @@ dependencies {
     compile libraries.messaging
     compile libraries.jsoup
     compile libraries.reactor
+    compile libraries.feign
+    compile libraries.hal
+    compile libraries.dataCommons
 
     compile utils.data
 

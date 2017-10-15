@@ -1,4 +1,4 @@
-package com.zephyr.scraper.crawler.internal.provider;
+package com.zephyr.scraper.crawler.provider;
 
 import com.zephyr.data.SearchResult;
 import com.zephyr.scraper.domain.ResponseDocument;

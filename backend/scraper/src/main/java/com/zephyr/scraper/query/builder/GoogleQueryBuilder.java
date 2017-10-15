@@ -1,19 +1,18 @@
 package com.zephyr.scraper.query.builder;
 
+import com.zephyr.scraper.query.util.QueryUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import reactor.core.publisher.Mono;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GoogleQueryBuilder {
-    private static final String WHITE_SPACE_REGEX = "\\s+";
-    private static final String WORDS_SEPARATOR = "+";
-
-    private String localeSearchEngine;
+    private Mono<String> localeSearchEngine;
     private String languageIso;
     private String query;
-    private int resultNumber;
+    private int count;
 
-    public static GoogleQueryBuilder with(String localeSearchEngine) {
+    public static GoogleQueryBuilder from(Mono<String> localeSearchEngine) {
         GoogleQueryBuilder builder = new GoogleQueryBuilder();
         builder.localeSearchEngine = localeSearchEngine;
 
@@ -30,27 +29,26 @@ public class GoogleQueryBuilder {
         return this;
     }
 
-    public GoogleQueryBuilder resultNumber(int resultNumber) {
-        this.resultNumber = resultNumber;
+    public GoogleQueryBuilder count(int count) {
+        this.count = count;
         return this;
     }
 
-    public String build() {
-        String queryString = getQuery(query);
+    public Mono<String> build() {
+        return localeSearchEngine.map(this::build);
+    }
 
-        return "https://www." + localeSearchEngine + "/search?hl=en" +
-                "&lr=" + languageIso +
+    private String build(String localeSearchEngine) {
+        return "https://www." + localeSearchEngine + "/search" +
+                "?hl=en" +
+                "&lr=" + QueryUtil.encode(languageIso) +
                 "&safe=images" +
                 "&dcr=0" +
                 "&source=hp" +
-                "&q=" + queryString +
-                "&oq=" + queryString +
+                "&q=" + QueryUtil.encode(query) +
+                "&oq=" + QueryUtil.encode(query) +
                 "&ie=UTF-8" +
-                "&num=" + resultNumber +
+                "&num=" + count +
                 "&pws=0";
-    }
-
-    private String getQuery(String query) {
-        return query.replaceAll(WHITE_SPACE_REGEX, WORDS_SEPARATOR);
     }
 }

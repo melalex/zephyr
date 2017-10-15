@@ -7,6 +7,48 @@ spring:
         output:
           destination: SEARCH_RESULTS
 
-request:
-  timeout: 0
-  resultCount: 100
+scraper:
+  google:
+    enabled: true
+    linkSelector: "#rso > div > div > div > div > div > h3 > a"
+    resultCount: 100
+      timeout: 0
+      proxy:
+        enabled: true
+        requestSize: 50
+
+  bing:
+    enabled: true
+    linkSelector: "#b_results > li > h2 > a"
+    resultCount: 100
+      timeout: 0
+      proxy:
+        enabled: true
+        requestSize: 50
+
+  yahoo:
+    enabled: true
+    linkSelector: "#web > ol > li > div > div > h3 > a"
+    resultCount: 100
+      timeout: 0
+      proxy:
+        enabled: true
+        requestSize: 50
+
+  yandex:
+    enabled: true
+    linkSelector: ".main__content > div > div > ul > li > div > h2 > a"
+    resultCount: 100
+      timeout: 0
+      proxy:
+        enabled: true
+        requestSize: 50
+
+  duckduckgo:
+    enabled: true
+    linkSelector: "a.result__a"
+    resultCount: 100
+      timeout: 0
+      proxy:
+        enabled: true
+        requestSize: 50

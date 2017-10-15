@@ -2,8 +2,9 @@ package com.zephyr.scraper.query.provider;
 
 import com.zephyr.data.Keyword;
 import com.zephyr.scraper.domain.Request;
+import reactor.core.publisher.Mono;
 
 public interface QueryProvider {
 
-    Request provide(Keyword keyword);
+    Mono<Request> provide(Keyword keyword);
 }
