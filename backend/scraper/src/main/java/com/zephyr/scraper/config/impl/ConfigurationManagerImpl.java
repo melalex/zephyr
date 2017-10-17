@@ -1,6 +1,7 @@
 package com.zephyr.scraper.config.impl;
 
 import com.google.common.collect.ImmutableMap;
+import com.zephyr.commons.MapUtils;
 import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.config.ConfigurationManager;
 import com.zephyr.scraper.domain.EngineConfig;
@@ -35,55 +36,50 @@ public class ConfigurationManagerImpl implements ConfigurationManager {
 
     @Override
     public EngineConfig configFor(SearchEngine engine) {
-        return Optional.ofNullable(configs.get(engine))
-                .orElseThrow(() -> new IllegalArgumentException(errorMessage(engine)));
-    }
-
-    private String errorMessage(SearchEngine searchEngine) {
-        return String.format("Unknown search engine '%s'", searchEngine);
+        return MapUtils.getOrThrow(configs, engine);
     }
 
     private EngineConfig createGoogleConfig() {
         boolean enabled = environment.getProperty("scraper.google.enabled", Boolean.class);
-        boolean useProxy = environment.getProperty("scraper.google.linkSelector", Boolean.class);
+        boolean useProxy = environment.getProperty("scraper.google.useProxy", Boolean.class);
         int count = environment.getProperty("scraper.google.resultCount", Integer.class);
-        String selector = environment.getProperty("scraper.google.useProxy");
+        String selector = environment.getProperty("scraper.google.linkSelector");
 
         return EngineConfig.of(enabled, useProxy, count, selector);
     }
 
     private EngineConfig createBingConfig() {
         boolean enabled = environment.getProperty("scraper.bing.enabled", Boolean.class);
-        boolean useProxy = environment.getProperty("scraper.bing.linkSelector", Boolean.class);
+        boolean useProxy = environment.getProperty("scraper.bing.useProxy", Boolean.class);
         int count = environment.getProperty("scraper.bing.resultCount", Integer.class);
-        String selector = environment.getProperty("scraper.bing.useProxy");
+        String selector = environment.getProperty("scraper.bing.linkSelector");
 
         return EngineConfig.of(enabled, useProxy, count, selector);
     }
 
     private EngineConfig createYahooConfig() {
         boolean enabled = environment.getProperty("scraper.yahoo.enabled", Boolean.class);
-        boolean useProxy = environment.getProperty("scraper.yahoo.linkSelector", Boolean.class);
+        boolean useProxy = environment.getProperty("scraper.yahoo.useProxy", Boolean.class);
         int count = environment.getProperty("scraper.yahoo.resultCount", Integer.class);
-        String selector = environment.getProperty("scraper.yahoo.useProxy");
+        String selector = environment.getProperty("scraper.yahoo.linkSelector");
 
         return EngineConfig.of(enabled, useProxy, count, selector);
     }
 
     private EngineConfig createYandexConfig() {
         boolean enabled = environment.getProperty("scraper.yandex.enabled", Boolean.class);
-        boolean useProxy = environment.getProperty("scraper.yandex.linkSelector", Boolean.class);
+        boolean useProxy = environment.getProperty("scraper.yandex.useProxy", Boolean.class);
         int count = environment.getProperty("scraper.yandex.resultCount", Integer.class);
-        String selector = environment.getProperty("scraper.yandex.useProxy");
+        String selector = environment.getProperty("scraper.yandex.linkSelector");
 
         return EngineConfig.of(enabled, useProxy, count, selector);
     }
 
     private EngineConfig createDuckDuckGoConfig() {
         boolean enabled = environment.getProperty("scraper.duckduckgo.enabled", Boolean.class);
-        boolean useProxy = environment.getProperty("scraper.duckduckgo.linkSelector", Boolean.class);
+        boolean useProxy = environment.getProperty("scraper.duckduckgo.useProxy", Boolean.class);
         int count = environment.getProperty("scraper.duckduckgo.resultCount", Integer.class);
-        String selector = environment.getProperty("scraper.duckduckgo.useProxy");
+        String selector = environment.getProperty("scraper.duckduckgo.linkSelector");
 
         return EngineConfig.of(enabled, useProxy, count, selector);
     }

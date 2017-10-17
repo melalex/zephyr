@@ -22,6 +22,7 @@ ext {
     def jodaVersion = '2.9.9'
     def guavaVersion = '22.0'
     def apacheCommonsVersion = '3.6'
+    def commonsCsvVersion = '1.5'
     def modelMapperVersion = '1.1.0'
     def beanutilsVersion = '1.9.3'
     def evoVersion = '1.2.2'
@@ -45,6 +46,7 @@ ext {
             jodaTime: "joda-time:joda-time:${jodaVersion}",
             guava: "com.google.guava:guava:${guavaVersion}",
             apacheCommons: "org.apache.commons:commons-lang3:${apacheCommonsVersion}",
+            csv: "org.apache.commons:commons-csv:${commonsCsvVersion}",
             modelMapper: "org.modelmapper:modelmapper:${modelMapperVersion}",
             beanUtils: "commons-beanutils:commons-beanutils:${beanutilsVersion}",
             evo: "org.atteo:evo-inflector:${evoVersion}",

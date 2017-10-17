@@ -39,7 +39,9 @@ dependencies {
     compile libraries.feign
     compile libraries.hal
     compile libraries.dataCommons
+    compile libraries.csv
 
+    compile utils.commons
     compile utils.data
 
     compileOnly libraries.lombok

@@ -44,7 +44,7 @@ public class GoogleQueryBuilder {
                 "&lr=" + QueryUtil.encode(languageIso) +
                 "&safe=images" +
                 "&dcr=0" +
-                "&source=hp" +
+                "&data=hp" +
                 "&q=" + QueryUtil.encode(query) +
                 "&oq=" + QueryUtil.encode(query) +
                 "&ie=UTF-8" +

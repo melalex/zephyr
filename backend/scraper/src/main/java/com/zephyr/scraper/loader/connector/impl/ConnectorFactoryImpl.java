@@ -6,8 +6,6 @@ import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Component;
 import reactor.ipc.netty.http.client.HttpClientOptions;
 
-import java.net.Proxy;
-
 @Component
 public class ConnectorFactoryImpl implements ConnectorFactory {
     private final ClientHttpConnector directConnector = new ReactorClientHttpConnector();
