@@ -1,6 +1,5 @@
 package com.zephyr.scraper.domain;
 
-import com.zephyr.data.enums.Protocol;
 import lombok.Data;
 
 @Data
@@ -13,4 +12,11 @@ public class Proxy {
     private int port;
     private Protocol protocol;
     private int failsCount;
+
+    public enum Protocol {
+        HTTP,
+        HTTPS,
+        SOCKS5,
+        SOCKS4
+    }
 }
