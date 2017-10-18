@@ -1,13 +1,12 @@
 package com.zephyr.scraper.source.impl;
 
-import com.google.common.collect.Streams;
 import com.zephyr.commons.MapUtils;
+import com.zephyr.scraper.domain.Country;
+import com.zephyr.scraper.source.CountrySource;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
-import com.zephyr.scraper.domain.Country;
-import com.zephyr.scraper.source.CountrySource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
@@ -16,6 +15,7 @@ import javax.annotation.PostConstruct;
 import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Component
 public class CountrySourceImpl implements CountrySource {
@@ -31,7 +31,7 @@ public class CountrySourceImpl implements CountrySource {
     public void init() {
         @Cleanup CSVParser parser = createParser();
 
-        countries = Streams.stream(parser)
+        countries = StreamSupport.stream(parser.spliterator(), false)
                 .map(r -> Country.of(r.get(0), r.get(1)))
                 .collect(Collectors.toMap(Country::getIso, c -> c));
     }

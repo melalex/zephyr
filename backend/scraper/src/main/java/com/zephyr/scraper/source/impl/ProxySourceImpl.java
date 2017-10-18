@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 public class ProxySourceImpl implements ProxySource {
 
     @Override
-    public Mono<Proxy> getByIso(String iso) {
+    public Mono<Proxy> getOne() {
         return null;
     }
 

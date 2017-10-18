@@ -3,10 +3,10 @@ package com.zephyr.scraper.crawler.impl;
 import com.zephyr.data.SearchResult;
 import com.zephyr.scraper.config.ConfigurationManager;
 import com.zephyr.scraper.crawler.DocumentCrawler;
-import com.zephyr.scraper.domain.ResponseDocument;
+import com.zephyr.scraper.domain.Response;
 import lombok.Setter;
 import org.joda.time.DateTime;
-import org.jsoup.nodes.Document;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
@@ -23,7 +23,7 @@ public class DocumentCrawlerImpl implements DocumentCrawler {
     private ConfigurationManager configurationManager;
 
     @Override
-    public SearchResult crawl(ResponseDocument document) {
+    public SearchResult crawl(Response document) {
         String linkSelector = configurationManager
                 .configFor(document.getProvider())
                 .getLinkSelector();
@@ -33,13 +33,13 @@ public class DocumentCrawlerImpl implements DocumentCrawler {
         searchResult.setKeyword(document.getKeyword());
         searchResult.setProvider(document.getProvider());
         searchResult.setTimestamp(DateTime.now());
-        searchResult.setLinks(parse(document.getDocument(), linkSelector));
+        searchResult.setLinks(parse(document.getResponseText(), linkSelector));
 
         return searchResult;
     }
 
-    private List<String> parse(Document document, String linkSelector) {
-        return document
+    private List<String> parse(String document, String linkSelector) {
+        return Jsoup.parse(document)
                 .select(linkSelector)
                 .stream()
                 .map(e -> e.attr(HREF_ATTR))

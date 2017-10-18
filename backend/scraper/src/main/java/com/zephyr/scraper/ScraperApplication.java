@@ -5,15 +5,12 @@ import com.zephyr.data.SearchResult;
 import com.zephyr.scraper.crawler.DocumentCrawler;
 import com.zephyr.scraper.domain.Request;
 import com.zephyr.scraper.domain.Response;
-import com.zephyr.scraper.domain.ResponseDocument;
 import com.zephyr.scraper.loader.PageLoader;
 import com.zephyr.scraper.query.QueryConstructor;
 import lombok.Setter;
-import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.web.WebClientAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -54,7 +51,6 @@ public class ScraperApplication {
         return input
                 .flatMap(constructQueries())
                 .flatMap(loadPages())
-                .map(toDocument())
                 .map(toSearchResult());
     }
 
@@ -69,12 +65,7 @@ public class ScraperApplication {
     }
 
     @Bean
-    public Function<Response, ResponseDocument> toDocument() {
-        return r -> ResponseDocument.of(r.getKeyword(), r.getProvider(), Jsoup.parse(r.getHtml()));
-    }
-
-    @Bean
-    public Function<ResponseDocument, SearchResult> toSearchResult() {
+    public Function<Response, SearchResult> toSearchResult() {
         return d -> crawler.crawl(d);
     }
 }

@@ -5,7 +5,7 @@ import reactor.core.publisher.Mono;
 
 public interface ProxySource {
 
-    Mono<Proxy> getByIso(String iso);
+    Mono<Proxy> getOne();
 
     Mono<Proxy> exchange(Proxy proxy);
 }

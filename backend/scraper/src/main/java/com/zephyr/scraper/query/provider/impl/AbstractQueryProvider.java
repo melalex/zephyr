@@ -7,6 +7,7 @@ import com.zephyr.scraper.query.provider.QueryProvider;
 import lombok.AllArgsConstructor;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -22,10 +23,10 @@ public abstract class AbstractQueryProvider implements QueryProvider {
     }
 
     private Request createRequest(Keyword keyword) {
-        return Request.of(keyword, searchEngine, getUrl(keyword), getParams(keyword));
+        return Request.of(keyword, searchEngine, provideUrl(keyword), providePages(keyword));
     }
 
-    protected abstract String getUrl(Keyword keyword);
+    protected abstract String provideUrl(Keyword keyword);
 
-    protected abstract Map<String, ?> getParams(Keyword keyword);
+    protected abstract List<Map<String, ?>> providePages(Keyword keyword);
 }
