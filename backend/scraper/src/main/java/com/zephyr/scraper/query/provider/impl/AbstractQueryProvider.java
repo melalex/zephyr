@@ -1,38 +1,55 @@
 package com.zephyr.scraper.query.provider.impl;
 
 import com.zephyr.commons.PaginationUtils;
-import com.zephyr.data.Keyword;
 import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.scraper.config.ConfigurationManager;
+import com.zephyr.scraper.domain.EngineConfig;
 import com.zephyr.scraper.domain.Request;
+import com.zephyr.scraper.domain.Task;
 import com.zephyr.scraper.query.provider.QueryProvider;
-import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public abstract class AbstractQueryProvider implements QueryProvider {
+    private static final String ROOT = "/";
+
+    @NonNull
     private SearchEngine searchEngine;
-    private boolean isEnabled;
-    private int pageSize;
-    private int count;
+
+    private EngineConfig engineConfig;
+
+    @Autowired
+    public void setConfigurationManager(ConfigurationManager configurationManager) {
+        this.engineConfig = configurationManager.configFor(searchEngine);
+    }
 
     @Override
-    public Mono<Request> provide(Keyword keyword) {
-        return isEnabled
-                ? Mono.just(createRequest(keyword))
+    public Mono<Request> provide(Task task) {
+        return engineConfig.isEnabled()
+                ? Mono.just(createRequest(task))
                 : Mono.empty();
     }
 
-    private Request createRequest(Keyword keyword) {
-        return Request.of(keyword, searchEngine, provideUrl(keyword), providePages(keyword));
+    private Request createRequest(Task task) {
+        return Request.builder()
+                .task(task)
+                .provider(searchEngine)
+                .baseUrl(provideBaseUrl(task))
+                .uri(provideUri())
+                .pages(providePages(task))
+                .build();
     }
 
-    protected List<Map<String, ?>> providePages(Keyword keyword) {
-        return PaginationUtils.pagesStream(count, pageSize)
-                .map(p -> providePage(keyword, PaginationUtils.startOf(p, pageSize)))
+    private List<Map<String, ?>> providePages(Task task) {
+        return PaginationUtils.pagesStream(engineConfig.getResultCount(), engineConfig.getPageSize())
+                .map(p -> providePage(task, PaginationUtils.startOf(p, engineConfig.getPageSize())))
                 .collect(Collectors.toList());
     }
 
@@ -40,7 +57,11 @@ public abstract class AbstractQueryProvider implements QueryProvider {
         return start > 0;
     }
 
-    protected abstract String provideUrl(Keyword keyword);
+    protected String provideUri() {
+        return ROOT;
+    }
 
-    protected abstract Map<String, ?> providePage(Keyword keyword, int start);
+    protected abstract String provideBaseUrl(Task task);
+
+    protected abstract Map<String, ?> providePage(Task task, int start);
 }

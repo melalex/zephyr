@@ -15,18 +15,18 @@ public class DataAccessUtils {
     private static final int FIRST_PAGE = 0;
 
     public <T> Mono<Page<T>> toReactivePage(Flux<T> content, Mono<Long> count, Pageable pageable) {
-        return toReactivePage(ReactorUtils.reduceToList(content), count, pageable);
+        return toReactivePage(content.collectList(), count, pageable);
     }
 
     public <T> Mono<Page<T>> toReactivePage(Flux<T> content) {
-        Mono<List<T>> reduced = ReactorUtils.reduceToList(content);
+        Mono<List<T>> reduced = content.collectList();
         Mono<Long> count = reduced.map(List::size).map(Integer::longValue);
 
         return toReactivePage(reduced, count);
     }
 
     public <T> Mono<Page<T>> toReactivePage(Flux<T> content, Mono<Long> count) {
-        return toReactivePage(ReactorUtils.reduceToList(content), count);
+        return toReactivePage(content.collectList(), count);
     }
 
     private <T> Mono<Page<T>> toReactivePage(Mono<List<T>> content, Mono<Long> count) {

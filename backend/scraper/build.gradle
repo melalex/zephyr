@@ -42,6 +42,7 @@ dependencies {
     compile libraries.csv
 
     compile utils.commons
+    compile utils.mapping
     compile utils.data
 
     compileOnly libraries.lombok

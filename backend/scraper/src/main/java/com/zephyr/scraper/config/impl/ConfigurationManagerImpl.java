@@ -6,6 +6,7 @@ import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.config.ConfigurationManager;
 import com.zephyr.scraper.domain.EngineConfig;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.env.Environment;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
-import java.util.Optional;
 
 @Component
 @RefreshScope
@@ -40,47 +40,57 @@ public class ConfigurationManagerImpl implements ConfigurationManager {
     }
 
     private EngineConfig createGoogleConfig() {
-        boolean enabled = environment.getProperty("scraper.google.enabled", Boolean.class);
-        boolean useProxy = environment.getProperty("scraper.google.useProxy", Boolean.class);
-        int count = environment.getProperty("scraper.google.resultCount", Integer.class);
-        String selector = environment.getProperty("scraper.google.linkSelector");
-
-        return EngineConfig.of(enabled, useProxy, count, selector);
+        return EngineConfig.builder()
+                .enabled(environment.getProperty("scraper.google.enabled", Boolean.class, false))
+                .useProxy(environment.getProperty("scraper.google.useProxy", Boolean.class, false))
+                .resultCount(environment.getProperty("scraper.google.resultCount", Integer.class, 10))
+                .pageSize(environment.getProperty("scraper.google.pageSize", Integer.class, 10))
+                .delay(environment.getProperty("scraper.google.delay", Long.class, 0L))
+                .linkSelector(environment.getProperty("scraper.google.linkSelector", StringUtils.EMPTY))
+                .build();
     }
 
     private EngineConfig createBingConfig() {
-        boolean enabled = environment.getProperty("scraper.bing.enabled", Boolean.class);
-        boolean useProxy = environment.getProperty("scraper.bing.useProxy", Boolean.class);
-        int count = environment.getProperty("scraper.bing.resultCount", Integer.class);
-        String selector = environment.getProperty("scraper.bing.linkSelector");
-
-        return EngineConfig.of(enabled, useProxy, count, selector);
+        return EngineConfig.builder()
+                .enabled(environment.getProperty("scraper.bing.enabled", Boolean.class, false))
+                .useProxy(environment.getProperty("scraper.bing.useProxy", Boolean.class, false))
+                .resultCount(environment.getProperty("scraper.bing.resultCount", Integer.class, 10))
+                .pageSize(environment.getProperty("scraper.bing.pageSize", Integer.class, 10))
+                .delay(environment.getProperty("scraper.bing.delay", Long.class, 0L))
+                .linkSelector(environment.getProperty("scraper.bing.linkSelector", StringUtils.EMPTY))
+                .build();
     }
 
     private EngineConfig createYahooConfig() {
-        boolean enabled = environment.getProperty("scraper.yahoo.enabled", Boolean.class);
-        boolean useProxy = environment.getProperty("scraper.yahoo.useProxy", Boolean.class);
-        int count = environment.getProperty("scraper.yahoo.resultCount", Integer.class);
-        String selector = environment.getProperty("scraper.yahoo.linkSelector");
-
-        return EngineConfig.of(enabled, useProxy, count, selector);
+        return EngineConfig.builder()
+                .enabled(environment.getProperty("scraper.yahoo.enabled", Boolean.class, false))
+                .useProxy(environment.getProperty("scraper.yahoo.useProxy", Boolean.class, false))
+                .resultCount(environment.getProperty("scraper.yahoo.resultCount", Integer.class, 10))
+                .pageSize(environment.getProperty("scraper.yahoo.pageSize", Integer.class, 10))
+                .delay(environment.getProperty("scraper.yahoo.delay", Long.class, 0L))
+                .linkSelector(environment.getProperty("scraper.yahoo.linkSelector", StringUtils.EMPTY))
+                .build();
     }
 
     private EngineConfig createYandexConfig() {
-        boolean enabled = environment.getProperty("scraper.yandex.enabled", Boolean.class);
-        boolean useProxy = environment.getProperty("scraper.yandex.useProxy", Boolean.class);
-        int count = environment.getProperty("scraper.yandex.resultCount", Integer.class);
-        String selector = environment.getProperty("scraper.yandex.linkSelector");
-
-        return EngineConfig.of(enabled, useProxy, count, selector);
+        return EngineConfig.builder()
+                .enabled(environment.getProperty("scraper.yandex.enabled", Boolean.class, false))
+                .useProxy(environment.getProperty("scraper.yandex.useProxy", Boolean.class, false))
+                .resultCount(environment.getProperty("scraper.yandex.resultCount", Integer.class, 10))
+                .pageSize(environment.getProperty("scraper.yandex.pageSize", Integer.class, 10))
+                .delay(environment.getProperty("scraper.yandex.delay", Long.class, 0L))
+                .linkSelector(environment.getProperty("scraper.yandex.linkSelector", StringUtils.EMPTY))
+                .build();
     }
 
     private EngineConfig createDuckDuckGoConfig() {
-        boolean enabled = environment.getProperty("scraper.duckduckgo.enabled", Boolean.class);
-        boolean useProxy = environment.getProperty("scraper.duckduckgo.useProxy", Boolean.class);
-        int count = environment.getProperty("scraper.duckduckgo.resultCount", Integer.class);
-        String selector = environment.getProperty("scraper.duckduckgo.linkSelector");
-
-        return EngineConfig.of(enabled, useProxy, count, selector);
+        return EngineConfig.builder()
+                .enabled(environment.getProperty("scraper.duckduckgo.enabled", Boolean.class, false))
+                .useProxy(environment.getProperty("scraper.duckduckgo.useProxy", Boolean.class, false))
+                .resultCount(environment.getProperty("scraper.duckduckgo.resultCount", Integer.class, 10))
+                .pageSize(environment.getProperty("scraper.duckduckgo.pageSize", Integer.class, 10))
+                .delay(environment.getProperty("scraper.duckduckgo.delay", Long.class, 0L))
+                .linkSelector(environment.getProperty("scraper.duckduckgo.linkSelector", StringUtils.EMPTY))
+                .build();
     }
 }

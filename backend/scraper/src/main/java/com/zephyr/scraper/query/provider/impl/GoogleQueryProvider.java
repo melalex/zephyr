@@ -1,23 +1,19 @@
 package com.zephyr.scraper.query.provider.impl;
 
 import com.zephyr.commons.MapUtils;
-import com.zephyr.data.Keyword;
 import com.zephyr.data.enums.SearchEngine;
-import com.zephyr.scraper.source.CountrySource;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.zephyr.scraper.domain.Task;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 @Component
 @RefreshScope
 public class GoogleQueryProvider extends AbstractQueryProvider {
-    private static final String DEFAULT_URL = "google.com";
+    private static final String URI = "/search";
     private static final String LANGUAGE = "lr";
     private static final String INTERFACE = "hl";
     private static final String COUNTRY = "cr";
@@ -33,56 +29,53 @@ public class GoogleQueryProvider extends AbstractQueryProvider {
     private static final String START = "start";
     private static final String NUMBER = "num";
 
-    private static final int PAGE_SIZE = 100;
+    @Value("${scraper.google.pageSize}")
+    private int pageSize;
 
-    @Setter(onMethod = @__(@Autowired))
-    private CountrySource countrySource;
-
-    public GoogleQueryProvider(@Value("scraper.google.enabled") boolean enabled,
-                               @Value("${scraper.google.resultCount}") int count) {
-        super(SearchEngine.GOOGLE, enabled, PAGE_SIZE, count);
+    public GoogleQueryProvider() {
+        super(SearchEngine.GOOGLE);
     }
 
     @Override
-    protected String provideUrl(Keyword keyword) {
-        return "https://www." + getLocaleSearchEngine(keyword) + "/search";
+    protected String provideBaseUrl(Task task) {
+        return "https://www." + task.getLocaleGoogle();
     }
 
     @Override
-    protected Map<String, ?> providePage(Keyword keyword, int page) {
+    protected String provideUri() {
+        return URI;
+    }
+
+    @Override
+    protected Map<String, ?> providePage(Task task, int page) {
         return MapUtils.<String, Object>builder()
                 .put(SAFE, IMAGE)
                 .put(AD_TEST, ON)
                 .put(GLP, ONE)
-                .put(QUERY, keyword.getWord())
-                .put(NUMBER, PAGE_SIZE)
-                .put(PARENT, getParent(keyword))
-                .put(LOCATION, keyword.getLocation())
-                .put(INTERFACE, keyword.getLanguageIso())
+                .put(QUERY, task.getWord())
+                .put(NUMBER, pageSize)
+                .put(PARENT, getParent(task))
+                .put(LOCATION, task.getLocation())
+                .put(INTERFACE, task.getLanguageIso())
                 .putIfTrue(START, page, notFirstPage(page))
-                .putIfNotNull(LANGUAGE, getLanguage(keyword))
-                .putIfTrueAndNotNull(COUNTRY, getCountry(keyword), keyword.isOnlyFromSpecifiedCountry())
+                .putIfNotNull(LANGUAGE, getLanguage(task))
+                .putIfTrueAndNotNull(COUNTRY, getCountry(task), task.isOnlyFromSpecifiedCountry())
                 .build();
     }
 
-    private String getParent(Keyword keyword) {
-        return "g:" + keyword.getParent();
+    private String getParent(Task task) {
+        return "g:" + task.getParent();
     }
 
-    private String getCountry(Keyword keyword) {
-        String iso = keyword.getCountryIso();
+    private String getCountry(Task task) {
+        String iso = task.getCountryIso();
 
-        return Objects.nonNull(iso) ? "country" + keyword.getCountryIso() : null;
+        return Objects.nonNull(iso) ? "country" + task.getCountryIso() : null;
     }
 
-    private String getLanguage(Keyword keyword) {
-        String iso = keyword.getLanguageIso();
+    private String getLanguage(Task task) {
+        String iso = task.getLanguageIso();
 
-        return Objects.nonNull(iso) ? "lang_" + keyword.getLanguageIso() : null;
-    }
-
-    private String getLocaleSearchEngine(Keyword keyword) {
-        return Optional.ofNullable(countrySource.getByIso(keyword.getCountryIso()).getLocaleGoogle())
-                .orElse(DEFAULT_URL);
+        return Objects.nonNull(iso) ? "lang_" + task.getLanguageIso() : null;
     }
 }

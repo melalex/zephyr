@@ -1,8 +1,8 @@
 package com.zephyr.scraper.query.provider.impl;
 
 import com.zephyr.commons.MapUtils;
-import com.zephyr.data.Keyword;
 import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.scraper.domain.Task;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
@@ -17,23 +17,23 @@ public class YandexQueryProvider extends AbstractQueryProvider {
     private static final String START = "b";
     private static final String COUNT = "n";
 
-    private static final int PAGE_SIZE = 10;
+    @Value("${scraper.google.pageSize}")
+    private int pageSize;
 
-    public YandexQueryProvider(@Value("scraper.yandex.enabled") boolean enabled,
-                               @Value("scraper.yandex.resultCount}") int count) {
-        super(SearchEngine.YANDEX, enabled, PAGE_SIZE, count);
+    public YandexQueryProvider() {
+        super(SearchEngine.YANDEX);
     }
 
     @Override
-    protected String provideUrl(Keyword keyword) {
+    protected String provideBaseUrl(Task task) {
         return URL;
     }
 
     @Override
-    protected Map<String, ?> providePage(Keyword keyword, int start) {
+    protected Map<String, ?> providePage(Task task, int start) {
         return MapUtils.<String, Object>builder()
-                .put(QUERY, keyword.getWord())
-                .put(COUNT, PAGE_SIZE)
+                .put(QUERY, task.getWord())
+                .put(COUNT, pageSize)
                 .putIfTrue(START, start, notFirstPage(start))
                 .build();
     }

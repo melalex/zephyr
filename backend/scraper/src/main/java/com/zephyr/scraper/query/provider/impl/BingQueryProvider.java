@@ -1,8 +1,8 @@
 package com.zephyr.scraper.query.provider.impl;
 
 import com.zephyr.commons.MapUtils;
-import com.zephyr.data.Keyword;
 import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.scraper.domain.Task;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -15,45 +15,48 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 @Component
 @RefreshScope
 public class BingQueryProvider extends AbstractQueryProvider {
-    private static final String URL = "https://www.bing.com/search";
+    private static final String URL = "https://www.bing.com";
+    private static final String URI = "/search";
     private static final String QUERY = "q";
     private static final String LANGUAGE = " language:";
     private static final String FIRST = "first";
     private static final String COUNT = "count";
 
-    private static final int PAGE_SIZE = 100;
+    @Value("${scraper.google.pageSize}")
+    private int pageSize;
 
-    public BingQueryProvider(@Value("scraper.bing.enabled") boolean enabled,
-                             @Value("${scraper.bing.resultCount}") int count) {
-        super(SearchEngine.BING, enabled, PAGE_SIZE, count);
+    public BingQueryProvider() {
+        super(SearchEngine.BING);
     }
 
-    @Value("${scraper.bing.resultCount}")
-    private int count;
-
     @Override
-    protected String provideUrl(Keyword keyword) {
+    protected String provideBaseUrl(Task task) {
         return URL;
     }
 
     @Override
-    protected Map<String, ?> providePage(Keyword keyword, int start) {
+    protected String provideUri() {
+        return URI;
+    }
+
+    @Override
+    protected Map<String, ?> providePage(Task task, int start) {
         int first = start + 1;
 
         return MapUtils.<String, Object>builder()
-                .put(QUERY, getQuery(keyword))
-                .put(COUNT, PAGE_SIZE)
+                .put(QUERY, getQuery(task))
+                .put(COUNT, pageSize)
                 .putIfTrue(FIRST, first, notFirstPage(start))
                 .build();
     }
 
-    private String getQuery(Keyword keyword) {
-        return keyword.getWord() + getLanguage(keyword);
+    private String getQuery(Task task) {
+        return task.getWord() + getLanguage(task);
     }
 
-    private String getLanguage(Keyword keyword) {
-        return isNotBlank(keyword.getLanguageIso())
-                ? LANGUAGE + keyword.getLanguageIso()
+    private String getLanguage(Task task) {
+        return isNotBlank(task.getLanguageIso())
+                ? LANGUAGE + task.getLanguageIso()
                 : StringUtils.EMPTY;
     }
 }

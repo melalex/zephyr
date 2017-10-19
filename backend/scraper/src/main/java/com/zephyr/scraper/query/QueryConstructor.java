@@ -1,11 +1,11 @@
 package com.zephyr.scraper.query;
 
-import com.zephyr.data.Keyword;
 import com.zephyr.scraper.domain.Request;
+import com.zephyr.scraper.domain.Task;
 import reactor.core.publisher.Flux;
 
 @FunctionalInterface
 public interface QueryConstructor {
 
-    Flux<Request> construct(Keyword keyword);
+    Flux<Request> construct(Task task);
 }

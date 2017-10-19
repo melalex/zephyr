@@ -5,8 +5,10 @@ import com.zephyr.data.SearchResult;
 import com.zephyr.scraper.crawler.DocumentCrawler;
 import com.zephyr.scraper.domain.Request;
 import com.zephyr.scraper.domain.Response;
+import com.zephyr.scraper.domain.Task;
 import com.zephyr.scraper.loader.PageLoader;
 import com.zephyr.scraper.query.QueryConstructor;
+import com.zephyr.scraper.task.TaskConverter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -33,6 +35,9 @@ import java.util.function.Function;
 public class ScraperApplication {
 
     @Setter(onMethod = @__(@Autowired))
+    private TaskConverter taskConverter;
+
+    @Setter(onMethod = @__(@Autowired))
     private QueryConstructor constructor;
 
     @Setter(onMethod = @__(@Autowired))
@@ -49,13 +54,19 @@ public class ScraperApplication {
     @Output(Processor.OUTPUT)
     public Flux<SearchResult> receive(@Input(Processor.INPUT) Flux<Keyword> input) {
         return input
+                .flatMap(toTask())
                 .flatMap(constructQueries())
                 .flatMap(loadPages())
                 .map(toSearchResult());
     }
 
     @Bean
-    public Function<Keyword, Flux<Request>> constructQueries() {
+    public Function<Keyword, Mono<Task>> toTask() {
+        return k -> taskConverter.convert(k);
+    }
+
+    @Bean
+    public Function<Task, Flux<Request>> constructQueries() {
         return k -> constructor.construct(k);
     }
 

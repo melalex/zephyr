@@ -1,7 +1,7 @@
 package com.zephyr.scraper.query.impl;
 
-import com.zephyr.data.Keyword;
 import com.zephyr.scraper.domain.Request;
+import com.zephyr.scraper.domain.Task;
 import com.zephyr.scraper.query.QueryConstructor;
 import com.zephyr.scraper.query.provider.QueryProvider;
 import lombok.Setter;
@@ -18,7 +18,7 @@ public class QueryConstructorImpl implements QueryConstructor {
     private List<QueryProvider> providers;
 
     @Override
-    public Flux<Request> construct(Keyword keyword) {
-        return Flux.fromIterable(providers).flatMap(p -> p.provide(keyword));
+    public Flux<Request> construct(Task task) {
+        return Flux.fromIterable(providers).flatMap(p -> p.provide(task));
     }
 }

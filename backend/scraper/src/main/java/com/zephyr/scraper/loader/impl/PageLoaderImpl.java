@@ -4,28 +4,28 @@ import com.zephyr.scraper.config.ConfigurationManager;
 import com.zephyr.scraper.domain.Request;
 import com.zephyr.scraper.domain.Response;
 import com.zephyr.scraper.loader.PageLoader;
-import com.zephyr.scraper.source.UserAgentSource;
 import com.zephyr.scraper.loader.connector.ConnectorFactory;
+import com.zephyr.scraper.source.UserAgentSource;
 import lombok.Setter;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.net.URLEncoder;
+import java.time.Duration;
+import java.util.List;
+import java.util.Map;
 
 @Component
 @RefreshScope
 public class PageLoaderImpl implements PageLoader {
-    private static final String ROOT = "/";
     private static final String DO_NOT_TRACK = "DNT";
     private static final String UPGRADE_INSECURE_REQUESTS = "Upgrade-Insecure-Requests";
     private static final String ACCEPT = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
     private static final String ENCODING = "gzip, deflate, br";
-    private static final String UTF8 = "UTF-8";
     private static final String KEEP_ALIVE = "keep-alive";
     private static final String TRUE = "1";
 
@@ -40,35 +40,43 @@ public class PageLoaderImpl implements PageLoader {
 
     @Override
     public Mono<Response> load(Request request) {
-        String country = request.getKeyword().getCountryIso();
-        String language = request.getKeyword().getLanguageIso();
-        String word = request.getKeyword().getWord();
-        boolean useProxy = configurationManager.configFor(request.getProvider()).isUseProxy();
+        WebClient webClient = createClient(request);
 
-        // @formatter:off
-        return WebClient.builder()
-                    .clientConnector(connectorFactory.create(country, useProxy))
-                    .baseUrl(request.getUrl())
-                .build()
-                .get()
-                    .uri(ROOT, request.getParams())
-                    .header(HttpHeaders.USER_AGENT, userAgentSource.provide())
-                    .header(HttpHeaders.ACCEPT, ACCEPT)
-                    .header(HttpHeaders.ACCEPT_LANGUAGE, language)
-                    .header(HttpHeaders.ACCEPT_ENCODING, ENCODING)
-                    .header(HttpHeaders.REFERER, getReferer(word))
-                    .header(HttpHeaders.CONNECTION, KEEP_ALIVE)
-                    .header(HttpHeaders.UPGRADE, TRUE)
-                    .header(DO_NOT_TRACK, TRUE)
-                    .header(UPGRADE_INSECURE_REQUESTS, TRUE)
-                .retrieve()
-                .bodyToMono(String.class)
-                .map(h -> Response.of(request.getKeyword(), request.getProvider(), h));
-        // @formatter:on
+        return toFlux(request)
+                .map(p -> webClient.get().uri(request.getUri(), p).retrieve())
+                .flatMap(c -> c.bodyToMono(String.class))
+                .collectList()
+                .map(h -> Response.of(request.getTask(), request.getProvider(), h));
     }
 
-    @SneakyThrows
-    private String getReferer(String word) {
-        return "http://lmgtfy.com/?q=" + URLEncoder.encode(word, UTF8);
+    private Flux<Map<String, ?>> toFlux(Request request) {
+        List<Map<String, ?>> pages = request.getPages();
+        long delay = configurationManager.configFor(request.getProvider()).getDelay();
+
+        Mono<Map<String, ?>> first = Mono.justOrEmpty(pages.stream().findFirst());
+        Flux<Map<String, ?>> rest = Flux.fromStream(pages.stream().skip(1))
+                .delayElements(Duration.ofMillis(delay));
+
+        return Flux.concat(first, rest);
+    }
+
+    private WebClient createClient(Request request) {
+        String country = request.getTask().getCountryIso();
+        String language = request.getTask().getLanguageIso();
+        boolean useProxy = configurationManager.configFor(request.getProvider()).isUseProxy();
+
+        return WebClient.builder()
+                .clientConnector(connectorFactory.create(country, useProxy))
+                .baseUrl(request.getBaseUrl())
+                .defaultHeader(HttpHeaders.USER_AGENT, userAgentSource.provide())
+                .defaultHeader(HttpHeaders.ACCEPT, ACCEPT)
+                .defaultHeader(HttpHeaders.ACCEPT_LANGUAGE, language)
+                .defaultHeader(HttpHeaders.ACCEPT_ENCODING, ENCODING)
+                .defaultHeader(HttpHeaders.REFERER, request.getBaseUrl())
+                .defaultHeader(HttpHeaders.CONNECTION, KEEP_ALIVE)
+                .defaultHeader(HttpHeaders.UPGRADE, TRUE)
+                .defaultHeader(DO_NOT_TRACK, TRUE)
+                .defaultHeader(UPGRADE_INSECURE_REQUESTS, TRUE)
+                .build();
     }
 }
