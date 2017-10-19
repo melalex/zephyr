@@ -39,7 +39,7 @@ public class DictionaryServiceImpl implements DictionaryService {
     public Mono<DictionaryDto> findById(String id) {
         return dictionaryRepository.findById(id)
                 .map(mapper.mapperFor(DictionaryDto.class))
-                .switchIfEmpty(ErrorUtil.notFound(Dictionary.class.getName(), id));
+                .switchIfEmpty(ErrorUtil.notFound(Dictionary.class, id));
     }
 
     @Override

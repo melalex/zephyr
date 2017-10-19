@@ -2,6 +2,7 @@ dependencies {
     compile libraries.jodaTime
 
     compileOnly libraries.hibernateValidator
+    compileOnly libraries.jacksonAnnotations
     compileOnly libraries.hateoas
     compileOnly libraries.lombok
 }

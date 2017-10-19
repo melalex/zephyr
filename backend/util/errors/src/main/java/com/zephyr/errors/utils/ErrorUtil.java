@@ -33,6 +33,10 @@ public class ErrorUtil {
         return clazz.getName();
     }
 
+    public <T> Mono<T> notFound(final Class<?> clazz, final Object id) {
+        return notFound(clazz.getName(), id);
+    }
+
     public <T> Mono<T> notFound(final String name, final Object id) {
         final String message = String.format("Resource '%s' with id '%s' not found", name, id);
 

@@ -34,7 +34,7 @@ ext {
     def slf4jVersion = '1.7.25'
     def reactorVersion = '3.1.0.RELEASE'
     def reactorTestVersion = '3.1.0.M1'
-    def jacksonVersion = '2.9.1'
+    def jacksonVersion = '2.9.2'
     def adWordsVersion = '3.9.0'
     def hibernateValidatorVersion = '6.0.2.Final'
     def hateoasVersion = '0.23.0.RELEASE'
@@ -59,6 +59,7 @@ ext {
             reactor: "io.projectreactor:reactor-core:${reactorVersion}",
             reactorTest: "io.projectreactor:reactor-test:${reactorTestVersion}",
             jackson: "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
+            jacksonAnnotations: "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}",
             adWords: "com.google.api-ads:ads-lib:${adWordsVersion}",
             hibernateValidator: "org.hibernate:hibernate-validator:${hibernateValidatorVersion}",
             hateoas: "org.springframework.hateoas:spring-hateoas:${hateoasVersion}",
