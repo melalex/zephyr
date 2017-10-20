@@ -15,6 +15,7 @@ public class Proxy {
     private int port;
     private Protocol protocol;
     private Map<SearchEngine, Integer> failsCount;
+    private Map<SearchEngine, Integer> lastUsage;
 
     public enum Protocol {
         HTTP,

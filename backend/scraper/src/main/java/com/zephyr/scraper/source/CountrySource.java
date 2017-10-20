@@ -4,5 +4,5 @@ import com.zephyr.scraper.domain.Country;
 
 public interface CountrySource {
 
-    Country getByIso(String iso);
+    Country find(String iso, String place);
 }

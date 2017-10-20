@@ -1,11 +1,12 @@
 package com.zephyr.scraper.source;
 
+import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.domain.Proxy;
 import reactor.core.publisher.Mono;
 
 public interface ProxySource {
 
-    Mono<Proxy> getOne();
+    Mono<Proxy> getOne(SearchEngine engine);
 
-    Mono<Proxy> exchange(Proxy proxy);
+    Mono<Void> report(Proxy proxy, SearchEngine engine);
 }
