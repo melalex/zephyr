@@ -1,6 +1,9 @@
 package com.zephyr.scraper.domain;
 
+import com.zephyr.data.enums.SearchEngine;
 import lombok.Data;
+
+import java.util.Map;
 
 @Data
 public class Proxy {
@@ -11,7 +14,7 @@ public class Proxy {
     private String ip;
     private int port;
     private Protocol protocol;
-    private int failsCount;
+    private Map<SearchEngine, Integer> failsCount;
 
     public enum Protocol {
         HTTP,

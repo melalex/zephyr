@@ -7,6 +7,7 @@ import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,8 @@ public class DefaultCrawlingProvider extends AbstractCrawlingProvider {
                 .getLinkSelector();
 
         return response.getDocuments().stream()
+                .sorted(Comparator.comparingInt(Response.PageResponse::getNumber))
+                .map(Response.PageResponse::getDocument)
                 .flatMap(d -> Jsoup.parse(d).select(linkSelector).stream())
                 .map(e -> e.attr(HREF_ATTR))
                 .collect(Collectors.toList());

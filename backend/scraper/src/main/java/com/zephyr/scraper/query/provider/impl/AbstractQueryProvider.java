@@ -47,10 +47,14 @@ public abstract class AbstractQueryProvider implements QueryProvider {
                 .build();
     }
 
-    private List<Map<String, ?>> providePages(Task task) {
+    private List<Request.PageRequest> providePages(Task task) {
         return PaginationUtils.pagesStream(engineConfig.getResultCount(), engineConfig.getPageSize())
-                .map(p -> providePage(task, PaginationUtils.startOf(p, engineConfig.getPageSize())))
+                .map(p -> getPage(task, p))
                 .collect(Collectors.toList());
+    }
+
+    private Request.PageRequest getPage(Task task, int page) {
+        return Request.PageRequest.of(providePage(task, PaginationUtils.startOf(page, engineConfig.getPageSize())), page);
     }
 
     boolean notFirstPage(int start) {

@@ -9,5 +9,11 @@ import java.util.List;
 public class Response {
     private Task task;
     private SearchEngine provider;
-    private List<String> documents;
+    private List<PageResponse> documents;
+
+    @Value(staticConstructor = "of")
+    public static class PageResponse {
+        private String document;
+        private int number;
+    }
 }
