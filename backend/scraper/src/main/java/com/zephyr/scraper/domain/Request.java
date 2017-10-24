@@ -15,10 +15,4 @@ public class Request {
     private String baseUrl;
     private String uri;
     private List<PageRequest> pages;
-
-    @Value(staticConstructor = "of")
-    public static class PageRequest {
-        private Map<String, ?> params;
-        private int number;
-    }
 }

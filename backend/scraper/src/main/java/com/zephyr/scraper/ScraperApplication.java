@@ -17,14 +17,12 @@ import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Processor;
-import org.springframework.hateoas.config.EnableHypermediaSupport;
 import reactor.core.publisher.Flux;
 
 @EnableFeignClients
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableBinding(Processor.class)
-@EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)
 public class ScraperApplication {
 
     @Setter(onMethod = @__(@Autowired))

@@ -10,10 +10,4 @@ public class Response {
     private Task task;
     private SearchEngine provider;
     private List<PageResponse> documents;
-
-    @Value(staticConstructor = "of")
-    public static class PageResponse {
-        private String document;
-        private int number;
-    }
 }

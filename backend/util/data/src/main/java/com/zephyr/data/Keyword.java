@@ -9,5 +9,4 @@ public class Keyword {
     private String place;
     private String languageIso;
     private String userAgent;
-    private boolean onlyFromSpecifiedCountry;
 }

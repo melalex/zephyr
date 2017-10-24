@@ -47,5 +47,11 @@ zuul:
         stripPrefix: false
         sensitiveHeaders:
 
+    location-service:
+        path: /location/**
+        serviceId: location-service
+        stripPrefix: false
+        sensitiveHeaders:
+
 server:
   port: 9500

@@ -4,6 +4,7 @@ import com.zephyr.commons.PaginationUtils;
 import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.config.ConfigurationManager;
 import com.zephyr.scraper.domain.EngineConfig;
+import com.zephyr.scraper.domain.PageRequest;
 import com.zephyr.scraper.domain.Request;
 import com.zephyr.scraper.domain.Task;
 import com.zephyr.scraper.query.provider.QueryProvider;
@@ -47,14 +48,14 @@ public abstract class AbstractQueryProvider implements QueryProvider {
                 .build();
     }
 
-    private List<Request.PageRequest> providePages(Task task) {
+    private List<PageRequest> providePages(Task task) {
         return PaginationUtils.pagesStream(engineConfig.getResultCount(), engineConfig.getPageSize())
                 .map(p -> getPage(task, p))
                 .collect(Collectors.toList());
     }
 
-    private Request.PageRequest getPage(Task task, int page) {
-        return Request.PageRequest.of(providePage(task, PaginationUtils.startOf(page, engineConfig.getPageSize())), page);
+    private PageRequest getPage(Task task, int page) {
+        return PageRequest.of(providePage(task, PaginationUtils.startOf(page, engineConfig.getPageSize())), page);
     }
 
     boolean notFirstPage(int start) {

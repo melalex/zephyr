@@ -18,7 +18,7 @@ public abstract class AbstractCrawlingProvider implements CrawlingProvider {
 
     @Override
     public SearchResult provide(Response response) {
-        SearchResult searchResult = new com.zephyr.data.SearchResult();
+        SearchResult searchResult = new SearchResult();
 
         searchResult.setKeyword(mapper.map(response.getTask(), Keyword.class));
         searchResult.setProvider(response.getProvider());

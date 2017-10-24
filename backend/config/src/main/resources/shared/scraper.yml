@@ -7,6 +7,11 @@ spring:
         output:
           destination: SEARCH_RESULTS
 
+browser:
+  retry:
+    firstBackoff: 5000
+    maxBackoff: 300000
+
 scraper:
   google:
     enabled: true
