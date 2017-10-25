@@ -2,6 +2,7 @@ package com.zephyr.scraper.domain;
 
 import com.zephyr.data.enums.SearchEngine;
 import lombok.Data;
+import org.joda.time.DateTime;
 
 import java.util.Map;
 
@@ -14,8 +15,10 @@ public class Proxy {
     private String ip;
     private int port;
     private Protocol protocol;
+    private int clientFailsCount;
+    private DateTime lastClientFail;
     private Map<SearchEngine, Integer> failsCount;
-    private Map<SearchEngine, Integer> lastUsage;
+    private Map<SearchEngine, DateTime> scheduledUsage;
 
     public enum Protocol {
         HTTP,

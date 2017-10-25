@@ -2,7 +2,7 @@ package com.zephyr.scraper.loader.agent.impl;
 
 import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.config.ConfigurationManager;
-import com.zephyr.scraper.domain.Request;
+import com.zephyr.scraper.domain.RequestContext;
 import com.zephyr.scraper.loader.agent.WebClientFactory;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +28,13 @@ public class WebClientFactoryImpl implements WebClientFactory {
     private ConfigurationManager configurationManager;
 
     @Override
-    public WebClient create(Request request) {
+    public WebClient create(RequestContext context) {
         return WebClient.builder()
-                .baseUrl(request.getBaseUrl())
-                .clientConnector(connector(request.getProvider()))
-                .defaultHeader(HttpHeaders.REFERER, request.getBaseUrl())
-                .defaultHeader(HttpHeaders.USER_AGENT, request.getTask().getUserAgent())
-                .defaultHeader(HttpHeaders.ACCEPT_LANGUAGE, request.getTask().getLanguageIso())
+                .baseUrl(context.getBaseUrl())
+                .clientConnector(connector(context.getProvider()))
+                .defaultHeader(HttpHeaders.REFERER, context.getBaseUrl())
+                .defaultHeader(HttpHeaders.USER_AGENT, context.getTask().getUserAgent())
+                .defaultHeader(HttpHeaders.ACCEPT_LANGUAGE, context.getTask().getLanguageIso())
                 .defaultHeader(HttpHeaders.ACCEPT, ACCEPT)
                 .defaultHeader(HttpHeaders.ACCEPT_ENCODING, ENCODING)
                 .defaultHeader(HttpHeaders.CONNECTION, KEEP_ALIVE)

@@ -11,6 +11,7 @@ browser:
   retry:
     firstBackoff: 5000
     maxBackoff: 300000
+    retryCount: 3
 
 scraper:
   google:
