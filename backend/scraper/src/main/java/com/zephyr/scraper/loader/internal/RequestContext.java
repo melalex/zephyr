@@ -1,6 +1,9 @@
-package com.zephyr.scraper.domain;
+package com.zephyr.scraper.loader.internal;
 
 import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.scraper.domain.PageRequest;
+import com.zephyr.scraper.domain.Proxy;
+import com.zephyr.scraper.domain.Task;
 import lombok.Builder;
 import lombok.Value;
 

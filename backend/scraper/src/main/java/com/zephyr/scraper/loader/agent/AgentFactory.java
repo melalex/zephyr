@@ -1,10 +1,10 @@
 package com.zephyr.scraper.loader.agent;
 
-import com.zephyr.scraper.domain.RequestContext;
+import com.zephyr.scraper.loader.internal.RequestContext;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @FunctionalInterface
-public interface WebClientFactory {
+public interface AgentFactory {
 
     WebClient create(RequestContext context);
 }

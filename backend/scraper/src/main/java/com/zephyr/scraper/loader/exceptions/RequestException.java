@@ -1,6 +1,6 @@
-package com.zephyr.scraper.domain.exceptions;
+package com.zephyr.scraper.loader.exceptions;
 
-import com.zephyr.scraper.domain.RequestContext;
+import com.zephyr.scraper.loader.internal.RequestContext;
 
 public class RequestException extends RuntimeException {
     private static final long serialVersionUID = -4214987745593759340L;

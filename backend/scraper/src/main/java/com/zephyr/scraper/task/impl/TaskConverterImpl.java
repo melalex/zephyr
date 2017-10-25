@@ -3,7 +3,7 @@ package com.zephyr.scraper.task.impl;
 import com.zephyr.data.Keyword;
 import com.zephyr.mapping.mappers.ExtendedMapper;
 import com.zephyr.scraper.domain.Task;
-import com.zephyr.scraper.source.LocationSource;
+import com.zephyr.scraper.task.location.LocationSource;
 import com.zephyr.scraper.task.TaskConverter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

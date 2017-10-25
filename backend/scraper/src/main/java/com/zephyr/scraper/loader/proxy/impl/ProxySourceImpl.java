@@ -1,8 +1,8 @@
-package com.zephyr.scraper.source.impl;
+package com.zephyr.scraper.loader.proxy.impl;
 
 import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.domain.Proxy;
-import com.zephyr.scraper.source.ProxySource;
+import com.zephyr.scraper.loader.proxy.ProxySource;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 

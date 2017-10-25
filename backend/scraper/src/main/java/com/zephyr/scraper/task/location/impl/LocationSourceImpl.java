@@ -1,8 +1,8 @@
-package com.zephyr.scraper.source.impl;
+package com.zephyr.scraper.task.location.impl;
 
 import com.zephyr.data.dto.CountryDto;
 import com.zephyr.data.dto.PlaceDto;
-import com.zephyr.scraper.source.LocationSource;
+import com.zephyr.scraper.task.location.LocationSource;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 

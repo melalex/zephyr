@@ -1,12 +1,12 @@
 package com.zephyr.scraper.loader.browser.impl;
 
 import com.zephyr.scraper.domain.*;
-import com.zephyr.scraper.domain.exceptions.FraudException;
-import com.zephyr.scraper.domain.exceptions.RequestException;
-import com.zephyr.scraper.loader.agent.WebClientFactory;
+import com.zephyr.scraper.loader.exceptions.RequestException;
+import com.zephyr.scraper.loader.agent.AgentFactory;
 import com.zephyr.scraper.loader.browser.Browser;
 import com.zephyr.scraper.loader.fraud.FraudAnalyzer;
-import com.zephyr.scraper.source.ProxySource;
+import com.zephyr.scraper.loader.internal.RequestContext;
+import com.zephyr.scraper.loader.proxy.ProxySource;
 import lombok.Setter;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class BrowserImpl implements Browser {
     private int retryCount;
 
     @Setter(onMethod = @__(@Autowired))
-    private WebClientFactory webClientFactory;
+    private AgentFactory agentFactory;
 
     @Setter(onMethod = @__(@Autowired))
     private FraudAnalyzer fraudAnalyzer;
@@ -45,7 +45,7 @@ public class BrowserImpl implements Browser {
     public Mono<PageResponse> browse(Request request, PageRequest page) {
         return Mono.defer(() -> toRequestContext(request, page))
                 .flatMap(this::makeRequest)
-                .retryWhen(fraudException());
+                .retryWhen(requestException());
     }
 
     private Mono<RequestContext> toRequestContext(Request request, PageRequest page) {
@@ -65,7 +65,7 @@ public class BrowserImpl implements Browser {
     }
 
     private Mono<PageResponse> makeRequest(RequestContext context) {
-        return webClientFactory.create(context).get()
+        return agentFactory.create(context).get()
                 .uri(context.getUri(), context.getPage().getParams())
                 .retrieve()
                 .bodyToMono(String.class)
@@ -81,16 +81,17 @@ public class BrowserImpl implements Browser {
                 .exponentialBackoff(Duration.ofMillis(firstBackoff), Duration.ofMillis(maxBackoff));
     }
 
-    private Function<Flux<Throwable>, ? extends Publisher<?>> fraudException() {
-        return Retry.anyOf(FraudException.class, WebClientException.class)
-                .doOnRetry(c -> reportProxy(c.exception()));
+    private Function<Flux<Throwable>, ? extends Publisher<?>> requestException() {
+        return Retry.anyOf(RequestException.class)
+                .doOnRetry(c -> report(c.exception()));
     }
 
-    private void reportProxy(Throwable throwable) {
+    private void report(Throwable throwable) {
         if (throwable instanceof RequestException) {
             RequestContext context = ((RequestException) throwable).getFailedRequest();
 
-            proxySource.report(context.getProxy(), context.getProvider());
+            proxySource.report(context.getProxy(), context.getProvider())
+                    .subscribe();
         }
     }
 }
