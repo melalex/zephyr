@@ -47,7 +47,9 @@ public class ScraperApplication {
         return input
                 .flatMap(k -> taskConverter.convert(k))
                 .flatMap(k -> queryConstructor.construct(k))
+                .parallel()
                 .flatMap(r -> pageLoader.load(r))
-                .map(d -> documentCrawler.crawl(d));
+                .map(d -> documentCrawler.crawl(d))
+                .sequential();
     }
 }

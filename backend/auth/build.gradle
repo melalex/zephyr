@@ -67,7 +67,7 @@ docker {
     javaApplication {
         baseImage = dockerBaseImage
         maintainer = dockerMainteiner
-        port = 5000
+        port = 8010
         tag = getDockerTag()
     }
 }

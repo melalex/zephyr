@@ -1,4 +1,6 @@
 package com.zephyr.scraper.loader.fraud.provider;
 
-public class FraudProvider {
+public interface FraudProvider {
+
+    boolean provide(String page);
 }

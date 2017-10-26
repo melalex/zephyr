@@ -1,0 +1,74 @@
+import com.bmuschko.gradle.docker.DockerRemoteApiPlugin
+
+buildscript {
+	ext {
+		springBootVersion = '2.0.0.M5'
+		dockerVersion = '3.1.0'
+	}
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		jcenter()
+
+		maven { url "http://repo1.maven.org/maven2/" }
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+		maven { url "https://plugins.gradle.org/m2/" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("com.bmuschko:gradle-docker-plugin:${dockerVersion}")
+	}
+}
+
+apply plugin: DockerRemoteApiPlugin
+apply plugin: 'com.bmuschko.docker-java-application'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'application'
+
+mainClassName = 'com.zephyr.proxy.ProxyApplication'
+
+dependencies {
+	compile libraries.webFlux
+	compile libraries.acutator
+	compile libraries.acutatorDocs
+//    compile libraries.mongodb
+	compile libraries.configClient
+	compile libraries.discoveryClient
+
+	// TODO: remove this dependencies
+	compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: '2.0.0.RELEASE'
+	compile group: 'org.springframework.data', name: 'spring-data-commons', version: '2.0.0.RELEASE'
+	compile group: 'org.mongodb', name: 'mongodb-driver-reactivestreams', version: '1.7.0-beta1'
+
+	compile utils.commons
+	compile utils.data
+	compile utils.errors
+	compile utils.mapping
+
+	compileOnly libraries.lombok
+
+	testCompile libraries.test
+}
+
+dependencyManagement {
+	imports {
+		mavenBom imports.springBootBom
+		mavenBom imports.springCloudBom
+		mavenBom imports.springBusBom
+	}
+}
+
+docker {
+	registryCredentials {
+		username = getDockerUserName()
+		password = getDockerPassword()
+	}
+	javaApplication {
+		baseImage = dockerBaseImage
+		maintainer = dockerMainteiner
+		port = 8017
+		tag = getDockerTag()
+	}
+}

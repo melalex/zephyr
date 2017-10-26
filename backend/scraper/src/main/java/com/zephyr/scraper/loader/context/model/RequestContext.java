@@ -1,14 +1,12 @@
-package com.zephyr.scraper.loader.internal;
+package com.zephyr.scraper.loader.context.model;
 
 import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.domain.PageRequest;
 import com.zephyr.scraper.domain.Proxy;
 import com.zephyr.scraper.domain.Task;
-import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
 
-@Value
-@Builder
+@Data
 public class RequestContext {
     private Task task;
     private SearchEngine provider;

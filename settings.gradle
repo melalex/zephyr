@@ -27,6 +27,9 @@ findProject(':backend:notification')?.name = 'notification'
 include 'backend:proposer'
 findProject(':backend:proposer')?.name = 'proposer'
 
+include 'backend:proxy'
+findProject(':backend:proxy')?.name = 'proxy'
+
 include 'backend:rating'
 findProject(':backend:rating')?.name = 'rating'
 

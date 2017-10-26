@@ -1,8 +1,8 @@
 package com.zephyr.scraper.loader.fraud;
 
-import com.zephyr.scraper.domain.PageResponse;
+import com.zephyr.data.enums.SearchEngine;
 
 public interface FraudAnalyzer {
 
-    void analyze(String response);
+    void analyze(String response, SearchEngine engine);
 }

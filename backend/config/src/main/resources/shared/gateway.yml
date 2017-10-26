@@ -1,3 +1,6 @@
+server:
+  port: 8013
+
 hystrix:
   command:
     default:
@@ -52,6 +55,3 @@ zuul:
         serviceId: location-service
         stripPrefix: false
         sensitiveHeaders:
-
-server:
-  port: 9500

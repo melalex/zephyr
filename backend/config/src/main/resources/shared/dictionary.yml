@@ -1,5 +1,6 @@
 server:
-  port: 7000
+  port: 8012
+
 spring:
   cloud:
     stream:

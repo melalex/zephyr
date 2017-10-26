@@ -21,27 +21,18 @@ public class TaskConverterImpl implements TaskConverter {
 
     @Override
     public Mono<Task> convert(Keyword keyword) {
-        return Mono.just(keyword)
-                .map(mapper.mapperFor(Task.class))
-                .flatMap(this::populateCountryData)
-                .flatMap(this::populateLocationData);
-    }
+        Task task = mapper.map(keyword, Task.class);
 
-    private Mono<Task> populateCountryData(Task task) {
         return locationSource.findCountry(task.getCountryIso())
-                .map(c -> {
+                .doOnNext(c -> {
                     task.setLocaleGoogle(c.getLocaleGoogle());
                     task.setLocaleYandex(c.getLocaleYandex());
-                    return task;
-                });
-    }
-
-    private Mono<Task> populateLocationData(Task task) {
-        return locationSource.findPlace(task.getCountryIso(), task.getPlace())
-                .map(p -> {
+                })
+                .then(locationSource.findPlace(task.getCountryIso(), task.getPlace()))
+                .doOnNext(p -> {
                     task.setParent(p.getParent());
                     task.setLocation(p.getLocation());
-                    return task;
-                });
+                })
+                .then(Mono.just(task));
     }
 }

@@ -1,6 +1,6 @@
 package com.zephyr.scraper.loader.agent;
 
-import com.zephyr.scraper.loader.internal.RequestContext;
+import com.zephyr.scraper.loader.context.model.RequestContext;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @FunctionalInterface

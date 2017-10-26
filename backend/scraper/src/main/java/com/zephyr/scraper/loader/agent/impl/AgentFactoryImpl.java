@@ -1,7 +1,7 @@
 package com.zephyr.scraper.loader.agent.impl;
 
 import com.zephyr.scraper.domain.Proxy;
-import com.zephyr.scraper.loader.internal.RequestContext;
+import com.zephyr.scraper.loader.context.model.RequestContext;
 import com.zephyr.scraper.loader.agent.AgentFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.client.reactive.ClientHttpConnector;

@@ -5,9 +5,11 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 @UtilityClass
 public class MapUtils {
@@ -27,7 +29,7 @@ public class MapUtils {
 
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class Builder<K, V> {
-        private Map<K, V> prototype;
+        private Map<K, V> prototype = new HashMap<>();
 
         public Builder<K, V> put(K key, V value) {
             prototype.put(key, value);
