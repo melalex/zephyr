@@ -1,13 +1,18 @@
-package com.zephyr.scraper.domain;
+package com.zephyr.proxy.domain;
 
+import com.zephyr.data.enums.Protocol;
 import com.zephyr.data.enums.SearchEngine;
 import lombok.Data;
-import org.joda.time.DateTime;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
 
 @Data
+@Document
 public class Proxy {
+
+    @Id
     private String id;
     private String username;
     private String password;
@@ -15,15 +20,6 @@ public class Proxy {
     private String ip;
     private int port;
     private Protocol protocol;
-    private int clientFailsCount;
-    private DateTime lastClientFail;
     private Map<SearchEngine, Integer> failsCount;
-    private Map<SearchEngine, DateTime> scheduledUsage;
-
-    public enum Protocol {
-        HTTP,
-        HTTPS,
-        SOCKS5,
-        SOCKS4
-    }
+    private Map<SearchEngine, Long> scheduledUsage;
 }

@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Flux;
 
-public interface DictionaryRepository extends ReactiveMongoRepository<Dictionary, String>, ExtendedDictionaryRepository {
+public interface DictionaryRepository extends ReactiveMongoRepository<Dictionary, String>, DictionaryOperations {
 
     Flux<Dictionary> findAll(Pageable pageable);
 

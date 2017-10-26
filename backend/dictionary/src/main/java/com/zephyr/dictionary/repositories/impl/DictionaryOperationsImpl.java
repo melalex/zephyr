@@ -3,7 +3,7 @@ package com.zephyr.dictionary.repositories.impl;
 import com.zephyr.data.Keyword;
 import com.zephyr.dictionary.domain.Dictionary;
 import com.zephyr.dictionary.domain.factories.DictionaryFactory;
-import com.zephyr.dictionary.repositories.ExtendedDictionaryRepository;
+import com.zephyr.dictionary.repositories.DictionaryOperations;
 import lombok.Setter;
 import org.joda.time.DateTime;
 import org.joda.time.ReadablePeriod;
@@ -20,7 +20,7 @@ import reactor.core.publisher.Mono;
 import java.util.UUID;
 
 @Repository
-public class ExtendedDictionaryRepositoryImpl implements ExtendedDictionaryRepository {
+public class DictionaryOperationsImpl implements DictionaryOperations {
     private static final String HITS_COUNT_FIELD = "hitsCount";
     private static final String LAST_HIT_FIELD = "lastHit";
     private static final String LAST_UPDATE_FIELD = "lastUpdate";
@@ -39,7 +39,8 @@ public class ExtendedDictionaryRepositoryImpl implements ExtendedDictionaryRepos
 
         Update update = new Update()
                 .inc(HITS_COUNT_FIELD, INC_VALUE)
-                .set(LAST_HIT_FIELD, DateTime.now());
+                .currentTimestamp(LAST_HIT_FIELD)
+                .isolated();
 
         return mongo.findAndModify(query, update, Dictionary.class);
     }
@@ -55,7 +56,7 @@ public class ExtendedDictionaryRepositoryImpl implements ExtendedDictionaryRepos
                 .with(pageable);
 
         Update update = new Update()
-                .set(LAST_UPDATE_FIELD, DateTime.now())
+                .currentTimestamp(LAST_UPDATE_FIELD)
                 .set(TRANSACTION_ID_FIELD, transactionId);
 
         return mongo.updateMulti(queryUpdate, update, Dictionary.class)
