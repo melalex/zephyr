@@ -3,7 +3,7 @@ package com.zephyr.scraper.query.provider.impl;
 import com.zephyr.commons.PaginationUtils;
 import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.config.ConfigurationManager;
-import com.zephyr.scraper.domain.EngineConfig;
+import com.zephyr.scraper.domain.EngineProperties;
 import com.zephyr.scraper.domain.PageRequest;
 import com.zephyr.scraper.domain.Request;
 import com.zephyr.scraper.domain.Task;
@@ -24,16 +24,16 @@ public abstract class AbstractQueryProvider implements QueryProvider {
     @NonNull
     private SearchEngine searchEngine;
 
-    private EngineConfig engineConfig;
+    private EngineProperties engineProperties;
 
     @Autowired
     public void setConfigurationManager(ConfigurationManager configurationManager) {
-        this.engineConfig = configurationManager.configFor(searchEngine);
+        this.engineProperties = configurationManager.configFor(searchEngine);
     }
 
     @Override
     public Mono<Request> provide(Task task) {
-        return engineConfig.isEnabled()
+        return engineProperties.isEnabled()
                 ? Mono.just(createRequest(task))
                 : Mono.empty();
     }
@@ -49,13 +49,13 @@ public abstract class AbstractQueryProvider implements QueryProvider {
     }
 
     private List<PageRequest> providePages(Task task) {
-        return PaginationUtils.pagesStream(engineConfig.getResultCount(), engineConfig.getPageSize())
+        return PaginationUtils.pagesStream(engineProperties.getResultCount(), engineProperties.getPageSize())
                 .map(p -> getPage(task, p))
                 .collect(Collectors.toList());
     }
 
     private PageRequest getPage(Task task, int page) {
-        return PageRequest.of(providePage(task, PaginationUtils.startOf(page, engineConfig.getPageSize())), page);
+        return PageRequest.of(providePage(task, PaginationUtils.startOf(page, engineProperties.getPageSize())), page);
     }
 
     boolean notFirstPage(int start) {

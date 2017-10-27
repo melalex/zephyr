@@ -2,22 +2,25 @@ server:
   port: 8017
 
 proxy:
-  google:
-    delay: 480000
-    errorDelay: 480000
+  maxFailsCount: 3
+  resetFailedCron: 0 0 0 1/1 * ? *
+  engine:
+    google:
+      delay: 480000
+      errorDelay: 480000
 
-  bing:
-    delay: 480000
-    errorDelay: 480000
+    bing:
+      delay: 480000
+      errorDelay: 480000
 
-  yahoo:
-    delay: 480000
-    errorDelay: 480000
+    yahoo:
+      delay: 480000
+      errorDelay: 480000
 
-  yandex:
-    delay: 480000
-    errorDelay: 480000
+    yandex:
+      delay: 480000
+      errorDelay: 480000
 
-  duckduckgo:
-    delay: 480000
-    errorDelay: 480000
+    duckduckgo:
+      delay: 480000
+      errorDelay: 480000

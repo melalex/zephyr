@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.zephyr.commons.MapUtils;
 import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.config.ConfigurationManager;
-import com.zephyr.scraper.domain.EngineConfig;
+import com.zephyr.scraper.domain.EngineProperties;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +18,14 @@ import java.util.Map;
 @Component
 @RefreshScope
 public class ConfigurationManagerImpl implements ConfigurationManager {
-    private Map<SearchEngine, EngineConfig> configs;
+    private Map<SearchEngine, EngineProperties> configs;
 
     @Setter(onMethod = @__(@Autowired))
     private Environment environment;
 
     @PostConstruct
     public void init() {
-        configs = ImmutableMap.<SearchEngine, EngineConfig>builder()
+        configs = ImmutableMap.<SearchEngine, EngineProperties>builder()
                 .put(SearchEngine.GOOGLE, createGoogleConfig())
                 .put(SearchEngine.BING, createBingConfig())
                 .put(SearchEngine.YAHOO, createYahooConfig())
@@ -35,12 +35,12 @@ public class ConfigurationManagerImpl implements ConfigurationManager {
     }
 
     @Override
-    public EngineConfig configFor(SearchEngine engine) {
+    public EngineProperties configFor(SearchEngine engine) {
         return MapUtils.getOrThrow(configs, engine);
     }
 
-    private EngineConfig createGoogleConfig() {
-        return EngineConfig.builder()
+    private EngineProperties createGoogleConfig() {
+        return EngineProperties.builder()
                 .enabled(environment.getProperty("scraper.google.enabled", Boolean.class, false))
                 .useProxy(environment.getProperty("scraper.google.useProxy", Boolean.class, false))
                 .resultCount(environment.getProperty("scraper.google.resultCount", Integer.class, 10))
@@ -50,8 +50,8 @@ public class ConfigurationManagerImpl implements ConfigurationManager {
                 .build();
     }
 
-    private EngineConfig createBingConfig() {
-        return EngineConfig.builder()
+    private EngineProperties createBingConfig() {
+        return EngineProperties.builder()
                 .enabled(environment.getProperty("scraper.bing.enabled", Boolean.class, false))
                 .useProxy(environment.getProperty("scraper.bing.useProxy", Boolean.class, false))
                 .resultCount(environment.getProperty("scraper.bing.resultCount", Integer.class, 10))
@@ -61,8 +61,8 @@ public class ConfigurationManagerImpl implements ConfigurationManager {
                 .build();
     }
 
-    private EngineConfig createYahooConfig() {
-        return EngineConfig.builder()
+    private EngineProperties createYahooConfig() {
+        return EngineProperties.builder()
                 .enabled(environment.getProperty("scraper.yahoo.enabled", Boolean.class, false))
                 .useProxy(environment.getProperty("scraper.yahoo.useProxy", Boolean.class, false))
                 .resultCount(environment.getProperty("scraper.yahoo.resultCount", Integer.class, 10))
@@ -72,8 +72,8 @@ public class ConfigurationManagerImpl implements ConfigurationManager {
                 .build();
     }
 
-    private EngineConfig createYandexConfig() {
-        return EngineConfig.builder()
+    private EngineProperties createYandexConfig() {
+        return EngineProperties.builder()
                 .enabled(environment.getProperty("scraper.yandex.enabled", Boolean.class, false))
                 .useProxy(environment.getProperty("scraper.yandex.useProxy", Boolean.class, false))
                 .resultCount(environment.getProperty("scraper.yandex.resultCount", Integer.class, 10))
@@ -83,8 +83,8 @@ public class ConfigurationManagerImpl implements ConfigurationManager {
                 .build();
     }
 
-    private EngineConfig createDuckDuckGoConfig() {
-        return EngineConfig.builder()
+    private EngineProperties createDuckDuckGoConfig() {
+        return EngineProperties.builder()
                 .enabled(environment.getProperty("scraper.duckduckgo.enabled", Boolean.class, false))
                 .useProxy(environment.getProperty("scraper.duckduckgo.useProxy", Boolean.class, false))
                 .resultCount(environment.getProperty("scraper.duckduckgo.resultCount", Integer.class, 10))

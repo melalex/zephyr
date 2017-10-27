@@ -44,6 +44,7 @@ dependencies {
     compile utils.data
 
     compileOnly libraries.lombok
+    compileOnly libraries.configurationProcessor
 
     testCompile libraries.test
 }
@@ -67,4 +68,3 @@ docker {
         tag = getDockerTag()
     }
 }
-

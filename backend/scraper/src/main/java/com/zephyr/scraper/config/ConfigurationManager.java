@@ -1,10 +1,10 @@
 package com.zephyr.scraper.config;
 
 import com.zephyr.data.enums.SearchEngine;
-import com.zephyr.scraper.domain.EngineConfig;
+import com.zephyr.scraper.domain.EngineProperties;
 
 @FunctionalInterface
 public interface ConfigurationManager {
 
-    EngineConfig configFor(SearchEngine engine);
+    EngineProperties configFor(SearchEngine engine);
 }

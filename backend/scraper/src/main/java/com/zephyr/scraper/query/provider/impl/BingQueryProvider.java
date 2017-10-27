@@ -22,7 +22,7 @@ public class BingQueryProvider extends AbstractQueryProvider {
     private static final String FIRST = "first";
     private static final String COUNT = "count";
 
-    @Value("${scraper.google.pageSize}")
+    @Value("${scraper.bing.pageSize}")
     private int pageSize;
 
     public BingQueryProvider() {

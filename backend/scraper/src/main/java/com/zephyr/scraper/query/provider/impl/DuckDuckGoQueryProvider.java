@@ -19,7 +19,7 @@ public class DuckDuckGoQueryProvider extends AbstractQueryProvider {
     private static final String AUTO_LOAD = "kc";
     private static final String NO_AUTO_LOAD = "1";
 
-    @Value("${scraper.google.pageSize}")
+    @Value("${scraper.duckduckgo.pageSize}")
     private int pageSize;
 
     public DuckDuckGoQueryProvider() {

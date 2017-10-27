@@ -1,5 +1,6 @@
 package com.zephyr.proxy.repositories;
 
+import com.mongodb.client.result.UpdateResult;
 import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.proxy.domain.Proxy;
 import reactor.core.publisher.Mono;
@@ -7,4 +8,8 @@ import reactor.core.publisher.Mono;
 public interface ProxyOperations {
 
     Mono<Proxy> reserve(SearchEngine engine);
+
+    Mono<UpdateResult> report(String id, SearchEngine engine);
+
+    Mono<UpdateResult> resetFailedProxies();
 }

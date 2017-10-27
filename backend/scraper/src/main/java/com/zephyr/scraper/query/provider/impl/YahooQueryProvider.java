@@ -20,7 +20,7 @@ public class YahooQueryProvider extends AbstractQueryProvider {
     private static final String COUNT = "n";
     private static final String UTF8 = "UTF-8";
 
-    @Value("${scraper.google.pageSize}")
+    @Value("${scraper.yahoo.pageSize}")
     private int pageSize;
 
     public YahooQueryProvider() {

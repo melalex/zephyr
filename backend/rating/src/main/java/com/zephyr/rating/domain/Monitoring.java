@@ -1,6 +1,5 @@
 package com.zephyr.rating.domain;
 
-import com.zephyr.commons.data.Keyword;
 import lombok.Data;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;

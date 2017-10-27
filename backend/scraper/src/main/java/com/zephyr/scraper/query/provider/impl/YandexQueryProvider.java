@@ -17,7 +17,7 @@ public class YandexQueryProvider extends AbstractQueryProvider {
     private static final String START = "b";
     private static final String COUNT = "n";
 
-    @Value("${scraper.google.pageSize}")
+    @Value("${scraper.yandex.pageSize}")
     private int pageSize;
 
     public YandexQueryProvider() {

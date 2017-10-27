@@ -9,4 +9,6 @@ public interface ProxyService {
     Mono<ProxyDto> reserve(SearchEngine engine);
 
     Mono<Void> report(String id, SearchEngine engine);
+
+    Mono<Void> resetFailedProxies();
 }
