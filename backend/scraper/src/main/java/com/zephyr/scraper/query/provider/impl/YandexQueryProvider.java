@@ -1,6 +1,7 @@
 package com.zephyr.scraper.query.provider.impl;
 
 import com.zephyr.commons.MapUtils;
+import com.zephyr.commons.PaginationUtils;
 import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.domain.Task;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,9 +18,6 @@ public class YandexQueryProvider extends AbstractQueryProvider {
     private static final String START = "b";
     private static final String COUNT = "n";
 
-    @Value("${scraper.yandex.pageSize}")
-    private int pageSize;
-
     public YandexQueryProvider() {
         super(SearchEngine.YANDEX);
     }
@@ -30,11 +28,13 @@ public class YandexQueryProvider extends AbstractQueryProvider {
     }
 
     @Override
-    protected Map<String, ?> providePage(Task task, int start) {
+    protected Map<String, ?> providePage(Task task, int page, int pageSize) {
+        int first = PaginationUtils.startOfZeroBased(page, pageSize);
+
         return MapUtils.<String, Object>builder()
                 .put(QUERY, task.getWord())
                 .put(COUNT, pageSize)
-                .putIfTrue(START, start, notFirstPage(start))
+                .putIfTrue(START, first, PaginationUtils.isNotFirstZeroBased(first))
                 .build();
     }
 }

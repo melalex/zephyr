@@ -1,8 +1,8 @@
 package com.zephyr.scraper.loader.agent.impl;
 
-import com.zephyr.scraper.domain.Proxy;
-import com.zephyr.scraper.loader.context.model.RequestContext;
+import com.zephyr.data.dto.ProxyDto;
 import com.zephyr.scraper.loader.agent.AgentFactory;
+import com.zephyr.scraper.loader.context.model.RequestContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.client.reactive.ClientHttpConnector;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
@@ -40,7 +40,7 @@ public class AgentFactoryImpl implements AgentFactory {
                 .build();
     }
 
-    private ClientHttpConnector connector(Proxy proxy) {
+    private ClientHttpConnector connector(ProxyDto proxy) {
         if (Objects.nonNull(proxy)) {
             return new ReactorClientHttpConnector(this::configConnector);
         }

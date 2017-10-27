@@ -9,10 +9,10 @@ import com.zephyr.scraper.loader.context.ContextManager;
 import com.zephyr.scraper.loader.context.model.RequestContext;
 import com.zephyr.scraper.loader.exceptions.RequestException;
 import com.zephyr.scraper.loader.fraud.FraudAnalyzer;
+import com.zephyr.scraper.properties.ScraperProperties;
 import lombok.Setter;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClientException;
@@ -27,14 +27,8 @@ import java.util.function.Function;
 @RefreshScope
 public class BrowserImpl implements Browser {
 
-    @Value("${browser.retry.firstBackoff}")
-    private long firstBackoff;
-
-    @Value("${browser.retry.maxBackoff}")
-    private long maxBackoff;
-
-    @Value("${browser.retry.retryCount}")
-    private int retryCount;
+    @Setter(onMethod = @__(@Autowired))
+    private ScraperProperties scraperProperties;
 
     @Setter(onMethod = @__(@Autowired))
     private AgentFactory agentFactory;
@@ -65,8 +59,11 @@ public class BrowserImpl implements Browser {
 
     private Function<Flux<Throwable>, ? extends Publisher<?>> webClientException() {
         return Retry.anyOf(WebClientException.class)
-                .retryMax(retryCount)
-                .exponentialBackoff(Duration.ofMillis(firstBackoff), Duration.ofMillis(maxBackoff));
+                .retryMax(scraperProperties.getBrowser().getRetryCount())
+                .exponentialBackoff(
+                        Duration.ofMillis(scraperProperties.getBrowser().getFirstBackoff()),
+                        Duration.ofMillis(scraperProperties.getBrowser().getMaxBackoff())
+                );
     }
 
     private Function<Flux<Throwable>, ? extends Publisher<?>> requestException() {

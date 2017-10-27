@@ -38,6 +38,7 @@ dependencies {
     compile libraries.messaging
 
     compile utils.commons
+    compile utils.data
 
     compileOnly libraries.lombok
 

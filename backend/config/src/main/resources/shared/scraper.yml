@@ -8,10 +8,9 @@ spring:
           destination: SEARCH_RESULTS
 
 browser:
-  retry:
-    firstBackoff: 5000
-    maxBackoff: 300000
-    retryCount: 3
+  firstBackoff: 5000
+  maxBackoff: 300000
+  retryCount: 3
 
 scraper:
   google:
@@ -29,6 +28,7 @@ scraper:
     errorDelay: 480000
     linkSelector: "#b_results > li > h2 > a"
     resultCount: 100
+    pageSize: 10
     useProxy: true
 
   yahoo:

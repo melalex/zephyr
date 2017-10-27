@@ -1,6 +1,7 @@
 package com.zephyr.scraper.query.provider.impl;
 
 import com.zephyr.commons.MapUtils;
+import com.zephyr.commons.PaginationUtils;
 import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.domain.Task;
 import org.apache.commons.lang3.StringUtils;
@@ -22,9 +23,6 @@ public class BingQueryProvider extends AbstractQueryProvider {
     private static final String FIRST = "first";
     private static final String COUNT = "count";
 
-    @Value("${scraper.bing.pageSize}")
-    private int pageSize;
-
     public BingQueryProvider() {
         super(SearchEngine.BING);
     }
@@ -40,13 +38,13 @@ public class BingQueryProvider extends AbstractQueryProvider {
     }
 
     @Override
-    protected Map<String, ?> providePage(Task task, int start) {
-        int first = start + 1;
+    protected Map<String, ?> providePage(Task task, int page, int pageSize) {
+        int first = PaginationUtils.startOf(page, pageSize);
 
         return MapUtils.<String, Object>builder()
                 .put(QUERY, getQuery(task))
                 .put(COUNT, pageSize)
-                .putIfTrue(FIRST, first, notFirstPage(start))
+                .putIfTrue(FIRST, first, PaginationUtils.isNotFirst(first))
                 .build();
     }
 

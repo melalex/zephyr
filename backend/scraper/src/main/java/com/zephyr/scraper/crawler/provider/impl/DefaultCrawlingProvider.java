@@ -1,6 +1,6 @@
 package com.zephyr.scraper.crawler.provider.impl;
 
-import com.zephyr.scraper.config.ConfigurationManager;
+import com.zephyr.scraper.properties.ConfigurationManager;
 import com.zephyr.scraper.domain.Response;
 import lombok.Setter;
 import org.jsoup.Jsoup;

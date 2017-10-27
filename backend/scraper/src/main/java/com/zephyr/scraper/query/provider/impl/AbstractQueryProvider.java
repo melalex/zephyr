@@ -2,16 +2,15 @@ package com.zephyr.scraper.query.provider.impl;
 
 import com.zephyr.commons.PaginationUtils;
 import com.zephyr.data.enums.SearchEngine;
-import com.zephyr.scraper.config.ConfigurationManager;
-import com.zephyr.scraper.domain.EngineProperties;
 import com.zephyr.scraper.domain.PageRequest;
 import com.zephyr.scraper.domain.Request;
 import com.zephyr.scraper.domain.Task;
+import com.zephyr.scraper.properties.ScraperProperties;
 import com.zephyr.scraper.query.provider.QueryProvider;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Map;
@@ -21,27 +20,17 @@ import java.util.stream.Collectors;
 public abstract class AbstractQueryProvider implements QueryProvider {
     private static final String ROOT = "/";
 
+    @Setter(onMethod = @__(@Autowired))
+    private ScraperProperties properties;
+
     @NonNull
-    private SearchEngine searchEngine;
-
-    private EngineProperties engineProperties;
-
-    @Autowired
-    public void setConfigurationManager(ConfigurationManager configurationManager) {
-        this.engineProperties = configurationManager.configFor(searchEngine);
-    }
+    private SearchEngine engine;
 
     @Override
-    public Mono<Request> provide(Task task) {
-        return engineProperties.isEnabled()
-                ? Mono.just(createRequest(task))
-                : Mono.empty();
-    }
-
-    private Request createRequest(Task task) {
+    public Request provide(Task task) {
         return Request.builder()
                 .task(task)
-                .provider(searchEngine)
+                .provider(engine)
                 .baseUrl(provideBaseUrl(task))
                 .uri(provideUri())
                 .pages(providePages(task))
@@ -49,17 +38,17 @@ public abstract class AbstractQueryProvider implements QueryProvider {
     }
 
     private List<PageRequest> providePages(Task task) {
-        return PaginationUtils.pagesStream(engineProperties.getResultCount(), engineProperties.getPageSize())
+        return PaginationUtils.pagesStream(engineProperties().getResultCount(), engineProperties().getPageSize())
                 .map(p -> getPage(task, p))
                 .collect(Collectors.toList());
     }
 
     private PageRequest getPage(Task task, int page) {
-        return PageRequest.of(providePage(task, PaginationUtils.startOf(page, engineProperties.getPageSize())), page);
+        return PageRequest.of(providePage(task, page, engineProperties().getPageSize()), page);
     }
 
-    boolean notFirstPage(int start) {
-        return start > 0;
+    private ScraperProperties.EngineProperties engineProperties() {
+        return properties.getScraper(engine);
     }
 
     protected String provideUri() {
@@ -68,5 +57,5 @@ public abstract class AbstractQueryProvider implements QueryProvider {
 
     protected abstract String provideBaseUrl(Task task);
 
-    protected abstract Map<String, ?> providePage(Task task, int start);
+    protected abstract Map<String, ?> providePage(Task task, int page, int pageSize);
 }

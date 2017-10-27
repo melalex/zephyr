@@ -1,6 +1,7 @@
 package com.zephyr.scraper.query.provider.impl;
 
 import com.zephyr.commons.MapUtils;
+import com.zephyr.commons.PaginationUtils;
 import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.domain.Task;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,9 +30,6 @@ public class GoogleQueryProvider extends AbstractQueryProvider {
     private static final String START = "start";
     private static final String NUMBER = "num";
 
-    @Value("${scraper.google.pageSize}")
-    private int pageSize;
-
     public GoogleQueryProvider() {
         super(SearchEngine.GOOGLE);
     }
@@ -47,7 +45,9 @@ public class GoogleQueryProvider extends AbstractQueryProvider {
     }
 
     @Override
-    protected Map<String, ?> providePage(Task task, int page) {
+    protected Map<String, ?> providePage(Task task, int page, int pageSize) {
+        int first = PaginationUtils.startOfZeroBased(page, pageSize);
+
         return MapUtils.<String, Object>builder()
                 .put(SAFE, IMAGE)
                 .put(AD_TEST, ON)
@@ -57,7 +57,7 @@ public class GoogleQueryProvider extends AbstractQueryProvider {
                 .put(PARENT, getParent(task))
                 .put(LOCATION, task.getLocation())
                 .put(INTERFACE, task.getLanguageIso())
-                .putIfTrue(START, page, notFirstPage(page))
+                .putIfTrue(START, first, PaginationUtils.isNotFirstZeroBased(first))
                 .putIfNotNull(LANGUAGE, getLanguage(task))
                 .putIfTrueAndNotNull(COUNTRY, getCountry(task), task.isOnlyFromSpecifiedCountry())
                 .build();

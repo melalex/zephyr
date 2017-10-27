@@ -19,9 +19,6 @@ public class DuckDuckGoQueryProvider extends AbstractQueryProvider {
     private static final String AUTO_LOAD = "kc";
     private static final String NO_AUTO_LOAD = "1";
 
-    @Value("${scraper.duckduckgo.pageSize}")
-    private int pageSize;
-
     public DuckDuckGoQueryProvider() {
         super(SearchEngine.DUCKDUCKGO);
     }
@@ -33,7 +30,7 @@ public class DuckDuckGoQueryProvider extends AbstractQueryProvider {
 
     // TODO: Improve me
     @Override
-    protected Map<String, ?> providePage(Task task, int start) {
+    protected Map<String, ?> providePage(Task task, int page, int pageSize) {
         return MapUtils.<String, Object>builder()
                 .put(QUERY, task.getWord())
                 .put(SAFE, NOT_SAFE)

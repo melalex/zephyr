@@ -19,6 +19,6 @@ public class QueryConstructorImpl implements QueryConstructor {
 
     @Override
     public Flux<Request> construct(Task task) {
-        return Flux.fromIterable(providers).flatMap(p -> p.provide(task));
+        return Flux.fromIterable(providers).map(p -> p.provide(task));
     }
 }

@@ -1,8 +1,8 @@
 package com.zephyr.scraper.loader.context.strategy.impl;
 
 import com.zephyr.data.enums.SearchEngine;
-import com.zephyr.scraper.config.ConfigurationManager;
 import com.zephyr.scraper.loader.context.model.RequestContext;
+import com.zephyr.scraper.properties.ScraperProperties;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,12 +21,12 @@ public class DirectRequestStrategy extends AbstractRequestStrategy {
     private final Map<SearchEngine, LocalDateTime> direct = new ConcurrentHashMap<>();
 
     @Setter(onMethod = @__(@Autowired))
-    private ConfigurationManager configurationManager;
+    private ScraperProperties properties;
 
     @Override
     protected Mono<RequestContext> configure(RequestContext context) {
         SearchEngine engine = context.getProvider();
-        Duration timeout = Duration.ofMillis(configurationManager.configFor(engine).getDelay());
+        Duration timeout = Duration.ofMillis(properties.getScraper(engine).getDelay());
         LocalDateTime schedule = direct.compute(engine, (k, v) -> nonNull(v) ? v.plus(timeout) : now().plus(timeout));
         Duration duration = Duration.between(now(), schedule);
 
@@ -37,6 +37,9 @@ public class DirectRequestStrategy extends AbstractRequestStrategy {
 
     @Override
     public void report(RequestContext context) {
+        SearchEngine engine = context.getProvider();
+        Duration timeout = Duration.ofMillis(properties.getScraper(engine).getErrorDelay());
 
+        direct.compute(engine, (k, v) -> nonNull(v) ? v.plus(timeout) : now().plus(timeout));
     }
 }
