@@ -13,6 +13,7 @@ import com.zephyr.scraper.loader.exceptions.RequestException;
 import com.zephyr.scraper.loader.fraud.FraudAnalyzer;
 import com.zephyr.scraper.properties.ScraperProperties;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -26,6 +27,7 @@ import java.time.Duration;
 import java.util.Map;
 import java.util.function.Function;
 
+@Slf4j
 @Component
 @RefreshScope
 public class BrowserImpl implements Browser {
@@ -54,6 +56,7 @@ public class BrowserImpl implements Browser {
 
     private Mono<PageResponse> makeRequest(RequestContext context) {
         int page = context.getPage().getNumber();
+        String task = context.getTask().getId();
         SearchEngine engine = context.getProvider();
         Map<String, ?> params = context.getPage().getParams();
 
@@ -62,7 +65,8 @@ public class BrowserImpl implements Browser {
                 .exchange()
                 .flatMap(c -> Mono.zip(c.bodyToMono(String.class), Mono.justOrEmpty(c.headers().contentType())))
                 .map(r -> responseExtractor.extract(r.getT2(), r.getT1(), engine, page))
-                .doOnNext(r -> fraudAnalyzer.analyze(context.getProvider(), r))
+                .doOnNext(r -> log.info("Response extracted for Task {} and Engine {} on {} page", task, engine, page))
+                .doOnNext(r -> fraudAnalyzer.analyze(context, r))
                 .retryWhen(webClientException())
                 .onErrorMap(t -> new RequestException(t, context));
     }
@@ -70,6 +74,7 @@ public class BrowserImpl implements Browser {
     private Function<Flux<Throwable>, ? extends Publisher<?>> webClientException() {
         return Retry.anyOf(WebClientException.class)
                 .retryMax(scraperProperties.getBrowser().getRetryCount())
+                .doOnRetry(c -> log.error("WebClient throw exception {} on {} try", c.exception(), c.iteration()))
                 .exponentialBackoff(
                         Duration.ofMillis(scraperProperties.getBrowser().getFirstBackoff()),
                         Duration.ofMillis(scraperProperties.getBrowser().getMaxBackoff())
@@ -78,7 +83,8 @@ public class BrowserImpl implements Browser {
 
     private Function<Flux<Throwable>, ? extends Publisher<?>> requestException() {
         return Retry.anyOf(RequestException.class)
-                .doOnRetry(c -> report(c.exception()));
+                .doOnRetry(c -> report(c.exception()))
+                .doOnRetry(c -> log.error("Request failed with exception {} on {} try", c.exception(), c.iteration()));
     }
 
     private void report(Throwable throwable) {

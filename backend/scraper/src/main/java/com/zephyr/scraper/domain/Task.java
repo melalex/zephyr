@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class Task {
+    private String id;
     private String word;
     private String countryIso;
     private String place;

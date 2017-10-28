@@ -6,6 +6,7 @@ import com.zephyr.scraper.properties.ScraperProperties;
 import lombok.Setter;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@RefreshScope
 public class DefaultCrawlingProvider extends AbstractCrawlingProvider {
     private static final String HREF_ATTR = "href";
 

@@ -3,6 +3,7 @@ package com.zephyr.scraper.loader.agent.impl;
 import com.zephyr.data.dto.ProxyDto;
 import com.zephyr.scraper.loader.agent.AgentFactory;
 import com.zephyr.scraper.loader.context.model.RequestContext;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.client.reactive.ClientHttpConnector;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
@@ -12,6 +13,7 @@ import reactor.ipc.netty.http.client.HttpClientOptions;
 
 import java.util.Objects;
 
+@Slf4j
 @Component
 public class AgentFactoryImpl implements AgentFactory {
     private static final String DO_NOT_TRACK = "DNT";
@@ -25,6 +27,9 @@ public class AgentFactoryImpl implements AgentFactory {
 
     @Override
     public WebClient create(RequestContext context) {
+        log.info("Creating Agent for Task {} and Engine {} on {} page",
+                context.getTask().getId(), context.getProvider(), context.getPage().getNumber());
+
         return WebClient.builder()
                 .baseUrl(context.getBaseUrl())
                 .clientConnector(connector(context.getProxy()))

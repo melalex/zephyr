@@ -6,6 +6,7 @@ import com.zephyr.data.dto.PlaceDto;
 import com.zephyr.scraper.clients.LocationServiceClient;
 import com.zephyr.scraper.task.location.LocationSource;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -13,6 +14,7 @@ import reactor.core.publisher.Mono;
 import javax.annotation.PostConstruct;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Slf4j
 @Component
 public class LocationSourceImpl implements LocationSource {
     private Mono<ImmutableMap<String, CountryDto>> countryCache;
@@ -28,6 +30,7 @@ public class LocationSourceImpl implements LocationSource {
                     return m;
                 })
                 .map(ImmutableMap::copyOf)
+                .doOnNext(c -> log.info("Finished countryCache loading"))
                 .cache();
     }
 
@@ -38,6 +41,7 @@ public class LocationSourceImpl implements LocationSource {
 
     @Override
     public Mono<PlaceDto> findPlace(String iso, String name) {
-        return locationServiceClient.findByCountryIsoAndName(iso, name);
+        return locationServiceClient.findByCountryIsoAndName(iso, name)
+                .doOnNext(p -> log.info("Received place: {}", p));
     }
 }
