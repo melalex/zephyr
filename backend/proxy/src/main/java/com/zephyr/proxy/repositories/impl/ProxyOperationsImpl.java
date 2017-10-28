@@ -1,5 +1,6 @@
 package com.zephyr.proxy.repositories.impl;
 
+import com.google.common.base.Joiner;
 import com.mongodb.client.result.UpdateResult;
 import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.proxy.domain.Proxy;
@@ -31,22 +32,17 @@ public class ProxyOperationsImpl implements ProxyOperations {
     private ProxyProperties proxyProperties;
 
     @Override
-    public Mono<Proxy> reserve(SearchEngine engine) {
+    public Mono<Proxy> findForReservation(SearchEngine engine) {
         String scheduledUsageField = getScheduledUsageField(engine);
         String failsCountField = getFailsCountField(engine);
 
         Query query = Query.query(Criteria.where(failsCountField).lt(proxyProperties.getMaxFailsCount()))
-                .limit(1)
                 .with(Sort.by(
                         Sort.Order.by(scheduledUsageField),
                         Sort.Order.by(failsCountField)
                 ));
 
-        Update update = new Update()
-                .inc(scheduledUsageField, proxyProperties.getEngineProperties(engine).getDelay())
-                .isolated();
-
-        return mongo.findAndModify(query, update, Proxy.class);
+        return mongo.findOne(query, Proxy.class);
     }
 
     @Override
@@ -77,10 +73,10 @@ public class ProxyOperationsImpl implements ProxyOperations {
     }
 
     private String getScheduledUsageField(SearchEngine engine) {
-        return SCHEDULED_USAGE_FIELD + FIELD_SEPARATOR + engine;
+        return Joiner.on(FIELD_SEPARATOR).join(SCHEDULED_USAGE_FIELD, engine);
     }
 
     private String getFailsCountField(SearchEngine engine) {
-        return FAILS_COUNT_FIELD + FIELD_SEPARATOR + engine;
+        return Joiner.on(FIELD_SEPARATOR).join(FAILS_COUNT_FIELD, engine);
     }
 }

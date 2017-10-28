@@ -11,13 +11,13 @@ import reactor.core.publisher.Mono;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static java.time.LocalDateTime.now;
-import static java.util.Objects.nonNull;
 
 @Component
 public class DirectRequestStrategy extends AbstractRequestStrategy {
+    private static final String ERROR_MESSAGE = "Report method should be called after toContext";
+
     private final Map<SearchEngine, LocalDateTime> direct = new ConcurrentHashMap<>();
 
     @Setter(onMethod = @__(@Autowired))
@@ -27,8 +27,9 @@ public class DirectRequestStrategy extends AbstractRequestStrategy {
     protected Mono<RequestContext> configure(RequestContext context) {
         SearchEngine engine = context.getProvider();
         Duration timeout = Duration.ofMillis(properties.getScraper(engine).getDelay());
-        LocalDateTime schedule = direct.compute(engine, (k, v) -> nonNull(v) ? v.plus(timeout) : now().plus(timeout));
-        Duration duration = Duration.between(now(), schedule);
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime schedule = direct.compute(engine, (k, v) -> reserve(now, v, timeout));
+        Duration duration = Duration.between(now, schedule);
 
         return Mono.empty()
                 .delaySubscription(duration)
@@ -40,6 +41,20 @@ public class DirectRequestStrategy extends AbstractRequestStrategy {
         SearchEngine engine = context.getProvider();
         Duration timeout = Duration.ofMillis(properties.getScraper(engine).getErrorDelay());
 
-        direct.compute(engine, (k, v) -> nonNull(v) ? v.plus(timeout) : now().plus(timeout));
+        direct.compute(engine, (k, v) -> relax(v, timeout));
+    }
+
+    private LocalDateTime reserve(LocalDateTime now, LocalDateTime previous, Duration duration) {
+        if (previous == null || previous.isBefore(now)) {
+            return now;
+        } else {
+            return previous.plus(duration);
+        }
+    }
+
+    private LocalDateTime relax(LocalDateTime previous, Duration duration) {
+        return Optional.ofNullable(previous)
+                .orElseThrow(() -> new IllegalStateException(ERROR_MESSAGE))
+                .plus(duration);
     }
 }
