@@ -56,9 +56,9 @@ public class ProxyServiceImpl implements ProxyService {
 
         if (previous == null || previous.isBefore(now)) {
             return now;
-        } else {
-            return previous.plus(duration);
         }
+
+        return previous.plus(duration);
     }
 
     private ProxyDto toProxyDto(Proxy proxy, SearchEngine engine) {

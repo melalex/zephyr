@@ -1,10 +1,12 @@
 package com.zephyr.scraper.loader.browser.impl;
 
+import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.domain.PageRequest;
 import com.zephyr.scraper.domain.PageResponse;
 import com.zephyr.scraper.domain.Request;
 import com.zephyr.scraper.loader.agent.AgentFactory;
 import com.zephyr.scraper.loader.browser.Browser;
+import com.zephyr.scraper.loader.content.ResponseExtractor;
 import com.zephyr.scraper.loader.context.ContextManager;
 import com.zephyr.scraper.loader.context.model.RequestContext;
 import com.zephyr.scraper.loader.exceptions.RequestException;
@@ -21,6 +23,7 @@ import reactor.core.publisher.Mono;
 import reactor.retry.Retry;
 
 import java.time.Duration;
+import java.util.Map;
 import java.util.function.Function;
 
 @Component
@@ -37,6 +40,9 @@ public class BrowserImpl implements Browser {
     private FraudAnalyzer fraudAnalyzer;
 
     @Setter(onMethod = @__(@Autowired))
+    private ResponseExtractor responseExtractor;
+
+    @Setter(onMethod = @__(@Autowired))
     private ContextManager contextManager;
 
     @Override
@@ -47,12 +53,16 @@ public class BrowserImpl implements Browser {
     }
 
     private Mono<PageResponse> makeRequest(RequestContext context) {
+        int page = context.getPage().getNumber();
+        SearchEngine engine = context.getProvider();
+        Map<String, ?> params = context.getPage().getParams();
+
         return agentFactory.create(context).get()
-                .uri(context.getUri(), context.getPage().getParams())
-                .retrieve()
-                .bodyToMono(String.class)
-                .doOnNext(response -> fraudAnalyzer.analyze(response, context.getProvider()))
-                .map(r -> PageResponse.of(r, context.getPage().getNumber()))
+                .uri(context.getUri(), params)
+                .exchange()
+                .flatMap(c -> Mono.zip(c.bodyToMono(String.class), Mono.justOrEmpty(c.headers().contentType())))
+                .map(r -> responseExtractor.extract(r.getT2(), r.getT1(), engine, page))
+                .doOnNext(r -> fraudAnalyzer.analyze(context.getProvider(), r))
                 .retryWhen(webClientException())
                 .onErrorMap(t -> new RequestException(t, context));
     }

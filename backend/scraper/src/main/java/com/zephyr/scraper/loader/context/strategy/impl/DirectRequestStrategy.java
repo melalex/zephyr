@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class DirectRequestStrategy extends AbstractRequestStrategy {
-    private static final String ERROR_MESSAGE = "Report method should be called after toContext";
+    private static final String ERROR_MESSAGE = "report method should be called after toContext";
 
     private final Map<SearchEngine, LocalDateTime> direct = new ConcurrentHashMap<>();
 
@@ -47,9 +47,9 @@ public class DirectRequestStrategy extends AbstractRequestStrategy {
     private LocalDateTime reserve(LocalDateTime now, LocalDateTime previous, Duration duration) {
         if (previous == null || previous.isBefore(now)) {
             return now;
-        } else {
-            return previous.plus(duration);
         }
+
+        return previous.plus(duration);
     }
 
     private LocalDateTime relax(LocalDateTime previous, Duration duration) {
