@@ -6,12 +6,14 @@ import com.zephyr.scraper.query.QueryConstructor;
 import com.zephyr.scraper.query.provider.QueryProvider;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
 
 @Component
+@RefreshScope
 public class QueryConstructorImpl implements QueryConstructor {
 
     @Setter(onMethod = @__(@Autowired))

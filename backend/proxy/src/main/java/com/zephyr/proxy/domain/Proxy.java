@@ -7,11 +7,15 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Data
 @Document
 public class Proxy {
+
+    @Version
+    private long version;
 
     @Id
     private String id;
@@ -22,5 +26,5 @@ public class Proxy {
     private int port;
     private Protocol protocol;
     private Map<SearchEngine, Integer> failsCount;
-    private Map<SearchEngine, Long> scheduledUsage;
+    private Map<SearchEngine, LocalDateTime> scheduledUsage;
 }

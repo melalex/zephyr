@@ -8,12 +8,14 @@ import com.zephyr.scraper.crawler.provider.CrawlingProvider;
 import com.zephyr.scraper.crawler.provider.impl.DefaultCrawlingProvider;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
 
 @Component
+@RefreshScope
 public class CrawlingManagerImpl implements CrawlingManager {
     private Map<SearchEngine, CrawlingProvider> providers;
 

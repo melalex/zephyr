@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Component
 public class TaskConverterImpl implements TaskConverter {
 
@@ -22,6 +24,7 @@ public class TaskConverterImpl implements TaskConverter {
     @Override
     public Mono<Task> convert(Keyword keyword) {
         Task task = mapper.map(keyword, Task.class);
+        task.setId(UUID.randomUUID().toString());
 
         return locationSource.findCountry(task.getCountryIso())
                 .doOnNext(c -> {

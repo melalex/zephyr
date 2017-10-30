@@ -1,16 +1,19 @@
 package com.zephyr.scraper.loader.browser.impl;
 
+import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.domain.PageRequest;
 import com.zephyr.scraper.domain.PageResponse;
 import com.zephyr.scraper.domain.Request;
 import com.zephyr.scraper.loader.agent.AgentFactory;
 import com.zephyr.scraper.loader.browser.Browser;
+import com.zephyr.scraper.loader.content.ResponseExtractor;
 import com.zephyr.scraper.loader.context.ContextManager;
 import com.zephyr.scraper.loader.context.model.RequestContext;
 import com.zephyr.scraper.loader.exceptions.RequestException;
 import com.zephyr.scraper.loader.fraud.FraudAnalyzer;
 import com.zephyr.scraper.properties.ScraperProperties;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -21,8 +24,10 @@ import reactor.core.publisher.Mono;
 import reactor.retry.Retry;
 
 import java.time.Duration;
+import java.util.Map;
 import java.util.function.Function;
 
+@Slf4j
 @Component
 @RefreshScope
 public class BrowserImpl implements Browser {
@@ -37,6 +42,9 @@ public class BrowserImpl implements Browser {
     private FraudAnalyzer fraudAnalyzer;
 
     @Setter(onMethod = @__(@Autowired))
+    private ResponseExtractor responseExtractor;
+
+    @Setter(onMethod = @__(@Autowired))
     private ContextManager contextManager;
 
     @Override
@@ -47,12 +55,18 @@ public class BrowserImpl implements Browser {
     }
 
     private Mono<PageResponse> makeRequest(RequestContext context) {
+        int page = context.getPage().getNumber();
+        String task = context.getTask().getId();
+        SearchEngine engine = context.getProvider();
+        Map<String, ?> params = context.getPage().getParams();
+
         return agentFactory.create(context).get()
-                .uri(context.getUri(), context.getPage().getParams())
-                .retrieve()
-                .bodyToMono(String.class)
-                .doOnNext(response -> fraudAnalyzer.analyze(response, context.getProvider()))
-                .map(r -> PageResponse.of(r, context.getPage().getNumber()))
+                .uri(context.getUri(), params)
+                .exchange()
+                .flatMap(c -> Mono.zip(c.bodyToMono(String.class), Mono.justOrEmpty(c.headers().contentType())))
+                .map(r -> responseExtractor.extract(r.getT2(), r.getT1(), engine, page))
+                .doOnNext(r -> log.info("Response extracted for Task {} and Engine {} on {} page", task, engine, page))
+                .doOnNext(r -> fraudAnalyzer.analyze(context, r))
                 .retryWhen(webClientException())
                 .onErrorMap(t -> new RequestException(t, context));
     }
@@ -60,6 +74,7 @@ public class BrowserImpl implements Browser {
     private Function<Flux<Throwable>, ? extends Publisher<?>> webClientException() {
         return Retry.anyOf(WebClientException.class)
                 .retryMax(scraperProperties.getBrowser().getRetryCount())
+                .doOnRetry(c -> log.error("WebClient throw exception {} on {} try", c.exception(), c.iteration()))
                 .exponentialBackoff(
                         Duration.ofMillis(scraperProperties.getBrowser().getFirstBackoff()),
                         Duration.ofMillis(scraperProperties.getBrowser().getMaxBackoff())
@@ -68,7 +83,8 @@ public class BrowserImpl implements Browser {
 
     private Function<Flux<Throwable>, ? extends Publisher<?>> requestException() {
         return Retry.anyOf(RequestException.class)
-                .doOnRetry(c -> report(c.exception()));
+                .doOnRetry(c -> report(c.exception()))
+                .doOnRetry(c -> log.error("Request failed with exception {} on {} try", c.exception(), c.iteration()));
     }
 
     private void report(Throwable throwable) {

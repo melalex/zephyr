@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono;
 
 public interface ProxyOperations {
 
-    Mono<Proxy> reserve(SearchEngine engine);
+    Mono<Proxy> findForReservation(SearchEngine engine);
 
     Mono<UpdateResult> report(String id, SearchEngine engine);
 

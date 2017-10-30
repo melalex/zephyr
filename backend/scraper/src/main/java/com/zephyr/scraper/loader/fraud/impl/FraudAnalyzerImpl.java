@@ -1,13 +1,17 @@
 package com.zephyr.scraper.loader.fraud.impl;
 
 import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.scraper.domain.PageResponse;
+import com.zephyr.scraper.loader.context.model.RequestContext;
 import com.zephyr.scraper.loader.exceptions.FraudException;
 import com.zephyr.scraper.loader.fraud.FraudAnalyzer;
 import com.zephyr.scraper.loader.fraud.manager.FraudManager;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class FraudAnalyzerImpl implements FraudAnalyzer {
 
@@ -15,9 +19,19 @@ public class FraudAnalyzerImpl implements FraudAnalyzer {
     private FraudManager manager;
 
     @Override
-    public void analyze(String response, SearchEngine engine) {
+    public void analyze(RequestContext context, PageResponse response) {
+        int page = context.getPage().getNumber();
+        String task = context.getTask().getId();
+        SearchEngine engine = context.getProvider();
+
         if (manager.manage(engine).provide(response)) {
-            throw new FraudException(String.format("Fraud detection when scraping %s", engine));
+            String message = String.format("Fraud detection when scraping %s for Task %s on %s page", engine, task, page);
+
+            log.error(message);
+
+            throw new FraudException(message);
         }
+
+        log.info("Fraud analyze passed for Task {} and Engine {} on {} page", task, engine, page);
     }
 }

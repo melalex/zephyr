@@ -9,10 +9,12 @@ import com.zephyr.scraper.loader.context.strategy.RequestStrategy;
 import com.zephyr.scraper.properties.ScraperProperties;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Component
+@RefreshScope
 public class ContextManagerImpl implements ContextManager {
 
     @Setter(onMethod = @__(@Autowired))
@@ -28,18 +30,18 @@ public class ContextManagerImpl implements ContextManager {
     public Mono<RequestContext> toContext(Request request, PageRequest page) {
         if (isUseProxy(request.getProvider())) {
             return proxyRequestStrategy.toContext(request, page);
-        } else {
-            return directRequestStrategy.toContext(request, page);
         }
+
+        return directRequestStrategy.toContext(request, page);
     }
 
     @Override
     public void report(RequestContext context) {
         if (isUseProxy(context.getProvider())) {
             proxyRequestStrategy.report(context);
-        } else {
-            directRequestStrategy.report(context);
         }
+
+        directRequestStrategy.report(context);
     }
 
     private boolean isUseProxy(SearchEngine engine) {
