@@ -70,7 +70,7 @@ ext {
     def springDependencies = [
             spring: 'org.springframework.boot:spring-boot-starter',
             zuul: 'org.springframework.cloud:spring-cloud-starter-zuul',
-            feign: "org.springframework.cloud:spring-cloud-starter-feign",
+            feign: 'org.springframework.cloud:spring-cloud-starter-feign',
             dataCommons: 'org.springframework.data:spring-data-commons',
             messaging: 'org.springframework.cloud:spring-cloud-starter-bus-amqp',
             configurationProcessor: 'org.springframework.boot:spring-boot-configuration-processor',

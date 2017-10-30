@@ -18,7 +18,6 @@ import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.context.annotation.Bean;
 import reactor.core.publisher.Flux;
 
-@Slf4j
 @EnableFeignClients
 @SpringBootApplication
 @EnableDiscoveryClient
