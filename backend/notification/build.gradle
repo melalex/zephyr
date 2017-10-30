@@ -54,14 +54,14 @@ dependencyManagement {
 
 docker {
     registryCredentials {
-        username = getDockerUserName()
-        password = getDockerPassword()
+        username = dockerUserName
+        password = dockerPassword
     }
     javaApplication {
         baseImage = dockerBaseImage
         maintainer = dockerMainteiner
         port = 8015
-        tag = getDockerTag()
+        tag = dockerTag
     }
 }
 

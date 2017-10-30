@@ -24,7 +24,6 @@ allprojects {
 
 subprojects {
     apply from: "${rootProject.projectDir}/backend/dependencies.gradle"
-    apply from: "${rootProject.projectDir}/backend/common.gradle"
 
     apply plugin: 'java'
 
@@ -34,6 +33,10 @@ subprojects {
     ext {
         dockerBaseImage = 'openjdk:9-jre'
         dockerMainteiner = 'Alexander Melashchenko <melalex490@gmail.com>'
+        dockerUserName = project.findProperty('dockerUserName')
+        dockerPassword = project.findProperty('dockerPassword')
+        dockerTagVersion = project.hasProperty('tagVersion') ? project.property('tagVersion') : version
+        dockerTag = { "${dockerUserName}/${projectName}-${applicationName}:${dockerTagVersion}" }
     }
 }
 
