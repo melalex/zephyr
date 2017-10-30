@@ -13,6 +13,7 @@ buildscript {
         maven { url "http://repo1.maven.org/maven2/" }
         maven { url "https://repo.spring.io/snapshot" }
         maven { url "https://repo.spring.io/milestone" }
+        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -26,19 +27,25 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'application'
 
-mainClassName = 'com.zephyr.rating.RatingApplication'
+mainClassName = 'com.zephyr.personalisation.PersonalisationApplication'
 
 dependencies {
     compile libraries.webFlux
     compile libraries.acutator
     compile libraries.acutatorDocs
-    compile libraries.mongodb
+//    compile libraries.mongodb
     compile libraries.configClient
     compile libraries.discoveryClient
-    compile libraries.messaging
+
+    // TODO: remove this dependencies
+    compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: '2.0.0.RELEASE'
+    compile group: 'org.springframework.data', name: 'spring-data-commons', version: '2.0.0.RELEASE'
+    compile group: 'org.mongodb', name: 'mongodb-driver-reactivestreams', version: '1.7.0-beta1'
 
     compile utils.commons
     compile utils.data
+    compile utils.errors
+    compile utils.mapping
 
     compileOnly libraries.lombok
 
@@ -61,8 +68,7 @@ docker {
     javaApplication {
         baseImage = dockerBaseImage
         maintainer = dockerMainteiner
-        port = 8017
+        port = 8014
         tag = dockerTag
     }
 }
-

@@ -26,7 +26,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'application'
 
-mainClassName = 'com.zephyr.rating.RatingApplication'
+mainClassName = 'com.zephyr.task.TaskApplication'
 
 dependencies {
     compile libraries.webFlux
@@ -38,7 +38,6 @@ dependencies {
     compile libraries.messaging
 
     compile utils.commons
-    compile utils.data
 
     compileOnly libraries.lombok
 
@@ -61,7 +60,7 @@ docker {
     javaApplication {
         baseImage = dockerBaseImage
         maintainer = dockerMainteiner
-        port = 8017
+        port = 8019
         tag = dockerTag
     }
 }

@@ -1,7 +1,7 @@
 package com.zephyr.scraper.flow.impl;
 
 import com.zephyr.data.Keyword;
-import com.zephyr.data.SearchResult;
+import com.zephyr.data.dto.SearchResultDto;
 import com.zephyr.scraper.crawler.DocumentCrawler;
 import com.zephyr.scraper.flow.ScrapingFlow;
 import com.zephyr.scraper.loader.PageLoader;
@@ -28,7 +28,7 @@ public class ScrapingFlowImpl implements ScrapingFlow {
     private DocumentCrawler documentCrawler;
 
     @Override
-    public Flux<SearchResult> handle(Flux<Keyword> input) {
+    public Flux<SearchResultDto> handle(Flux<Keyword> input) {
         return input
                 .doOnNext(k -> log.info("Received new Keyword: {}", k))
                 .flatMap(k -> taskConverter.convert(k))

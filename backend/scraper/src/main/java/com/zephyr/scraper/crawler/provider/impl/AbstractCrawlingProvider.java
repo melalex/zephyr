@@ -1,7 +1,7 @@
 package com.zephyr.scraper.crawler.provider.impl;
 
 import com.zephyr.data.Keyword;
-import com.zephyr.data.SearchResult;
+import com.zephyr.data.dto.SearchResultDto;
 import com.zephyr.scraper.crawler.provider.CrawlingProvider;
 import com.zephyr.scraper.domain.Response;
 import lombok.Setter;
@@ -17,15 +17,15 @@ public abstract class AbstractCrawlingProvider implements CrawlingProvider {
     private ModelMapper mapper;
 
     @Override
-    public SearchResult provide(Response response) {
-        SearchResult searchResult = new SearchResult();
+    public SearchResultDto provide(Response response) {
+        SearchResultDto searchResultDto = new SearchResultDto();
 
-        searchResult.setKeyword(mapper.map(response.getTask(), Keyword.class));
-        searchResult.setProvider(response.getProvider());
-        searchResult.setTimestamp(LocalDateTime.now());
-        searchResult.setLinks(parse(response));
+        searchResultDto.setKeyword(mapper.map(response.getTask(), Keyword.class));
+        searchResultDto.setProvider(response.getProvider());
+        searchResultDto.setTimestamp(LocalDateTime.now());
+        searchResultDto.setLinks(parse(response));
 
-        return searchResult;
+        return searchResultDto;
     }
 
     protected abstract List<String> parse(Response response);

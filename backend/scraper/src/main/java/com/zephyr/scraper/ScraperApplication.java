@@ -1,7 +1,7 @@
 package com.zephyr.scraper;
 
 import com.zephyr.data.Keyword;
-import com.zephyr.data.SearchResult;
+import com.zephyr.data.dto.SearchResultDto;
 import com.zephyr.scraper.flow.ScrapingFlow;
 import com.zephyr.scraper.flow.impl.ScrapingFlowImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ public class ScraperApplication {
 
     @StreamListener
     @Output(Processor.OUTPUT)
-    public Flux<SearchResult> receive(@Input(Processor.INPUT) Flux<Keyword> input) {
+    public Flux<SearchResultDto> receive(@Input(Processor.INPUT) Flux<Keyword> input) {
         return flow().handle(input);
     }
 

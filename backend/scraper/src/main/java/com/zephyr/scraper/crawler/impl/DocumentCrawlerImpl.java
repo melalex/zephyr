@@ -1,6 +1,6 @@
 package com.zephyr.scraper.crawler.impl;
 
-import com.zephyr.data.SearchResult;
+import com.zephyr.data.dto.SearchResultDto;
 import com.zephyr.scraper.crawler.DocumentCrawler;
 import com.zephyr.scraper.crawler.manager.CrawlingManager;
 import com.zephyr.scraper.domain.Response;
@@ -17,7 +17,7 @@ public class DocumentCrawlerImpl implements DocumentCrawler {
     private CrawlingManager manager;
 
     @Override
-    public SearchResult crawl(Response document) {
+    public SearchResultDto crawl(Response document) {
         return manager.manage(document.getProvider()).provide(document);
     }
 }
