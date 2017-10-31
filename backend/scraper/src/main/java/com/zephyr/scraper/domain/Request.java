@@ -5,12 +5,11 @@ import lombok.Builder;
 import lombok.Value;
 
 import java.util.List;
-import java.util.Map;
 
 @Value
 @Builder
 public class Request {
-    private Task task;
+    private ScraperTask task;
     private SearchEngine provider;
     private String baseUrl;
     private String uri;

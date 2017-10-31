@@ -1,10 +1,10 @@
 package com.zephyr.scraper.task;
 
-import com.zephyr.data.Keyword;
-import com.zephyr.scraper.domain.Task;
+import com.zephyr.data.commons.Keyword;
+import com.zephyr.scraper.domain.ScraperTask;
 import reactor.core.publisher.Mono;
 
 public interface TaskConverter {
 
-    Mono<Task> convert(Keyword keyword);
+    Mono<ScraperTask> convert(Keyword keyword);
 }

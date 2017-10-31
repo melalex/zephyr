@@ -32,12 +32,15 @@ dependencies {
     compile libraries.webFlux
     compile libraries.acutator
     compile libraries.acutatorDocs
-    compile libraries.mongodb
     compile libraries.configClient
     compile libraries.discoveryClient
     compile libraries.messaging
+    compile libraries.collectionValidator
 
+    compile utils.data
+    compile utils.errors
     compile utils.commons
+    compile utils.validation
 
     compileOnly libraries.lombok
 

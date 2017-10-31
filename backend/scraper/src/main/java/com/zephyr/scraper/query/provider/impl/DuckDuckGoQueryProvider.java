@@ -2,8 +2,7 @@ package com.zephyr.scraper.query.provider.impl;
 
 import com.zephyr.commons.MapUtils;
 import com.zephyr.data.enums.SearchEngine;
-import com.zephyr.scraper.domain.Task;
-import org.springframework.beans.factory.annotation.Value;
+import com.zephyr.scraper.domain.ScraperTask;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
@@ -24,13 +23,13 @@ public class DuckDuckGoQueryProvider extends AbstractQueryProvider {
     }
 
     @Override
-    protected String provideBaseUrl(Task task) {
+    protected String provideBaseUrl(ScraperTask task) {
         return URL;
     }
 
     // TODO: Improve me
     @Override
-    protected Map<String, ?> providePage(Task task, int page, int pageSize) {
+    protected Map<String, ?> providePage(ScraperTask task, int page, int pageSize) {
         return MapUtils.<String, Object>builder()
                 .put(QUERY, task.getWord())
                 .put(SAFE, NOT_SAFE)

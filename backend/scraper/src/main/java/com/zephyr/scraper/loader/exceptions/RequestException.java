@@ -5,7 +5,7 @@ import com.zephyr.scraper.loader.context.model.RequestContext;
 public class RequestException extends RuntimeException {
     private static final long serialVersionUID = -4214987745593759340L;
 
-    private RequestContext failedRequest;
+    private final RequestContext failedRequest;
 
     public RequestContext getFailedRequest() {
         return failedRequest;

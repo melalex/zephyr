@@ -3,9 +3,8 @@ package com.zephyr.scraper.query.provider.impl;
 import com.zephyr.commons.MapUtils;
 import com.zephyr.commons.PaginationUtils;
 import com.zephyr.data.enums.SearchEngine;
-import com.zephyr.scraper.domain.Task;
+import com.zephyr.scraper.domain.ScraperTask;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +27,7 @@ public class BingQueryProvider extends AbstractQueryProvider {
     }
 
     @Override
-    protected String provideBaseUrl(Task task) {
+    protected String provideBaseUrl(ScraperTask task) {
         return URL;
     }
 
@@ -38,7 +37,7 @@ public class BingQueryProvider extends AbstractQueryProvider {
     }
 
     @Override
-    protected Map<String, ?> providePage(Task task, int page, int pageSize) {
+    protected Map<String, ?> providePage(ScraperTask task, int page, int pageSize) {
         int first = PaginationUtils.startOf(page, pageSize);
 
         return MapUtils.<String, Object>builder()
@@ -48,11 +47,11 @@ public class BingQueryProvider extends AbstractQueryProvider {
                 .build();
     }
 
-    private String getQuery(Task task) {
+    private String getQuery(ScraperTask task) {
         return task.getWord() + getLanguage(task);
     }
 
-    private String getLanguage(Task task) {
+    private String getLanguage(ScraperTask task) {
         return isNotBlank(task.getLanguageIso())
                 ? LANGUAGE + task.getLanguageIso()
                 : StringUtils.EMPTY;

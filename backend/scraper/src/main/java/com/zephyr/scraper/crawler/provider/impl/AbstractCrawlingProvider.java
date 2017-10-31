@@ -1,6 +1,6 @@
 package com.zephyr.scraper.crawler.provider.impl;
 
-import com.zephyr.data.Keyword;
+import com.zephyr.data.commons.Keyword;
 import com.zephyr.data.dto.SearchResultDto;
 import com.zephyr.scraper.crawler.provider.CrawlingProvider;
 import com.zephyr.scraper.domain.Response;

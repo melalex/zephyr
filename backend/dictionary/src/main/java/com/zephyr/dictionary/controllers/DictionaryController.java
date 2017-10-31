@@ -1,6 +1,6 @@
 package com.zephyr.dictionary.controllers;
 
-import com.zephyr.data.Keyword;
+import com.zephyr.data.commons.Keyword;
 import com.zephyr.dictionary.controllers.resources.DictionaryResource;
 import com.zephyr.dictionary.services.DictionaryService;
 import com.zephyr.dictionary.services.dto.DictionaryDto;

@@ -3,8 +3,7 @@ package com.zephyr.scraper.query.provider.impl;
 import com.zephyr.commons.MapUtils;
 import com.zephyr.commons.PaginationUtils;
 import com.zephyr.data.enums.SearchEngine;
-import com.zephyr.scraper.domain.Task;
-import org.springframework.beans.factory.annotation.Value;
+import com.zephyr.scraper.domain.ScraperTask;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +34,7 @@ public class GoogleQueryProvider extends AbstractQueryProvider {
     }
 
     @Override
-    protected String provideBaseUrl(Task task) {
+    protected String provideBaseUrl(ScraperTask task) {
         return "https://www." + task.getLocaleGoogle();
     }
 
@@ -45,7 +44,7 @@ public class GoogleQueryProvider extends AbstractQueryProvider {
     }
 
     @Override
-    protected Map<String, ?> providePage(Task task, int page, int pageSize) {
+    protected Map<String, ?> providePage(ScraperTask task, int page, int pageSize) {
         int first = PaginationUtils.startOfZeroBased(page, pageSize);
 
         return MapUtils.<String, Object>builder()
@@ -59,21 +58,14 @@ public class GoogleQueryProvider extends AbstractQueryProvider {
                 .put(INTERFACE, task.getLanguageIso())
                 .putIfTrue(START, first, PaginationUtils.isNotFirstZeroBased(first))
                 .putIfNotNull(LANGUAGE, getLanguage(task))
-                .putIfTrueAndNotNull(COUNTRY, getCountry(task), task.isOnlyFromSpecifiedCountry())
                 .build();
     }
 
-    private String getParent(Task task) {
+    private String getParent(ScraperTask task) {
         return "g:" + task.getParent();
     }
 
-    private String getCountry(Task task) {
-        String iso = task.getCountryIso();
-
-        return Objects.nonNull(iso) ? "country" + task.getCountryIso() : null;
-    }
-
-    private String getLanguage(Task task) {
+    private String getLanguage(ScraperTask task) {
         String iso = task.getLanguageIso();
 
         return Objects.nonNull(iso) ? "lang_" + task.getLanguageIso() : null;

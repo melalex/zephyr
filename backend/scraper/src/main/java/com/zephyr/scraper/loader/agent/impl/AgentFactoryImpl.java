@@ -27,7 +27,7 @@ public class AgentFactoryImpl implements AgentFactory {
 
     @Override
     public WebClient create(RequestContext context) {
-        log.info("Creating Agent for Task {} and Engine {} on {} page",
+        log.info("Creating Agent for TaskDto {} and Engine {} on {} page",
                 context.getTask().getId(), context.getProvider(), context.getPage().getNumber());
 
         return WebClient.builder()

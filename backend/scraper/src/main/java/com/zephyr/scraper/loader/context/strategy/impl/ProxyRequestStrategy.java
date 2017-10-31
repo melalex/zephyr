@@ -30,7 +30,7 @@ public class ProxyRequestStrategy extends AbstractRequestStrategy {
 
         return proxyServiceClient.reserve(context.getProvider())
                 .doOnNext(p -> log.info("Received proxy: {}", p))
-                .doOnNext(p -> log.info("Schedule request via Proxy {} on {} for Task {}, {} page and Engine {}",
+                .doOnNext(p -> log.info("Schedule request via Proxy {} on {} for TaskDto {}, {} page and Engine {}",
                         p.getId(), p.getSchedule(), task, page, engine))
                 .doOnNext(context::setProxy)
                 .flatMap(p -> Mono.just(context).delaySubscription(Duration.between(now(), p.getSchedule())));
@@ -44,7 +44,7 @@ public class ProxyRequestStrategy extends AbstractRequestStrategy {
         SearchEngine engine = context.getProvider();
 
         proxyServiceClient.report(context.getProxy().getId(), context.getProvider())
-                .doOnNext(v -> log.info("Proxy request error handled for Proxy {}, Task {} and Engine {} on {} page",
+                .doOnNext(v -> log.info("Proxy request error handled for Proxy {}, TaskDto {} and Engine {} on {} page",
                         proxy, task, engine, page))
                 .subscribe();
     }

@@ -4,7 +4,7 @@ import com.zephyr.commons.PaginationUtils;
 import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.domain.PageRequest;
 import com.zephyr.scraper.domain.Request;
-import com.zephyr.scraper.domain.Task;
+import com.zephyr.scraper.domain.ScraperTask;
 import com.zephyr.scraper.properties.ScraperProperties;
 import com.zephyr.scraper.query.provider.QueryProvider;
 import lombok.NonNull;
@@ -27,7 +27,7 @@ public abstract class AbstractQueryProvider implements QueryProvider {
     private SearchEngine engine;
 
     @Override
-    public Request provide(Task task) {
+    public Request provide(ScraperTask task) {
         return Request.builder()
                 .task(task)
                 .provider(engine)
@@ -37,13 +37,13 @@ public abstract class AbstractQueryProvider implements QueryProvider {
                 .build();
     }
 
-    private List<PageRequest> providePages(Task task) {
+    private List<PageRequest> providePages(ScraperTask task) {
         return PaginationUtils.pagesStream(engineProperties().getResultCount(), engineProperties().getPageSize())
                 .map(p -> getPage(task, p))
                 .collect(Collectors.toList());
     }
 
-    private PageRequest getPage(Task task, int page) {
+    private PageRequest getPage(ScraperTask task, int page) {
         return PageRequest.of(providePage(task, page, engineProperties().getPageSize()), page);
     }
 
@@ -55,7 +55,7 @@ public abstract class AbstractQueryProvider implements QueryProvider {
         return ROOT;
     }
 
-    protected abstract String provideBaseUrl(Task task);
+    protected abstract String provideBaseUrl(ScraperTask task);
 
-    protected abstract Map<String, ?> providePage(Task task, int page, int pageSize);
+    protected abstract Map<String, ?> providePage(ScraperTask task, int page, int pageSize);
 }

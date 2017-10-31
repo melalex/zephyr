@@ -25,13 +25,13 @@ public class FraudAnalyzerImpl implements FraudAnalyzer {
         SearchEngine engine = context.getProvider();
 
         if (manager.manage(engine).provide(response)) {
-            String message = String.format("Fraud detection when scraping %s for Task %s on %s page", engine, task, page);
+            String message = String.format("Fraud detection when scraping %s for TaskDto %s on %s page", engine, task, page);
 
             log.error(message);
 
             throw new FraudException(message);
         }
 
-        log.info("Fraud analyze passed for Task {} and Engine {} on {} page", task, engine, page);
+        log.info("Fraud analyze passed for TaskDto {} and Engine {} on {} page", task, engine, page);
     }
 }

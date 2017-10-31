@@ -5,7 +5,6 @@ import com.zephyr.commons.MapUtils;
 import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.crawler.manager.CrawlingManager;
 import com.zephyr.scraper.crawler.provider.CrawlingProvider;
-import com.zephyr.scraper.crawler.provider.impl.DefaultCrawlingProvider;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;

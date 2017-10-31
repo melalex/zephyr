@@ -17,13 +17,13 @@ ext {
             validation: project(':backend:util:validation'),
     ]
 
-    def lombokVersion = '1.16.16'
+    def lombokVersion = '1.16.18.1'
     def validationApiVersion = '2.0.0.Final'
     def jodaVersion = '2.9.9'
     def guavaVersion = '22.0'
     def apacheCommonsVersion = '3.6'
     def commonsCsvVersion = '1.5'
-    def modelMapperVersion = '1.1.0'
+    def modelMapperVersion = '1.1.1'
     def beanutilsVersion = '1.9.3'
     def evoVersion = '1.2.2'
     def jUnitVersion = '4.12'
@@ -37,6 +37,7 @@ ext {
     def jacksonVersion = '2.9.2'
     def adWordsVersion = '3.9.0'
     def hibernateValidatorVersion = '6.0.2.Final'
+    def collectionValidatorVersion = '2.2.0'
     def hateoasVersion = '0.23.0.RELEASE'
     def jsoupVersion = '1.10.3'
 
@@ -63,6 +64,7 @@ ext {
             jacksonAnnotations: "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
             adWords: "com.google.api-ads:ads-lib:${adWordsVersion}",
             hibernateValidator: "org.hibernate:hibernate-validator:${hibernateValidatorVersion}",
+            collectionValidator: "cz.jirutka.validator:validator-collection:${collectionValidatorVersion}",
             hateoas: "org.springframework.hateoas:spring-hateoas:${hateoasVersion}",
             jsoup: "org.jsoup:jsoup:${jsoupVersion}",
     ]

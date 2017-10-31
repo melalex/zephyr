@@ -50,13 +50,6 @@ public class MapUtils {
             return this;
         }
 
-        public Builder<K, V> putIfTrueAndNotNull(K key, V value, boolean condition) {
-            if (Objects.nonNull(value)) {
-                return putIfTrue(key, value, condition);
-            }
-            return this;
-        }
-
         public Map<K, V> build() {
             return ImmutableMap.copyOf(prototype);
         }

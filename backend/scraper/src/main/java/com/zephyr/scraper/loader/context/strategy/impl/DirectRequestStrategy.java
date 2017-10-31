@@ -35,7 +35,7 @@ public class DirectRequestStrategy extends AbstractRequestStrategy {
         LocalDateTime schedule = direct.compute(engine, (k, v) -> reserve(now, v, timeout));
         Duration duration = Duration.between(now, schedule);
 
-        log.info("Schedule direct request on {} for Task {}, page {} and Engine {}", schedule, task, page, engine);
+        log.info("Schedule direct request on {} for TaskDto {}, page {} and Engine {}", schedule, task, page, engine);
 
         return Mono.empty()
                 .delaySubscription(duration)
@@ -51,7 +51,7 @@ public class DirectRequestStrategy extends AbstractRequestStrategy {
 
         direct.compute(engine, (k, v) -> relax(v, timeout));
 
-        log.info("Direct request error handled for Task {} and Engine {} on {} page", task, engine, page);
+        log.info("Direct request error handled for TaskDto {} and Engine {} on {} page", task, engine, page);
     }
 
     private LocalDateTime reserve(LocalDateTime now, LocalDateTime previous, Duration duration) {

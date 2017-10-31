@@ -1,6 +1,6 @@
 package com.zephyr.scraper.flow.impl;
 
-import com.zephyr.data.Keyword;
+import com.zephyr.data.commons.Keyword;
 import com.zephyr.data.dto.SearchResultDto;
 import com.zephyr.scraper.crawler.DocumentCrawler;
 import com.zephyr.scraper.flow.ScrapingFlow;
@@ -32,12 +32,12 @@ public class ScrapingFlowImpl implements ScrapingFlow {
         return input
                 .doOnNext(k -> log.info("Received new Keyword: {}", k))
                 .flatMap(k -> taskConverter.convert(k))
-                .doOnNext(t -> log.info("Converted Keyword to Task: {}", t))
+                .doOnNext(t -> log.info("Converted Keyword to TaskDto: {}", t))
                 .flatMap(t -> queryConstructor.construct(t))
                 .doOnNext(r -> log.info("Request constructed: {}", r))
                 .parallel()
                 .flatMap(r -> pageLoader.load(r))
-                .doOnNext(r -> log.info("Finished loading pages for Task {} and Engine {}", r.getTask().getId(), r.getProvider()))
+                .doOnNext(r -> log.info("Finished loading pages for TaskDto {} and Engine {}", r.getTask().getId(), r.getProvider()))
                 .map(d -> documentCrawler.crawl(d))
                 .doOnNext(r -> log.info("Finished crawling result for Keyword {} and Engine {}", r.getKeyword(), r.getProvider()))
                 .sequential()

@@ -3,8 +3,7 @@ package com.zephyr.scraper.query.provider.impl;
 import com.zephyr.commons.MapUtils;
 import com.zephyr.commons.PaginationUtils;
 import com.zephyr.data.enums.SearchEngine;
-import com.zephyr.scraper.domain.Task;
-import org.springframework.beans.factory.annotation.Value;
+import com.zephyr.scraper.domain.ScraperTask;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +25,7 @@ public class YahooQueryProvider extends AbstractQueryProvider {
     }
 
     @Override
-    protected String provideBaseUrl(Task task) {
+    protected String provideBaseUrl(ScraperTask task) {
         return URL;
     }
 
@@ -36,7 +35,7 @@ public class YahooQueryProvider extends AbstractQueryProvider {
     }
 
     @Override
-    protected Map<String, ?> providePage(Task task, int page, int pageSize) {
+    protected Map<String, ?> providePage(ScraperTask task, int page, int pageSize) {
         int first = PaginationUtils.startOf(page, pageSize);
 
         return MapUtils.<String, Object>builder()

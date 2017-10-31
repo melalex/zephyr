@@ -1,8 +1,8 @@
 package com.zephyr.scraper.task.impl;
 
-import com.zephyr.data.Keyword;
+import com.zephyr.data.commons.Keyword;
 import com.zephyr.mapping.mappers.ExtendedMapper;
-import com.zephyr.scraper.domain.Task;
+import com.zephyr.scraper.domain.ScraperTask;
 import com.zephyr.scraper.task.location.LocationSource;
 import com.zephyr.scraper.task.TaskConverter;
 import lombok.Setter;
@@ -22,8 +22,8 @@ public class TaskConverterImpl implements TaskConverter {
     private LocationSource locationSource;
 
     @Override
-    public Mono<Task> convert(Keyword keyword) {
-        Task task = mapper.map(keyword, Task.class);
+    public Mono<ScraperTask> convert(Keyword keyword) {
+        ScraperTask task = mapper.map(keyword, ScraperTask.class);
         task.setId(UUID.randomUUID().toString());
 
         return locationSource.findCountry(task.getCountryIso())

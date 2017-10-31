@@ -65,7 +65,7 @@ public class BrowserImpl implements Browser {
                 .exchange()
                 .flatMap(c -> Mono.zip(c.bodyToMono(String.class), Mono.justOrEmpty(c.headers().contentType())))
                 .map(r -> responseExtractor.extract(r.getT2(), r.getT1(), engine, page))
-                .doOnNext(r -> log.info("Response extracted for Task {} and Engine {} on {} page", task, engine, page))
+                .doOnNext(r -> log.info("Response extracted for TaskDto {} and Engine {} on {} page", task, engine, page))
                 .doOnNext(r -> fraudAnalyzer.analyze(context, r))
                 .retryWhen(webClientException())
                 .onErrorMap(t -> new RequestException(t, context));

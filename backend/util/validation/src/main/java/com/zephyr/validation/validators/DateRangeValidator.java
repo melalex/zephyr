@@ -4,10 +4,10 @@ import com.zephyr.validation.DateRange;
 import lombok.SneakyThrows;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.DateTime;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.time.LocalDateTime;
 
 public class DateRangeValidator implements ConstraintValidator<DateRange, Object> {
     private String fromProperty;
@@ -26,8 +26,8 @@ public class DateRangeValidator implements ConstraintValidator<DateRange, Object
         final String toValue = BeanUtils.getProperty(value, toProperty);
 
         if (StringUtils.isNoneEmpty(fromValue, toValue)) {
-            final DateTime from = DateTime.parse(fromValue);
-            final DateTime to = DateTime.parse(toValue);
+            final LocalDateTime from = LocalDateTime.parse(fromValue);
+            final LocalDateTime to = LocalDateTime.parse(toValue);
 
             return from.isBefore(to);
         }

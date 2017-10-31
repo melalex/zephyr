@@ -32,9 +32,9 @@ zuul:
         stripPrefix: false
         sensitiveHeaders:
 
-    notification-service:
-        path: /notifications/**
-        serviceId: notification-service
+    personalisation-service:
+        path: /personalisation/**
+        serviceId: personalisation-service
         stripPrefix: false
         sensitiveHeaders:
 
@@ -44,14 +44,20 @@ zuul:
         stripPrefix: false
         sensitiveHeaders:
 
+    proxy-service:
+        path: /proxy/**
+        serviceId: proxy-service
+        stripPrefix: false
+        sensitiveHeaders:
+
     rating-service:
         path: /rating/**
         serviceId: rating-service
         stripPrefix: false
         sensitiveHeaders:
 
-    location-service:
-        path: /location/**
-        serviceId: location-service
+    task-service:
+        path: /task/**
+        serviceId: task-service
         stripPrefix: false
         sensitiveHeaders:

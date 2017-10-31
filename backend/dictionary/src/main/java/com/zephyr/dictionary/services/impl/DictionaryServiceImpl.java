@@ -1,7 +1,7 @@
 package com.zephyr.dictionary.services.impl;
 
 import com.zephyr.commons.DataAccessUtils;
-import com.zephyr.data.Keyword;
+import com.zephyr.data.commons.Keyword;
 import com.zephyr.dictionary.domain.Dictionary;
 import com.zephyr.dictionary.domain.factories.DictionaryFactory;
 import com.zephyr.dictionary.integration.gateways.NewKeywordGateway;

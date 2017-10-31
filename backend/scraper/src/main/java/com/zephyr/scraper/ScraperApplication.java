@@ -1,10 +1,9 @@
 package com.zephyr.scraper;
 
-import com.zephyr.data.Keyword;
+import com.zephyr.data.commons.Keyword;
 import com.zephyr.data.dto.SearchResultDto;
 import com.zephyr.scraper.flow.ScrapingFlow;
 import com.zephyr.scraper.flow.impl.ScrapingFlowImpl;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
