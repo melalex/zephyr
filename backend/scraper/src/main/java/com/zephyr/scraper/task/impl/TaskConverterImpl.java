@@ -27,15 +27,11 @@ public class TaskConverterImpl implements TaskConverter {
         task.setId(UUID.randomUUID().toString());
 
         return locationSource.findCountry(task.getCountryIso())
-                .doOnNext(c -> {
-                    task.setLocaleGoogle(c.getLocaleGoogle());
-                    task.setLocaleYandex(c.getLocaleYandex());
-                })
+                .doOnNext(c -> task.setLocaleGoogle(c.getLocaleGoogle()))
+                .doOnNext(c -> task.setLocaleYandex(c.getLocaleYandex()))
                 .then(locationSource.findPlace(task.getCountryIso(), task.getPlace()))
-                .doOnNext(p -> {
-                    task.setParent(p.getParent());
-                    task.setLocation(p.getLocation());
-                })
+                .doOnNext(p -> task.setParent(p.getParent()))
+                .doOnNext(p -> task.setLocation(p.getLocation()))
                 .then(Mono.just(task));
     }
 }
