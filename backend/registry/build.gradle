@@ -2,7 +2,7 @@ import com.bmuschko.gradle.docker.DockerRemoteApiPlugin
 
 buildscript {
     ext {
-        springBootVersion = '2.0.0.M5'
+        springBootVersion = '2.0.0.M6'
         dockerVersion = '3.1.0'
     }
     repositories {
@@ -29,17 +29,17 @@ apply plugin: 'application'
 mainClassName = 'com.zephyr.registry.RegistryApplication'
 
 dependencies {
-    compile libraries.configClient
-    compile libraries.discoveryServer
+    compile libraries['configClient']
+    compile libraries['discoveryServer']
 
-    testCompile libraries.test
+    testCompile libraries['test']
 }
 
 dependencyManagement {
     imports {
-        mavenBom imports.springBootBom
-        mavenBom imports.springCloudBom
-        mavenBom imports.springBusBom
+        mavenBom imports['springBootBom']
+        mavenBom imports['springCloudBom']
+        mavenBom imports['springBusBom']
     }
 }
 

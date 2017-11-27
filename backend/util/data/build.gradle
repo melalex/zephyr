@@ -1,6 +1,6 @@
 dependencies {
-    compileOnly libraries.hibernateValidator
-    compileOnly libraries.jacksonAnnotations
-    compileOnly libraries.hateoas
-    compileOnly libraries.lombok
+    compileOnly libraries['hibernateValidator']
+    compileOnly libraries['jacksonAnnotations']
+    compileOnly libraries['hateoas']
+    compileOnly libraries['lombok']
 }

@@ -1,10 +1,12 @@
 package com.zephyr.scraper.flow;
 
 import com.zephyr.data.commons.Keyword;
-import com.zephyr.data.dto.SearchResultDto;
 import reactor.core.publisher.Flux;
 
+import javax.naming.directory.SearchResult;
+
+@FunctionalInterface
 public interface ScrapingFlow {
 
-    Flux<SearchResultDto> handle(Flux<Keyword> input);
+    Flux<SearchResult> handle(Flux<Keyword> input);
 }

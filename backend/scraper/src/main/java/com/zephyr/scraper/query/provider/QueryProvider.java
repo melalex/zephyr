@@ -1,10 +1,12 @@
 package com.zephyr.scraper.query.provider;
 
-import com.zephyr.scraper.domain.Request;
-import com.zephyr.scraper.domain.ScraperTask;
+import com.zephyr.scraper.domain.EngineRequest;
+import com.zephyr.scraper.domain.QueryContext;
+
+import java.util.List;
 
 @FunctionalInterface
 public interface QueryProvider {
 
-    Request provide(ScraperTask task);
+    List<EngineRequest> provide(QueryContext context);
 }

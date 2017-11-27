@@ -2,7 +2,7 @@ import com.bmuschko.gradle.docker.DockerRemoteApiPlugin
 
 buildscript {
     ext {
-        springBootVersion = '2.0.0.M5'
+        springBootVersion = '2.0.0.M6'
         dockerVersion = '3.1.0'
     }
     repositories {
@@ -29,27 +29,27 @@ apply plugin: 'application'
 mainClassName = 'com.zephyr.rating.RatingApplication'
 
 dependencies {
-    compile libraries.webFlux
-    compile libraries.acutator
-    compile libraries.acutatorDocs
-//    compile libraries.mongodb
-    compile libraries.configClient
-    compile libraries.discoveryClient
-    compile libraries.messaging
+    compile libraries['webFlux']
+    compile libraries['acutator']
+    compile libraries['acutatorDocs']
+//    compile libraries['mongodb']
+    compile libraries['configClient']
+    compile libraries['discoveryClient']
+    compile libraries['messaging']
 
     // TODO: remove this dependencies
     compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: '2.0.0.RELEASE'
     compile group: 'org.springframework.data', name: 'spring-data-commons', version: '2.0.0.RELEASE'
     compile group: 'org.mongodb', name: 'mongodb-driver-reactivestreams', version: '1.7.0-beta1'
 
-    compile utils.data
-    compile utils.errors
-    compile utils.commons
-    compile utils.mapping
+    compile utils['data']
+    compile utils['errors']
+    compile utils['commons']
+    compile utils['mapping']
 
-    compileOnly libraries.lombok
+    compileOnly libraries['lombok']
 
-    testCompile libraries.test
+    testCompile libraries['test']
 }
 
 dependencyManagement {

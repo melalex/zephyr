@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.0.M5'
+        springBootVersion = '2.0.0.M6'
     }
     repositories {
         mavenLocal()
@@ -19,19 +19,19 @@ buildscript {
 apply plugin: 'io.spring.dependency-management'
 
 dependencies {
-    compile libraries.spring
-    compile libraries.modelMapper
+    compile libraries['spring']
+    compile libraries['modelMapper']
 
-    compileOnly libraries.lombok
+    compileOnly libraries['lombok']
 
-    testCompile libraries.guava
-    testCompile libraries.test
+    testCompile libraries['guava']
+    testCompile libraries['test']
 
-    testCompileOnly libraries.lombok
+    testCompileOnly libraries['lombok']
 }
 
 dependencyManagement {
     imports {
-        mavenBom imports.springBootBom
+        mavenBom imports['springBootBom']
     }
 }

@@ -1,32 +1,39 @@
 package com.zephyr.scraper.crawler.provider.impl;
 
-import com.zephyr.data.commons.Keyword;
-import com.zephyr.data.dto.SearchResultDto;
+import com.zephyr.scraper.crawler.fraud.FraudAnalyzer;
 import com.zephyr.scraper.crawler.provider.CrawlingProvider;
-import com.zephyr.scraper.domain.Response;
+import com.zephyr.scraper.domain.EngineResponse;
+import com.zephyr.scraper.domain.external.SearchEngine;
+import com.zephyr.scraper.domain.properties.ScraperProperties;
 import lombok.Setter;
-import org.modelmapper.ModelMapper;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
+@Component
 public abstract class AbstractCrawlingProvider implements CrawlingProvider {
 
     @Setter(onMethod = @__(@Autowired))
-    private ModelMapper mapper;
+    private ScraperProperties scraperProperties;
+
+    @Setter(onMethod = @__(@Autowired))
+    private FraudAnalyzer fraudAnalyzer;
 
     @Override
-    public SearchResultDto provide(Response response) {
-        SearchResultDto searchResultDto = new SearchResultDto();
+    public List<String> provide(EngineResponse engineResponse) {
+        SearchEngine engine = engineResponse.getProvider();
+        Document document = Jsoup.parse(engineResponse.getBody());
+        String linkSelector = scraperProperties
+                .getScraper(engine)
+                .getLinkSelector();
 
-        searchResultDto.setKeyword(mapper.map(response.getTask(), Keyword.class));
-        searchResultDto.setProvider(response.getProvider());
-        searchResultDto.setTimestamp(LocalDateTime.now());
-        searchResultDto.setLinks(parse(response));
+        fraudAnalyzer.analyze(engine, document);
 
-        return searchResultDto;
+        return parse(document, linkSelector);
     }
 
-    protected abstract List<String> parse(Response response);
+    protected abstract List<String> parse(Document document, String linkSelector);
 }

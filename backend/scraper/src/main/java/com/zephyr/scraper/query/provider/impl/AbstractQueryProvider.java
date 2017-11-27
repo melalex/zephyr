@@ -1,11 +1,11 @@
 package com.zephyr.scraper.query.provider.impl;
 
-import com.zephyr.commons.PaginationUtils;
 import com.zephyr.data.enums.SearchEngine;
-import com.zephyr.scraper.domain.PageRequest;
-import com.zephyr.scraper.domain.Request;
-import com.zephyr.scraper.domain.ScraperTask;
-import com.zephyr.scraper.properties.ScraperProperties;
+import com.zephyr.scraper.domain.EngineRequest;
+import com.zephyr.scraper.domain.Page;
+import com.zephyr.scraper.domain.QueryContext;
+import com.zephyr.scraper.domain.properties.ScraperProperties;
+import com.zephyr.scraper.domain.support.PageIterator;
 import com.zephyr.scraper.query.provider.QueryProvider;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Spliterator;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RequiredArgsConstructor
 public abstract class AbstractQueryProvider implements QueryProvider {
     private static final String ROOT = "/";
+    private static final int FIRST = 0;
 
     @Setter(onMethod = @__(@Autowired))
     private ScraperProperties properties;
@@ -27,35 +30,44 @@ public abstract class AbstractQueryProvider implements QueryProvider {
     private SearchEngine engine;
 
     @Override
-    public Request provide(ScraperTask task) {
-        return Request.builder()
-                .task(task)
-                .provider(engine)
-                .baseUrl(provideBaseUrl(task))
-                .uri(provideUri())
-                .pages(providePages(task))
-                .build();
-    }
-
-    private List<PageRequest> providePages(ScraperTask task) {
-        return PaginationUtils.pagesStream(engineProperties().getResultCount(), engineProperties().getPageSize())
-                .map(p -> getPage(task, p))
+    public List<EngineRequest> provide(QueryContext context) {
+        return StreamSupport.stream(pageIterator(), false)
+                .map(p -> getPage(context, p))
                 .collect(Collectors.toList());
     }
 
-    private PageRequest getPage(ScraperTask task, int page) {
-        return PageRequest.of(providePage(task, page, engineProperties().getPageSize()), page);
+    private Spliterator<Page> pageIterator() {
+        return PageIterator.of(Page.of(FIRST, first(), pageSize(), resultCount())).asSplitIterator();
     }
 
-    private ScraperProperties.EngineProperties engineProperties() {
-        return properties.getScraper(engine);
+    private EngineRequest getPage(QueryContext context, Page page) {
+        return EngineRequest.builder()
+                .keyword(context.getKeyword())
+                .provider(engine)
+                .baseUrl(provideBaseUrl(context))
+                .uri(provideUri())
+                .params(provideParams(context, page))
+                .offset(page.getStart())
+                .build();
+    }
+
+    private int first() {
+        return properties.getScraper(engine).getFirst();
+    }
+
+    private int pageSize() {
+        return properties.getScraper(engine).getPageSize();
+    }
+
+    private int resultCount() {
+        return properties.getScraper(engine).getResultCount();
     }
 
     protected String provideUri() {
         return ROOT;
     }
 
-    protected abstract String provideBaseUrl(ScraperTask task);
+    protected abstract String provideBaseUrl(QueryContext context);
 
-    protected abstract Map<String, ?> providePage(ScraperTask task, int page, int pageSize);
+    protected abstract Map<String, List<String>> provideParams(QueryContext context, Page page);
 }

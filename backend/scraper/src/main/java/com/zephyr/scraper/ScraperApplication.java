@@ -17,6 +17,8 @@ import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.context.annotation.Bean;
 import reactor.core.publisher.Flux;
 
+import java.time.Clock;
+
 @EnableFeignClients
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -37,5 +39,15 @@ public class ScraperApplication {
     @RefreshScope
     public ScrapingFlow flow() {
         return new ScrapingFlowImpl();
+    }
+
+    @Bean
+    public Clock clock() {
+        return Clock.systemDefaultZone();
+    }
+
+    @Bean
+    public AsyncHttpClient asyncHttpClient() {
+        return new DefaultAsyncHttpClient();
     }
 }

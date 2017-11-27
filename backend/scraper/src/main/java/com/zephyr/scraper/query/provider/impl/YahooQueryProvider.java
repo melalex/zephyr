@@ -1,16 +1,17 @@
 package com.zephyr.scraper.query.provider.impl;
 
 import com.zephyr.commons.MapUtils;
-import com.zephyr.commons.PaginationUtils;
 import com.zephyr.data.enums.SearchEngine;
-import com.zephyr.scraper.domain.ScraperTask;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
+import com.zephyr.scraper.domain.Page;
+import com.zephyr.scraper.domain.QueryContext;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 
 @Component
-@RefreshScope
+@ConditionalOnProperty(name = "scraper.yahoo.enabled", havingValue = "true")
 public class YahooQueryProvider extends AbstractQueryProvider {
     private static final String URL = "https://search.yahoo.com";
     private static final String URI = "/search";
@@ -25,7 +26,7 @@ public class YahooQueryProvider extends AbstractQueryProvider {
     }
 
     @Override
-    protected String provideBaseUrl(ScraperTask task) {
+    protected String provideBaseUrl(QueryContext context) {
         return URL;
     }
 
@@ -35,14 +36,12 @@ public class YahooQueryProvider extends AbstractQueryProvider {
     }
 
     @Override
-    protected Map<String, ?> providePage(ScraperTask task, int page, int pageSize) {
-        int first = PaginationUtils.startOf(page, pageSize);
-
-        return MapUtils.<String, Object>builder()
-                .put(QUERY, task.getWord())
+    protected Map<String, List<String>> provideParams(QueryContext context, Page page) {
+        return MapUtils.<String, Object>multiValueMapBuilder()
+                .put(QUERY, context.getWord())
                 .put(ENCODING, UTF8)
-                .put(COUNT, pageSize)
-                .putIfTrue(START, first, PaginationUtils.isNotFirst(first))
+                .put(COUNT, page.getPageSize())
+                .putIfTrue(START, page.getStart(), page.isNotFirst())
                 .build();
     }
 }

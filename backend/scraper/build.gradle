@@ -2,7 +2,7 @@ import com.bmuschko.gradle.docker.DockerRemoteApiPlugin
 
 buildscript {
     ext {
-        springBootVersion = '2.0.0.M5'
+        springBootVersion = '2.0.0.M6'
         dockerVersion = '3.1.0'
     }
     repositories {
@@ -29,31 +29,33 @@ apply plugin: 'application'
 mainClassName = 'com.zephyr.scraper.ScraperApplication'
 
 dependencies {
-    compile libraries.spring
-    compile libraries.webFluxLib
-    compile libraries.discoveryClient
-    compile libraries.configClient
-    compile libraries.messaging
-    compile libraries.jsoup
-    compile libraries.reactor
-    compile libraries.reactorExtra
-    compile libraries.feign
+    compile libraries['spring']
+    compile libraries['discoveryClient']
+    compile libraries['configClient']
+    compile libraries['messaging']
+    compile libraries['jsoup']
+    compile libraries['reactor']
+    compile libraries['reactorExtra']
+    compile libraries['feign']
+    compile libraries['netty']
+    compile libraries['asyncHttp']
 
-    compile utils.commons
-    compile utils.mapping
-    compile utils.data
+    compile utils['commons']
+    compile utils['mapping']
+    compile utils['data']
 
-    compileOnly libraries.lombok
-    compileOnly libraries.configurationProcessor
+    compileOnly libraries['lombok']
+    compileOnly libraries['configurationProcessor']
 
-    testCompile libraries.test
+    testCompile libraries['test']
+    testCompile libraries['reactorTest']
 }
 
 dependencyManagement {
     imports {
-        mavenBom imports.springBootBom
-        mavenBom imports.springCloudBom
-        mavenBom imports.springBusBom
+        mavenBom imports['springBootBom']
+        mavenBom imports['springCloudBom']
+        mavenBom imports['springBusBom']
     }
 }
 

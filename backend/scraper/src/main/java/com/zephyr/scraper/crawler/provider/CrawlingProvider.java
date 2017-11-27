@@ -1,9 +1,11 @@
 package com.zephyr.scraper.crawler.provider;
 
-import com.zephyr.data.dto.SearchResultDto;
-import com.zephyr.scraper.domain.Response;
+import com.zephyr.scraper.domain.EngineResponse;
 
+import java.util.List;
+
+@FunctionalInterface
 public interface CrawlingProvider {
 
-    SearchResultDto provide(Response response);
+    List<String> provide(EngineResponse engineResponse);
 }

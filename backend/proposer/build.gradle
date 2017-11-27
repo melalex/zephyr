@@ -2,7 +2,7 @@ import com.bmuschko.gradle.docker.DockerRemoteApiPlugin
 
 buildscript {
     ext {
-        springBootVersion = '2.0.0.M5'
+        springBootVersion = '2.0.0.M6'
         dockerVersion = '3.1.0'
     }
     repositories {
@@ -29,27 +29,27 @@ apply plugin: 'application'
 mainClassName = 'com.zephyr.proposer.ProposerApplication'
 
 dependencies {
-    compile libraries.webFlux
-    compile libraries.acutator
-    compile libraries.acutatorDocs
-    compile libraries.mongodb
-    compile libraries.configClient
-    compile libraries.discoveryClient
-    compile libraries.messaging
-    compile libraries.adWords
+    compile libraries['webFlux']
+    compile libraries['acutator']
+    compile libraries['acutatorDocs']
+    compile libraries['mongodb']
+    compile libraries['configClient']
+    compile libraries['discoveryClient']
+    compile libraries['messaging']
+    compile libraries['adWords']
 
-    compile utils.errors
+    compile utils['errors']
 
-    compileOnly libraries.lombok
+    compileOnly libraries['lombok']
 
-    testCompile libraries.test
+    testCompile libraries['test']
 }
 
 dependencyManagement {
     imports {
-        mavenBom imports.springBootBom
-        mavenBom imports.springCloudBom
-        mavenBom imports.springBusBom
+        mavenBom imports['springBootBom']
+        mavenBom imports['springCloudBom']
+        mavenBom imports['springBusBom']
     }
 }
 

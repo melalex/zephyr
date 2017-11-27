@@ -1,26 +1,25 @@
 ext {
-    def springCloudVersion = 'Finchley.M2'
-    def springBootVersion = '2.0.0.M5'
+    def springCloudVersion = 'Finchley.M4'
+    def springBootVersion = '2.0.0.M6'
     def springBusVersion = '1.3.2.BUILD-SNAPSHOT'
 
     imports = [
-            springBootBom: "org.springframework.boot:spring-boot-dependencies:${springBootVersion}",
+            springBootBom : "org.springframework.boot:spring-boot-dependencies:${springBootVersion}",
             springCloudBom: "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}",
-            springBusBom: "org.springframework.cloud:spring-cloud-bus:${springBusVersion}"
+            springBusBom  : "org.springframework.cloud:spring-cloud-bus:${springBusVersion}"
     ]
 
     utils = [
-            commons: project(':backend:util:commons'),
-            data: project(':backend:util:data'),
-            errors: project(':backend:util:errors'),
-            mapping: project(':backend:util:mapping'),
+            commons   : project(':backend:util:commons'),
+            data      : project(':backend:util:data'),
+            errors    : project(':backend:util:errors'),
+            mapping   : project(':backend:util:mapping'),
             validation: project(':backend:util:validation'),
     ]
 
-    def lombokVersion = '1.16.18.1'
+    def lombokVersion = '1.16.18'
     def validationApiVersion = '2.0.0.Final'
     def jodaVersion = '2.9.9'
-    def guavaVersion = '22.0'
     def apacheCommonsVersion = '3.6'
     def commonsCsvVersion = '1.5'
     def modelMapperVersion = '1.1.1'
@@ -40,76 +39,89 @@ ext {
     def collectionValidatorVersion = '2.2.0'
     def hateoasVersion = '0.23.0.RELEASE'
     def jsoupVersion = '1.10.3'
+    def nettyVersion = '4.1.17.Final'
+    def asyncHttpVersion = '2.0.37'
 
     def librariesDependencies = [
-            lombok: "org.projectlombok:lombok:${lombokVersion}",
-            validationApi: "javax.validation:validation-api:${validationApiVersion}",
-            jodaTime: "joda-time:joda-time:${jodaVersion}",
-            guava: "com.google.guava:guava:${guavaVersion}",
-            apacheCommons: "org.apache.commons:commons-lang3:${apacheCommonsVersion}",
-            csv: "org.apache.commons:commons-csv:${commonsCsvVersion}",
-            modelMapper: "org.modelmapper:modelmapper:${modelMapperVersion}",
-            beanUtils: "commons-beanutils:commons-beanutils:${beanutilsVersion}",
-            evo: "org.atteo:evo-inflector:${evoVersion}",
-            jUnit: "junit:junit:${jUnitVersion}",
-            mockito: "org.mockito:mockito-core:${mockitoVersion}",
-            jsonpath: "com.jayway.jsonpath:json-path:${jsonpathVersion}",
-            embeddedMongodb: "de.flapdoodle.embed:de.flapdoodle.embed.mongo:${embeddedMongodbVersion}",
-            rollbar: "com.rollbar:rollbar:${rollbarVersion}",
-            slf4j: "org.slf4j:slf4j-api:${slf4jVersion}",
-            reactor: "io.projectreactor:reactor-core:${reactorVersion}",
-            reactorExtra: "io.projectreactor.addons:reactor-extra:${reactorVersion}",
-            reactorTest: "io.projectreactor:reactor-test:${reactorTestVersion}",
-            jackson: "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
-            jacksonAnnotations: "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
-            adWords: "com.google.api-ads:ads-lib:${adWordsVersion}",
-            hibernateValidator: "org.hibernate:hibernate-validator:${hibernateValidatorVersion}",
+            lombok             : "org.projectlombok:lombok:${lombokVersion}",
+
+            jodaTime           : "joda-time:joda-time:${jodaVersion}",
+            apacheCommons      : "org.apache.commons:commons-lang3:${apacheCommonsVersion}",
+            csv                : "org.apache.commons:commons-csv:${commonsCsvVersion}",
+
+            modelMapper        : "org.modelmapper:modelmapper:${modelMapperVersion}",
+            beanUtils          : "commons-beanutils:commons-beanutils:${beanutilsVersion}",
+            evo                : "org.atteo:evo-inflector:${evoVersion}",
+
+            jUnit              : "junit:junit:${jUnitVersion}",
+            mockito            : "org.mockito:mockito-core:${mockitoVersion}",
+            jsonpath           : "com.jayway.jsonpath:json-path:${jsonpathVersion}",
+            embeddedMongodb    : "de.flapdoodle.embed:de.flapdoodle.embed.mongo:${embeddedMongodbVersion}",
+
+            slf4j              : "org.slf4j:slf4j-api:${slf4jVersion}",
+
+            reactor            : "io.projectreactor:reactor-core:${reactorVersion}",
+            reactorExtra       : "io.projectreactor.addons:reactor-extra:${reactorVersion}",
+            reactorTest        : "io.projectreactor:reactor-test:${reactorTestVersion}",
+
+            jackson            : "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
+            jacksonAnnotations : "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
+
+            adWords            : "com.google.api-ads:ads-lib:${adWordsVersion}",
+            rollbar            : "com.rollbar:rollbar:${rollbarVersion}",
+
+            validationApi      : "javax.validation:validation-api:${validationApiVersion}",
+            hibernateValidator : "org.hibernate:hibernate-validator:${hibernateValidatorVersion}",
             collectionValidator: "cz.jirutka.validator:validator-collection:${collectionValidatorVersion}",
-            hateoas: "org.springframework.hateoas:spring-hateoas:${hateoasVersion}",
-            jsoup: "org.jsoup:jsoup:${jsoupVersion}",
+
+            hateoas            : "org.springframework.hateoas:spring-hateoas:${hateoasVersion}",
+            jsoup              : "org.jsoup:jsoup:${jsoupVersion}",
+
+            netty              : "io.netty:netty-all:${nettyVersion}",
+            asyncHttp          : "org.asynchttpclient:async-http-client:${asyncHttpVersion}"
     ]
 
     def springDependencies = [
-            spring: 'org.springframework.boot:spring-boot-starter',
-            zuul: 'org.springframework.cloud:spring-cloud-starter-zuul',
-            feign: 'org.springframework.cloud:spring-cloud-starter-feign',
-            dataCommons: 'org.springframework.data:spring-data-commons',
-            messaging: 'org.springframework.cloud:spring-cloud-starter-bus-amqp',
+            spring                : 'org.springframework.boot:spring-boot-starter',
+            zuul                  : 'org.springframework.cloud:spring-cloud-starter-zuul',
+            feign                 : 'org.springframework.cloud:spring-cloud-starter-feign',
+            dataCommons           : 'org.springframework.data:spring-data-commons',
+            messaging             : 'org.springframework.cloud:spring-cloud-starter-bus-amqp',
             configurationProcessor: 'org.springframework.boot:spring-boot-configuration-processor',
-            mongodb: 'org.springframework.boot:spring-boot-starter-data-mongodb',
-            redis: 'org.springframework.data:spring-data-redis',
-            test: 'org.springframework.boot:spring-boot-starter-test',
+            mongodb               : 'org.springframework.boot:spring-boot-starter-data-mongodb',
+            redis                 : 'org.springframework.data:spring-data-redis',
+            test                  : 'org.springframework.boot:spring-boot-starter-test',
 
-            webFlux: 'org.springframework.boot:spring-boot-starter-webflux',
-            webFluxLib: 'org.springframework:spring-webflux',
+            webFlux               : 'org.springframework.boot:spring-boot-starter-webflux',
+            webFluxLib            : 'org.springframework:spring-webflux',
 
-            hal: 'org.springframework.boot:spring-boot-starter-hateoas',
-            halBrowser: 'org.springframework.data:spring-data-rest-hal-browser',
+            hal                   : 'org.springframework.boot:spring-boot-starter-hateoas',
+            halBrowser            : 'org.springframework.data:spring-data-rest-hal-browser',
 
-            cache: 'org.springframework.boot:spring-boot-starter-cache',
-            validation: 'org.springframework.boot:spring-boot-starter-validation',
+            cache                 : 'org.springframework.boot:spring-boot-starter-cache',
+            validation            : 'org.springframework.boot:spring-boot-starter-validation',
 
-            acutator: 'org.springframework.boot:spring-boot-starter-actuator',
-            acutatorDocs: 'org.springframework.boot:spring-boot-actuator-docs',
+            acutator              : 'org.springframework.boot:spring-boot-starter-actuator',
+            acutatorDocs          : 'org.springframework.boot:spring-boot-actuator-docs',
 
-            vault: 'org.springframework.cloud:spring-cloud-starter-vault-config',
-            configServer: 'org.springframework.cloud:spring-cloud-config-server',
-            configClient: 'org.springframework.cloud:spring-cloud-starter-config',
-            configMonitor: 'org.springframework.cloud:spring-cloud-config-monitor',
+            vault                 : 'org.springframework.cloud:spring-cloud-starter-vault-config',
+            configServer          : 'org.springframework.cloud:spring-cloud-config-server',
+            configClient          : 'org.springframework.cloud:spring-cloud-starter-config',
+            configMonitor         : 'org.springframework.cloud:spring-cloud-config-monitor',
 
-            discoveryServer: 'org.springframework.cloud:spring-cloud-starter-eureka-server',
-            discoveryClient: 'org.springframework.cloud:spring-cloud-starter-eureka',
+            discoveryServer       : 'org.springframework.cloud:spring-cloud-starter-eureka-server',
+            discoveryClient       : 'org.springframework.cloud:spring-cloud-starter-eureka',
 
-            security: 'org.springframework.boot:spring-boot-starter-security',
-            securityCloud: 'org.springframework.cloud:spring-cloud-starter-security',
-            securityOAuth2: 'org.springframework.cloud:spring-cloud-starter-oauth2',
-            securityTest: 'org.springframework.security:spring-security-test',
+            security              : 'org.springframework.boot:spring-boot-starter-security',
+            securityCloud         : 'org.springframework.cloud:spring-cloud-starter-security',
+            securityOAuth2        : 'org.springframework.cloud:spring-cloud-starter-oauth2',
+            securityTest          : 'org.springframework.security:spring-security-test',
 
-            turbine: 'org.springframework.cloud:spring-cloud-starter-turbine-amqp',
-            turbineStream: 'org.springframework.cloud:spring-cloud-starter-turbine-stream',
+            turbine               : 'org.springframework.cloud:spring-cloud-starter-turbine-amqp',
+            turbineStream         : 'org.springframework.cloud:spring-cloud-starter-turbine-stream',
 
-            hystrix: 'org.springframework.cloud:spring-cloud-starter-hystrix',
-            hystrixDashboard: 'org.springframework.cloud:spring-cloud-starter-hystrix-dashboard',
+            hystrix               : 'org.springframework.cloud:spring-cloud-starter-hystrix',
+            hystrixDashboard      : 'org.springframework.cloud:spring-cloud-starter-hystrix-dashboard',
     ]
 
     libraries = librariesDependencies + springDependencies

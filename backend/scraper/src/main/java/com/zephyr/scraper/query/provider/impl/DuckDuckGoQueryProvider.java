@@ -2,14 +2,16 @@ package com.zephyr.scraper.query.provider.impl;
 
 import com.zephyr.commons.MapUtils;
 import com.zephyr.data.enums.SearchEngine;
-import com.zephyr.scraper.domain.ScraperTask;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
+import com.zephyr.scraper.domain.Page;
+import com.zephyr.scraper.domain.QueryContext;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 
 @Component
-@RefreshScope
+@ConditionalOnProperty(name = "scraper.duckduckgo.enabled", havingValue = "true")
 public class DuckDuckGoQueryProvider extends AbstractQueryProvider {
     private static final String URL = "https://duckduckgo.com";
     private static final String QUERY = "q";
@@ -23,15 +25,14 @@ public class DuckDuckGoQueryProvider extends AbstractQueryProvider {
     }
 
     @Override
-    protected String provideBaseUrl(ScraperTask task) {
+    protected String provideBaseUrl(QueryContext context) {
         return URL;
     }
 
-    // TODO: Improve me
     @Override
-    protected Map<String, ?> providePage(ScraperTask task, int page, int pageSize) {
-        return MapUtils.<String, Object>builder()
-                .put(QUERY, task.getWord())
+    protected Map<String, List<String>> provideParams(QueryContext context, Page page) {
+        return MapUtils.multiValueMapBuilder()
+                .put(QUERY, context.getWord())
                 .put(SAFE, NOT_SAFE)
                 .put(AUTO_LOAD, NO_AUTO_LOAD)
                 .build();

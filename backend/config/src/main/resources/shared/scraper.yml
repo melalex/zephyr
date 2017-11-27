@@ -8,52 +8,61 @@ spring:
           destination: SEARCH_RESULTS
 
 browser:
-  firstBackoff: 5000
-  maxBackoff: 300000
-  retryCount: 3
+  backoff: 5000
+  retryCount: 2
 
 scraper:
   google:
     enabled: true
+    saveResponse: true
     delay: 480000
     errorDelay: 480000
-    linkSelector: "#rso > div > div > div > div > div > h3 > a"
+    linkSelector: "#rso > div > div > div> div > div > div > div > div.f.kv._SWb > cite"
+    first: 0
     resultCount: 100
     pageSize: 100
-    useProxy: true
+    useProxy: false
 
   bing:
     enabled: true
+    saveResponse: true
     delay: 480000
     errorDelay: 480000
     linkSelector: "#b_results > li > h2 > a"
-    resultCount: 100
+    first: 1
+    resultCount: 10
     pageSize: 10
-    useProxy: true
+    useProxy: false
 
   yahoo:
     enabled: true
+    saveResponse: true
     delay: 480000
     errorDelay: 480000
-    linkSelector: "#web > ol > li > div > div > h3 > a"
-    resultCount: 100
-    pageSize: 100
-    useProxy: true
+    linkSelector: "#web > ol > li > div > div > div > span"
+    first: 1
+    resultCount: 10
+    pageSize: 10
+    useProxy: false
 
   yandex:
-    enabled: true
+    enabled: false
+    saveResponse: false
     delay: 480000
     errorDelay: 480000
-    linkSelector: ".main__content > div > div > ul > li > div > h2 > a"
+    linkSelector:
+    first: 0
     resultCount: 100
     pageSize: 100
-    useProxy: true
+    useProxy: false
 
   duckduckgo:
-    enabled: true
+    enabled: false
+    saveResponse: false
     delay: 480000
     errorDelay: 480000
-    linkSelector: "a.result__a"
+    linkSelector:
+    first: 0
     resultCount: 100
     pageSize: 100
-    useProxy: true
+    useProxy: false

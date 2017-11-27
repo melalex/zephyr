@@ -1,13 +1,13 @@
 dependencies {
-    compile libraries.apacheCommons
-    compile libraries.jodaTime
-    compile libraries.beanUtils
-    compile libraries.validationApi
+    compile libraries['apacheCommons']
+    compile libraries['jodaTime']
+    compile libraries['beanUtils']
+    compile libraries['validationApi']
 
-    compileOnly libraries.lombok
+    compileOnly libraries['lombok']
 
-    testCompile libraries.jUnit
-    testCompile libraries.mockito
+    testCompile libraries['jUnit']
+    testCompile libraries['mockito']
 
-    testCompileOnly libraries.lombok
+    testCompileOnly libraries['lombok']
 }

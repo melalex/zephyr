@@ -2,7 +2,7 @@ import com.bmuschko.gradle.docker.DockerRemoteApiPlugin
 
 buildscript {
     ext {
-        springBootVersion = '2.0.0.M5'
+        springBootVersion = '2.0.0.M6'
         dockerVersion = '3.1.0'
     }
     repositories {
@@ -29,23 +29,23 @@ apply plugin: 'application'
 mainClassName = 'com.zephyr.monitoring.MonitoringApplication'
 
 dependencies {
-    compile libraries.configClient
-    compile libraries.discoveryServer
+    compile libraries['configClient']
+    compile libraries['discoveryServer']
 
-    compile libraries.hystrixDashboard
-    compile libraries.turbineStream
+    compile libraries['hystrixDashboard']
+    compile libraries['turbineStream']
 
-    compile libraries.messaging
+    compile libraries['messaging']
 
-    testCompile libraries.test
+    testCompile libraries['test']
 
 }
 
 dependencyManagement {
     imports {
-        mavenBom imports.springBootBom
-        mavenBom imports.springCloudBom
-        mavenBom imports.springBusBom
+        mavenBom imports['springBootBom']
+        mavenBom imports['springCloudBom']
+        mavenBom imports['springBusBom']
     }
 }
 

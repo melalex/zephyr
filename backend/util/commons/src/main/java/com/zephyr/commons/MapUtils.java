@@ -1,14 +1,12 @@
 package com.zephyr.commons;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 
 @UtilityClass
@@ -19,38 +17,56 @@ public class MapUtils {
                 .orElseThrow(() -> new IllegalArgumentException(errorMessage(key)));
     }
 
-    public <K, V> Builder<K, V> builder() {
-        return new Builder<>();
+    public MultiValueMapBuilder multiValueMapBuilder() {
+        return new MultiValueMapBuilder();
     }
 
     private <K> String errorMessage(K key) {
         return String.format("Map doesn't contains key '%s'", key);
     }
 
+    public <K, V> Map<K, V> merge(Map<K, V> result, Map<K, V> element) {
+        result.putAll(element);
+        return result;
+    }
+
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
-    public static class Builder<K, V> {
-        private Map<K, V> prototype = new HashMap<>();
+    public static class MultiValueMapBuilder {
+        private final Map<String, List<String>> prototype = new HashMap<>();
 
-        public Builder<K, V> put(K key, V value) {
-            prototype.put(key, value);
+        public MultiValueMapBuilder put(String key, String value) {
+            prototype.put(key, ImmutableList.of(value));
             return this;
         }
 
-        public Builder<K, V> putIfTrue(K key, V value, boolean condition) {
+        public MultiValueMapBuilder putAll(Map<String, List<String>> map) {
+            prototype.putAll(map);
+            return this;
+        }
+
+        public MultiValueMapBuilder put(String key, int value) {
+            return put(key, String.valueOf(value));
+        }
+
+        public MultiValueMapBuilder putIfTrue(String key, String value, boolean condition) {
             if (condition) {
-                prototype.put(key, value);
+                prototype.put(key, ImmutableList.of(value));
             }
             return this;
         }
 
-        public Builder<K, V> putIfNotNull(K key, V value) {
+        public MultiValueMapBuilder putIfTrue(String key, int value, boolean condition) {
+            return putIfTrue(key, String.valueOf(value), condition);
+        }
+
+        public MultiValueMapBuilder putIfNotNull(String key, String value) {
             if (Objects.nonNull(value)) {
-                prototype.put(key, value);
+                prototype.put(key, ImmutableList.of(value));
             }
             return this;
         }
 
-        public Map<K, V> build() {
+        public Map<String, List<String>> build() {
             return ImmutableMap.copyOf(prototype);
         }
     }

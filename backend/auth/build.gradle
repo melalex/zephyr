@@ -2,7 +2,7 @@ import com.bmuschko.gradle.docker.DockerRemoteApiPlugin
 
 buildscript {
     ext {
-        springBootVersion = '2.0.0.M5'
+        springBootVersion = '2.0.0.M6'
         dockerVersion = '3.1.0'
     }
     repositories {
@@ -29,33 +29,33 @@ apply plugin: 'application'
 mainClassName = 'com.zephyr.auth.AuthApplication'
 
 dependencies {
-    compile libraries.webFlux
-    compile libraries.acutator
-    compile libraries.acutatorDocs
-    compile libraries.security
-    compile libraries.securityOAuth2
-    compile libraries.validation
-    compile libraries.mongodb
-    compile libraries.configClient
-    compile libraries.discoveryClient
-    compile libraries.messaging
+    compile libraries['webFlux']
+    compile libraries['acutator']
+    compile libraries['acutatorDocs']
+    compile libraries['security']
+    compile libraries['securityOAuth2']
+    compile libraries['validation']
+    compile libraries['mongodb']
+    compile libraries['configClient']
+    compile libraries['discoveryClient']
+    compile libraries['messaging']
 
-    compile utils.commons
-    compile utils.errors
-    compile utils.mapping
+    compile utils['commons']
+    compile utils['errors']
+    compile utils['mapping']
 
-    compileOnly libraries.lombok
+    compileOnly libraries['lombok']
 
-    testCompile libraries.test
-    testCompile libraries.jsonpath
-    testCompile libraries.securityTest
+    testCompile libraries['test']
+    testCompile libraries['jsonpath']
+    testCompile libraries['securityTest']
 }
 
 dependencyManagement {
     imports {
-        mavenBom imports.springBootBom
-        mavenBom imports.springCloudBom
-        mavenBom imports.springBusBom
+        mavenBom imports['springBootBom']
+        mavenBom imports['springCloudBom']
+        mavenBom imports['springBusBom']
     }
 }
 
