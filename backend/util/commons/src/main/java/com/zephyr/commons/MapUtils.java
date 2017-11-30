@@ -2,12 +2,15 @@ package com.zephyr.commons;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Streams;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @UtilityClass
 public class MapUtils {
@@ -25,9 +28,15 @@ public class MapUtils {
         return String.format("Map doesn't contains key '%s'", key);
     }
 
-    public <K, V> Map<K, V> merge(Map<K, V> result, Map<K, V> element) {
-        result.putAll(element);
-        return result;
+    @SafeVarargs
+    public <K, V> Map<K, V> merge(Map<K, V> ...maps) {
+        return Stream.of(maps)
+                .map(Map::entrySet)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue
+                ));
     }
 
     @NoArgsConstructor(access = AccessLevel.PRIVATE)

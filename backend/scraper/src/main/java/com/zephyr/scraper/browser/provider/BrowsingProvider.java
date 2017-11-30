@@ -1,10 +1,10 @@
-package com.zephyr.scraper.browser;
+package com.zephyr.scraper.browser.provider;
 
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.EngineResponse;
 import reactor.core.publisher.Mono;
 
-public interface Browser {
+public interface BrowsingProvider {
 
     Mono<EngineResponse> get(EngineRequest engineRequest);
 

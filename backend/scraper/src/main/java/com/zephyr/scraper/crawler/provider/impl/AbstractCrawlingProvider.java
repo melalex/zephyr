@@ -1,9 +1,9 @@
 package com.zephyr.scraper.crawler.provider.impl;
 
+import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.crawler.fraud.FraudAnalyzer;
 import com.zephyr.scraper.crawler.provider.CrawlingProvider;
 import com.zephyr.scraper.domain.EngineResponse;
-import com.zephyr.scraper.domain.external.SearchEngine;
 import com.zephyr.scraper.domain.properties.ScraperProperties;
 import lombok.Setter;
 import org.jsoup.Jsoup;
@@ -30,7 +30,7 @@ public abstract class AbstractCrawlingProvider implements CrawlingProvider {
                 .getScraper(engine)
                 .getLinkSelector();
 
-        fraudAnalyzer.analyze(engine, document);
+        fraudAnalyzer.analyze(engineResponse, document);
 
         return parse(document, linkSelector);
     }

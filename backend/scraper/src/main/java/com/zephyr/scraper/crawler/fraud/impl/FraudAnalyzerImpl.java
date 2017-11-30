@@ -1,9 +1,10 @@
 package com.zephyr.scraper.crawler.fraud.impl;
 
+import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.crawler.fraud.FraudAnalyzer;
-import com.zephyr.scraper.crawler.fraud.manager.FraudManager;
+import com.zephyr.scraper.crawler.fraud.provider.FraudProvider;
+import com.zephyr.scraper.domain.EngineResponse;
 import com.zephyr.scraper.domain.exceptions.FraudException;
-import com.zephyr.scraper.domain.external.SearchEngine;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
@@ -15,12 +16,24 @@ import org.springframework.stereotype.Component;
 public class FraudAnalyzerImpl implements FraudAnalyzer {
 
     @Setter(onMethod = @__(@Autowired))
-    private FraudManager manager;
+    private FraudProvider googleFraudProvider;
+
+    @Setter(onMethod = @__(@Autowired))
+    private FraudProvider defaultFraudProvider;
 
     @Override
-    public void analyze(SearchEngine engine, Document document) {
-        if (manager.manage(engine).provide(document)) {
-            throw new FraudException();
+    public void analyze(EngineResponse response, Document document) {
+        if (manage(response.getProvider()).provide(document)) {
+            throw new FraudException(response);
+        }
+    }
+
+    private FraudProvider manage(SearchEngine searchEngine) {
+        switch (searchEngine) {
+            case GOOGLE:
+                return googleFraudProvider;
+            default:
+                return defaultFraudProvider;
         }
     }
 }

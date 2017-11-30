@@ -31,8 +31,7 @@ ext {
     def embeddedMongodbVersion = '2.0.0'
     def rollbarVersion = '0.5.3'
     def slf4jVersion = '1.7.25'
-    def reactorVersion = '3.1.0.RELEASE'
-    def reactorTestVersion = '3.1.0.M1'
+    def reactorVersion = '3.1.2.RELEASE'
     def jacksonVersion = '2.9.2'
     def adWordsVersion = '3.9.0'
     def hibernateValidatorVersion = '6.0.2.Final'
@@ -62,7 +61,7 @@ ext {
 
             reactor            : "io.projectreactor:reactor-core:${reactorVersion}",
             reactorExtra       : "io.projectreactor.addons:reactor-extra:${reactorVersion}",
-            reactorTest        : "io.projectreactor:reactor-test:${reactorTestVersion}",
+            reactorTest        : "io.projectreactor:reactor-test:${reactorVersion}",
 
             jackson            : "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
             jacksonAnnotations : "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
@@ -81,16 +80,17 @@ ext {
             asyncHttp          : "org.asynchttpclient:async-http-client:${asyncHttpVersion}"
     ]
 
+    // TODO: Remove artifact version
     def springDependencies = [
-            spring                : 'org.springframework.boot:spring-boot-starter',
-            zuul                  : 'org.springframework.cloud:spring-cloud-starter-zuul',
-            feign                 : 'org.springframework.cloud:spring-cloud-starter-feign',
+            spring                : 'org.springframework.boot:spring-boot-starter:2.0.0.M6',
+            zuul                  : 'org.springframework.cloud:spring-cloud-starter-zuul:2.0.0.M2',
+            feign                 : 'org.springframework.cloud:spring-cloud-starter-feign:2.0.0.M2',
             dataCommons           : 'org.springframework.data:spring-data-commons',
             messaging             : 'org.springframework.cloud:spring-cloud-starter-bus-amqp',
             configurationProcessor: 'org.springframework.boot:spring-boot-configuration-processor',
             mongodb               : 'org.springframework.boot:spring-boot-starter-data-mongodb',
             redis                 : 'org.springframework.data:spring-data-redis',
-            test                  : 'org.springframework.boot:spring-boot-starter-test',
+            test                  : 'org.springframework.boot:spring-boot-starter-test:2.0.0.M6',
 
             webFlux               : 'org.springframework.boot:spring-boot-starter-webflux',
             webFluxLib            : 'org.springframework:spring-webflux',
@@ -109,8 +109,8 @@ ext {
             configClient          : 'org.springframework.cloud:spring-cloud-starter-config',
             configMonitor         : 'org.springframework.cloud:spring-cloud-config-monitor',
 
-            discoveryServer       : 'org.springframework.cloud:spring-cloud-starter-eureka-server',
-            discoveryClient       : 'org.springframework.cloud:spring-cloud-starter-eureka',
+            discoveryServer       : 'org.springframework.cloud:spring-cloud-starter-eureka-server:2.0.0.M2',
+            discoveryClient       : 'org.springframework.cloud:spring-cloud-starter-eureka:2.0.0.M2',
 
             security              : 'org.springframework.boot:spring-boot-starter-security',
             securityCloud         : 'org.springframework.cloud:spring-cloud-starter-security',
@@ -118,10 +118,10 @@ ext {
             securityTest          : 'org.springframework.security:spring-security-test',
 
             turbine               : 'org.springframework.cloud:spring-cloud-starter-turbine-amqp',
-            turbineStream         : 'org.springframework.cloud:spring-cloud-starter-turbine-stream',
+            turbineStream         : 'org.springframework.cloud:spring-cloud-starter-turbine-stream:2.0.0.M2',
 
             hystrix               : 'org.springframework.cloud:spring-cloud-starter-hystrix',
-            hystrixDashboard      : 'org.springframework.cloud:spring-cloud-starter-hystrix-dashboard',
+            hystrixDashboard      : 'org.springframework.cloud:spring-cloud-starter-hystrix-dashboard:2.0.0.M2',
     ]
 
     libraries = librariesDependencies + springDependencies

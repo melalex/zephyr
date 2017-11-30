@@ -21,7 +21,7 @@ scraper:
     first: 0
     resultCount: 100
     pageSize: 100
-    useProxy: false
+    requestType: DIRECT
 
   bing:
     enabled: true
@@ -32,7 +32,7 @@ scraper:
     first: 1
     resultCount: 10
     pageSize: 10
-    useProxy: false
+    requestType: DIRECT
 
   yahoo:
     enabled: true
@@ -43,7 +43,7 @@ scraper:
     first: 1
     resultCount: 10
     pageSize: 10
-    useProxy: false
+    requestType: DIRECT
 
   yandex:
     enabled: false
@@ -54,7 +54,7 @@ scraper:
     first: 0
     resultCount: 100
     pageSize: 100
-    useProxy: false
+    requestType: DIRECT
 
   duckduckgo:
     enabled: false
@@ -65,4 +65,4 @@ scraper:
     first: 0
     resultCount: 100
     pageSize: 100
-    useProxy: false
+    requestType: DIRECT

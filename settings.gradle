@@ -30,17 +30,11 @@ findProject(':backend:proxy')?.name = 'proxy'
 include 'backend:rating'
 findProject(':backend:rating')?.name = 'rating'
 
-include 'backend:reducer'
-findProject(':backend:reducer')?.name = 'reducer'
-
 include 'backend:registry'
 findProject(':backend:registry')?.name = 'registry'
 
 include 'backend:scraper'
 findProject(':backend:scraper')?.name = 'scraper'
-
-include 'backend:task'
-findProject(':backend:task')?.name = 'task'
 
 include 'backend:util'
 findProject(':backend:util')?.name = 'util'

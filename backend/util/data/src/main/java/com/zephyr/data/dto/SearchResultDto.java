@@ -1,6 +1,5 @@
 package com.zephyr.data.dto;
 
-import com.zephyr.data.commons.Keyword;
 import com.zephyr.data.enums.SearchEngine;
 import lombok.Data;
 
@@ -9,7 +8,8 @@ import java.util.List;
 
 @Data
 public class SearchResultDto {
-    private Keyword keyword;
+    private int offset;
+    private QueryDto query;
     private LocalDateTime timestamp;
     private SearchEngine provider;
     private List<String> links;

@@ -1,13 +1,14 @@
 package com.zephyr.scraper;
 
-import com.zephyr.data.commons.Keyword;
+import com.zephyr.data.dto.QueryDto;
 import com.zephyr.data.dto.SearchResultDto;
 import com.zephyr.scraper.flow.ScrapingFlow;
 import com.zephyr.scraper.flow.impl.ScrapingFlowImpl;
+import org.asynchttpclient.AsyncHttpClient;
+import org.asynchttpclient.DefaultAsyncHttpClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.Input;
@@ -31,12 +32,11 @@ public class ScraperApplication {
 
     @StreamListener
     @Output(Processor.OUTPUT)
-    public Flux<SearchResultDto> receive(@Input(Processor.INPUT) Flux<Keyword> input) {
+    public Flux<SearchResultDto> receive(@Input(Processor.INPUT) Flux<QueryDto> input) {
         return flow().handle(input);
     }
 
     @Bean
-    @RefreshScope
     public ScrapingFlow flow() {
         return new ScrapingFlowImpl();
     }

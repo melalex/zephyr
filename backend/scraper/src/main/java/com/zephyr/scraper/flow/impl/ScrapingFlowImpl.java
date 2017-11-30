@@ -1,16 +1,13 @@
 package com.zephyr.scraper.flow.impl;
 
-import com.zephyr.data.commons.Keyword;
+import com.zephyr.data.dto.QueryDto;
+import com.zephyr.data.dto.SearchResultDto;
 import com.zephyr.scraper.browser.Browser;
 import com.zephyr.scraper.crawler.Crawler;
 import com.zephyr.scraper.domain.EngineRequest;
-import com.zephyr.scraper.domain.RequestContext;
-import com.zephyr.scraper.domain.exceptions.BrowserException;
-import com.zephyr.scraper.domain.exceptions.RequestException;
-import com.zephyr.scraper.domain.properties.ScraperProperties;
+import com.zephyr.scraper.domain.exceptions.FraudException;
 import com.zephyr.scraper.flow.ScrapingFlow;
-import com.zephyr.scraper.query.QueryConstructor;
-import com.zephyr.scraper.scheduler.Scheduler;
+import com.zephyr.scraper.request.RequestConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
@@ -19,11 +16,8 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.retry.Retry;
-import reactor.retry.RetryContext;
 
-import javax.naming.directory.SearchResult;
 import java.time.Clock;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Function;
@@ -33,13 +27,7 @@ import java.util.function.Function;
 public class ScrapingFlowImpl implements ScrapingFlow {
 
     @Setter(onMethod = @__(@Autowired))
-    private ScraperProperties scraperProperties;
-
-    @Setter(onMethod = @__(@Autowired))
-    private Scheduler scheduler;
-
-    @Setter(onMethod = @__(@Autowired))
-    private QueryConstructor queryConstructor;
+    private RequestConstructor requestConstructor;
 
     @Setter(onMethod = @__(@Autowired))
     private Browser browser;
@@ -51,56 +39,40 @@ public class ScrapingFlowImpl implements ScrapingFlow {
     private Clock clock;
 
     @Override
-    public Flux<SearchResult> handle(Flux<Keyword> input) {
-        return input.doOnNext(k -> log.info("Received new Keyword: {}", k))
-                .flatMap(queryConstructor::construct)
+    public Flux<SearchResultDto> handle(Flux<QueryDto> input) {
+        return input.doOnNext(q -> log.info("Received new Query: {}", q))
+                .flatMap(requestConstructor::construct)
                 .parallel()
-                .flatMap(this::browse)
+                .flatMap(this::makeRequest)
                 .sequential();
     }
 
-    private Mono<SearchResult> browse(EngineRequest engineRequest) {
-        return Mono.defer(() -> scheduler.createContext(engineRequest))
-                .flatMap(this::makeRequest)
-                .retryWhen(requestException());
+    private Mono<SearchResultDto> makeRequest(EngineRequest request) {
+        return Mono.defer(() -> browser.get(request))
+                .map(crawler::crawl)
+                .retryWhen(fraudException())
+                .map(l -> toSearchResult(request, l));
     }
 
-    private Mono<SearchResult> makeRequest(RequestContext context) {
-        return Mono.delay(context.getDuration())
-                .then(Mono.defer(() -> browser.get(context)).retryWhen(browserException(context)))
-                .map(r -> crawler.crawl(context.getProvider(), r))
-                .map(l -> toSearchResult(context, l))
-                .onErrorMap(t -> new RequestException(t, context));
+    private SearchResultDto toSearchResult(EngineRequest request, List<String> links) {
+        SearchResultDto searchResult = new SearchResultDto();
+        searchResult.setOffset(request.getOffset());
+        searchResult.setQuery(request.getQuery());
+        searchResult.setProvider(request.getProvider());
+        searchResult.setTimestamp(LocalDateTime.now(clock));
+        searchResult.setLinks(links);
+
+        return searchResult;
     }
 
-    private SearchResult toSearchResult(RequestContext request, List<String> links) {
-        return SearchResult.builder()
-                .offset(request.getOffset())
-                .keyword(request.getKeyword())
-                .provider(request.getProvider())
-                .timestamp(LocalDateTime.now(clock))
-                .links(links)
-                .build();
+    private Function<Flux<Throwable>, ? extends Publisher<?>> fraudException() {
+        return Retry.anyOf(FraudException.class)
+                .doOnRetry(c -> handleFraudException(c.exception()));
     }
 
-    private Function<Flux<Throwable>, ? extends Publisher<?>> browserException(RequestContext context) {
-        return Retry.<RequestContext>anyOf(BrowserException.class)
-                .withApplicationContext(context)
-                .retryMax(scraperProperties.getBrowser().getRetryCount())
-                .doOnRetry(c -> log.error(String.format("Browser throw exception on %s try", c.iteration()), c.exception()))
-                .fixedBackoff(Duration.ofMillis(scraperProperties.getBrowser().getBackoff()));
-    }
-
-    private Function<Flux<Throwable>, ? extends Publisher<?>> requestException() {
-        return Retry.any()
-                .doOnRetry(this::onRequestException);
-    }
-
-    private void onRequestException(RetryContext<Object> context) {
-        log.error(String.format("Request failed with exception on %s try", context.iteration()), context.exception());
-
-        if (context.exception() instanceof RequestException) {
-            scheduler.report(((RequestException) context.exception()).getFailedContext());
+    private void handleFraudException(Throwable exception) {
+        if (exception instanceof FraudException) {
+            browser.report(((FraudException) exception).getResponse());
         }
     }
 }

@@ -24,7 +24,6 @@ dependencies {
 
     compileOnly libraries['lombok']
 
-    testCompile libraries['guava']
     testCompile libraries['test']
 
     testCompileOnly libraries['lombok']
