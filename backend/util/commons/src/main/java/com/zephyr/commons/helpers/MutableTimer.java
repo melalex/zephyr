@@ -3,6 +3,7 @@ package com.zephyr.commons.helpers;
 import com.zephyr.commons.TimeUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import reactor.core.Disposable;
 import reactor.core.Disposables;
@@ -16,18 +17,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Setter(AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MutableTimer {
-
     private MonoSink<Void> sink;
     private Disposable.Swap swap;
     private Clock clock;
 
     @Getter
     private AtomicReference<LocalDateTime> dateTime;
-
-    private MutableTimer() {
-
-    }
 
     public static MutableTimer create(MonoSink<Void> sink, LocalDateTime dateTime, Clock clock) {
         Disposable.Swap swap = Disposables.swap();
