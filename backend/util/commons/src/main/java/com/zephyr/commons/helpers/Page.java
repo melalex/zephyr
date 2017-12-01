@@ -1,4 +1,4 @@
-package com.zephyr.scraper.domain.helpers;
+package com.zephyr.commons.helpers;
 
 import lombok.Builder;
 import lombok.Value;
