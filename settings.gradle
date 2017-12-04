@@ -51,5 +51,8 @@ findProject(':backend:util:errors')?.name = 'errors'
 include 'backend:util:mapping'
 findProject(':backend:util:mapping')?.name = 'mapping'
 
+include 'backend:util:scheduling'
+findProject(':backend:util:scheduling')?.name = 'scheduling'
+
 include 'backend:util:validation'
 findProject(':backend:util:validation')?.name = 'validation'
