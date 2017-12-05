@@ -41,6 +41,7 @@ dependencies {
     compile libraries['asyncHttp']
 
     compile utils['commons']
+    compile utils['scheduling']
     compile utils['mapping']
     compile utils['data']
 

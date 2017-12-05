@@ -10,7 +10,7 @@ public interface SchedulingManager {
 
     Publisher<Void> scheduleNext(String group, Duration duration);
 
-    Publisher<Void> reSchedule(Enum<?> group, Duration duration);
+    void onError(Enum<?> group, Duration duration);
 
-    Publisher<Void> reSchedule(String group, Duration duration);
+    void onError(String group, Duration duration);
 }
