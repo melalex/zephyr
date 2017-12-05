@@ -1,23 +1,26 @@
 package com.zephyr.scraper.request.provider.impl;
 
 import com.zephyr.commons.MapUtils;
+import com.zephyr.commons.helpers.Page;
 import com.zephyr.data.dto.QueryDto;
 import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.domain.EngineRequest;
-import com.zephyr.commons.helpers.Page;
 import com.zephyr.scraper.domain.properties.ScraperProperties;
 import com.zephyr.scraper.request.provider.RequestProvider;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Slf4j
 @RequiredArgsConstructor
 public abstract class AbstractRequestProvider implements RequestProvider {
     private static final String DO_NOT_TRACK = "DNT";
@@ -43,6 +46,7 @@ public abstract class AbstractRequestProvider implements RequestProvider {
 
     private EngineRequest getPage(QueryDto query, Page page, Map<String, List<String>> headers) {
         return EngineRequest.builder()
+                .id(UUID.randomUUID().toString())
                 .provider(engine)
                 .url(provideUrl(query))
                 .headers(headers)

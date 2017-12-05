@@ -24,10 +24,6 @@ public final class MutableTimer {
         this.dateTime = new AtomicReference<>(dateTime);
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime.get();
-    }
-
     public void reSchedule(Duration duration) {
         swap.update(schedule(dateTime.updateAndGet(d -> d.plus(duration))));
     }

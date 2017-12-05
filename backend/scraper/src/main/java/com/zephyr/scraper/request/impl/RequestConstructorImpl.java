@@ -1,5 +1,6 @@
 package com.zephyr.scraper.request.impl;
 
+import com.zephyr.commons.LoggingUtils;
 import com.zephyr.data.dto.QueryDto;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.request.RequestConstructor;
@@ -15,6 +16,7 @@ import java.util.List;
 @Slf4j
 @Component
 public class RequestConstructorImpl implements RequestConstructor {
+    private static final String NEW_REQUEST_MESSAGE = "Constructed Request: {}";
 
     @Setter(onMethod = @__(@Autowired))
     private List<RequestProvider> providers;
@@ -24,6 +26,6 @@ public class RequestConstructorImpl implements RequestConstructor {
         return Flux.fromIterable(providers)
                 .map(p -> p.provide(query))
                 .flatMap(Flux::fromIterable)
-                .doOnNext(r -> log.info("Construct Request: {}", r));
+                .doOnNext(LoggingUtils.info(log, NEW_REQUEST_MESSAGE));
     }
 }

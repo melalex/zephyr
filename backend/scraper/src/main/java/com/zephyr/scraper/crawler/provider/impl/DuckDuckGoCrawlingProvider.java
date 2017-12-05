@@ -11,10 +11,11 @@ import java.util.List;
 @Slf4j
 @Component
 public class DuckDuckGoCrawlingProvider implements CrawlingProvider {
+    private static final String WARNING = "DuckDuckGo Crawler not implemented yet";
 
     @Override
     public List<String> provide(EngineResponse engineResponse) {
-        log.warn("DuckDuckGo Crawler not implemented yet");
+        log.warn(WARNING);
         return Collections.emptyList();
     }
 }

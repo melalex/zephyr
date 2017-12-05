@@ -1,5 +1,6 @@
 package com.zephyr.scraper.browser.provider.impl;
 
+import com.zephyr.commons.LoggingUtils;
 import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scheduling.managers.SchedulingManager;
 import com.zephyr.scraper.browser.provider.BrowsingProvider;
@@ -31,6 +32,11 @@ import java.util.stream.StreamSupport;
 @Slf4j
 @Component
 public class DirectBrowsingProvider implements BrowsingProvider {
+    private static final String NEW_REQUEST_MSG = "Scheduled new request with id {}";
+    private static final String NEW_RESPONSE_MSG = "Received response for request with id %s";
+    private static final String NEW_RESPONSE_FULL_MSG = "Received response for\n{}";
+    private static final String BROWSER_EXCEPTION_MSG = "Exception during request: ";
+    private static final String REQUEST_EXCEPTION_MSG = "Exception during request on %s try: ";
 
     @Setter(onMethod = @__(@Autowired))
     private SchedulingManager schedulingManager;
@@ -44,11 +50,14 @@ public class DirectBrowsingProvider implements BrowsingProvider {
     @Override
     public Mono<EngineResponse> get(EngineRequest request) {
         SearchEngine engine = request.getProvider();
+
+        log.info(NEW_REQUEST_MSG, request.getId());
+
         return Mono.empty()
                 .delaySubscription(schedulingManager.scheduleNext(engine, delay(engine)))
                 .then(makeRequest(request))
-                .doOnError(e -> log.error("Exception during request", e))
-                .retryWhen(requestException(request));
+                .doOnError(LoggingUtils.error(log, BROWSER_EXCEPTION_MSG))
+                .retryWhen(browserException(request));
     }
 
     @Override
@@ -66,6 +75,8 @@ public class DirectBrowsingProvider implements BrowsingProvider {
 
         return Mono.defer(() -> Mono.fromFuture(asyncHttpClient.executeRequest(request).toCompletableFuture()))
                 .map(r -> toEngineResponse(r, engineRequest))
+                .doOnNext(LoggingUtils.info(log, String.format(NEW_RESPONSE_MSG, engineRequest.getId())))
+                .doOnNext(LoggingUtils.debug(log, NEW_RESPONSE_FULL_MSG))
                 .retryWhen(requestException());
     }
 
@@ -77,11 +88,10 @@ public class DirectBrowsingProvider implements BrowsingProvider {
         return Retry.any()
                 .retryMax(properties.getBrowser().getRetryCount())
                 .fixedBackoff(Duration.ofMillis(properties.getBrowser().getBackoff()))
-                .doOnRetry(c ->
-                        log.error(String.format("Exception during request on %s try: ", c.iteration()), c.exception()));
+                .doOnRetry(LoggingUtils.retryableError(log, REQUEST_EXCEPTION_MSG));
     }
 
-    private Function<Flux<Throwable>, ? extends Publisher<?>> requestException(EngineRequest engineRequest) {
+    private Function<Flux<Throwable>, ? extends Publisher<?>> browserException(EngineRequest engineRequest) {
         return Retry.<EngineRequest>any()
                 .withApplicationContext(engineRequest)
                 .doOnRetry(c -> report(c.applicationContext().getProvider()));
@@ -95,8 +105,13 @@ public class DirectBrowsingProvider implements BrowsingProvider {
         return Duration.ofMillis(properties.getScraper(engine).getErrorDelay());
     }
 
-    private EngineResponse toEngineResponse(Response response, EngineRequest request) {
-        return EngineResponse.of(getHeaders(response.getHeaders()), response.getResponseBody(), request.getProvider());
+    private EngineResponse toEngineResponse(Response response, EngineRequest engineRequest) {
+        return EngineResponse.builder()
+                .id(engineRequest.getId())
+                .headers(getHeaders(response.getHeaders()))
+                .body(response.getResponseBody())
+                .provider(engineRequest.getProvider())
+                .build();
     }
 
     private Map<String, List<String>> getHeaders(HttpHeaders headers) {

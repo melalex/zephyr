@@ -1,14 +1,11 @@
 package com.zephyr.commons;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Streams;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -29,7 +26,7 @@ public class MapUtils {
     }
 
     @SafeVarargs
-    public <K, V> Map<K, V> merge(Map<K, V> ...maps) {
+    public <K, V> Map<K, V> merge(Map<K, V>... maps) {
         return Stream.of(maps)
                 .map(Map::entrySet)
                 .flatMap(Collection::stream)
@@ -76,7 +73,7 @@ public class MapUtils {
         }
 
         public Map<String, List<String>> build() {
-            return ImmutableMap.copyOf(prototype);
+            return new HashMap<>(prototype);
         }
     }
 }

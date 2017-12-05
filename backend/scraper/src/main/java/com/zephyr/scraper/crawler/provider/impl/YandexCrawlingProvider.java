@@ -11,10 +11,11 @@ import java.util.List;
 @Slf4j
 @Component
 public class YandexCrawlingProvider implements CrawlingProvider {
+    private static final String WARNING = "Yandex Crawler not implemented yet";
 
     @Override
     public List<String> provide(EngineResponse engineResponse) {
-        log.warn("Yandex Crawler not implemented yet");
+        log.warn(WARNING);
         return Collections.emptyList();
     }
 }

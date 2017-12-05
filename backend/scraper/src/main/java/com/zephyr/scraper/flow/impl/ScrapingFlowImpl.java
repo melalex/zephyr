@@ -1,5 +1,6 @@
 package com.zephyr.scraper.flow.impl;
 
+import com.zephyr.commons.LoggingUtils;
 import com.zephyr.data.dto.QueryDto;
 import com.zephyr.data.dto.SearchResultDto;
 import com.zephyr.scraper.browser.Browser;
@@ -25,6 +26,10 @@ import java.util.function.Function;
 @Slf4j
 @Component
 public class ScrapingFlowImpl implements ScrapingFlow {
+    private static final String NEW_QUERY_MSG = "Received new Query: {}";
+    private static final String RECEIVED_SEARCH_RESULT_MSG = "Received SearchResult: {}";
+    private static final String FRAUD_EXCEPTION_MSG = "Fraud detected. Reporting...";
+    private static final String UNEXPECTED_EXCEPTION_MSG = "Unexpected exception: ";
 
     @Setter(onMethod = @__(@Autowired))
     private RequestConstructor requestConstructor;
@@ -40,11 +45,13 @@ public class ScrapingFlowImpl implements ScrapingFlow {
 
     @Override
     public Flux<SearchResultDto> handle(Flux<QueryDto> input) {
-        return input.doOnNext(q -> log.info("Received new Query: {}", q))
+        return input.doOnNext(LoggingUtils.info(log, NEW_QUERY_MSG))
                 .flatMap(requestConstructor::construct)
                 .parallel()
                 .flatMap(this::makeRequest)
-                .sequential();
+                .sequential()
+                .doOnNext(LoggingUtils.debug(log, RECEIVED_SEARCH_RESULT_MSG))
+                .doOnError(LoggingUtils.error(log, UNEXPECTED_EXCEPTION_MSG));
     }
 
     private Mono<SearchResultDto> makeRequest(EngineRequest request) {
@@ -72,6 +79,7 @@ public class ScrapingFlowImpl implements ScrapingFlow {
 
     private void handleFraudException(Throwable exception) {
         if (exception instanceof FraudException) {
+            log.error(FRAUD_EXCEPTION_MSG);
             browser.report(((FraudException) exception).getResponse());
         }
     }

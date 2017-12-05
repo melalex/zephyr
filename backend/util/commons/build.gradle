@@ -24,10 +24,12 @@ dependencies {
 
     compileOnly libraries['slf4j']
     compileOnly libraries['reactor']
+    compileOnly libraries['reactorExtra']
     compileOnly libraries['dataCommons']
     compileOnly libraries['lombok']
 
     testCompile libraries['test']
+    testCompile libraries['reactorTest']
 }
 
 dependencyManagement {

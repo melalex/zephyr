@@ -11,6 +11,8 @@ import java.util.Map;
 @Value
 @Builder
 public class EngineRequest {
+    private String id;
+
     private QueryDto query;
 
     private SearchEngine provider;
