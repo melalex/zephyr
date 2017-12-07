@@ -1,14 +1,14 @@
 package com.zephyr.location.domain;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.NodeEntity;
 
 @Data
-@Document
+@NodeEntity
 public class Language {
 
-    @Id
-    private String iso;
+    @GraphId
+    private long iso;
     private String name;
 }

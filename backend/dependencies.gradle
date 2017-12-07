@@ -91,6 +91,7 @@ ext {
             messaging             : 'org.springframework.cloud:spring-cloud-starter-bus-amqp',
             configurationProcessor: 'org.springframework.boot:spring-boot-configuration-processor',
             mongodb               : 'org.springframework.boot:spring-boot-starter-data-mongodb:2.0.0.M7',
+            neo4j                 : 'org.springframework.data:spring-data-neo4j',
             redis                 : 'org.springframework.data:spring-data-redis',
             test                  : 'org.springframework.boot:spring-boot-starter-test:2.0.0.M7',
 
