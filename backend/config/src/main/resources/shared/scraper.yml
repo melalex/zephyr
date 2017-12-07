@@ -1,9 +1,11 @@
 spring:
+  main:
+    web-environment: false
   cloud:
     stream:
       bindings:
         input:
-          destination: KEYWORDS
+          destination: QUERIES
         output:
           destination: SEARCH_RESULTS
 

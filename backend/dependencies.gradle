@@ -1,6 +1,6 @@
 ext {
     def springCloudVersion = 'Finchley.M4'
-    def springBootVersion = '2.0.0.M6'
+    def springBootVersion = '2.0.0.M7'
     def springBusVersion = '1.3.2.BUILD-SNAPSHOT'
 
     imports = [
@@ -13,7 +13,6 @@ ext {
             commons   : project(':backend:util:commons'),
             data      : project(':backend:util:data'),
             errors    : project(':backend:util:errors'),
-            mapping   : project(':backend:util:mapping'),
             scheduling: project(':backend:util:scheduling'),
             validation: project(':backend:util:validation'),
     ]
@@ -41,6 +40,7 @@ ext {
     def jsoupVersion = '1.10.3'
     def nettyVersion = '4.1.17.Final'
     def asyncHttpVersion = '2.0.37'
+    def modelMapperStarter = '1.1.0'
 
     def librariesDependencies = [
             lombok             : "org.projectlombok:lombok:${lombokVersion}",
@@ -50,6 +50,7 @@ ext {
             csv                : "org.apache.commons:commons-csv:${commonsCsvVersion}",
 
             modelMapper        : "org.modelmapper:modelmapper:${modelMapperVersion}",
+            modelMapperStarter : "com.github.jmnarloch:modelmapper-spring-boot-starter:${modelMapperStarter}",
             beanUtils          : "commons-beanutils:commons-beanutils:${beanutilsVersion}",
             evo                : "org.atteo:evo-inflector:${evoVersion}",
 
@@ -83,15 +84,15 @@ ext {
 
     // TODO: Remove artifact version
     def springDependencies = [
-            spring                : 'org.springframework.boot:spring-boot-starter:2.0.0.M6',
+            spring                : 'org.springframework.boot:spring-boot-starter:2.0.0.M7',
             zuul                  : 'org.springframework.cloud:spring-cloud-starter-zuul:2.0.0.M2',
             feign                 : 'org.springframework.cloud:spring-cloud-starter-feign:2.0.0.M2',
             dataCommons           : 'org.springframework.data:spring-data-commons',
             messaging             : 'org.springframework.cloud:spring-cloud-starter-bus-amqp',
             configurationProcessor: 'org.springframework.boot:spring-boot-configuration-processor',
-            mongodb               : 'org.springframework.boot:spring-boot-starter-data-mongodb',
+            mongodb               : 'org.springframework.boot:spring-boot-starter-data-mongodb:2.0.0.M7',
             redis                 : 'org.springframework.data:spring-data-redis',
-            test                  : 'org.springframework.boot:spring-boot-starter-test:2.0.0.M6',
+            test                  : 'org.springframework.boot:spring-boot-starter-test:2.0.0.M7',
 
             webFlux               : 'org.springframework.boot:spring-boot-starter-webflux',
             webFluxLib            : 'org.springframework:spring-webflux',

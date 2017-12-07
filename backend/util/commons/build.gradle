@@ -21,6 +21,7 @@ apply plugin: 'io.spring.dependency-management'
 dependencies {
     compile libraries['apacheCommons']
     compile libraries['validationApi']
+    compile libraries['modelMapper']
 
     compileOnly libraries['slf4j']
     compileOnly libraries['reactor']

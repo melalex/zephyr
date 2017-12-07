@@ -2,7 +2,7 @@ import com.bmuschko.gradle.docker.DockerRemoteApiPlugin
 
 buildscript {
     ext {
-        springBootVersion = '2.0.0.M6'
+        springBootVersion = '2.0.0.M7'
         dockerVersion = '3.1.0'
     }
     repositories {
@@ -45,7 +45,6 @@ dependencies {
     compile utils['data']
     compile utils['errors']
     compile utils['commons']
-    compile utils['mapping']
 
     compileOnly libraries['lombok']
 
@@ -68,7 +67,7 @@ docker {
     javaApplication {
         baseImage = dockerBaseImage
         maintainer = dockerMainteiner
-        port = 8017
+        port = 8016
         tag = dockerTag
     }
 }

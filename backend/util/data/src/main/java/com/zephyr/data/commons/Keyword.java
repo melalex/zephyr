@@ -7,7 +7,6 @@ import lombok.Data;
 public class Keyword {
     private String word;
     private String place;
-    private String countryIso;
     private String languageIso;
     private UserAgentCriteria userAgentCriteria;
 }
