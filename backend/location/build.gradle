@@ -29,7 +29,7 @@ apply plugin: 'application'
 mainClassName = 'com.zephyr.location.LocationApplication'
 
 dependencies {
-	compile libraries['webFlux']
+	compile libraries['web']
 	compile libraries['acutator']
 	compile libraries['acutatorDocs']
 	compile libraries['neo4j']

@@ -1,9 +1,10 @@
 package com.zephyr.location.services;
 
 import com.zephyr.data.dto.LanguageDto;
-import reactor.core.publisher.Flux;
+
+import java.util.Set;
 
 public interface LanguageService {
 
-    Flux<LanguageDto> findAll();
+    Set<LanguageDto> findAll();
 }

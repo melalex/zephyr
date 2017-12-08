@@ -1,14 +1,12 @@
 package com.zephyr.location.services;
 
 import com.zephyr.data.dto.CountryDto;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+
+import java.util.Set;
 
 public interface CountryService {
 
-    Mono<CountryDto> findByIso(String iso);
+    CountryDto findByIso(String iso);
 
-    Flux<CountryDto> findAll();
-
-    Flux<CountryDto> findByNameStarts(String name);
+    Set<CountryDto> findByNameStarts(String name);
 }

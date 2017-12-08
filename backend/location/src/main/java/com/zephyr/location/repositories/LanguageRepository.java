@@ -1,8 +1,7 @@
 package com.zephyr.location.repositories;
 
-import com.zephyr.personalisation.domain.Language;
-import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+import com.zephyr.location.domain.Language;
 
-public interface LanguageRepository extends ReactiveMongoRepository<Language, String> {
+public interface LanguageRepository extends FunctionalNeo4jRepository<Language, Long> {
 
 }

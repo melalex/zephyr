@@ -11,7 +11,6 @@ import java.util.Set;
 @Data
 @NodeEntity
 public class Country {
-    private static final String RELATIONSHIP_COUNTRY = "COUNTRY";
 
     @GraphId
     private String iso;

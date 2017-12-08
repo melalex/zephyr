@@ -1,16 +1,16 @@
 package com.zephyr.location.controllers;
 
 import com.zephyr.data.dto.PlaceDto;
-import com.zephyr.personalisation.services.PlaceService;
+import com.zephyr.location.services.PlaceService;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping("/v1/place")
@@ -20,22 +20,15 @@ public class PlaceController {
     private PlaceService placeService;
 
     @GetMapping("/{id}")
-    public Mono<PlaceDto> findById(@PathVariable("id") long id) {
+    @Cacheable("PLACE_BY_ID")
+    public PlaceDto findById(@PathVariable("id") long id) {
         return placeService.findById(id);
     }
 
-    @GetMapping("/find")
-    public Mono<PlaceDto> findByCountryIsoAndName(String iso, String name) {
-        return placeService.findByCountryIsoAndName(iso, name);
-    }
-
-    @GetMapping("/search")
-    public Flux<PlaceDto> findByCountryIsoAndNameStartsWith(String iso, String name) {
+    @GetMapping("/{iso}/{name}")
+    @Cacheable("PLACE_BY_COUNTRY_AND_NAME")
+    public Set<PlaceDto> findByCountryIsoAndNameStartsWith(@PathVariable("iso") String iso,
+                                                           @PathVariable("name") String name) {
         return placeService.findByCountryIsoAndNameStartsWith(iso, name);
-    }
-
-    @GetMapping("/country/{iso}")
-    public Flux<PlaceDto> findByCountryIso(@PathVariable("iso") String iso, Pageable pageable) {
-        return placeService.findByCountryIso(iso, pageable);
     }
 }

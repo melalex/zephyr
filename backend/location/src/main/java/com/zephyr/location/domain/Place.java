@@ -30,40 +30,30 @@ public class Place {
     private String location;
 
     public enum PlaceType {
-        AIRPORT("Airport"),
-        AUTONOMOUS_COMMUNITY("Autonomous Community"),
-        BOROUGH("Borough"),
-        CANTON("Canton"),
-        CITY("City"),
-        CITY_REGION("City Region"),
-        CONGRESSIONAL_DISTRICT("Congressional District"),
-        COUNTRY("Country"),
-        COUNTY("County"),
-        DEPARTMENT("Department"),
-        DISTRICT("District"),
-        GOVERNORATE("Governorate"),
-        MUNICIPALITY("Municipality"),
-        NATIONAL_PARK("National Park"),
-        NEIGHBORHOOD("Neighborhood"),
-        OKRUG("Okrug"),
-        POSTAL_CODE("Postal Code"),
-        PREFECTURE("Prefecture"),
-        PROVINCE("Province"),
-        REGION("Region"),
-        STATE("State"),
-        TERRITORY("Territory"),
-        TV_REGION("TV Region"),
-        UNION_TERRITORY("Union Territory"),
-        UNIVERSITY("University");
-
-        private final String value;
-
-        PlaceType(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
+        AIRPORT,
+        AUTONOMOUS_COMMUNITY,
+        BOROUGH,
+        CANTON,
+        CITY,
+        CITY_REGION,
+        CONGRESSIONAL_DISTRICT,
+        COUNTRY,
+        COUNTY,
+        DEPARTMENT,
+        DISTRICT,
+        GOVERNORATE,
+        MUNICIPALITY,
+        NATIONAL_PARK,
+        NEIGHBORHOOD,
+        OKRUG,
+        POSTAL_CODE,
+        PREFECTURE,
+        PROVINCE,
+        REGION,
+        STATE,
+        TERRITORY,
+        TV_REGION,
+        UNION_TERRITORY,
+        UNIVERSITY
     }
 }

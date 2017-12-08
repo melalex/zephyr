@@ -1,11 +1,15 @@
 package com.zephyr.location.repositories;
 
-import com.zephyr.personalisation.domain.Country;
-import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import com.zephyr.location.domain.Country;
+import org.springframework.data.neo4j.annotation.Depth;
 
-public interface CountryRepository extends ReactiveMongoRepository<Country, String> {
+import java.util.Optional;
+import java.util.stream.Stream;
 
-    Flux<Country> findAllByNameStartingWith(String name);
+public interface CountryRepository extends FunctionalNeo4jRepository<Country, Long> {
+
+    Optional<Country> findByIso(String iso);
+
+    @Depth(0)
+    Stream<Country> findByNameStartingWith(String name);
 }

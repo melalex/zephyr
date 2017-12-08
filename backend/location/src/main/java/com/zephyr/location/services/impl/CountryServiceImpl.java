@@ -1,19 +1,22 @@
 package com.zephyr.location.services.impl;
 
+import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.data.dto.CountryDto;
 import com.zephyr.errors.utils.ErrorUtil;
-import com.zephyr.personalisation.domain.Country;
+import com.zephyr.location.domain.Country;
 import com.zephyr.location.repositories.CountryRepository;
 import com.zephyr.location.services.CountryService;
-import com.zephyr.mapping.mappers.ExtendedMapper;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class CountryServiceImpl implements CountryService {
+    private static final int ZERO_DEPTH = 0;
 
     @Setter(onMethod = @__(@Autowired))
     private CountryRepository countryRepository;
@@ -22,21 +25,18 @@ public class CountryServiceImpl implements CountryService {
     private ExtendedMapper mapper;
 
     @Override
-    public Mono<CountryDto> findByIso(String iso) {
-        return countryRepository.findById(iso)
+    public CountryDto findByIso(String iso) {
+        return countryRepository.findByIso(iso)
                 .map(mapper.mapperFor(CountryDto.class))
-                .switchIfEmpty(ErrorUtil.notFound(Country.class, iso));
+                .orElseThrow(ErrorUtil.newNotFoundError(Country.class, iso));
     }
 
     @Override
-    public Flux<CountryDto> findAll() {
-        return countryRepository.findAll()
-                .map(mapper.mapperFor(CountryDto.class));
-    }
-
-    @Override
-    public Flux<CountryDto> findByNameStarts(String name) {
-        return countryRepository.findAllByNameStartingWith(name)
-                .map(mapper.mapperFor(CountryDto.class));
+    public Set<CountryDto> findByNameStarts(String name) {
+        return Optional.ofNullable(name)
+                .map(countryRepository::findByNameStartingWith)
+                .orElseGet(() -> countryRepository.findAllStream(ZERO_DEPTH))
+                .map(mapper.mapperFor(CountryDto.class))
+                .collect(Collectors.toSet());
     }
 }

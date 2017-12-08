@@ -24,6 +24,7 @@ dependencies {
     compile libraries['modelMapper']
 
     compileOnly libraries['slf4j']
+    compileOnly libraries['jackson']
     compileOnly libraries['reactor']
     compileOnly libraries['reactorExtra']
     compileOnly libraries['dataCommons']

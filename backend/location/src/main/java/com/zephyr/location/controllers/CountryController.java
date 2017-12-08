@@ -1,15 +1,16 @@
 package com.zephyr.location.controllers;
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.zephyr.data.dto.CountryDto;
-import com.zephyr.personalisation.services.CountryService;
+import com.zephyr.location.services.CountryService;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/country")
@@ -19,17 +20,22 @@ public class CountryController {
     private CountryService countryService;
 
     @GetMapping("/{iso}")
-    public Mono<CountryDto> findByIso(@PathVariable("iso") String iso) {
+    @Cacheable("COUNTRY_BY_ISO")
+    public CountryDto findByIso(@PathVariable("iso") String iso) {
         return countryService.findByIso(iso);
     }
 
-    @GetMapping("/")
-    public Flux<CountryDto> findAll() {
-        return countryService.findAll();
+    @GetMapping
+    @Cacheable("COUNTRY_BY_NAME")
+    public Set<MappingJacksonValue> find(@RequestParam(required = false) String name, Set<String> fields) {
+        return countryService.findByNameStarts(name)
+                .stream()
+                .map(MappingJacksonValue::new)
+                .peek(v -> v.setFilters(getFilters(fields)))
+                .collect(Collectors.toSet());
     }
 
-    @GetMapping("/search")
-    public Flux<CountryDto> findByNameStarts(String name) {
-        return countryService.findByNameStarts(name);
+    private FilterProvider getFilters(Set<String> fields) {
+        return null;
     }
 }

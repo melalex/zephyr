@@ -9,9 +9,14 @@ import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import reactor.core.publisher.Mono;
 
+import java.util.function.Supplier;
+
 @UtilityClass
 public class ErrorUtil {
     private static final int NOT_FOUND_STATUS_CODE = 404;
+
+    private static final String NOT_FOUND_ERROR_MESSAGE = "Resource '%s' with id '%s' not found";
+    private static final String AT_LEAST_ONE_ERROR_MESSAGE = "ErrorData must contains at least one SubjectError";
     private static final String NOT_FOUND_ERROR_ROOT = "notFound";
 
     public static final String ERROR_CODE_PREFIX = "error";
@@ -23,7 +28,7 @@ public class ErrorUtil {
 
     public SubjectError firstError(@NonNull final ErrorData errorData) {
         if (errorData.getSubjectErrors().isEmpty()) {
-            throw new IllegalArgumentException("ErrorData must contains at least one SubjectError");
+            throw new IllegalArgumentException(AT_LEAST_ONE_ERROR_MESSAGE);
         }
 
         return errorData.getSubjectErrors().get(0);
@@ -38,10 +43,16 @@ public class ErrorUtil {
     }
 
     public <T> Mono<T> notFound(final String name, final Object id) {
-        final String message = String.format("Resource '%s' with id '%s' not found", name, id);
+        return Mono.error(newNotFoundError(name, id).get());
+    }
 
+    public Supplier<ResourceNotFoundException> newNotFoundError(final Class<?> clazz, final Object id)  {
+        return newNotFoundError(clazz.getName(), id);
+    }
+
+    public Supplier<ResourceNotFoundException> newNotFoundError(final String name, final Object id) {
         // @formatter:off
-        final ResourceNotFoundException exception = ExceptionPopulator.of(new ResourceNotFoundException(message))
+        return () -> ExceptionPopulator.of(new ResourceNotFoundException(String.format(NOT_FOUND_ERROR_MESSAGE, name, id)))
                 .status(NOT_FOUND_STATUS_CODE)
                 .data()
                     .subjectError()
@@ -55,7 +66,5 @@ public class ErrorUtil {
                     .complete()
                 .populate();
         // @formatter:on
-
-        return Mono.error(exception);
     }
 }

@@ -1,13 +1,15 @@
 package com.zephyr.location.services.impl;
 
+import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.data.dto.LanguageDto;
 import com.zephyr.location.repositories.LanguageRepository;
 import com.zephyr.location.services.LanguageService;
-import com.zephyr.mapping.mappers.ExtendedMapper;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class LanguageServiceImpl implements LanguageService {
@@ -19,8 +21,9 @@ public class LanguageServiceImpl implements LanguageService {
     private ExtendedMapper mapper;
 
     @Override
-    public Flux<LanguageDto> findAll() {
-        return languageRepository.findAll()
-                .map(mapper.mapperFor(LanguageDto.class));
+    public Set<LanguageDto> findAll() {
+        return languageRepository.findAllStream()
+                .map(mapper.mapperFor(LanguageDto.class))
+                .collect(Collectors.toSet());
     }
 }
