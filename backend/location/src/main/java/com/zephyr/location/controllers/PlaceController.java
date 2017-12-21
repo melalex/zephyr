@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/v1/place")
+@RequestMapping("/v1/places")
 public class PlaceController {
 
     @Setter(onMethod = @__(@Autowired))

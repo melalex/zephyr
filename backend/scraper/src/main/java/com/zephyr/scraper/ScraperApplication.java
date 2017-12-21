@@ -3,9 +3,10 @@ package com.zephyr.scraper;
 import com.zephyr.data.dto.QueryDto;
 import com.zephyr.data.dto.SearchResultDto;
 import com.zephyr.scraper.flow.ScrapingFlow;
-import com.zephyr.scraper.flow.impl.ScrapingFlowImpl;
+import lombok.Setter;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.DefaultAsyncHttpClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -26,6 +27,9 @@ import java.time.Clock;
 @EnableBinding(Processor.class)
 public class ScraperApplication {
 
+    @Setter(onMethod = @__(@Autowired))
+    private ScrapingFlow scrapingFlow;
+
     public static void main(String[] args) {
         SpringApplication.run(ScraperApplication.class, args);
     }
@@ -33,12 +37,7 @@ public class ScraperApplication {
     @StreamListener
     @Output(Processor.OUTPUT)
     public Flux<SearchResultDto> receive(@Input(Processor.INPUT) Flux<QueryDto> input) {
-        return flow().handle(input);
-    }
-
-    @Bean
-    public ScrapingFlow flow() {
-        return new ScrapingFlowImpl();
+        return scrapingFlow.handle(input);
     }
 
     @Bean

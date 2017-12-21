@@ -10,6 +10,8 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Function;
@@ -21,9 +23,13 @@ public class ParameterizedExceptionConverter implements ProblemConverter<Paramet
     @Setter(onMethod = @__(@Autowired))
     private MessageSourceHolder messageSource;
 
+    @Setter(onMethod = @__(@Autowired))
+    private Clock clock;
+
     @Override
     public Problem convert(final ParameterizedException exception, final Locale locale) {
         return Problem.builder()
+                .timestamp(LocalDateTime.now(clock))
                 .type(exception.getCode())
                 .status(exception.getStatus())
                 .detail(exception.getLocalizedMessage())

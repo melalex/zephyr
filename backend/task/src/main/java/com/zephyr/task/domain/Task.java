@@ -1,7 +1,8 @@
 package com.zephyr.task.domain;
 
-import com.zephyr.data.commons.Keyword;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -9,7 +10,12 @@ import java.util.List;
 @Data
 @Document
 public class Task {
+
+    @Id
+    private String id;
     private String userId;
     private String url;
-    private List<Keyword> keyword;
+
+    @DBRef
+    private List<SearchCriteria> searchCriteria;
 }

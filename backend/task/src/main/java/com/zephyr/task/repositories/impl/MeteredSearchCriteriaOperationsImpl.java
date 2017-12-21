@@ -1,9 +1,9 @@
 package com.zephyr.task.repositories.impl;
 
-import com.zephyr.data.commons.Keyword;
-import com.zephyr.task.domain.Dictionary;
-import com.zephyr.task.domain.factories.DictionaryFactory;
-import com.zephyr.task.repositories.DictionaryOperations;
+import com.zephyr.task.domain.SearchCriteria;
+import com.zephyr.task.domain.MeteredSearchCriteria;
+import com.zephyr.task.domain.factories.MeteredSearchCriteriaFactory;
+import com.zephyr.task.repositories.MeteredSearchCriteriaOperations;
 import lombok.Setter;
 import org.joda.time.DateTime;
 import org.joda.time.ReadablePeriod;
@@ -20,9 +20,8 @@ import reactor.core.publisher.Mono;
 import java.util.UUID;
 
 @Repository
-public class DictionaryOperationsImpl implements DictionaryOperations {
+public class MeteredSearchCriteriaOperationsImpl implements MeteredSearchCriteriaOperations {
     private static final String HITS_COUNT_FIELD = "hitsCount";
-    private static final String LAST_HIT_FIELD = "lastHit";
     private static final String LAST_UPDATE_FIELD = "lastUpdate";
     private static final String TRANSACTION_ID_FIELD = "transactionId";
     private static final Number INC_VALUE = 1;
@@ -31,22 +30,21 @@ public class DictionaryOperationsImpl implements DictionaryOperations {
     private ReactiveMongoOperations mongo;
 
     @Setter(onMethod = @__(@Autowired))
-    private DictionaryFactory dictionaryFactory;
+    private MeteredSearchCriteriaFactory meteredSearchCriteriaFactory;
 
     @Override
-    public Mono<Dictionary> updateUsage(Keyword keyword) {
-        Query query = Query.query(Criteria.byExample(dictionaryFactory.newDictionaryExample(keyword)));
+    public Mono<MeteredSearchCriteria> updateUsage(SearchCriteria searchCriteria) {
+        Query query = Query.query(Criteria.byExample(meteredSearchCriteriaFactory.createExample(searchCriteria)));
 
         Update update = new Update()
                 .inc(HITS_COUNT_FIELD, INC_VALUE)
-                .currentTimestamp(LAST_HIT_FIELD)
                 .isolated();
 
-        return mongo.findAndModify(query, update, Dictionary.class);
+        return mongo.findAndModify(query, update, MeteredSearchCriteria.class);
     }
 
     @Override
-    public Flux<Dictionary> findAllForUpdate(ReadablePeriod relevancePeriod, Pageable pageable) {
+    public Flux<MeteredSearchCriteria> findAllForUpdate(ReadablePeriod relevancePeriod, Pageable pageable) {
         String transactionId = createTransactionId();
 
         Query queryUpdate = Query.query(Criteria.where(LAST_UPDATE_FIELD).lt(DateTime.now().minus(relevancePeriod)))
@@ -59,8 +57,8 @@ public class DictionaryOperationsImpl implements DictionaryOperations {
                 .currentTimestamp(LAST_UPDATE_FIELD)
                 .set(TRANSACTION_ID_FIELD, transactionId);
 
-        return mongo.updateMulti(queryUpdate, update, Dictionary.class)
-                .thenMany(mongo.find(queryResult, Dictionary.class));
+        return mongo.updateMulti(queryUpdate, update, MeteredSearchCriteria.class)
+                .thenMany(mongo.find(queryResult, MeteredSearchCriteria.class));
     }
 
     private String createTransactionId() {

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/v1/language")
+@RequestMapping("/v1/languages")
 public class LanguageController {
 
     @Setter(onMethod = @__(@Autowired))

@@ -8,6 +8,8 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,9 +21,13 @@ public class UnhandledExceptionConverter implements ProblemConverter<Throwable> 
     @Setter(onMethod = @__(@Autowired))
     private MessageSourceHolder messageSource;
 
+    @Setter(onMethod = @__(@Autowired))
+    private Clock clock;
+
     @Override
     public Problem convert(final Throwable exception, final Locale locale) {
         return Problem.builder()
+                .timestamp(LocalDateTime.now(clock))
                 .type(ErrorUtil.errorCode(exception.getClass()))
                 .status(INTERNAL_SERVER_ERROR_STATUS)
                 .detail(exception.getLocalizedMessage())

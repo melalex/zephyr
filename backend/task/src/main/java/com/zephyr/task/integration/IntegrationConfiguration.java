@@ -1,38 +1,45 @@
 package com.zephyr.task.integration;
 
-import com.zephyr.data.commons.Keyword;
-import com.zephyr.task.integration.gateways.NewKeywordGateway;
-import com.zephyr.task.integration.gateways.UpdateRatingGateway;
-import org.reactivestreams.Publisher;
+import com.zephyr.commons.extensions.ExtendedMapper;
+import com.zephyr.data.dto.QueryDto;
+import com.zephyr.task.integration.source.SearchCriteriaSource;
+import com.zephyr.task.properties.TaskServiceProperties;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.cloud.stream.messaging.Source;
-import org.springframework.cloud.stream.reactive.StreamEmitter;
 import org.springframework.context.annotation.Bean;
+import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
-import org.springframework.messaging.Message;
+import org.springframework.integration.dsl.Pollers;
 
 @EnableBinding(Source.class)
 public class IntegrationConfiguration {
-    private static final String PRIORITY_HEADER = "priority";
-    private static final Integer UPDATE_PRIORITY = 1;
-    private static final Integer REQUEST_PRIORITY = 9;
+    public static final String SEARCH_CRITERIA_OUTPUT = "SEARCH_CRITERIA_OUTPUT";
+
+    @Setter(onMethod = @__(@Autowired))
+    private SearchCriteriaSource searchCriteriaSource;
+
+    @Setter(onMethod = @__(@Autowired))
+    private TaskServiceProperties properties;
+
+    @Setter(onMethod = @__(@Autowired))
+    private ExtendedMapper mapper;
 
     @Bean
-    @StreamEmitter
-    @Output(Source.OUTPUT)
-    public Publisher<Message<Keyword>> updateRatingFlow() {
-        return IntegrationFlows.from(UpdateRatingGateway.class)
-                .enrichHeaders(h -> h.header(PRIORITY_HEADER, UPDATE_PRIORITY))
-                .toReactivePublisher();
+    public IntegrationFlow updateRatingFlow() {
+        return IntegrationFlows.from(searchCriteriaSource, s -> s.poller(Pollers.cron(properties.getCron())))
+                .split()
+                .transform(mapper.mapperFor(QueryDto.class))
+                .channel(SEARCH_CRITERIA_OUTPUT)
+                .get();
     }
 
     @Bean
-    @StreamEmitter
-    @Output(Source.OUTPUT)
-    public Publisher<Message<Keyword>> requestRatingFlow() {
-        return IntegrationFlows.from(NewKeywordGateway.class)
-                .enrichHeaders(h -> h.header(PRIORITY_HEADER, REQUEST_PRIORITY))
-                .toReactivePublisher();
+    public IntegrationFlow searchCriteriaOutputFlow() {
+        return IntegrationFlows.from(SEARCH_CRITERIA_OUTPUT)
+                .transform(mapper.mapperFor(QueryDto.class))
+                .channel(Source.OUTPUT)
+                .get();
     }
 }

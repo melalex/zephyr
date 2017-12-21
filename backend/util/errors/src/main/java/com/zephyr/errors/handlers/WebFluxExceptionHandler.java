@@ -22,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Optional;
 
+// TODO: Replace with controller advice
 @Slf4j
 @Component
 public class WebFluxExceptionHandler implements WebExceptionHandler {

@@ -14,6 +14,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ElementKind;
 import javax.validation.Path;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -27,9 +29,13 @@ public class ValidationExceptionConverter implements ProblemConverter<Constraint
     @Setter(onMethod = @__(@Autowired))
     private MessageSourceHolder messageSource;
 
+    @Setter(onMethod = @__(@Autowired))
+    private Clock clock;
+
     @Override
     public Problem convert(final ConstraintViolationException exception, final Locale locale) {
         return Problem.builder()
+                .timestamp(LocalDateTime.now(clock))
                 .type(ErrorUtil.errorCode(exception.getClass()))
                 .detail(exception.getLocalizedMessage())
                 .status(UNPROCESSABLE_ENTITY)
