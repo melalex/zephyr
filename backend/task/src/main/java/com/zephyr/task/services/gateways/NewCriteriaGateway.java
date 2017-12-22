@@ -1,10 +1,11 @@
-package com.zephyr.task.integration.gateways;
+package com.zephyr.task.services.gateways;
 
+import com.zephyr.task.TaskApplication;
 import com.zephyr.task.domain.SearchCriteria;
-import com.zephyr.task.integration.IntegrationConfiguration;
 import org.springframework.integration.annotation.Gateway;
 import org.springframework.integration.annotation.GatewayHeader;
 import org.springframework.integration.annotation.MessagingGateway;
+import reactor.core.publisher.Mono;
 
 @MessagingGateway
 public interface NewCriteriaGateway {
@@ -12,8 +13,8 @@ public interface NewCriteriaGateway {
     String PRIORITY = "9";
 
     @Gateway(
-            requestChannel = IntegrationConfiguration.SEARCH_CRITERIA_OUTPUT,
+            requestChannel = TaskApplication.SEARCH_CRITERIA_OUTPUT,
             headers = @GatewayHeader(name = PRIORITY_HEADER, value = PRIORITY)
     )
-    void send(SearchCriteria searchCriteria);
+    Mono<Void> send(SearchCriteria searchCriteria);
 }

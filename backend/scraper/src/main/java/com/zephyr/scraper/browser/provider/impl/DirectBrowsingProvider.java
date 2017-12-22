@@ -6,7 +6,7 @@ import com.zephyr.scheduling.managers.SchedulingManager;
 import com.zephyr.scraper.browser.provider.BrowsingProvider;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.EngineResponse;
-import com.zephyr.scraper.domain.properties.ScraperProperties;
+import com.zephyr.scraper.properties.ScraperProperties;
 import io.netty.handler.codec.http.HttpHeaders;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

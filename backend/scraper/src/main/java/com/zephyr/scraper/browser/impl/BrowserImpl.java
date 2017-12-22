@@ -5,7 +5,7 @@ import com.zephyr.scraper.browser.Browser;
 import com.zephyr.scraper.browser.provider.BrowsingProvider;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.EngineResponse;
-import com.zephyr.scraper.domain.properties.ScraperProperties;
+import com.zephyr.scraper.properties.ScraperProperties;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,6 +13,7 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class BrowserImpl implements Browser {
+    private static final String UNSUPPORTED_REQUEST_TYPE = "Browser doesn't support RequestType '%s' of '%s' engine";
 
     @Setter(onMethod = @__(@Autowired))
     private ScraperProperties scraperProperties;
@@ -51,9 +52,7 @@ public class BrowserImpl implements Browser {
             case TOR:
                 return torBrowsingProvider;
             default:
-                String message = String
-                        .format("Browser doesn't support RequestType '%s' of '%s' engine", requestType, engine);
-                throw new IllegalArgumentException(message);
+                throw new IllegalArgumentException(String.format(UNSUPPORTED_REQUEST_TYPE, requestType, engine));
         }
     }
 }

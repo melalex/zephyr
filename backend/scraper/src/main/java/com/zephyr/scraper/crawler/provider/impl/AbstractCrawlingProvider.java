@@ -4,7 +4,7 @@ import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.crawler.fraud.FraudAnalyzer;
 import com.zephyr.scraper.crawler.provider.CrawlingProvider;
 import com.zephyr.scraper.domain.EngineResponse;
-import com.zephyr.scraper.domain.properties.ScraperProperties;
+import com.zephyr.scraper.properties.ScraperProperties;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;

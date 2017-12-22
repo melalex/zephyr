@@ -6,7 +6,7 @@ import org.springframework.data.neo4j.annotation.Depth;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public interface CountryRepository extends FunctionalNeo4jRepository<Country, Long> {
+public interface CountryRepository extends FunctionalNeo4jRepository<Country, String> {
 
     Optional<Country> findByIso(String iso);
 

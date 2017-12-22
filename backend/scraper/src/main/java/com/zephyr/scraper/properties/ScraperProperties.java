@@ -1,4 +1,4 @@
-package com.zephyr.scraper.domain.properties;
+package com.zephyr.scraper.properties;
 
 import com.zephyr.data.enums.SearchEngine;
 import lombok.Data;

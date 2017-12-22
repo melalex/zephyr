@@ -2,9 +2,7 @@ package com.zephyr.location.domain;
 
 import com.zephyr.location.domain.constants.Relations;
 import lombok.Data;
-import org.neo4j.ogm.annotation.GraphId;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
+import org.neo4j.ogm.annotation.*;
 
 import java.util.Set;
 
@@ -12,7 +10,8 @@ import java.util.Set;
 @NodeEntity
 public class Place {
 
-    @GraphId
+    @Id
+    @GeneratedValue
     private long id;
     private String name;
     private String canonicalName;

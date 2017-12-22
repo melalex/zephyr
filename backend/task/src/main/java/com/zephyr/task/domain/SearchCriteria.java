@@ -10,7 +10,7 @@ public class SearchCriteria {
     private String id;
 
     private String query;
-    private String place;
+    private long place;
     private String languageIso;
     private UserAgent userAgent;
 

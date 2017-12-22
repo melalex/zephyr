@@ -5,7 +5,7 @@ import com.zephyr.commons.helpers.Page;
 import com.zephyr.data.dto.QueryDto;
 import com.zephyr.data.enums.SearchEngine;
 import com.zephyr.scraper.domain.EngineRequest;
-import com.zephyr.scraper.domain.properties.ScraperProperties;
+import com.zephyr.scraper.properties.ScraperProperties;
 import com.zephyr.scraper.request.provider.RequestProvider;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

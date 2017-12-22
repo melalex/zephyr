@@ -1,4 +1,4 @@
-package com.zephyr.task.integration.source;
+package com.zephyr.task.services.source;
 
 import com.zephyr.task.domain.MeteredSearchCriteria;
 import com.zephyr.task.domain.SearchCriteria;
