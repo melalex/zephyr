@@ -18,7 +18,7 @@ public class LanguageController {
     @Setter(onMethod = @__(@Autowired))
     private LanguageService languageService;
 
-    @GetMapping("/")
+    @GetMapping
     @Cacheable("LANGUAGE_ALL")
     public Set<LanguageDto> findAll() {
         return languageService.findAll();

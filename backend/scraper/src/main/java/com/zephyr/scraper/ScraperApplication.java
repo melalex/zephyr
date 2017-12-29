@@ -7,8 +7,8 @@ import lombok.Setter;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.DefaultAsyncHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -31,7 +31,10 @@ public class ScraperApplication {
     private ScrapingFlow scrapingFlow;
 
     public static void main(String[] args) {
-        SpringApplication.run(ScraperApplication.class, args);
+        new SpringApplicationBuilder()
+                .web(false)
+                .main(ScraperApplication.class)
+                .run(args);
     }
 
     @StreamListener

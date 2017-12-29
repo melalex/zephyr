@@ -1,6 +1,5 @@
 package com.zephyr.task.services.dto;
 
-import com.zephyr.task.domain.SearchCriteria;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
@@ -20,5 +19,5 @@ public class TaskDto {
     @Valid
     @NotNull
     @Size(min = 1, max = 6)
-    private List<SearchCriteria> searchCriteria;
+    private List<SearchCriteriaDto> searchCriteria;
 }

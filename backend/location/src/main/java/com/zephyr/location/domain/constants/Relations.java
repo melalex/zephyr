@@ -1,10 +1,9 @@
 package com.zephyr.location.domain.constants;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class Relations {
+@UtilityClass
+public class Relations {
     public static final String RELATIVES = "RELATIVES";
     public static final String COUNTRY = "COUNTRY";
 }
