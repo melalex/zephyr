@@ -22,7 +22,7 @@ ext {
     def jodaVersion = '2.9.9'
     def apacheCommonsVersion = '3.6'
     def commonsCsvVersion = '1.5'
-    def modelMapperVersion = '1.1.1'
+    def modelMapperVersion = '1.1.2'
     def beanutilsVersion = '1.9.3'
     def evoVersion = '1.2.2'
     def jUnitVersion = '4.12'
@@ -96,7 +96,7 @@ ext {
             test                  : 'org.springframework.boot:spring-boot-starter-test:2.0.0.M7',
 
             web                   : 'org.springframework.boot:spring-boot-starter-web',
-            webFlux               : 'org.springframework.boot:spring-boot-starter-webflux',
+            webFlux               : 'org.springframework.boot:spring-boot-starter-webflux:2.0.0.M7',
             webFluxLib            : 'org.springframework:spring-webflux',
 
             hal                   : 'org.springframework.boot:spring-boot-starter-hateoas',

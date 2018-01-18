@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.0.M6'
+        springBootVersion = '2.0.0.M7'
     }
     repositories {
         mavenLocal()
@@ -24,6 +24,7 @@ dependencies {
     compile libraries['modelMapper']
 
     compileOnly libraries['slf4j']
+    compileOnly libraries['spring']
     compileOnly libraries['jackson']
     compileOnly libraries['reactor']
     compileOnly libraries['reactorExtra']

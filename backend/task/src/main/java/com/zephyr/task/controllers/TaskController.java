@@ -1,6 +1,6 @@
 package com.zephyr.task.controllers;
 
-import com.zephyr.task.services.TaskService;
+import com.zephyr.task.facades.TaskFacade;
 import com.zephyr.task.services.dto.TaskDto;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +18,15 @@ import javax.validation.Valid;
 public class TaskController {
 
     @Setter(onMethod = @__(@Autowired))
-    private TaskService taskService;
+    private TaskFacade taskFacade;
 
     @GetMapping
     public Flux<TaskDto> findAllForCurrentUser() {
-        return taskService.findAllForCurrentUser();
+        return taskFacade.findAllForCurrentUser();
     }
 
     @PostMapping
     public Mono<Void> createTaskForCurrentUser(@Valid Mono<TaskDto> task) {
-        return taskService.createTaskForCurrentUser(task);
+        return taskFacade.createTaskForCurrentUser(task);
     }
 }

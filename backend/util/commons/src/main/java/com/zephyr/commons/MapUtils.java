@@ -1,6 +1,5 @@
 package com.zephyr.commons;
 
-import com.google.common.collect.ImmutableList;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
@@ -41,7 +40,7 @@ public class MapUtils {
         private final Map<String, List<String>> prototype = new HashMap<>();
 
         public MultiValueMapBuilder put(String key, String value) {
-            prototype.put(key, ImmutableList.of(value));
+            prototype.put(key, List.of(value));
             return this;
         }
 
@@ -56,7 +55,7 @@ public class MapUtils {
 
         public MultiValueMapBuilder putIfTrue(String key, String value, boolean condition) {
             if (condition) {
-                prototype.put(key, ImmutableList.of(value));
+                prototype.put(key, List.of(value));
             }
             return this;
         }
@@ -67,7 +66,7 @@ public class MapUtils {
 
         public MultiValueMapBuilder putIfNotNull(String key, String value) {
             if (Objects.nonNull(value)) {
-                prototype.put(key, ImmutableList.of(value));
+                prototype.put(key, List.of(value));
             }
             return this;
         }

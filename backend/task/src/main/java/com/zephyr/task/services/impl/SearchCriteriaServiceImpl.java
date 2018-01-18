@@ -8,10 +8,8 @@ import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.task.domain.factories.MeteredSearchCriteriaFactory;
 import com.zephyr.task.repositories.MeteredSearchCriteriaRepository;
 import com.zephyr.task.repositories.SearchCriteriaRepository;
-import com.zephyr.task.services.dto.MeteredSearchCriteriaDto;
-import com.zephyr.task.services.dto.SearchCriteriaDto;
+import com.zephyr.task.services.SearchCriteriaService;
 import com.zephyr.task.services.gateways.NewCriteriaGateway;
-import com.zephyr.task.services.internal.UpdatableSearchCriteriaService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +22,7 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Service
-public class UpdatableSearchCriteriaServiceImpl implements UpdatableSearchCriteriaService {
+public class SearchCriteriaServiceImpl implements SearchCriteriaService {
     private static final String UPDATE_USAGE_MESSAGE = "Update usage of searchCriteria: {}";
     private static final String NEW_CRITERIA_MESSAGE = "Save new searchCriteria: {}";
 
@@ -38,22 +36,17 @@ public class UpdatableSearchCriteriaServiceImpl implements UpdatableSearchCriter
     private MeteredSearchCriteriaFactory meteredSearchCriteriaFactory;
 
     @Setter(onMethod = @__(@Autowired))
-    private ExtendedMapper mapper;
-
-    @Setter(onMethod = @__(@Autowired))
     private NewCriteriaGateway newCriteriaGateway;
 
     @Override
-    public Flux<MeteredSearchCriteriaDto> findAll(Pageable pageable) {
-        return meteredSearchCriteriaRepository.findAll(pageable)
-                .map(mapper.mapperFor(MeteredSearchCriteriaDto.class));
+    public Flux<MeteredSearchCriteria> findAll(Pageable pageable) {
+        return meteredSearchCriteriaRepository.findAll(pageable);
     }
 
     @Override
-    public Flux<MeteredSearchCriteriaDto> findByExample(SearchCriteriaDto example, Sort sort) {
+    public Flux<MeteredSearchCriteria> findByExample(SearchCriteria example, Sort sort) {
         return meteredSearchCriteriaRepository
-                .findAll(meteredSearchCriteriaFactory.createExample(example), sort)
-                .map(mapper.mapperFor(MeteredSearchCriteriaDto.class));
+                .findAll(meteredSearchCriteriaFactory.createExample(example), sort);
     }
 
     @Override
