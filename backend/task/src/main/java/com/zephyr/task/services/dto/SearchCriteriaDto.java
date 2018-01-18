@@ -22,7 +22,7 @@ public class SearchCriteriaDto {
     private UserAgent userAgent;
 
     @Data
-    private static class Place {
+    public static class Place {
 
         @NotEmpty
         private String country;

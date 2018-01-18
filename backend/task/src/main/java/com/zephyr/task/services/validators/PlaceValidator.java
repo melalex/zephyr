@@ -17,5 +17,4 @@ public class PlaceValidator implements Validator {
     public void validate(@NonNull Object target, @NonNull Errors errors) {
 
     }
-
 }
