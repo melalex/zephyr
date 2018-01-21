@@ -3,7 +3,9 @@ package com.zephyr.task.facades.dto;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class SearchCriteriaDto {
@@ -12,10 +14,14 @@ public class SearchCriteriaDto {
     @NotEmpty
     private String query;
 
+    @Valid
+    @NotNull
     @JsonUnwrapped
     private Place place;
     private String languageIso;
 
+    @Valid
+    @NotNull
     @JsonUnwrapped
     private UserAgent userAgent;
 
@@ -30,7 +36,9 @@ public class SearchCriteriaDto {
     }
 
     @Data
-    private static class UserAgent {
+    public static class UserAgent {
+
+        @NotEmpty
         private String osName;
         private String osVersion;
         private String browserName;

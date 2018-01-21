@@ -1,8 +1,9 @@
-package com.zephyr.errors.builders;
+package com.zephyr.errors.dsl;
 
 import com.zephyr.errors.domain.ErrorData;
 import com.zephyr.errors.exceptions.ParameterizedException;
 import com.zephyr.errors.utils.ErrorUtil;
+import lombok.experimental.Delegate;
 
 import java.util.function.Supplier;
 
@@ -27,8 +28,8 @@ public final class ExceptionPopulator<T extends ParameterizedException> {
         return this;
     }
 
-    public ErrorDataBuilder<T> data() {
-        return new ErrorDataBuilder<>(this);
+    public SubordinateErrorDataSpec<T> data() {
+        return new SubordinateErrorDataSpec<>(this);
     }
 
     public T populate() {
@@ -52,5 +53,21 @@ public final class ExceptionPopulator<T extends ParameterizedException> {
     ExceptionPopulator<T> onDataBuilt(ErrorData data) {
         this.data = data;
         return this;
+    }
+
+    public static class SubordinateErrorDataSpec<T extends ParameterizedException> {
+
+        @Delegate(excludes = Creation.class)
+        private final ErrorDataSpec errorDataSpec;
+        private final ExceptionPopulator<T> exceptionPopulator;
+
+        public SubordinateErrorDataSpec(ExceptionPopulator<T> exceptionPopulator) {
+            this.exceptionPopulator = exceptionPopulator;
+            this.errorDataSpec = ErrorDataSpec.from();
+        }
+
+        public ExceptionPopulator<T> complete() {
+            return exceptionPopulator.onDataBuilt(errorDataSpec.create());
+        }
     }
 }

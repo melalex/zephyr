@@ -45,7 +45,7 @@ public class ParameterizedExceptionConverter implements ProblemConverter<Paramet
 
     private Function<SubjectError, Problem.NestedError> toNestedError(final Locale locale) {
         return e -> Problem.NestedError.builder()
-                .field(e.getFiled().getValue())
+                .field(e.getField().getValue())
                 .rejected(e.getActual().getValue())
                 .message(messageSource.getMessage(e.getCode(), e.getPayloadAsArray(), locale))
                 .build();

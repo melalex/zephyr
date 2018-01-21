@@ -7,6 +7,7 @@ import com.zephyr.scraper.browser.Browser;
 import com.zephyr.scraper.crawler.Crawler;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.exceptions.FraudException;
+import com.zephyr.scraper.domain.factories.SearchResultFactory;
 import com.zephyr.scraper.flow.ScrapingFlow;
 import com.zephyr.scraper.request.RequestConstructor;
 import lombok.Setter;
@@ -18,9 +19,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.retry.Retry;
 
-import java.time.Clock;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.function.Function;
 
 @Slf4j
@@ -41,7 +39,7 @@ public class ScrapingFlowImpl implements ScrapingFlow {
     private Crawler crawler;
 
     @Setter(onMethod = @__(@Autowired))
-    private Clock clock;
+    private SearchResultFactory searchResultFactory;
 
     @Override
     public Flux<SearchResultDto> handle(Flux<QueryDto> input) {
@@ -58,18 +56,7 @@ public class ScrapingFlowImpl implements ScrapingFlow {
         return Mono.defer(() -> browser.get(request))
                 .map(crawler::crawl)
                 .retryWhen(fraudException())
-                .map(l -> toSearchResult(request, l));
-    }
-
-    private SearchResultDto toSearchResult(EngineRequest request, List<String> links) {
-        SearchResultDto searchResult = new SearchResultDto();
-        searchResult.setOffset(request.getOffset());
-        searchResult.setQuery(request.getQuery());
-        searchResult.setProvider(request.getProvider());
-        searchResult.setTimestamp(LocalDateTime.now(clock));
-        searchResult.setLinks(links);
-
-        return searchResult;
+                .map(l -> searchResultFactory.create(request, l));
     }
 
     private Function<Flux<Throwable>, ? extends Publisher<?>> fraudException() {

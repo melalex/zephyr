@@ -1,7 +1,7 @@
-package com.zephyr.errors.builders;
+package com.zephyr.errors.dsl;
 
 import com.zephyr.errors.domain.Actual;
-import com.zephyr.errors.domain.Filed;
+import com.zephyr.errors.domain.Field;
 import com.zephyr.errors.domain.SubjectPath;
 import com.zephyr.errors.exceptions.ParameterizedException;
 import com.zephyr.errors.utils.ErrorUtil;
@@ -34,7 +34,7 @@ public class ExceptionPopulatorTest {
                         .path(SubjectPath.valueOf(ROOT).pathPart(PATH_PART))
                         .payload(payload())
                         .actual(Actual.isA(ACTUAL))
-                        .field(Filed.isA(EXPECTED))
+                        .field(Field.isA(EXPECTED))
                         .add()
                     .complete()
                 .status(STATUS_CODE)
@@ -43,7 +43,7 @@ public class ExceptionPopulatorTest {
 
         assertEquals(EXPECTED_CODE, ErrorUtil.firstError(exception.getData()).getCode());
         assertEquals(ACTUAL, ErrorUtil.firstError(exception.getData()).getActual().getValue());
-        assertEquals(EXPECTED, ErrorUtil.firstError(exception.getData()).getFiled().getValue());
+        assertEquals(EXPECTED, ErrorUtil.firstError(exception.getData()).getField().getValue());
         assertEquals(STATUS_CODE, exception.getStatus());
         assertEquals(EXCEPTION_CODE, exception.getCode());
         assertEquals(EXCEPTION_MESSAGE, exception.getMessage());

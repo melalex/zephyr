@@ -14,13 +14,13 @@ public class SubjectError implements Serializable {
 
     private SubjectPath path;
     private Actual actual;
-    private Filed filed;
+    private Field field;
     private Iterable<Object> payload;
 
-    public SubjectError(final SubjectPath path, final Actual actual, final Filed filed, final Iterable<Object> payload) {
+    public SubjectError(final SubjectPath path, final Actual actual, final Field field, final Iterable<Object> payload) {
         this.path = path;
         this.actual = actual;
-        this.filed = filed;
+        this.field = field;
         this.payload = ImmutableList.copyOf(payload);
     }
 

@@ -1,7 +1,6 @@
 package com.zephyr.errors.domain;
 
 import com.google.common.collect.ImmutableList;
-import com.zephyr.errors.builders.ErrorDataBuilder;
 import lombok.Value;
 
 import java.io.Serializable;
@@ -15,5 +14,13 @@ public class ErrorData implements Serializable {
 
     public ErrorData(final List<SubjectError> subjectErrors) {
         this.subjectErrors = ImmutableList.copyOf(subjectErrors);
+    }
+
+    public static ErrorData of(final List<SubjectError> subjectErrors) {
+        return new ErrorData(subjectErrors);
+    }
+
+    public boolean hasErrors() {
+        return !subjectErrors.isEmpty();
     }
 }

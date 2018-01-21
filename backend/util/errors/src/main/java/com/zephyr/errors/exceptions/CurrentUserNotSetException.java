@@ -18,5 +18,4 @@ public class CurrentUserNotSetException extends ParameterizedException {
     public CurrentUserNotSetException(Throwable cause) {
         super(cause);
     }
-
 }

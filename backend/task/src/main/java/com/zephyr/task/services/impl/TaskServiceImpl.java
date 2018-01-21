@@ -37,10 +37,10 @@ public class TaskServiceImpl implements TaskService {
         log.info(NEW_TASK_MESSAGE, task);
         return userService.getCurrentUserId()
                 .doOnNext(task::setId)
-                .then(saveSearchCriteria(task));
+                .then(createTask(task));
     }
 
-    private Mono<Void> saveSearchCriteria(Task task) {
+    private Mono<Void> createTask(Task task) {
         return Flux.fromIterable(task.getSearchCriteria())
                 .flatMap(searchCriteriaService::updateSearchCriteria)
                 .then(taskRepository.save(task))

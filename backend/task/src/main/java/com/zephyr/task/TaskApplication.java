@@ -2,6 +2,7 @@ package com.zephyr.task;
 
 import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.data.dto.QueryDto;
+import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.task.integration.source.SearchCriteriaSource;
 import com.zephyr.task.properties.TaskServiceProperties;
 import org.modelmapper.ModelMapper;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.Pollers;
+import org.springframework.integration.transformer.GenericTransformer;
 
 @EnableDiscoveryClient
 @SpringBootApplication
@@ -48,9 +50,9 @@ public class TaskApplication {
 
     @Bean
     @Autowired
-    public IntegrationFlow searchCriteriaOutputFlow(ExtendedMapper mapper) {
+    public IntegrationFlow searchCriteriaOutputFlow(GenericTransformer<SearchCriteria, QueryDto> transformer) {
         return IntegrationFlows.from(SEARCH_CRITERIA_OUTPUT)
-                .transform(mapper.mapperFor(QueryDto.class))
+                .transform(transformer)
                 .channel(Source.OUTPUT)
                 .get();
     }
