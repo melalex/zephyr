@@ -1,8 +1,8 @@
 package com.zephyr.task.controllers;
 
 import com.zephyr.task.facades.MeteredSearchCriteriaFacade;
-import com.zephyr.task.services.dto.MeteredSearchCriteriaDto;
-import com.zephyr.task.services.dto.SearchCriteriaDto;
+import com.zephyr.task.facades.dto.MeteredSearchCriteriaDto;
+import com.zephyr.task.facades.dto.SearchCriteriaDto;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

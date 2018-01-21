@@ -4,7 +4,7 @@ import com.zephyr.task.domain.Task;
 import com.zephyr.task.repositories.TaskRepository;
 import com.zephyr.task.services.SearchCriteriaService;
 import com.zephyr.task.services.TaskService;
-import com.zephyr.task.services.clients.AuthServiceClient;
+import com.zephyr.task.services.UserService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +24,23 @@ public class TaskServiceImpl implements TaskService {
     private TaskRepository taskRepository;
 
     @Setter(onMethod = @__(@Autowired))
-    private AuthServiceClient authServiceClient;
+    private UserService userService;
 
     @Override
     public Flux<Task> findAllForCurrentUser() {
-        return taskRepository.findAllByUserId(authServiceClient.current().getName());
+        return userService.getCurrentUserId()
+                .flatMapMany(id -> taskRepository.findAllByUserId(id));
     }
 
     @Override
     public Mono<Void> createTaskForCurrentUser(Task task) {
         log.info(NEW_TASK_MESSAGE, task);
+        return userService.getCurrentUserId()
+                .doOnNext(task::setId)
+                .then(saveSearchCriteria(task));
+    }
+
+    private Mono<Void> saveSearchCriteria(Task task) {
         return Flux.fromIterable(task.getSearchCriteria())
                 .flatMap(searchCriteriaService::updateSearchCriteria)
                 .then(taskRepository.save(task))

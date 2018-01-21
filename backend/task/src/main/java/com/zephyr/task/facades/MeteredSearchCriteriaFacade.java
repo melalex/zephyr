@@ -1,7 +1,7 @@
 package com.zephyr.task.facades;
 
-import com.zephyr.task.services.dto.MeteredSearchCriteriaDto;
-import com.zephyr.task.services.dto.SearchCriteriaDto;
+import com.zephyr.task.facades.dto.MeteredSearchCriteriaDto;
+import com.zephyr.task.facades.dto.SearchCriteriaDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import reactor.core.publisher.Flux;

@@ -8,7 +8,6 @@ import com.zephyr.errors.exceptions.ParameterizedException;
 
 import java.util.List;
 
-@SuppressWarnings("unused, WeakerAccess")
 public final class ErrorDataBuilder<T extends ParameterizedException> {
     private ExceptionPopulator<T> exceptionPopulator;
     private final List<SubjectError> subjectErrors = Lists.newLinkedList();

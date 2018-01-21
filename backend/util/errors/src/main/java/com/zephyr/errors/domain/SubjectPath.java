@@ -14,8 +14,6 @@ import java.util.List;
 public class SubjectPath implements Serializable {
     private static final long serialVersionUID = -1335468596895051110L;
 
-    public final String ERROR_CODE_SEPARATOR = ".";
-
     private String root;
     private List<String> path = Lists.newLinkedList();
 
@@ -59,14 +57,14 @@ public class SubjectPath implements Serializable {
 
     public String getFullPathCode() {
         return Joiner
-                .on(ERROR_CODE_SEPARATOR)
+                .on(ErrorUtil.ERROR_CODE_SEPARATOR)
                 .skipNulls()
                 .join(getFullPath());
     }
 
     public String getPathCode() {
         return Joiner
-                .on(ERROR_CODE_SEPARATOR)
+                .on(ErrorUtil.ERROR_CODE_SEPARATOR)
                 .skipNulls()
                 .join(path);
     }

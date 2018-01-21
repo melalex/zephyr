@@ -2,7 +2,7 @@ package com.zephyr.task;
 
 import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.data.dto.QueryDto;
-import com.zephyr.task.services.source.SearchCriteriaSource;
+import com.zephyr.task.integration.source.SearchCriteriaSource;
 import com.zephyr.task.properties.TaskServiceProperties;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

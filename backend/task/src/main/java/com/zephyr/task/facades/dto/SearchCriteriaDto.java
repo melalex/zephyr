@@ -1,4 +1,4 @@
-package com.zephyr.task.services.dto;
+package com.zephyr.task.facades.dto;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Data;

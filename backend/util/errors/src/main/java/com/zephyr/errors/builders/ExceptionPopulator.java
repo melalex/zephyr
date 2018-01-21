@@ -3,7 +3,8 @@ package com.zephyr.errors.builders;
 import com.zephyr.errors.domain.ErrorData;
 import com.zephyr.errors.exceptions.ParameterizedException;
 import com.zephyr.errors.utils.ErrorUtil;
-import reactor.core.publisher.Mono;
+
+import java.util.function.Supplier;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -38,6 +39,10 @@ public final class ExceptionPopulator<T extends ParameterizedException> {
         exception.setData(data);
 
         return exception;
+    }
+
+    public Supplier<T> populatingFunction() {
+        return this::populate;
     }
 
     public void populateAndThrow() {

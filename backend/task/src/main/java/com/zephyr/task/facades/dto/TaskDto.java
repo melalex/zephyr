@@ -1,4 +1,4 @@
-package com.zephyr.task.services.dto;
+package com.zephyr.task.facades.dto;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;

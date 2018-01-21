@@ -19,8 +19,8 @@ ext {
 
     def lombokVersion = '1.16.20'
     def validationApiVersion = '2.0.0.Final'
-    def jodaVersion = '2.9.9'
     def apacheCommonsVersion = '3.6'
+    def guavaVersion = '23.6-jre'
     def commonsCsvVersion = '1.5'
     def modelMapperVersion = '1.1.2'
     def beanutilsVersion = '1.9.3'
@@ -45,7 +45,7 @@ ext {
     def librariesDependencies = [
             lombok             : "org.projectlombok:lombok:${lombokVersion}",
 
-            jodaTime           : "joda-time:joda-time:${jodaVersion}",
+            guava              : "com.google.guava:guava:${guavaVersion}",
             apacheCommons      : "org.apache.commons:commons-lang3:${apacheCommonsVersion}",
             csv                : "org.apache.commons:commons-csv:${commonsCsvVersion}",
 

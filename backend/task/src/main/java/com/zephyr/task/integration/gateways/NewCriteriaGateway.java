@@ -1,4 +1,4 @@
-package com.zephyr.task.services.gateways;
+package com.zephyr.task.integration.gateways;
 
 import com.zephyr.task.TaskApplication;
 import com.zephyr.task.domain.SearchCriteria;

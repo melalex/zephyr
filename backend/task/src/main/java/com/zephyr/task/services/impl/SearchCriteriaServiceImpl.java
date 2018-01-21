@@ -2,14 +2,15 @@ package com.zephyr.task.services.impl;
 
 import com.zephyr.commons.LoggingUtils;
 import com.zephyr.commons.ReactorUtils;
-import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.task.domain.MeteredSearchCriteria;
 import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.task.domain.factories.MeteredSearchCriteriaFactory;
+import com.zephyr.task.properties.TaskServiceProperties;
 import com.zephyr.task.repositories.MeteredSearchCriteriaRepository;
 import com.zephyr.task.repositories.SearchCriteriaRepository;
 import com.zephyr.task.services.SearchCriteriaService;
-import com.zephyr.task.services.gateways.NewCriteriaGateway;
+import com.zephyr.task.integration.gateways.NewCriteriaGateway;
+import com.zephyr.task.services.order.OrderProvider;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,22 +39,35 @@ public class SearchCriteriaServiceImpl implements SearchCriteriaService {
     @Setter(onMethod = @__(@Autowired))
     private NewCriteriaGateway newCriteriaGateway;
 
+    @Setter(onMethod = @__(@Autowired))
+    private TaskServiceProperties properties;
+
+    @Setter(onMethod = @__(@Autowired))
+    private OrderProvider orderProvider;
+
     @Override
     public Flux<MeteredSearchCriteria> findAll(Pageable pageable) {
         return meteredSearchCriteriaRepository.findAll(pageable);
     }
 
     @Override
-    public Flux<MeteredSearchCriteria> findByExample(SearchCriteria example, Sort sort) {
+    public Flux<MeteredSearchCriteria> findAllByExample(SearchCriteria example, Sort sort) {
         return meteredSearchCriteriaRepository
                 .findAll(meteredSearchCriteriaFactory.createExample(example), sort);
     }
 
     @Override
+    public Flux<SearchCriteria> findAllForUpdate() {
+        return meteredSearchCriteriaRepository
+                .findAllForUpdate(properties.getRelevancePeriod(), orderProvider.provide(properties.getBatchSize()))
+                .map(MeteredSearchCriteria::getSearchCriteria);
+    }
+
+    @Override
     public Flux<MeteredSearchCriteria> updateSearchCriteria(SearchCriteria searchCriteria) {
         return searchCriteriaRepository.findAll(Example.of(searchCriteria))
-                .flatMap(m -> meteredSearchCriteriaRepository.updateUsage(m)
-                        .doOnNext(LoggingUtils.info(log, UPDATE_USAGE_MESSAGE)))
+                .flatMap(m -> meteredSearchCriteriaRepository.updateUsage(m))
+                .doOnNext(LoggingUtils.info(log, UPDATE_USAGE_MESSAGE))
                 .switchIfEmpty(saveNewSearchCriteria(searchCriteria));
     }
 

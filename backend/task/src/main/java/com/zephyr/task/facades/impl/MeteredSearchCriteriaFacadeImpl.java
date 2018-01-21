@@ -5,8 +5,8 @@ import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.task.facades.MeteredSearchCriteriaFacade;
 import com.zephyr.task.services.SearchCriteriaService;
-import com.zephyr.task.services.dto.MeteredSearchCriteriaDto;
-import com.zephyr.task.services.dto.SearchCriteriaDto;
+import com.zephyr.task.facades.dto.MeteredSearchCriteriaDto;
+import com.zephyr.task.facades.dto.SearchCriteriaDto;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +32,7 @@ public class MeteredSearchCriteriaFacadeImpl implements MeteredSearchCriteriaFac
     @Override
     public Flux<MeteredSearchCriteriaDto> findByExample(Mono<SearchCriteriaDto> example, Sort sort) {
         return example.map(mapper.mapperFor(SearchCriteria.class))
-                .flatMapMany(e -> searchCriteriaService.findByExample(e, sort))
+                .flatMapMany(e -> searchCriteriaService.findAllByExample(e, sort))
                 .map(mapper.mapperFor(MeteredSearchCriteriaDto.class));
     }
 }

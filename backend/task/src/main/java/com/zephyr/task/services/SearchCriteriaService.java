@@ -10,7 +10,9 @@ public interface SearchCriteriaService {
 
     Flux<MeteredSearchCriteria> findAll(Pageable pageable);
 
-    Flux<MeteredSearchCriteria> findByExample(SearchCriteria example, Sort sort);
+    Flux<MeteredSearchCriteria> findAllByExample(SearchCriteria example, Sort sort);
+
+    Flux<SearchCriteria> findAllForUpdate();
 
     Flux<MeteredSearchCriteria> updateSearchCriteria(SearchCriteria searchCriteria);
 }
