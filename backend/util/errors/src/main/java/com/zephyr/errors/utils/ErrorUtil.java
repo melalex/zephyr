@@ -19,15 +19,15 @@ public class ErrorUtil {
     private static final String WRAPPER = "'";
     private static final String EMPTY = WRAPPER + " " + WRAPPER;
 
-    public String toCamel(@NonNull final Enum<?> value) {
+    public String identifier(@NonNull Enum<?> value) {
         return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, value.name());
     }
 
-    public String toCamel(@NonNull final Class<?> clazz) {
+    public String identifier(@NonNull Class<?> clazz) {
         return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, clazz.getName());
     }
 
-    public String errorCode(@NonNull final Class<?> clazz) {
+    public String errorCode(@NonNull Class<?> clazz) {
         return clazz.getName();
     }
 
@@ -37,7 +37,7 @@ public class ErrorUtil {
                 .orElse(EMPTY);
     }
 
-    public SubjectError firstError(@NonNull final ErrorData errorData) {
+    public SubjectError firstError(@NonNull ErrorData errorData) {
         Preconditions.checkState(errorData.hasErrors(), AT_LEAST_ONE_ERROR_MESSAGE);
 
         return errorData.getSubjectErrors().get(0);

@@ -11,23 +11,23 @@ public class Actual implements Serializable {
 
     private String value;
 
-    public static Actual isA(final String value) {
+    public static Actual isA(String value) {
         return new Actual(value);
     }
 
-    public static Actual isA(final long value) {
+    public static Actual isA(long value) {
         return isA(String.valueOf(value));
     }
 
-    public static Actual isA(final double value) {
+    public static Actual isA(double value) {
         return isA(String.valueOf(value));
     }
 
-    public static Actual isA(final Object value) {
+    public static Actual isA(Object value) {
         return isA(String.valueOf(value));
     }
 
-    public static Actual isA(final Enum<?> value) {
-        return isA(ErrorUtil.toCamel(value));
+    public static Actual isA(Enum<?> value) {
+        return isA(ErrorUtil.identifier(value));
     }
 }

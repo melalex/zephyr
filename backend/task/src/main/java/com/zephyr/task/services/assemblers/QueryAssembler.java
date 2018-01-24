@@ -8,6 +8,7 @@ import com.zephyr.errors.domain.Actual;
 import com.zephyr.errors.domain.Field;
 import com.zephyr.errors.domain.Reason;
 import com.zephyr.errors.domain.SubjectError;
+import com.zephyr.errors.dsl.Problems;
 import com.zephyr.errors.dsl.SubjectSpec;
 import com.zephyr.errors.exceptions.InconsistentModelException;
 import com.zephyr.errors.utils.ErrorUtil;
@@ -76,8 +77,8 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
                 .payload()
                     .with(place.getPlaceName())
                     .with(place.getCountry())
-                    .add()
-                .create();
+                    .completePayload()
+                .completeSubject();
         // @formatter:on
     }
 
@@ -89,19 +90,19 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
                     .with(agent.getOsVersion())
                     .with(agent.getBrowserName())
                     .with(agent.getBrowserVersion())
-                    .add()
-                .create();
+                    .completePayload()
+                .completeSubject();
         // @formatter:on
     }
 
-    private SubjectSpec newSubjectSpec(String field, Object model) {
+    private SubjectSpec<SubjectError> newSubjectSpec(String field, Object model) {
         // @formatter:off
-        return SubjectSpec.from()
+        return Problems.subject()
                 .path()
-                    .root(ErrorUtil.toCamel(QueryDto.class))
+                    .root(ErrorUtil.identifier(QueryDto.class))
                     .with(field)
                     .with(Reason.NOT_FOUND)
-                    .add()
+                    .completePath()
                 .actual(Actual.isA(model))
                 .field(Field.isA(field));
         // @formatter:on

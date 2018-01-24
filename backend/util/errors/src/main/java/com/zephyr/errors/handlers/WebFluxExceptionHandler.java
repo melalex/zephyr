@@ -44,8 +44,8 @@ public class WebFluxExceptionHandler implements WebExceptionHandler {
 
     @NonNull
     @Override
-    public Mono<Void> handle(@NonNull final ServerWebExchange exchange, @NonNull final Throwable ex) {
-        final Locale locale = LocaleContextHolder.getLocale();
+    public Mono<Void> handle(@NonNull ServerWebExchange exchange, @NonNull Throwable ex) {
+        Locale locale = LocaleContextHolder.getLocale();
 
         Problem problem;
 
@@ -66,11 +66,11 @@ public class WebFluxExceptionHandler implements WebExceptionHandler {
         return exchange.getResponse().writeWith(toDataBuffer(exchange, problem));
     }
 
-    private Mono<DataBuffer> toDataBuffer(final ServerWebExchange exchange, final Problem problem) {
+    private Mono<DataBuffer> toDataBuffer(ServerWebExchange exchange, Problem problem) {
         return Mono.fromSupplier(() -> {
             try {
                 return mapper.writeValueAsBytes(problem);
-            } catch (final JsonProcessingException e) {
+            } catch (JsonProcessingException e) {
                 return Optional.ofNullable(problem.getDetail())
                         .orElse(DEFAULT_ERROR_MESSAGE)
                         .getBytes(StandardCharsets.UTF_8);

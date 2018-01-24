@@ -12,11 +12,11 @@ public class ErrorData implements Serializable {
 
     private List<SubjectError> subjectErrors;
 
-    public ErrorData(final List<SubjectError> subjectErrors) {
+    public ErrorData(List<SubjectError> subjectErrors) {
         this.subjectErrors = ImmutableList.copyOf(subjectErrors);
     }
 
-    public static ErrorData of(final List<SubjectError> subjectErrors) {
+    public static ErrorData of(List<SubjectError> subjectErrors) {
         return new ErrorData(subjectErrors);
     }
 

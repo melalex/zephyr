@@ -27,7 +27,7 @@ public class ParameterizedExceptionConverter implements ProblemConverter<Paramet
     private Clock clock;
 
     @Override
-    public Problem convert(final ParameterizedException exception, final Locale locale) {
+    public Problem convert(ParameterizedException exception, Locale locale) {
         return Problem.builder()
                 .timestamp(LocalDateTime.now(clock))
                 .type(exception.getCode())
@@ -37,13 +37,13 @@ public class ParameterizedExceptionConverter implements ProblemConverter<Paramet
                 .build();
     }
 
-    private List<Problem.NestedError> toErrors(final ErrorData data, final Locale locale) {
+    private List<Problem.NestedError> toErrors(ErrorData data, Locale locale) {
         return data.getSubjectErrors().stream()
                 .map(toNestedError(locale))
                 .collect(Collectors.toList());
     }
 
-    private Function<SubjectError, Problem.NestedError> toNestedError(final Locale locale) {
+    private Function<SubjectError, Problem.NestedError> toNestedError(Locale locale) {
         return e -> Problem.NestedError.builder()
                 .field(e.getField().getValue())
                 .rejected(e.getActual().getValue())

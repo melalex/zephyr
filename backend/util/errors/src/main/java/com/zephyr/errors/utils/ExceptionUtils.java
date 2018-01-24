@@ -1,10 +1,9 @@
 package com.zephyr.errors.utils;
 
-import com.google.common.base.CaseFormat;
 import com.zephyr.errors.domain.Actual;
 import com.zephyr.errors.domain.Reason;
-import com.zephyr.errors.dsl.ExceptionPopulator;
 import com.zephyr.errors.domain.SubjectError;
+import com.zephyr.errors.dsl.Problems;
 import com.zephyr.errors.exceptions.CurrentUserNotSetException;
 import com.zephyr.errors.exceptions.ParameterizedException;
 import com.zephyr.errors.exceptions.ResourceNotFoundException;
@@ -26,41 +25,41 @@ public class ExceptionUtils {
     public void assertErrors(@NonNull ParameterizedException exception, @NonNull Collection<SubjectError> errors) {
         if (!errors.isEmpty()) {
             // @formatter:off
-            ExceptionPopulator.of(exception)
+            Problems.exception(exception)
                     .data()
                         .subjectErrors(errors)
-                        .complete()
+                        .completeData()
                     .populateAndThrow();
             // @formatter:on
         }
     }
 
-    public <T> Mono<T> notFound(final Class<?> clazz, final Object id) {
+    public <T> Mono<T> notFound(Class<?> clazz, Object id) {
         return notFound(clazz.getName(), id);
     }
 
-    public <T> Mono<T> notFound(final String name, final Object id) {
+    public <T> Mono<T> notFound(String name, Object id) {
         return Mono.error(newNotFoundError(name, id).get());
     }
 
-    public Supplier<ResourceNotFoundException> newNotFoundError(final Class<?> clazz, final Object id) {
-        return newNotFoundError(clazz.getName(), id);
+    public Supplier<ResourceNotFoundException> newNotFoundError(Class<?> clazz, Object id) {
+        return newNotFoundError(ErrorUtil.identifier(clazz), id);
     }
 
-    public Supplier<ResourceNotFoundException> newNotFoundError(final String name, final Object id) {
+    public Supplier<ResourceNotFoundException> newNotFoundError(String name, Object id) {
         // @formatter:off
-        return ExceptionPopulator.of(new ResourceNotFoundException(String.format(NOT_FOUND_ERROR_MESSAGE, name, id)))
+        return Problems.exception(new ResourceNotFoundException(String.format(NOT_FOUND_ERROR_MESSAGE, name, id)))
                 .status(HttpStatus.NOT_FOUND.value())
                 .data()
                     .subjectError()
                         .path()
-                            .root(CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, name))
+                            .root(name)
                             .with(Reason.NOT_FOUND)
-                            .add()
+                            .completePath()
                         .actual(Actual.isA(id))
                         .payload(id)
-                        .add()
-                    .complete()
+                        .completeSubject()
+                    .completeData()
                 .populatingFunction();
         // @formatter:on
     }
@@ -71,16 +70,16 @@ public class ExceptionUtils {
 
     public CurrentUserNotSetException noCurrentUser() {
         // @formatter:off
-        return ExceptionPopulator.of(new CurrentUserNotSetException(NO_CURRENT_USER_MESSAGE))
+        return Problems.exception(new CurrentUserNotSetException(NO_CURRENT_USER_MESSAGE))
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .data()
                     .subjectError()
                         .path()
                             .root(NO_CURRENT_USER_ROOT)
                             .with(Reason.IS_NOT_SET)
-                            .add()
-                        .add()
-                    .complete()
+                            .completePath()
+                        .completeSubject()
+                    .completeData()
                 .populate();
         // @formatter:on
     }

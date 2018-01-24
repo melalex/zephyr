@@ -21,25 +21,25 @@ public class SubjectPath implements Serializable {
         return ImmutableList.copyOf(path);
     }
 
-    public static SubjectPath valueOf(final String root) {
+    public static SubjectPath valueOf(String root) {
         return new SubjectPath(root);
     }
 
-    public static SubjectPath valueOf(final Enum<?> value) {
-        return valueOf(ErrorUtil.toCamel(value));
+    public static SubjectPath valueOf(Enum<?> value) {
+        return valueOf(ErrorUtil.identifier(value));
     }
 
-    public SubjectPath pathPart(final String pathPart) {
+    public SubjectPath pathPart(String pathPart) {
         path.add(pathPart);
         return this;
     }
 
-    public SubjectPath pathPart(final Enum<?> pathPart) {
-        path.add(ErrorUtil.toCamel(pathPart));
+    public SubjectPath pathPart(Enum<?> pathPart) {
+        path.add(ErrorUtil.identifier(pathPart));
         return this;
     }
 
-    public SubjectPath pathPart(final Collection<String> pathPart) {
+    public SubjectPath pathPart(Collection<String> pathPart) {
         path.addAll(pathPart);
         return this;
     }
@@ -49,7 +49,7 @@ public class SubjectPath implements Serializable {
     }
 
     public List<String> getFullPath() {
-        final List<String> fullPath = Lists.newArrayList(root);
+        List<String> fullPath = Lists.newArrayList(root);
         fullPath.addAll(path);
 
         return fullPath;

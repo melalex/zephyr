@@ -25,7 +25,7 @@ public class UnhandledExceptionConverter implements ProblemConverter<Throwable> 
     private Clock clock;
 
     @Override
-    public Problem convert(final Throwable exception, final Locale locale) {
+    public Problem convert(Throwable exception, Locale locale) {
         return Problem.builder()
                 .timestamp(LocalDateTime.now(clock))
                 .type(ErrorUtil.errorCode(exception.getClass()))
@@ -35,7 +35,7 @@ public class UnhandledExceptionConverter implements ProblemConverter<Throwable> 
                 .build();
     }
 
-    private List<Problem.NestedError> getErrors(final Locale locale) {
+    private List<Problem.NestedError> getErrors(Locale locale) {
         return List.of(
                 Problem.NestedError.builder()
                         .message(messageSource.getMessage(INTERNAL_SERVER_ERROR_MESSAGE, locale))

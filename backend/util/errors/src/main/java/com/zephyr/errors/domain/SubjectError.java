@@ -17,7 +17,7 @@ public class SubjectError implements Serializable {
     private Field field;
     private Iterable<Object> payload;
 
-    public SubjectError(final SubjectPath path, final Actual actual, final Field field, final Iterable<Object> payload) {
+    public SubjectError(SubjectPath path, Actual actual, Field field, Iterable<Object> payload) {
         this.path = path;
         this.actual = actual;
         this.field = field;

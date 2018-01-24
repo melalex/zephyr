@@ -11,23 +11,23 @@ public class Field implements Serializable {
 
     private String value;
 
-    public static Field isA(final String value) {
+    public static Field isA(String value) {
         return new Field(value);
     }
 
-    public static Field isA(final long value) {
+    public static Field isA(long value) {
         return isA(String.valueOf(value));
     }
 
-    public static Field isA(final double value) {
+    public static Field isA(double value) {
         return isA(String.valueOf(value));
     }
 
-    public static Field isA(final Object value) {
+    public static Field isA(Object value) {
         return isA(String.valueOf(value));
     }
 
-    public static Field isA(final Enum<?> value) {
-        return isA(ErrorUtil.toCamel(value));
+    public static Field isA(Enum<?> value) {
+        return isA(ErrorUtil.identifier(value));
     }
 }

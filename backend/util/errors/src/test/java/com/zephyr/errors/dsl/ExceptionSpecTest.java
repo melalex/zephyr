@@ -11,7 +11,7 @@ import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 
-public class ExceptionPopulatorTest {
+public class ExceptionSpecTest {
     private static final int STATUS_CODE = 500;
     private static final String EXCEPTION_CODE = "ParameterizedException";
     private static final String EXCEPTION_MESSAGE = "EXCEPTION_MESSAGE";
@@ -23,7 +23,7 @@ public class ExceptionPopulatorTest {
 
     private static final String EXPECTED_CODE = "error.root.pathPart";
 
-    private final ExceptionPopulator testInstance = createTestInstance();
+    private final ExceptionSpec<ParameterizedException> testInstance = createTestInstance();
 
     @Test
     public void shouldBuild() {
@@ -35,8 +35,8 @@ public class ExceptionPopulatorTest {
                         .payload(payload())
                         .actual(Actual.isA(ACTUAL))
                         .field(Field.isA(EXPECTED))
-                        .add()
-                    .complete()
+                        .completeSubject()
+                    .completeData()
                 .status(STATUS_CODE)
                 .populate();
         // @formatter:on
@@ -53,7 +53,7 @@ public class ExceptionPopulatorTest {
         return Collections.singleton(PAYLOAD);
     }
 
-    private ExceptionPopulator createTestInstance() {
-        return ExceptionPopulator.of(new ParameterizedException(EXCEPTION_MESSAGE));
+    private ExceptionSpec<ParameterizedException> createTestInstance() {
+        return Problems.exception(new ParameterizedException(EXCEPTION_MESSAGE));
     }
 }

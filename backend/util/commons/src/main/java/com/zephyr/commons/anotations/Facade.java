@@ -10,4 +10,5 @@ import java.lang.annotation.*;
 @Component
 public @interface Facade {
 
+    String value() default "";
 }

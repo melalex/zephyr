@@ -33,7 +33,7 @@ public class ValidationExceptionConverter implements ProblemConverter<Constraint
     private Clock clock;
 
     @Override
-    public Problem convert(final ConstraintViolationException exception, final Locale locale) {
+    public Problem convert(ConstraintViolationException exception, Locale locale) {
         return Problem.builder()
                 .timestamp(LocalDateTime.now(clock))
                 .type(ErrorUtil.errorCode(exception.getClass()))
@@ -43,13 +43,13 @@ public class ValidationExceptionConverter implements ProblemConverter<Constraint
                 .build();
     }
 
-    private List<Problem.NestedError> toErrors(final ConstraintViolationException exception, final Locale locale) {
+    private List<Problem.NestedError> toErrors(ConstraintViolationException exception, Locale locale) {
         return exception.getConstraintViolations().stream()
                 .map(toNestedError(locale))
                 .collect(Collectors.toList());
     }
 
-    private Function<ConstraintViolation, Problem.NestedError> toNestedError(final Locale locale) {
+    private Function<ConstraintViolation, Problem.NestedError> toNestedError(Locale locale) {
         return v -> Problem.NestedError.builder()
                 .field(getField(v))
                 .rejected(String.valueOf(v.getInvalidValue()))
@@ -57,7 +57,7 @@ public class ValidationExceptionConverter implements ProblemConverter<Constraint
                 .build();
     }
 
-    private String getCode(final ConstraintViolation violation) {
+    private String getCode(ConstraintViolation violation) {
         List<String> path = Streams.stream(violation.getPropertyPath())
                 .map(Path.Node::getName)
                 .filter(Objects::nonNull)
@@ -67,7 +67,7 @@ public class ValidationExceptionConverter implements ProblemConverter<Constraint
                 .join(violation.getRootBean(), path);
     }
 
-    private String getField(final ConstraintViolation violation) {
+    private String getField(ConstraintViolation violation) {
         return Streams.stream(violation.getPropertyPath())
                 .filter(n -> ElementKind.PROPERTY.equals(n.getKind()))
                 .map(Path.Node::getName)
