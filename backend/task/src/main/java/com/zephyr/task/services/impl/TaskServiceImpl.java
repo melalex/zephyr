@@ -27,9 +27,8 @@ public class TaskServiceImpl implements TaskService {
     private UserService userService;
 
     @Override
-    public Flux<Task> findAllForCurrentUser() {
-        return userService.getCurrentUserId()
-                .flatMapMany(id -> taskRepository.findAllByUserId(id));
+    public Flux<Task> findAllForCurrentUser(String userId) {
+        return taskRepository.findAllByUserId(userId);
     }
 
     @Override

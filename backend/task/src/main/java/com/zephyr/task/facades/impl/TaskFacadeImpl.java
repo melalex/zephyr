@@ -21,8 +21,8 @@ public class TaskFacadeImpl implements TaskFacade {
     private ExtendedMapper mapper;
 
     @Override
-    public Flux<TaskDto> findAllForCurrentUser() {
-        return taskService.findAllForCurrentUser()
+    public Flux<TaskDto> findAllForCurrentUser(String userId) {
+        return taskService.findAllForCurrentUser(userId)
                 .map(mapper.mapperFor(TaskDto.class));
     }
 
