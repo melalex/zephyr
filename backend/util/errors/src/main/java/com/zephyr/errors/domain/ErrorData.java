@@ -10,17 +10,17 @@ import java.util.List;
 public class ErrorData implements Serializable {
     private static final long serialVersionUID = 5782507593253190287L;
 
-    private List<SubjectError> subjectErrors;
+    private List<Subject> subjects;
 
-    public ErrorData(List<SubjectError> subjectErrors) {
-        this.subjectErrors = ImmutableList.copyOf(subjectErrors);
+    private ErrorData(List<Subject> subjects) {
+        this.subjects = ImmutableList.copyOf(subjects);
     }
 
-    public static ErrorData of(List<SubjectError> subjectErrors) {
-        return new ErrorData(subjectErrors);
+    public static ErrorData of(List<Subject> subjects) {
+        return new ErrorData(subjects);
     }
 
     public boolean hasErrors() {
-        return !subjectErrors.isEmpty();
+        return !subjects.isEmpty();
     }
 }

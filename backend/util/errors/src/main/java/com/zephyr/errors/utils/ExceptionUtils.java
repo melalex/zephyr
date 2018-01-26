@@ -1,8 +1,9 @@
 package com.zephyr.errors.utils;
 
 import com.zephyr.errors.domain.Actual;
-import com.zephyr.errors.domain.Reason;
-import com.zephyr.errors.domain.SubjectError;
+import com.zephyr.errors.domain.Path;
+import com.zephyr.errors.domain.Reasons;
+import com.zephyr.errors.domain.Subject;
 import com.zephyr.errors.dsl.Problems;
 import com.zephyr.errors.exceptions.CurrentUserNotSetException;
 import com.zephyr.errors.exceptions.ParameterizedException;
@@ -22,7 +23,7 @@ public class ExceptionUtils {
     private static final String NO_CURRENT_USER_ROOT = "user";
     private static final String NO_CURRENT_USER_MESSAGE = "Current User not set";
 
-    public void assertErrors(@NonNull ParameterizedException exception, @NonNull Collection<SubjectError> errors) {
+    public void assertErrors(@NonNull ParameterizedException exception, @NonNull Collection<Subject> errors) {
         if (!errors.isEmpty()) {
             // @formatter:off
             Problems.exception(exception)
@@ -52,10 +53,8 @@ public class ExceptionUtils {
                 .status(HttpStatus.NOT_FOUND.value())
                 .data()
                     .subjectError()
-                        .path()
-                            .root(name)
-                            .with(Reason.NOT_FOUND)
-                            .completePath()
+                        .path(Path.of(name))
+                        .reason(Reasons.NOT_FOUND)
                         .actual(Actual.isA(id))
                         .payload(id)
                         .completeSubject()
@@ -74,14 +73,11 @@ public class ExceptionUtils {
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .data()
                     .subjectError()
-                        .path()
-                            .root(NO_CURRENT_USER_ROOT)
-                            .with(Reason.IS_NOT_SET)
-                            .completePath()
+                        .path(Path.of(NO_CURRENT_USER_ROOT))
+                        .reason(Reasons.NOT_SET)
                         .completeSubject()
                     .completeData()
                 .populate();
         // @formatter:on
     }
-
 }

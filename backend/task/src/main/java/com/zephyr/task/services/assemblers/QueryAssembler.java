@@ -5,10 +5,9 @@ import com.zephyr.commons.ReactorUtils;
 import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.commons.interfaces.Assembler;
 import com.zephyr.data.dto.QueryDto;
-import com.zephyr.errors.domain.Actual;
-import com.zephyr.errors.domain.Field;
-import com.zephyr.errors.domain.Reason;
-import com.zephyr.errors.domain.SubjectError;
+import com.zephyr.errors.domain.Path;
+import com.zephyr.errors.domain.Reasons;
+import com.zephyr.errors.domain.Subject;
 import com.zephyr.errors.dsl.Problems;
 import com.zephyr.errors.dsl.SubjectSpec;
 import com.zephyr.errors.exceptions.InconsistentModelException;
@@ -51,7 +50,7 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
     public Mono<QueryDto> assemble(SearchCriteria source) {
         log.info(BEGIN_ASSEMBLE_MESSAGE, source);
 
-        Collection<SubjectError> errors = new ConcurrentLinkedQueue<>();
+        Collection<Subject> errors = new ConcurrentLinkedQueue<>();
 
         return Mono.just(source)
                 .map(mapper.mapperFor(QueryDto.class))
@@ -61,7 +60,7 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
                 .doOnNext(LoggingUtils.info(log, FINISH_ASSEMBLE_MESSAGE));
     }
 
-    private Publisher<QueryDto> populatePlace(SearchCriteria source, QueryDto query, Collection<SubjectError> errors) {
+    private Publisher<QueryDto> populatePlace(SearchCriteria source, QueryDto query, Collection<Subject> errors) {
         PlaceCriteria place = source.getPlace();
 
         return locationServiceClient.findByCountryIsoAndNameStartsWith(place.getCountry(), place.getPlaceName())
@@ -70,7 +69,7 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
                 .switchIfEmpty(Mono.just(query).doOnNext(q -> errors.add(newError(place))));
     }
 
-    private Publisher<QueryDto> populateAgent(SearchCriteria source, QueryDto query, Collection<SubjectError> errors) {
+    private Publisher<QueryDto> populateAgent(SearchCriteria source, QueryDto query, Collection<Subject> errors) {
         UserAgentCriteria agent = source.getUserAgent();
 
         return agentServiceClient.findByExample(agent)
@@ -79,9 +78,9 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
                 .switchIfEmpty(Mono.just(query).doOnNext(q -> errors.add(newError(agent))));
     }
 
-    private SubjectError newError(PlaceCriteria place) {
+    private Subject newError(PlaceCriteria place) {
         // @formatter:off
-        return newSubjectSpec(PLACE_FIELD, place)
+        return newSubjectSpec(PLACE_FIELD)
                 .payload()
                     .with(place.getPlaceName())
                     .with(place.getCountry())
@@ -90,9 +89,9 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
         // @formatter:on
     }
 
-    private SubjectError newError(UserAgentCriteria agent) {
+    private Subject newError(UserAgentCriteria agent) {
         // @formatter:off
-        return newSubjectSpec(AGENT_FIELD, agent)
+        return newSubjectSpec(AGENT_FIELD)
                 .payload()
                     .with(agent.getOsName())
                     .with(agent.getOsVersion())
@@ -103,16 +102,11 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
         // @formatter:on
     }
 
-    private SubjectSpec<SubjectError> newSubjectSpec(String field, Object model) {
+    private SubjectSpec<Subject> newSubjectSpec(String field) {
         // @formatter:off
         return Problems.subject()
-                .path()
-                    .root(ErrorUtil.identifier(QueryDto.class))
-                    .with(field)
-                    .with(Reason.NOT_FOUND)
-                    .completePath()
-                .actual(Actual.isA(model))
-                .field(Field.isA(field));
+                .path(Path.of(ErrorUtil.identifier(QueryDto.class)).to(field))
+                .reason(Reasons.NOT_FOUND);
         // @formatter:on
     }
 }

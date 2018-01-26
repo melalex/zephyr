@@ -2,13 +2,13 @@ package com.zephyr.errors.dsl;
 
 import com.google.common.collect.Lists;
 import com.zephyr.errors.domain.ErrorData;
-import com.zephyr.errors.domain.SubjectError;
+import com.zephyr.errors.domain.Subject;
 
 import java.util.Collection;
 import java.util.List;
 
 public final class ErrorDataSpec<T> {
-    private final List<SubjectError> subjectErrors = Lists.newLinkedList();
+    private final List<Subject> subjects = Lists.newLinkedList();
 
     private final AssembleCallback<T, ErrorData> callback;
 
@@ -16,13 +16,13 @@ public final class ErrorDataSpec<T> {
         this.callback = callback;
     }
 
-    private ErrorDataSpec<T> addSubjectError(SubjectError subjectError) {
-        subjectErrors.add(subjectError);
+    private ErrorDataSpec<T> addSubjectError(Subject subject) {
+        subjects.add(subject);
         return this;
     }
 
-    public ErrorDataSpec<T> subjectErrors(Collection<SubjectError> errors) {
-        subjectErrors.addAll(errors);
+    public ErrorDataSpec<T> subjectErrors(Collection<Subject> errors) {
+        subjects.addAll(errors);
         return this;
     }
 
@@ -31,6 +31,6 @@ public final class ErrorDataSpec<T> {
     }
 
     public T completeData() {
-        return callback.onAssemble(ErrorData.of(subjectErrors));
+        return callback.onAssemble(ErrorData.of(subjects));
     }
 }

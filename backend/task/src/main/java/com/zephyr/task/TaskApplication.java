@@ -43,8 +43,7 @@ public class TaskApplication {
 
     @Bean
     @Autowired
-    public IntegrationFlow updateRatingFlow(QuerySource querySource,
-                                            TaskServiceProperties properties) {
+    public IntegrationFlow updateRatingFlow(QuerySource querySource, TaskServiceProperties properties) {
         return IntegrationFlows.from(querySource, s -> s.poller(Pollers.cron(properties.getCron())))
                 .split()
                 .enrichHeaders(setPriority(UPDATE_RATING_PRIORITY))

@@ -9,18 +9,18 @@ import lombok.Value;
 import java.io.Serializable;
 
 @Value
-public class SubjectError implements Serializable {
+public class Subject implements Serializable {
     private static final long serialVersionUID = -5358302471268083113L;
 
-    private SubjectPath path;
+    private Path path;
     private Actual actual;
-    private Field field;
+    private Reason reason;
     private Iterable<Object> payload;
 
-    public SubjectError(SubjectPath path, Actual actual, Field field, Iterable<Object> payload) {
+    public Subject(Path path, Actual actual, Reason reason, Iterable<Object> payload) {
         this.path = path;
         this.actual = actual;
-        this.field = field;
+        this.reason = reason;
         this.payload = ImmutableList.copyOf(payload);
     }
 
@@ -29,9 +29,8 @@ public class SubjectError implements Serializable {
     }
 
     public String getCode() {
-        return Joiner
-                .on(ErrorUtil.ERROR_CODE_SEPARATOR)
+        return Joiner.on(ErrorUtil.ERROR_CODE_SEPARATOR)
                 .skipNulls()
-                .join(ErrorUtil.ERROR_CODE_PREFIX, path.getFullPathCode());
+                .join(ErrorUtil.ERROR_CODE_PREFIX, path.getFullPathCode(), reason.getValue());
     }
 }

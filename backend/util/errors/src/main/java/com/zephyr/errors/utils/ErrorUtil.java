@@ -3,7 +3,7 @@ package com.zephyr.errors.utils;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Preconditions;
 import com.zephyr.errors.domain.ErrorData;
-import com.zephyr.errors.domain.SubjectError;
+import com.zephyr.errors.domain.Subject;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
@@ -14,7 +14,7 @@ public class ErrorUtil {
     public static final String ERROR_CODE_PREFIX = "error";
     public static final String ERROR_CODE_SEPARATOR = ".";
 
-    private static final String AT_LEAST_ONE_ERROR_MESSAGE = "ErrorData must contains at least one SubjectError";
+    private static final String AT_LEAST_ONE_ERROR_MESSAGE = "ErrorData must contains at least one Subject";
 
     private static final String WRAPPER = "'";
     private static final String EMPTY = WRAPPER + " " + WRAPPER;
@@ -37,9 +37,9 @@ public class ErrorUtil {
                 .orElse(EMPTY);
     }
 
-    public SubjectError firstError(@NonNull ErrorData errorData) {
+    public Subject firstError(@NonNull ErrorData errorData) {
         Preconditions.checkState(errorData.hasErrors(), AT_LEAST_ONE_ERROR_MESSAGE);
 
-        return errorData.getSubjectErrors().get(0);
+        return errorData.getSubjects().get(0);
     }
 }

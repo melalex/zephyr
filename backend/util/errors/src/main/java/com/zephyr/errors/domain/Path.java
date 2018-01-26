@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Value
-public class SubjectPath implements Serializable {
+public class Path implements Serializable {
     private static final long serialVersionUID = -1335468596895051110L;
 
     private String root;
@@ -21,25 +21,25 @@ public class SubjectPath implements Serializable {
         return ImmutableList.copyOf(path);
     }
 
-    public static SubjectPath valueOf(String root) {
-        return new SubjectPath(root);
+    public static Path of(String root) {
+        return new Path(root);
     }
 
-    public static SubjectPath valueOf(Enum<?> value) {
-        return valueOf(ErrorUtil.identifier(value));
+    public static Path of(Enum<?> value) {
+        return of(ErrorUtil.identifier(value));
     }
 
-    public SubjectPath pathPart(String pathPart) {
+    public Path to(String pathPart) {
         path.add(pathPart);
         return this;
     }
 
-    public SubjectPath pathPart(Enum<?> pathPart) {
+    public Path to(Enum<?> pathPart) {
         path.add(ErrorUtil.identifier(pathPart));
         return this;
     }
 
-    public SubjectPath pathPart(Collection<String> pathPart) {
+    public Path to(Collection<String> pathPart) {
         path.addAll(pathPart);
         return this;
     }
@@ -56,15 +56,13 @@ public class SubjectPath implements Serializable {
     }
 
     public String getFullPathCode() {
-        return Joiner
-                .on(ErrorUtil.ERROR_CODE_SEPARATOR)
+        return Joiner.on(ErrorUtil.ERROR_CODE_SEPARATOR)
                 .skipNulls()
                 .join(getFullPath());
     }
 
     public String getPathCode() {
-        return Joiner
-                .on(ErrorUtil.ERROR_CODE_SEPARATOR)
+        return Joiner.on(ErrorUtil.ERROR_CODE_SEPARATOR)
                 .skipNulls()
                 .join(path);
     }

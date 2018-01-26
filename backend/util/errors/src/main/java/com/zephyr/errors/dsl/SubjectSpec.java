@@ -8,18 +8,18 @@ import com.zephyr.errors.utils.ErrorUtil;
 import java.util.stream.Collectors;
 
 public final class SubjectSpec<T> {
-    private SubjectPath path;
+    private Path path;
     private Actual actual;
-    private Field field;
+    private Reason reason;
     private Iterable<Object> payload;
 
-    private final AssembleCallback<T, SubjectError> callback;
+    private final AssembleCallback<T, Subject> callback;
 
-    SubjectSpec(AssembleCallback<T, SubjectError> callback) {
+    SubjectSpec(AssembleCallback<T, Subject> callback) {
         this.callback = callback;
     }
 
-    public SubjectSpec<T> path(SubjectPath path) {
+    public SubjectSpec<T> path(Path path) {
         this.path = path;
         return this;
     }
@@ -33,8 +33,8 @@ public final class SubjectSpec<T> {
         return this;
     }
 
-    public SubjectSpec<T> field(Field field) {
-        this.field = field;
+    public SubjectSpec<T> reason(Reason reason) {
+        this.reason = reason;
         return this;
     }
 
@@ -56,6 +56,6 @@ public final class SubjectSpec<T> {
     }
 
     public T completeSubject() {
-        return callback.onAssemble(new SubjectError(path, actual, field, payload));
+        return callback.onAssemble(new Subject(path, actual, reason, payload));
     }
 }
