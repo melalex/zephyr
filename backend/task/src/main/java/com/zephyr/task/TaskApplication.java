@@ -1,9 +1,8 @@
 package com.zephyr.task;
 
 import com.zephyr.commons.extensions.ExtendedMapper;
-import com.zephyr.data.dto.QueryDto;
-import com.zephyr.task.domain.SearchCriteria;
-import com.zephyr.task.integration.source.SearchCriteriaSource;
+import com.zephyr.task.integration.gateways.NewCriteriaGateway;
+import com.zephyr.task.integration.source.QuerySource;
 import com.zephyr.task.properties.TaskServiceProperties;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +12,20 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.context.annotation.Bean;
+import org.springframework.integration.dsl.HeaderEnricherSpec;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.Pollers;
-import org.springframework.integration.transformer.GenericTransformer;
+
+import java.util.function.Consumer;
 
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableBinding(Source.class)
 public class TaskApplication {
-    public static final String SEARCH_CRITERIA_OUTPUT = "SEARCH_CRITERIA_OUTPUT";
+    private static final String PRIORITY_HEADER = "priority";
+    private static final String NEW_CRITERIA_PRIORITY = "9";
+    private static final String UPDATE_RATING_PRIORITY = "1";
 
     public static void main(String[] args) {
         SpringApplication.run(TaskApplication.class, args);
@@ -40,20 +43,24 @@ public class TaskApplication {
 
     @Bean
     @Autowired
-    public IntegrationFlow updateRatingFlow(SearchCriteriaSource searchCriteriaSource,
+    public IntegrationFlow updateRatingFlow(QuerySource querySource,
                                             TaskServiceProperties properties) {
-        return IntegrationFlows.from(searchCriteriaSource, s -> s.poller(Pollers.cron(properties.getCron())))
+        return IntegrationFlows.from(querySource, s -> s.poller(Pollers.cron(properties.getCron())))
                 .split()
-                .channel(SEARCH_CRITERIA_OUTPUT)
+                .enrichHeaders(setPriority(UPDATE_RATING_PRIORITY))
+                .channel(Source.OUTPUT)
                 .get();
     }
 
     @Bean
-    @Autowired
-    public IntegrationFlow searchCriteriaOutputFlow(GenericTransformer<SearchCriteria, QueryDto> transformer) {
-        return IntegrationFlows.from(SEARCH_CRITERIA_OUTPUT)
-                .transform(transformer)
+    public IntegrationFlow newSearchCriteriaFlow() {
+        return IntegrationFlows.from(NewCriteriaGateway.class)
+                .enrichHeaders(setPriority(NEW_CRITERIA_PRIORITY))
                 .channel(Source.OUTPUT)
                 .get();
+    }
+
+    private Consumer<HeaderEnricherSpec> setPriority(String priority) {
+        return h -> h.header(PRIORITY_HEADER, priority);
     }
 }
