@@ -1,6 +1,6 @@
 package com.zephyr.task.facades;
 
-import com.zephyr.task.facades.dto.TaskDto;
+import com.zephyr.data.dto.TaskDto;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
