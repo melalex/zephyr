@@ -3,6 +3,7 @@ package com.zephyr.rating.domain;
 import com.zephyr.data.enums.SearchEngine;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Document
+@NoArgsConstructor
 @Builder(toBuilder = true)
 public class Rating {
 
@@ -30,7 +32,7 @@ public class Rating {
     }
 
     @Data
-    private static class Query {
+    public static class Query {
         private String query;
         private String languageIso;
         private Place place;
