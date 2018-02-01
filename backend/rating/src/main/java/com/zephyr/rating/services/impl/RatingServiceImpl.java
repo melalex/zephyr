@@ -8,14 +8,13 @@ import com.zephyr.rating.domain.Rating;
 import com.zephyr.rating.repository.RatingRepository;
 import com.zephyr.rating.services.RatingService;
 import com.zephyr.rating.services.dto.RatingDto;
+import com.zephyr.rating.services.dto.factory.RatingDtoFactory;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
 
 @Service
 public class RatingServiceImpl implements RatingService {
@@ -27,7 +26,7 @@ public class RatingServiceImpl implements RatingService {
     private Transformer<SearchResultDto, Iterable<Rating>> searchResultTransformer;
 
     @Setter(onMethod = @__(@Autowired))
-    private Transformer<List<Rating>, RatingDto> ratingTransformer;
+    private RatingDtoFactory ratingDtoFactory;
 
     @Setter(onMethod = @__(@Autowired))
     private Transformer<SearchCriteriaDto, Example<Rating>> taskTransformer;
@@ -51,6 +50,6 @@ public class RatingServiceImpl implements RatingService {
                 .map(taskTransformer::transform)
                 .flatMapMany(ratingRepository::findAll)
                 .collectList()
-                .map(ratingTransformer::transform);
+                .map(l -> ratingDtoFactory.create(searchCriteria, l));
     }
 }
