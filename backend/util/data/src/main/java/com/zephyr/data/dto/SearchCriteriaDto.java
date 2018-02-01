@@ -1,6 +1,5 @@
 package com.zephyr.data.dto;
 
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Data;
 
 import javax.validation.Valid;
@@ -13,16 +12,14 @@ public class SearchCriteriaDto {
 
     @NotEmpty
     private String query;
-
-    @Valid
-    @NotNull
-    @JsonUnwrapped
-    private Place place;
     private String languageIso;
 
     @Valid
     @NotNull
-    @JsonUnwrapped
+    private Place place;
+
+    @Valid
+    @NotNull
     private UserAgent userAgent;
 
     @Data
