@@ -17,10 +17,12 @@ public class RatingDtoFactory {
         return RatingDto.of(searchCriteria, position(source));
     }
 
+    public RatingDto create(SearchCriteriaDto searchCriteria) {
+        return RatingDto.of(searchCriteria, Map.of());
+    }
+
     private Map<LocalDateTime, Integer> position(List<Rating> source) {
-        return source.stream().collect(Collectors.toMap(
-                Rating::getTimestamp,
-                Rating::getPosition
-        ));
+        return source.stream()
+                .collect(Collectors.toMap(Rating::getTimestamp, Rating::getPosition));
     }
 }

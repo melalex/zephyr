@@ -23,10 +23,10 @@ public class RatingServiceImpl implements RatingService {
     private RatingRepository ratingRepository;
 
     @Setter(onMethod = @__(@Autowired))
-    private Transformer<SearchResultDto, Iterable<Rating>> searchResultTransformer;
+    private RatingDtoFactory ratingDtoFactory;
 
     @Setter(onMethod = @__(@Autowired))
-    private RatingDtoFactory ratingDtoFactory;
+    private Transformer<SearchResultDto, Iterable<Rating>> searchResultTransformer;
 
     @Setter(onMethod = @__(@Autowired))
     private Transformer<SearchCriteriaDto, Example<Rating>> taskTransformer;
@@ -50,6 +50,7 @@ public class RatingServiceImpl implements RatingService {
                 .map(taskTransformer::transform)
                 .flatMapMany(ratingRepository::findAll)
                 .collectList()
-                .map(l -> ratingDtoFactory.create(searchCriteria, l));
+                .map(l -> ratingDtoFactory.create(searchCriteria, l))
+                .switchIfEmpty(Mono.fromSupplier(() -> ratingDtoFactory.create(searchCriteria)));
     }
 }

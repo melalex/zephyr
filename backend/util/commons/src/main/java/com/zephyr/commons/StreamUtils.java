@@ -10,8 +10,8 @@ import java.util.stream.Stream;
 @UtilityClass
 public class StreamUtils {
 
-    public <T> Stream<Pair<Integer, T>> zipWithIndexes(List<T> list, int first) {
-        return IntStream.range(first, list.size())
+    public <T> Stream<Pair<Integer, T>> zipWithIndexes(List<T> list, int offset) {
+        return IntStream.range(offset, list.size() + offset)
                 .boxed()
                 .map(i -> Pair.of(i, list.get(i)));
     }
