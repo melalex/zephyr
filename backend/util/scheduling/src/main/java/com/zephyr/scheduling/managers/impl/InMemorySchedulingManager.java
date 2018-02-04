@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.Deque;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
@@ -62,10 +63,10 @@ public class InMemorySchedulingManager implements SchedulingManager {
 
     private LocalDateTime pushLast(String group, Duration duration) {
         LocalDateTime now = LocalDateTime.now(clock);
-        return lastAdded.compute(group, (k, v) -> v == null || v.isBefore(now) ? now : v.plus(duration));
+        return lastAdded.compute(group, (k, v) -> Objects.isNull(v) || v.isBefore(now) ? now : v.plus(duration));
     }
 
     private Deque<MutableTimer> group(String groupName) {
-        return state.compute(groupName, (g, d) -> Objects.isNull(d) ? new ConcurrentLinkedDeque<>() : d);
+        return state.compute(groupName, (g, d) -> Optional.ofNullable(d).orElse(new ConcurrentLinkedDeque<>()));
     }
 }

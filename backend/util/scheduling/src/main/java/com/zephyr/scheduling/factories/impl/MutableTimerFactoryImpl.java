@@ -11,6 +11,7 @@ import reactor.core.scheduler.Scheduler;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Component
 public class MutableTimerFactoryImpl implements MutableTimerFactory {
@@ -23,14 +24,13 @@ public class MutableTimerFactoryImpl implements MutableTimerFactory {
 
     @Override
     public MutableTimer create(MonoSink<Void> sink, LocalDateTime dateTime) {
-        MutableTimer timer = new MutableTimer();
-        timer.setSink(sink);
-        timer.setDateTime(dateTime);
-        timer.setClock(clock);
-        timer.setScheduler(scheduler);
-        timer.setSwap(Disposables.swap());
-        timer.schedule();
-
-        return timer;
+        return MutableTimer.builder()
+                .sink(sink)
+                .dateTime(new AtomicReference<>(dateTime))
+                .clock(clock)
+                .scheduler(scheduler)
+                .swap(Disposables.swap())
+                .build()
+                .schedule();
     }
 }

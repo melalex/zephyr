@@ -1,7 +1,8 @@
 package com.zephyr.scheduling.domain;
 
 import com.zephyr.commons.TimeUtils;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Value;
 import reactor.core.Disposable;
 import reactor.core.publisher.MonoSink;
 import reactor.core.scheduler.Scheduler;
@@ -12,24 +13,22 @@ import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-@Data
-public final class MutableTimer {
+@Value
+@Builder
+public class MutableTimer {
     private MonoSink<Void> sink;
     private AtomicReference<LocalDateTime> dateTime;
     private Scheduler scheduler;
     private Disposable.Swap swap;
     private Clock clock;
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = new AtomicReference<>(dateTime);
-    }
-
     public void reSchedule(Duration duration) {
         swap.update(schedule(dateTime.updateAndGet(d -> d.plus(duration))));
     }
 
-    public void schedule() {
+    public MutableTimer schedule() {
         swap.update(schedule(dateTime.get()));
+        return this;
     }
 
     private Disposable schedule(LocalDateTime dateTime) {
