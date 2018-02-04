@@ -12,6 +12,8 @@ public class SearchCriteriaDto {
 
     @NotEmpty
     private String query;
+
+    @NotEmpty
     private String languageIso;
 
     @Valid

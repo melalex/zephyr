@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.bus.jackson.RemoteApplicationEventScan;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.StreamListener;
@@ -17,6 +18,7 @@ import reactor.core.publisher.Mono;
 
 @SpringBootApplication
 @EnableBinding(Sink.class)
+@RemoteApplicationEventScan
 public class RatingApplication {
 
     @Setter(onMethod = @__(@Autowired))

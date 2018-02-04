@@ -5,12 +5,17 @@ import org.slf4j.Logger;
 import reactor.retry.RetryContext;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 @UtilityClass
 public class LoggingUtils {
 
     public <T> Consumer<T> info(Logger log, String format) {
         return t -> log.info(format, t);
+    }
+
+    public <T, R> Consumer<T> info(Logger log, Function<T, R> mapper, String format) {
+        return t -> log.info(format, mapper.apply(t));
     }
 
     public <T extends Throwable> Consumer<T> error(Logger log, String format) {

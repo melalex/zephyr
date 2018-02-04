@@ -30,26 +30,4 @@ public class Rating {
                 .position(position)
                 .build();
     }
-
-    @Data
-    public static class Query {
-        private String query;
-        private String languageIso;
-        private Place place;
-        private UserAgent userAgent;
-    }
-
-    @Data
-    private static class UserAgent {
-        private String osName;
-        private String osVersion;
-        private String browserName;
-        private String browserVersion;
-    }
-
-    @Data
-    private static class Place {
-        private String country;
-        private String placeName;
-    }
 }

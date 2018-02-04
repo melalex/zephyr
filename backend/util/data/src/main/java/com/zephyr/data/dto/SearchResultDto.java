@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 public class SearchResultDto {
+    private String id;
     private int offset;
     private QueryDto query;
     private LocalDateTime timestamp;
