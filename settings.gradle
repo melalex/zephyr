@@ -24,9 +24,6 @@ findProject(':backend:location')?.name = 'location'
 include 'backend:monitoring'
 findProject(':backend:monitoring')?.name = 'monitoring'
 
-include 'backend:notification'
-findProject(':backend:notification')?.name = 'notification'
-
 include 'backend:proxy'
 findProject(':backend:proxy')?.name = 'proxy'
 
