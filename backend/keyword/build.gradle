@@ -41,6 +41,7 @@ dependencies {
 	compile utils['commons']
 
 	compileOnly libraries['lombok']
+	compileOnly libraries['configurationProcessor']
 
 	testCompile libraries['test']
 }

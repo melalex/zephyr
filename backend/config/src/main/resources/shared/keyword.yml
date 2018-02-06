@@ -1,2 +1,5 @@
 server:
   port: 8013
+
+keyword:
+  provider: RATING_SERVICE
