@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @UtilityClass
 public class TimeUtils {
 
-    public long milisToNow(LocalDateTime dateTime, Clock clock) {
+    public long millisToNow(LocalDateTime dateTime, Clock clock) {
         return Duration.between(LocalDateTime.now(clock), dateTime).toMillis();
     }
 }

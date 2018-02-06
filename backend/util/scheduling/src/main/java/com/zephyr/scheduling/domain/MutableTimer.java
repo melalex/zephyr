@@ -32,6 +32,6 @@ public class MutableTimer {
     }
 
     private Disposable schedule(LocalDateTime dateTime) {
-        return scheduler.schedule(sink::success, TimeUtils.milisToNow(dateTime, clock), TimeUnit.MILLISECONDS);
+        return scheduler.schedule(sink::success, TimeUtils.millisToNow(dateTime, clock), TimeUnit.MILLISECONDS);
     }
 }

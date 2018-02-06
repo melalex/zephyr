@@ -33,6 +33,7 @@ dependencies {
     compile libraries['acutator']
     compile libraries['acutatorDocs']
 //    compile libraries['mongodb']
+    compile libraries['redis']
     compile libraries['configClient']
     compile libraries['discoveryClient']
     compile libraries['messaging']
