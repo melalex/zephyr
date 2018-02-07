@@ -6,7 +6,9 @@ import reactor.core.publisher.Mono;
 
 public interface TaskService {
 
-    Flux<Task> findAllForCurrentUser(String userId);
+    Flux<Task> findAllForCurrentUser();
+
+    Mono<Task> findById(String id);
 
     Mono<Void> createTaskForCurrentUser(Task task);
 }

@@ -7,8 +7,8 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.regex.Pattern;
 
 public class AtLeastOneDigitValidator implements ConstraintValidator<AtLeastOneDigit, String> {
-    private static final String regExp = "(?=.*[0-9])";
-    private static final Pattern pattern = Pattern.compile(regExp);
+    private static final String REG_EXP = "(?=.*[0-9])";
+    private static final Pattern PATTERN = Pattern.compile(REG_EXP);
 
     @Override
     public void initialize(AtLeastOneDigit constraintAnnotation) {
@@ -17,7 +17,7 @@ public class AtLeastOneDigitValidator implements ConstraintValidator<AtLeastOneD
 
     @Override
     public boolean isValid(String obj, ConstraintValidatorContext context) {
-        return pattern.matcher(obj).matches();
+        return PATTERN.matcher(obj).matches();
     }
 }
 

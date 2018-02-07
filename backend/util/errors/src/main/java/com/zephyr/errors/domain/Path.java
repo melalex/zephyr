@@ -17,16 +17,16 @@ public class Path implements Serializable {
     private String root;
     private List<String> path = Lists.newLinkedList();
 
-    public List<String> getPathParts() {
-        return ImmutableList.copyOf(path);
-    }
-
     public static Path of(String root) {
         return new Path(root);
     }
 
-    public static Path of(Enum<?> value) {
-        return of(ErrorUtil.identifier(value));
+    public static Path of(Enum<?> root) {
+        return of(ErrorUtil.identifier(root));
+    }
+
+    public static Path of(Class<?> root) {
+        return of(ErrorUtil.identifier(root));
     }
 
     public Path to(String pathPart) {
@@ -44,15 +44,19 @@ public class Path implements Serializable {
         return this;
     }
 
+    public List<String> getPathParts() {
+        return ImmutableList.copyOf(path);
+    }
+
     public List<String> getPath() {
         return ImmutableList.copyOf(path);
     }
 
     public List<String> getFullPath() {
-        List<String> fullPath = Lists.newArrayList(root);
-        fullPath.addAll(path);
-
-        return fullPath;
+        return ImmutableList.<String>builder()
+                .add(root)
+                .addAll(path)
+                .build();
     }
 
     public String getFullPathCode() {

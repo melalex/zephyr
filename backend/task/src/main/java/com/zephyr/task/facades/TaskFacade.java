@@ -6,7 +6,9 @@ import reactor.core.publisher.Mono;
 
 public interface TaskFacade {
 
-    Flux<TaskDto> findAllForCurrentUser(String userId);
+    Flux<TaskDto> findAllForCurrentUser();
+
+    Mono<TaskDto> findById(String id);
 
     Mono<Void> createTaskForCurrentUser(Mono<TaskDto> task);
 }

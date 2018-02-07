@@ -48,19 +48,13 @@ public class ExceptionUtils {
     }
 
     public Supplier<ResourceNotFoundException> newNotFoundError(String name, Object id) {
-        // @formatter:off
-        return Problems.exception(new ResourceNotFoundException(String.format(NOT_FOUND_ERROR_MESSAGE, name, id)))
+        return Problems.simpleException(new ResourceNotFoundException(String.format(NOT_FOUND_ERROR_MESSAGE, name, id)))
                 .status(HttpStatus.NOT_FOUND.value())
-                .data()
-                    .subjectError()
-                        .path(Path.of(name))
-                        .reason(Reasons.NOT_FOUND)
-                        .actual(Actual.isA(id))
-                        .payload(id)
-                        .completeSubject()
-                    .completeData()
+                .path(Path.of(name))
+                .reason(Reasons.NOT_FOUND)
+                .actual(Actual.isA(id))
+                .payload(id)
                 .populatingFunction();
-        // @formatter:on
     }
 
     public <T> Mono<T> noCurrentUserAsync() {
@@ -68,16 +62,10 @@ public class ExceptionUtils {
     }
 
     public CurrentUserNotSetException noCurrentUser() {
-        // @formatter:off
-        return Problems.exception(new CurrentUserNotSetException(NO_CURRENT_USER_MESSAGE))
-                .status(HttpStatus.UNAUTHORIZED.value())
-                .data()
-                    .subjectError()
-                        .path(Path.of(NO_CURRENT_USER_ROOT))
-                        .reason(Reasons.NOT_SET)
-                        .completeSubject()
-                    .completeData()
+        return Problems.simpleException(new CurrentUserNotSetException(NO_CURRENT_USER_MESSAGE))
+                .status(HttpStatus.UNAUTHORIZED)
+                .path(Path.of(NO_CURRENT_USER_ROOT))
+                .reason(Reasons.NOT_SET)
                 .populate();
-        // @formatter:on
     }
 }

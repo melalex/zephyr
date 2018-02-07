@@ -20,6 +20,10 @@ public class ErrorData implements Serializable {
         return new ErrorData(subjects);
     }
 
+    public static ErrorData of(Subject subjects) {
+        return new ErrorData(ImmutableList.of(subjects));
+    }
+
     public boolean hasErrors() {
         return !subjects.isEmpty();
     }

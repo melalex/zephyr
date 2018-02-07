@@ -7,8 +7,8 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.regex.Pattern;
 
 public class AtLeastOneUpperCaseLatterValidator implements ConstraintValidator<AtLeastOneUpperCaseLatter, String> {
-    private static final String regExp = "(?=.*[A-Z])";
-    private static final Pattern pattern = Pattern.compile(regExp);
+    private static final String REG_EXP = "(?=.*[A-Z])";
+    private static final Pattern PATTERN = Pattern.compile(REG_EXP);
 
     @Override
     public void initialize(AtLeastOneUpperCaseLatter constraintAnnotation) {
@@ -17,6 +17,6 @@ public class AtLeastOneUpperCaseLatterValidator implements ConstraintValidator<A
 
     @Override
     public boolean isValid(String obj, ConstraintValidatorContext context) {
-        return pattern.matcher(obj).matches();
+        return PATTERN.matcher(obj).matches();
     }
 }

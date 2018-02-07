@@ -38,6 +38,9 @@ dependencies {
     compile libraries['discoveryClient']
     compile libraries['messaging']
 
+    compile libraries['mongoIntegration']
+    compile libraries['redisIntegration']
+
     // TODO: remove this dependencies
     compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: '2.0.0.RELEASE'
     compile group: 'org.springframework.data', name: 'spring-data-commons', version: '2.0.0.RELEASE'
@@ -48,6 +51,7 @@ dependencies {
     compile utils['commons']
 
     compileOnly libraries['lombok']
+    compileOnly libraries['ideaAnnotations']
 
     testCompile libraries['test']
 }

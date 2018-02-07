@@ -2,7 +2,10 @@ package com.zephyr.errors.dsl;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Streams;
-import com.zephyr.errors.domain.*;
+import com.zephyr.errors.domain.Actual;
+import com.zephyr.errors.domain.Path;
+import com.zephyr.errors.domain.Reason;
+import com.zephyr.errors.domain.Subject;
 import com.zephyr.errors.utils.ErrorUtil;
 
 import java.util.stream.Collectors;
@@ -47,8 +50,16 @@ public final class SubjectSpec<T> {
     }
 
     public SubjectSpec<T> payload(Object payload) {
-        this.payload = ImmutableList.of(ErrorUtil.wrapValue(payload));
-        return this;
+        return payload(ImmutableList.of(payload));
+    }
+
+    public SubjectSpec<T> payload(Object first, Object ... other) {
+        Iterable<Object> payload = ImmutableList.builder()
+                .add(first)
+                .add(other)
+                .build();
+
+        return payload(payload);
     }
 
     public PayloadSpec<SubjectSpec<T>> payload() {

@@ -10,16 +10,16 @@ public class Query {
     private UserAgent userAgent;
 
     @Data
+    public static class Place {
+        private String country;
+        private String placeName;
+    }
+
+    @Data
     public static class UserAgent {
         private String osName;
         private String osVersion;
         private String browserName;
         private String browserVersion;
-    }
-
-    @Data
-    public static class Place {
-        private String country;
-        private String placeName;
     }
 }

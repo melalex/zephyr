@@ -1,13 +1,12 @@
 package com.zephyr.rating.services.bus;
 
-import com.zephyr.data.dto.SearchCriteriaDto;
-import com.zephyr.rating.domain.Query;
-import com.zephyr.rating.services.dto.RatingDto;
+import com.zephyr.rating.domain.Rating;
+import com.zephyr.rating.domain.RatingCriteria;
 import reactor.core.publisher.Flux;
 
 public interface RatingBus {
 
-    void onRatingUpdated(Query query);
+    void onRatingUpdated(Rating rating);
 
-    Flux<RatingDto> updatesFor(SearchCriteriaDto searchCriteria);
+    Flux<RatingCriteria> updatesFor(RatingCriteria ratingCriteria);
 }

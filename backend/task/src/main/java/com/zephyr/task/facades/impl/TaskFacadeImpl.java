@@ -2,10 +2,10 @@ package com.zephyr.task.facades.impl;
 
 import com.zephyr.commons.anotations.Facade;
 import com.zephyr.commons.extensions.ExtendedMapper;
+import com.zephyr.data.dto.TaskDto;
 import com.zephyr.task.domain.Task;
 import com.zephyr.task.facades.TaskFacade;
 import com.zephyr.task.services.TaskService;
-import com.zephyr.data.dto.TaskDto;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Flux;
@@ -21,8 +21,14 @@ public class TaskFacadeImpl implements TaskFacade {
     private ExtendedMapper mapper;
 
     @Override
-    public Flux<TaskDto> findAllForCurrentUser(String userId) {
-        return taskService.findAllForCurrentUser(userId)
+    public Flux<TaskDto> findAllForCurrentUser() {
+        return taskService.findAllForCurrentUser()
+                .map(mapper.mapperFor(TaskDto.class));
+    }
+
+    @Override
+    public Mono<TaskDto> findById(String id) {
+        return taskService.findById(id)
                 .map(mapper.mapperFor(TaskDto.class));
     }
 

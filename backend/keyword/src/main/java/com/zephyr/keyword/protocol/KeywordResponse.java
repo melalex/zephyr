@@ -1,8 +1,8 @@
 package com.zephyr.keyword.protocol;
 
-import lombok.Data;
+import lombok.Value;
 
-@Data
+@Value(staticConstructor = "of")
 public class KeywordResponse {
     private String query;
     private String requestedUrl;

@@ -3,6 +3,7 @@ package com.zephyr.errors.dsl;
 import com.zephyr.errors.domain.ErrorData;
 import com.zephyr.errors.exceptions.ParameterizedException;
 import com.zephyr.errors.utils.ErrorUtil;
+import org.springframework.http.HttpStatus;
 
 import java.util.function.Supplier;
 
@@ -18,8 +19,13 @@ public final class ExceptionSpec<T extends ParameterizedException> {
         this.exception = exception;
     }
 
-    public ExceptionSpec<T> status(final int code) {
+    public ExceptionSpec<T> status(int code) {
         this.status = code;
+        return this;
+    }
+
+    public ExceptionSpec<T> status(HttpStatus status) {
+        this.status = status.value();
         return this;
     }
 

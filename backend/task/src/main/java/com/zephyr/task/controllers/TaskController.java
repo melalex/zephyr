@@ -1,7 +1,7 @@
 package com.zephyr.task.controllers;
 
-import com.zephyr.task.facades.TaskFacade;
 import com.zephyr.data.dto.TaskDto;
+import com.zephyr.task.facades.TaskFacade;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +17,14 @@ public class TaskController {
     @Setter(onMethod = @__(@Autowired))
     private TaskFacade taskFacade;
 
-    @GetMapping(value = "/{id}")
-    public Flux<TaskDto> findAllForUser(@PathVariable("id") String userId) {
-        return taskFacade.findAllForCurrentUser(userId);
+    @GetMapping
+    public Flux<TaskDto> findAllForCurrent() {
+        return taskFacade.findAllForCurrentUser();
+    }
+
+    @GetMapping("/{id}")
+    public Mono<TaskDto> findById(@PathVariable("id") String id) {
+        return taskFacade.findById(id);
     }
 
     @PostMapping

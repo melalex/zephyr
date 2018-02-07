@@ -20,6 +20,10 @@ public class Problems {
         return new ExceptionSpec<>(exception);
     }
 
+    public <T extends ParameterizedException> SimpleExceptionSpec<T> simpleException(T exception) {
+        return new SimpleExceptionSpec<>(exception);
+    }
+
     public ExceptionSpec<ParameterizedException> exception(String message) {
         return exception(new ParameterizedException(message));
     }

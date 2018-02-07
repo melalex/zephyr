@@ -6,4 +6,5 @@ import lombok.experimental.UtilityClass;
 public class Reasons {
     public static final Reason NOT_FOUND = Reason.isA("notFound");
     public static final Reason NOT_SET = Reason.isA("notSet");
+    public static final Reason NOT_MATCH = Reason.isA("notMatch");
 }
