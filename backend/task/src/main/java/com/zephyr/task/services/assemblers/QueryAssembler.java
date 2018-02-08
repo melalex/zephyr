@@ -72,7 +72,7 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
     private Publisher<QueryDto> populateAgent(SearchCriteria source, QueryDto query, Collection<Subject> errors) {
         UserAgentCriteria agent = source.getUserAgent();
 
-        return agentServiceClient.findByExample(agent)
+        return agentServiceClient.findByOneExample(agent)
                 .doOnNext(query::setUserAgent)
                 .map(p -> query)
                 .switchIfEmpty(Mono.just(query).doOnNext(q -> errors.add(newError(agent))));

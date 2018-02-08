@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserAgentDto {
+    private String id;
     private String httpHeader;
     private String hardWareType;
     private String osName;

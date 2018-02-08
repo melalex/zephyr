@@ -6,11 +6,9 @@ import com.zephyr.keyword.services.manager.KeywordManager;
 import com.zephyr.keyword.services.provider.KeywordsProvider;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 @Component
-@RefreshScope
 public class KeywordManagerImpl implements KeywordManager {
     private static final String ERROR_MESSAGE = "Unknown keyword provider '%s'";
 

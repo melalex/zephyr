@@ -49,7 +49,7 @@ public class ExceptionUtils {
 
     public Supplier<ResourceNotFoundException> newNotFoundError(String name, Object id) {
         return Problems.simpleException(new ResourceNotFoundException(String.format(NOT_FOUND_ERROR_MESSAGE, name, id)))
-                .status(HttpStatus.NOT_FOUND.value())
+                .status(HttpStatus.NOT_FOUND)
                 .path(Path.of(name))
                 .reason(Reasons.NOT_FOUND)
                 .actual(Actual.isA(id))

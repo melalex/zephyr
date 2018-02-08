@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 public class UserAgent {
 
     @Id
+    private String id;
     private String httpHeader;
     private String hardWareType;
     private String osName;
