@@ -2,7 +2,7 @@ package com.zephyr.location.services.impl;
 
 import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.data.dto.CountryDto;
-import com.zephyr.errors.utils.ErrorUtil;
+import com.zephyr.errors.utils.ExceptionUtils;
 import com.zephyr.location.domain.Country;
 import com.zephyr.location.repositories.CountryRepository;
 import com.zephyr.location.services.CountryService;
@@ -28,7 +28,7 @@ public class CountryServiceImpl implements CountryService {
     public CountryDto findByIso(String iso) {
         return countryRepository.findByIso(iso)
                 .map(mapper.mapperFor(CountryDto.class))
-                .orElseThrow(ErrorUtil.newNotFoundError(Country.class, iso));
+                .orElseThrow(ExceptionUtils.newNotFoundError(Country.class, iso));
     }
 
     @Override

@@ -75,7 +75,7 @@ public class DirectBrowsingProvider implements BrowsingProvider {
 
         return Mono.defer(() -> Mono.fromFuture(asyncHttpClient.executeRequest(request).toCompletableFuture()))
                 .map(r -> toEngineResponse(r, engineRequest))
-                .doOnNext(LoggingUtils.info(log, String.format(NEW_RESPONSE_MSG, engineRequest.getId())))
+                .doOnNext(LoggingUtils.info(log, EngineResponse::getId, NEW_RESPONSE_MSG))
                 .doOnNext(LoggingUtils.debug(log, NEW_RESPONSE_FULL_MSG))
                 .retryWhen(requestException());
     }
