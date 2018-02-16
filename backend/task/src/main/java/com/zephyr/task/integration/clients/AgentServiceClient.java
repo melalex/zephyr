@@ -10,5 +10,5 @@ import reactor.core.publisher.Mono;
 public interface AgentServiceClient {
 
     @GetMapping("/first")
-    Mono<UserAgentDto> findByOneExample(UserAgentCriteria userAgentDto);
+    Mono<UserAgentDto> findByOneExample(UserAgentCriteria userAgent);
 }

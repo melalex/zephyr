@@ -5,7 +5,6 @@ import com.zephyr.task.integration.gateways.NewCriteriaGateway;
 import com.zephyr.task.integration.source.QuerySource;
 import com.zephyr.task.properties.TaskServiceProperties;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -42,7 +41,6 @@ public class TaskApplication {
     }
 
     @Bean
-    @Autowired
     public IntegrationFlow updateRatingFlow(QuerySource querySource, TaskServiceProperties properties) {
         return IntegrationFlows.from(querySource, s -> s.poller(Pollers.cron(properties.getCron())))
                 .split()

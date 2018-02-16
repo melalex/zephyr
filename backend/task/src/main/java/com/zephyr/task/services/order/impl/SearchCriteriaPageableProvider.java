@@ -1,13 +1,13 @@
 package com.zephyr.task.services.order.impl;
 
-import com.zephyr.task.services.order.OrderProvider;
+import com.zephyr.task.services.order.PageableProvider;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SearchCriteriaOrderProvider implements OrderProvider {
+public class SearchCriteriaPageableProvider implements PageableProvider {
     private static final int FIRST_PAGE = 0;
 
     private static final String HITS_COUNT_FIELD = "hitsCount";

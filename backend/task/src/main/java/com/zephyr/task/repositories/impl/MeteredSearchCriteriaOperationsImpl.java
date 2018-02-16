@@ -22,6 +22,7 @@ import java.util.UUID;
 @Repository
 public class MeteredSearchCriteriaOperationsImpl implements MeteredSearchCriteriaOperations {
     private static final String HITS_COUNT_FIELD = "hitsCount";
+    private static final String LAST_HIT_FIELD = "lastHit";
     private static final String LAST_UPDATE_FIELD = "lastUpdate";
     private static final String TRANSACTION_ID_FIELD = "transactionId";
     private static final Number INC_VALUE = 1;
@@ -38,6 +39,7 @@ public class MeteredSearchCriteriaOperationsImpl implements MeteredSearchCriteri
 
         Update update = new Update()
                 .inc(HITS_COUNT_FIELD, INC_VALUE)
+                .currentDate(LAST_HIT_FIELD)
                 .isolated();
 
         return mongo.findAndModify(query, update, MeteredSearchCriteria.class);

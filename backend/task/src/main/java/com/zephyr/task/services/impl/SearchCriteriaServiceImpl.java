@@ -12,7 +12,7 @@ import com.zephyr.task.repositories.MeteredSearchCriteriaRepository;
 import com.zephyr.task.repositories.SearchCriteriaRepository;
 import com.zephyr.task.services.SearchCriteriaService;
 import com.zephyr.task.integration.gateways.NewCriteriaGateway;
-import com.zephyr.task.services.order.OrderProvider;
+import com.zephyr.task.services.order.PageableProvider;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
@@ -48,7 +48,7 @@ public class SearchCriteriaServiceImpl implements SearchCriteriaService {
     private TaskServiceProperties properties;
 
     @Setter(onMethod = @__(@Autowired))
-    private OrderProvider orderProvider;
+    private PageableProvider pageableProvider;
 
     @Setter(onMethod = @__(@Autowired))
     private Assembler<SearchCriteria, QueryDto> queryAssembler;
@@ -67,7 +67,7 @@ public class SearchCriteriaServiceImpl implements SearchCriteriaService {
     @Override
     public Flux<SearchCriteria> findAllForUpdate() {
         return meteredSearchCriteriaRepository
-                .findAllForUpdate(properties.getRelevancePeriod(), orderProvider.provide(properties.getBatchSize()))
+                .findAllForUpdate(properties.getRelevancePeriod(), pageableProvider.provide(properties.getBatchSize()))
                 .map(MeteredSearchCriteria::getSearchCriteria);
     }
 
