@@ -1,7 +1,7 @@
 package com.zephyr.task.properties;
 
 import lombok.Data;
-import org.joda.time.Period;
+import org.joda.time.MutablePeriod;
 import org.joda.time.ReadablePeriod;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -10,17 +10,28 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @RefreshScope
-@ConfigurationProperties(prefix = "integration")
+@ConfigurationProperties(prefix = "task")
 public class TaskServiceProperties {
-    private String cron;
     private int batchSize;
-    private int relevancePeriodDays;
-    private int relevancePeriodHours;
-    private int relevancePeriodMinutes;
-    private int relevancePeriodSeconds;
+    private boolean enableUpdates;
+    private String cron;
+    private RelevancePeriod relevancePeriod;
 
     public ReadablePeriod getRelevancePeriod() {
-        return new Period(0, 0, 0, relevancePeriodDays, relevancePeriodHours,
-                relevancePeriodMinutes, relevancePeriodSeconds, 0);
+        MutablePeriod mutablePeriod = new MutablePeriod();
+        mutablePeriod.setDays(relevancePeriod.getDays());
+        mutablePeriod.setHours(relevancePeriod.getHours());
+        mutablePeriod.setMinutes(relevancePeriod.getMinutes());
+        mutablePeriod.setSeconds(relevancePeriod.getSeconds());
+
+        return mutablePeriod.toPeriod();
+    }
+
+    @Data
+    private static class RelevancePeriod {
+        private int days;
+        private int hours;
+        private int minutes;
+        private int seconds;
     }
 }

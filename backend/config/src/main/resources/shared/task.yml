@@ -8,12 +8,12 @@ spring:
         output:
           destination: QUERIES
 
-integration:
-  updateRating:
-    cron: 0 0 0 1/1 * ? *
-    batchSize: 100
-    relevancePeriod:
-      days: 3
-      hours: 0
-      minutes: 0
-      seconds: 0
+task:
+  cron: 0 0 0 1/1 * ? *
+  batchSize: 100
+  enableUpdates: true
+  relevancePeriod:
+    days: 3
+    hours: 0
+    minutes: 0
+    seconds: 0

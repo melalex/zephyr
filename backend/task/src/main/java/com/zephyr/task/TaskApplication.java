@@ -7,7 +7,9 @@ import com.zephyr.task.properties.TaskServiceProperties;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
@@ -43,6 +45,8 @@ public class TaskApplication {
     }
 
     @Bean
+    @RefreshScope
+    @ConditionalOnProperty("${task.enableUpdates}")
     public IntegrationFlow updateRatingFlow(QuerySource querySource, TaskServiceProperties properties) {
         return IntegrationFlows.from(querySource, s -> s.poller(Pollers.cron(properties.getCron())))
                 .split()
