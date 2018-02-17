@@ -1,9 +1,9 @@
 package com.zephyr.scraper.request.provider.impl;
 
 import com.zephyr.commons.MapUtils;
-import com.zephyr.data.dto.QueryDto;
-import com.zephyr.data.enums.SearchEngine;
-import com.zephyr.commons.helpers.Page;
+import com.zephyr.commons.support.Page;
+import com.zephyr.data.internal.dto.QueryDto;
+import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.scraper.request.headers.EngineSpecificHeadersProvider;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

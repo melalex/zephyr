@@ -1,8 +1,8 @@
 package com.zephyr.rating.controllers;
 
-import com.zephyr.data.dto.RatingDto;
+import com.zephyr.data.protocol.dto.RatingDto;
+import com.zephyr.data.protocol.dto.StatisticsDto;
 import com.zephyr.rating.services.RatingService;
-import com.zephyr.rating.services.dto.StatisticsDto;
 import lombok.Setter;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;

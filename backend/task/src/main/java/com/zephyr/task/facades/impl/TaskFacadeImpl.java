@@ -2,7 +2,7 @@ package com.zephyr.task.facades.impl;
 
 import com.zephyr.commons.anotations.Facade;
 import com.zephyr.commons.extensions.ExtendedMapper;
-import com.zephyr.data.dto.TaskDto;
+import com.zephyr.data.protocol.dto.TaskDto;
 import com.zephyr.task.domain.Task;
 import com.zephyr.task.facades.TaskFacade;
 import com.zephyr.task.services.TaskService;

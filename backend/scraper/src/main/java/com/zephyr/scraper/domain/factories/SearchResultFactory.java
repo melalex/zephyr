@@ -1,6 +1,6 @@
 package com.zephyr.scraper.domain.factories;
 
-import com.zephyr.data.dto.SearchResultDto;
+import com.zephyr.data.internal.dto.SearchResultDto;
 import com.zephyr.scraper.domain.EngineRequest;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

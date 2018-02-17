@@ -1,5 +1,7 @@
-package com.zephyr.data.dto;
+package com.zephyr.data.internal.dto;
 
+import com.zephyr.data.protocol.dto.PlaceDto;
+import com.zephyr.data.protocol.dto.UserAgentDto;
 import lombok.Data;
 
 @Data

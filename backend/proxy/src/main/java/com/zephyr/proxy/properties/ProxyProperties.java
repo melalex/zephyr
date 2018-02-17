@@ -1,6 +1,6 @@
 package com.zephyr.proxy.properties;
 
-import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.data.protocol.enums.SearchEngine;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;

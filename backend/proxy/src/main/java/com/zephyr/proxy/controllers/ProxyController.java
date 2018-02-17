@@ -1,7 +1,7 @@
 package com.zephyr.proxy.controllers;
 
-import com.zephyr.data.dto.ProxyDto;
-import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.data.internal.dto.ProxyDto;
+import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.proxy.services.ProxyService;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

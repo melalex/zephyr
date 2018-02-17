@@ -1,6 +1,6 @@
 package com.zephyr.location.controllers;
 
-import com.zephyr.data.dto.PlaceDto;
+import com.zephyr.data.protocol.dto.PlaceDto;
 import com.zephyr.location.services.PlaceService;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

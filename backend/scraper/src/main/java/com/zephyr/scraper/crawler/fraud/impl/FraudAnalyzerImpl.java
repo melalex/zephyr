@@ -1,12 +1,11 @@
 package com.zephyr.scraper.crawler.fraud.impl;
 
-import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.scraper.crawler.fraud.FraudAnalyzer;
 import com.zephyr.scraper.crawler.fraud.provider.FraudProvider;
 import com.zephyr.scraper.domain.EngineResponse;
 import com.zephyr.scraper.domain.exceptions.FraudException;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

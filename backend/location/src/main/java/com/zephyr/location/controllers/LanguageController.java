@@ -1,6 +1,6 @@
 package com.zephyr.location.controllers;
 
-import com.zephyr.data.dto.LanguageDto;
+import com.zephyr.data.protocol.dto.LanguageDto;
 import com.zephyr.location.services.LanguageService;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

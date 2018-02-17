@@ -1,7 +1,7 @@
 package com.zephyr.scraper.request.impl;
 
 import com.zephyr.commons.LoggingUtils;
-import com.zephyr.data.dto.QueryDto;
+import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.request.RequestConstructor;
 import com.zephyr.scraper.request.provider.RequestProvider;

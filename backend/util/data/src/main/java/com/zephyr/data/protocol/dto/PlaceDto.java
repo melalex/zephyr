@@ -1,6 +1,6 @@
-package com.zephyr.data.dto;
+package com.zephyr.data.protocol.dto;
 
-import com.zephyr.data.enums.PlaceType;
+import com.zephyr.data.protocol.enums.PlaceType;
 import lombok.Data;
 
 @Data

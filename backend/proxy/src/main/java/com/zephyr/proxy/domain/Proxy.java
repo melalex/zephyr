@@ -1,7 +1,7 @@
 package com.zephyr.proxy.domain;
 
-import com.zephyr.data.enums.Protocol;
-import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.data.internal.enums.Protocol;
+import com.zephyr.data.protocol.enums.SearchEngine;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;

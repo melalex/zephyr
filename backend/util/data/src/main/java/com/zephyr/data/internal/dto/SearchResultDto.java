@@ -1,6 +1,6 @@
-package com.zephyr.data.dto;
+package com.zephyr.data.internal.dto;
 
-import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.data.protocol.enums.SearchEngine;
 import lombok.Data;
 
 import java.time.LocalDateTime;

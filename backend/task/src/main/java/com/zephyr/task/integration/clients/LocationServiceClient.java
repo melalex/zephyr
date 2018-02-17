@@ -1,6 +1,6 @@
 package com.zephyr.task.integration.clients;
 
-import com.zephyr.data.dto.PlaceDto;
+import com.zephyr.data.protocol.dto.PlaceDto;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

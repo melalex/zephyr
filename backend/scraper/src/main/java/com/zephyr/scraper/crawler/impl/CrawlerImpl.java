@@ -1,6 +1,6 @@
 package com.zephyr.scraper.crawler.impl;
 
-import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.scraper.crawler.Crawler;
 import com.zephyr.scraper.crawler.provider.CrawlingProvider;
 import com.zephyr.scraper.domain.EngineResponse;

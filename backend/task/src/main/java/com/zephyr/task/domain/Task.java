@@ -1,6 +1,6 @@
 package com.zephyr.task.domain;
 
-import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.data.protocol.enums.SearchEngine;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;

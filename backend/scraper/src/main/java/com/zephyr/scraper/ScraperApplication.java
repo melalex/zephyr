@@ -1,7 +1,7 @@
 package com.zephyr.scraper;
 
-import com.zephyr.data.dto.QueryDto;
-import com.zephyr.data.dto.SearchResultDto;
+import com.zephyr.data.internal.dto.QueryDto;
+import com.zephyr.data.internal.dto.SearchResultDto;
 import com.zephyr.scraper.flow.ScrapingFlow;
 import lombok.Setter;
 import org.asynchttpclient.AsyncHttpClient;
@@ -11,7 +11,6 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
@@ -22,7 +21,6 @@ import reactor.core.publisher.Flux;
 
 import java.time.Clock;
 
-@EnableFeignClients
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableBinding(Processor.class)

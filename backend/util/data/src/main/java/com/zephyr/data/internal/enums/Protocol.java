@@ -1,4 +1,4 @@
-package com.zephyr.data.enums;
+package com.zephyr.data.internal.enums;
 
 public enum Protocol {
     HTTP,

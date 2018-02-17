@@ -1,7 +1,7 @@
 package com.zephyr.task.integration.source;
 
 import com.zephyr.commons.interfaces.Assembler;
-import com.zephyr.data.dto.QueryDto;
+import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.task.services.SearchCriteriaService;
 import lombok.Setter;

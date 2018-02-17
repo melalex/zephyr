@@ -1,7 +1,7 @@
 package com.zephyr.location.services.impl;
 
 import com.zephyr.commons.extensions.ExtendedMapper;
-import com.zephyr.data.dto.CountryDto;
+import com.zephyr.data.protocol.dto.CountryDto;
 import com.zephyr.errors.utils.ExceptionUtils;
 import com.zephyr.location.domain.Country;
 import com.zephyr.location.repositories.CountryRepository;

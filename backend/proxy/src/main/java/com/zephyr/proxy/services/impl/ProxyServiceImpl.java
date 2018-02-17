@@ -1,7 +1,7 @@
 package com.zephyr.proxy.services.impl;
 
-import com.zephyr.data.dto.ProxyDto;
-import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.data.internal.dto.ProxyDto;
+import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.proxy.domain.Proxy;
 import com.zephyr.proxy.properties.ProxyProperties;
 import com.zephyr.proxy.repositories.ProxyRepository;

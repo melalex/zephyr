@@ -1,21 +1,19 @@
 package com.zephyr.task.services.impl;
 
 import com.zephyr.commons.LoggingUtils;
-import com.zephyr.commons.ReactorUtils;
 import com.zephyr.commons.interfaces.Assembler;
-import com.zephyr.data.dto.QueryDto;
+import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.task.domain.MeteredSearchCriteria;
 import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.task.domain.factories.MeteredSearchCriteriaFactory;
+import com.zephyr.task.integration.gateways.NewCriteriaGateway;
 import com.zephyr.task.properties.TaskServiceProperties;
 import com.zephyr.task.repositories.MeteredSearchCriteriaRepository;
 import com.zephyr.task.repositories.SearchCriteriaRepository;
 import com.zephyr.task.services.SearchCriteriaService;
-import com.zephyr.task.integration.gateways.NewCriteriaGateway;
 import com.zephyr.task.services.order.PageableProvider;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Pageable;
@@ -23,8 +21,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.function.Function;
 
 @Slf4j
 @Service
@@ -83,13 +79,8 @@ public class SearchCriteriaServiceImpl implements SearchCriteriaService {
         MeteredSearchCriteria meteredSearchCriteria = meteredSearchCriteriaFactory.create(searchCriteria);
 
         return queryAssembler.assemble(searchCriteria)
-                .transform(ReactorUtils.doOnNextAsync(newSearchCriteria(meteredSearchCriteria)))
-                .transform(ReactorUtils.doOnNextAsync(q -> newCriteriaGateway.send(q)))
-                .then(Mono.just(meteredSearchCriteria));
-    }
-
-    private Function<QueryDto, Publisher<?>> newSearchCriteria(MeteredSearchCriteria meteredSearchCriteria) {
-        return q -> meteredSearchCriteriaRepository.save(meteredSearchCriteria)
+                .flatMap(newCriteriaGateway::send)
+                .then(meteredSearchCriteriaRepository.save(meteredSearchCriteria))
                 .doOnNext(LoggingUtils.info(log, NEW_CRITERIA_MESSAGE));
     }
 }

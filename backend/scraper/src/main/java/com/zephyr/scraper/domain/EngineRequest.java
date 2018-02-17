@@ -1,7 +1,7 @@
 package com.zephyr.scraper.domain;
 
-import com.zephyr.data.dto.QueryDto;
-import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.data.internal.dto.QueryDto;
+import com.zephyr.data.protocol.enums.SearchEngine;
 import lombok.Builder;
 import lombok.Value;
 

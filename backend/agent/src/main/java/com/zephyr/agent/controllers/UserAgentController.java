@@ -1,7 +1,7 @@
 package com.zephyr.agent.controllers;
 
 import com.zephyr.agent.services.UserAgentService;
-import com.zephyr.data.dto.UserAgentDto;
+import com.zephyr.data.protocol.dto.UserAgentDto;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,13 +18,13 @@ public class UserAgentController {
     private UserAgentService userAgentService;
 
     @GetMapping
-    public Flux<UserAgentDto> findByExample(UserAgentDto userAgentDto) {
-        return userAgentService.findByExample(userAgentDto);
+    public Flux<UserAgentDto> findAllByExample(UserAgentDto userAgentDto) {
+        return userAgentService.findAllByExample(userAgentDto);
     }
 
     @GetMapping("/first")
-    public Mono<UserAgentDto> findByOneExample(UserAgentDto userAgentDto) {
-        return userAgentService.findByOneExample(userAgentDto);
+    public Mono<UserAgentDto> findOneByExample(UserAgentDto userAgentDto) {
+        return userAgentService.findOneByExample(userAgentDto);
     }
 
     @GetMapping("/random")

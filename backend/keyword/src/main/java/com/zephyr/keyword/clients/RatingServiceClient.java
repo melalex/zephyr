@@ -1,6 +1,6 @@
 package com.zephyr.keyword.clients;
 
-import com.zephyr.data.dto.RatingDto;
+import com.zephyr.data.protocol.dto.RatingDto;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

@@ -1,4 +1,4 @@
-package com.zephyr.data.enums;
+package com.zephyr.data.protocol.enums;
 
 public enum PlaceType {
     AIRPORT,

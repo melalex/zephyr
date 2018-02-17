@@ -1,6 +1,6 @@
 package com.zephyr.task.controllers;
 
-import com.zephyr.data.dto.TaskDto;
+import com.zephyr.data.protocol.dto.TaskDto;
 import com.zephyr.task.facades.TaskFacade;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

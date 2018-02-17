@@ -1,8 +1,8 @@
 package com.zephyr.scraper.flow.impl;
 
 import com.zephyr.commons.LoggingUtils;
-import com.zephyr.data.dto.QueryDto;
-import com.zephyr.data.dto.SearchResultDto;
+import com.zephyr.data.internal.dto.QueryDto;
+import com.zephyr.data.internal.dto.SearchResultDto;
 import com.zephyr.scraper.browser.Browser;
 import com.zephyr.scraper.crawler.Crawler;
 import com.zephyr.scraper.domain.EngineRequest;

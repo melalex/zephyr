@@ -1,4 +1,4 @@
-package com.zephyr.data.dto;
+package com.zephyr.data.protocol.dto;
 
 import lombok.Data;
 

@@ -1,7 +1,7 @@
 package com.zephyr.scraper.flow;
 
-import com.zephyr.data.dto.QueryDto;
-import com.zephyr.data.dto.SearchResultDto;
+import com.zephyr.data.internal.dto.QueryDto;
+import com.zephyr.data.internal.dto.SearchResultDto;
 import reactor.core.publisher.Flux;
 
 @FunctionalInterface

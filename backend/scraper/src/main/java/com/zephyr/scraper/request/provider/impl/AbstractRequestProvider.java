@@ -1,9 +1,9 @@
 package com.zephyr.scraper.request.provider.impl;
 
 import com.zephyr.commons.MapUtils;
-import com.zephyr.commons.helpers.Page;
-import com.zephyr.data.dto.QueryDto;
-import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.commons.support.Page;
+import com.zephyr.data.internal.dto.QueryDto;
+import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.properties.ScraperProperties;
 import com.zephyr.scraper.request.provider.RequestProvider;
@@ -66,7 +66,7 @@ public abstract class AbstractRequestProvider implements RequestProvider {
 
     private Map<String, List<String>> defaultHeaders(QueryDto query) {
         return MapUtils.multiValueMapBuilder()
-                .put(HttpHeaders.USER_AGENT, query.getUserAgent().getHeaderValue())
+                .put(HttpHeaders.USER_AGENT, query.getUserAgent().getHttpHeader())
                 .put(HttpHeaders.ACCEPT_LANGUAGE, query.getLanguageIso())
                 .put(HttpHeaders.ACCEPT_ENCODING, ENCODING)
                 .put(HttpHeaders.CONNECTION, KEEP_ALIVE)

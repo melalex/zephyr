@@ -1,7 +1,7 @@
 package com.zephyr.proxy.services;
 
-import com.zephyr.data.dto.ProxyDto;
-import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.data.internal.dto.ProxyDto;
+import com.zephyr.data.protocol.enums.SearchEngine;
 import reactor.core.publisher.Mono;
 
 public interface ProxyService {

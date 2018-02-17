@@ -1,6 +1,6 @@
 package com.zephyr.location.services;
 
-import com.zephyr.data.dto.LanguageDto;
+import com.zephyr.data.protocol.dto.LanguageDto;
 
 import java.util.Set;
 

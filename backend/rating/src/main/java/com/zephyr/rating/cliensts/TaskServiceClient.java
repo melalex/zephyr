@@ -1,6 +1,6 @@
 package com.zephyr.rating.cliensts;
 
-import com.zephyr.data.dto.TaskDto;
+import com.zephyr.data.protocol.dto.TaskDto;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

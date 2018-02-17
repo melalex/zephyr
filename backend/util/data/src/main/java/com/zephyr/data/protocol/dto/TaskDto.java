@@ -1,6 +1,6 @@
-package com.zephyr.data.dto;
+package com.zephyr.data.protocol.dto;
 
-import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.validation.DateRange;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;

@@ -1,7 +1,7 @@
 package com.zephyr.keyword.services.impl;
 
-import com.zephyr.keyword.protocol.KeywordRequest;
-import com.zephyr.keyword.protocol.KeywordResponse;
+import com.zephyr.data.protocol.criteria.KeywordCriteria;
+import com.zephyr.data.protocol.vo.KeywordVo;
 import com.zephyr.keyword.services.KeywordService;
 import com.zephyr.keyword.services.manager.KeywordManager;
 import lombok.Setter;
@@ -18,7 +18,7 @@ public class KeywordServiceImpl implements KeywordService {
     private KeywordManager keywordManager;
 
     @Override
-    public Flux<KeywordResponse> findKeywords(@Valid KeywordRequest request) {
+    public Flux<KeywordVo> findKeywords(@Valid KeywordCriteria request) {
         return keywordManager.manage().provide(request);
     }
 }

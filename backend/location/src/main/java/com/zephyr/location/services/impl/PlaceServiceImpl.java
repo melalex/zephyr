@@ -1,8 +1,8 @@
 package com.zephyr.location.services.impl;
 
 import com.zephyr.commons.extensions.ExtendedMapper;
-import com.zephyr.data.dto.PlaceDto;
-import com.zephyr.errors.utils.ErrorUtil;
+import com.zephyr.data.protocol.dto.PlaceDto;
+import com.zephyr.errors.utils.ExceptionUtils;
 import com.zephyr.location.domain.Place;
 import com.zephyr.location.repositories.PlaceRepository;
 import com.zephyr.location.services.PlaceService;
@@ -27,7 +27,7 @@ public class PlaceServiceImpl implements PlaceService {
     public PlaceDto findById(long id) {
         return placeRepository.findById(id, DEFAULT_DEPTH)
                 .map(mapper.mapperFor(PlaceDto.class))
-                .orElseThrow(ErrorUtil.newNotFoundError(Place.class, id));
+                .orElseThrow(ExceptionUtils.newNotFoundError(Place.class, id));
     }
 
     @Override

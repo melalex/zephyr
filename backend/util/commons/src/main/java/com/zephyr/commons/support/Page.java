@@ -1,4 +1,4 @@
-package com.zephyr.commons.helpers;
+package com.zephyr.commons.support;
 
 import lombok.Builder;
 import lombok.Value;

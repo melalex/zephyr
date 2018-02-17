@@ -1,43 +1,29 @@
 package com.zephyr.rating.domain;
 
-import com.zephyr.data.enums.SearchEngine;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.time.LocalDateTime;
 
 @Data
 @Document
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Rating implements Cloneable {
+public class Rating {
 
     @Id
     private String id;
 
+    @DBRef
+    @NonNull
+    private Request request;
+
+    @NonNull
     private int position;
 
     @NonNull
     private String url;
-
-    @NonNull
-    private Query query;
-
-    private LocalDateTime timestamp;
-    private SearchEngine provider;
-
-    @SneakyThrows
-    public Rating withLinkAndPosition(String url, int position) {
-        Rating clone = clone();
-        clone.setUrl(url);
-        clone.setPosition(position);
-
-        return clone;
-    }
-
-    @Override
-    protected Rating clone() throws CloneNotSupportedException {
-        return (Rating) super.clone();
-    }
 }

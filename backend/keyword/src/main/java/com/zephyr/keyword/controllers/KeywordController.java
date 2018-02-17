@@ -1,7 +1,7 @@
 package com.zephyr.keyword.controllers;
 
-import com.zephyr.keyword.protocol.KeywordResponse;
-import com.zephyr.keyword.protocol.KeywordRequest;
+import com.zephyr.data.protocol.criteria.KeywordCriteria;
+import com.zephyr.data.protocol.vo.KeywordVo;
 import com.zephyr.keyword.services.KeywordService;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class KeywordController {
     private KeywordService keywordService;
 
     @GetMapping
-    public Flux<KeywordResponse> findKeywords(@Valid KeywordRequest request) {
+    public Flux<KeywordVo> findKeywords(@Valid KeywordCriteria request) {
         return keywordService.findKeywords(request);
     }
 }

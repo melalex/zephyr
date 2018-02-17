@@ -10,18 +10,15 @@ import java.util.stream.Stream;
 
 @UtilityClass
 public class MapUtils {
+    private static final String GET_ERROR_MESSAGE = "Map doesn't contains key '%s'";
 
     public <K, V> V getOrThrow(Map<K, V> map, K key) {
         return Optional.ofNullable(map.get(key))
-                .orElseThrow(() -> new IllegalArgumentException(errorMessage(key)));
+                .orElseThrow(() -> new IllegalArgumentException(String.format(GET_ERROR_MESSAGE, key)));
     }
 
     public MultiValueMapBuilder multiValueMapBuilder() {
         return new MultiValueMapBuilder();
-    }
-
-    private <K> String errorMessage(K key) {
-        return String.format("Map doesn't contains key '%s'", key);
     }
 
     @SafeVarargs
@@ -41,11 +38,6 @@ public class MapUtils {
 
         public MultiValueMapBuilder put(String key, String value) {
             prototype.put(key, List.of(value));
-            return this;
-        }
-
-        public MultiValueMapBuilder putAll(Map<String, List<String>> map) {
-            prototype.putAll(map);
             return this;
         }
 

@@ -2,10 +2,10 @@ package com.zephyr.task.facades.impl;
 
 import com.zephyr.commons.anotations.Facade;
 import com.zephyr.commons.extensions.ExtendedMapper;
+import com.zephyr.data.protocol.dto.MeteredSearchCriteriaDto;
+import com.zephyr.data.protocol.dto.SearchCriteriaDto;
 import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.task.facades.MeteredSearchCriteriaFacade;
-import com.zephyr.task.facades.dto.MeteredSearchCriteriaDto;
-import com.zephyr.data.dto.SearchCriteriaDto;
 import com.zephyr.task.services.SearchCriteriaService;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

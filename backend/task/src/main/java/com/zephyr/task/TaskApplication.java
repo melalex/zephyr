@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,7 @@ import org.springframework.integration.dsl.Pollers;
 
 import java.util.function.Consumer;
 
+@EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableBinding(Source.class)

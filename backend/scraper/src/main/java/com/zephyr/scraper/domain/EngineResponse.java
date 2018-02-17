@@ -1,6 +1,6 @@
 package com.zephyr.scraper.domain;
 
-import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.data.protocol.enums.SearchEngine;
 import lombok.Builder;
 import lombok.Value;
 

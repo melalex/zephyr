@@ -1,8 +1,8 @@
 package com.zephyr.keyword.services.provider.impl;
 
+import com.zephyr.data.protocol.criteria.KeywordCriteria;
+import com.zephyr.data.protocol.vo.KeywordVo;
 import com.zephyr.keyword.clients.RatingServiceClient;
-import com.zephyr.keyword.protocol.KeywordRequest;
-import com.zephyr.keyword.protocol.KeywordResponse;
 import com.zephyr.keyword.services.provider.KeywordsProvider;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,8 @@ public class RatingServiceProvider implements KeywordsProvider {
     private RatingServiceClient ratingServiceClient;
 
     @Override
-    public Flux<KeywordResponse> provide(KeywordRequest request) {
+    public Flux<KeywordVo> provide(KeywordCriteria request) {
         return ratingServiceClient.findRatingForUrl(request.getUrl(), request.getPage(), request.getPageSize())
-                .map(r -> KeywordResponse.of(r.getQuery().getQuery(), r.getUrl()));
+                .map(r -> KeywordVo.of(r.getQuery().getQuery(), r.getUrl()));
     }
 }

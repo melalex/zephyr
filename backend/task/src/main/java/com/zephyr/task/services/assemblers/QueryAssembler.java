@@ -4,7 +4,7 @@ import com.zephyr.commons.LoggingUtils;
 import com.zephyr.commons.ReactorUtils;
 import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.commons.interfaces.Assembler;
-import com.zephyr.data.dto.QueryDto;
+import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.errors.domain.Path;
 import com.zephyr.errors.domain.Reasons;
 import com.zephyr.errors.domain.Subject;

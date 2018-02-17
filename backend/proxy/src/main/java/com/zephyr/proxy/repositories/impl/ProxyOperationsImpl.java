@@ -2,7 +2,7 @@ package com.zephyr.proxy.repositories.impl;
 
 import com.google.common.base.Joiner;
 import com.mongodb.client.result.UpdateResult;
-import com.zephyr.data.enums.SearchEngine;
+import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.proxy.domain.Proxy;
 import com.zephyr.proxy.properties.ProxyProperties;
 import com.zephyr.proxy.repositories.ProxyOperations;

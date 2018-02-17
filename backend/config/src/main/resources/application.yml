@@ -4,6 +4,7 @@ server:
 spring:
   application:
     name: config
+    index: ${random.uuid}
   cloud:
     config:
       server:
