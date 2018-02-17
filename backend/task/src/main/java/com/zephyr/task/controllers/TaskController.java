@@ -17,9 +17,14 @@ public class TaskController {
     @Setter(onMethod = @__(@Autowired))
     private TaskFacade taskFacade;
 
+    @PostMapping
+    public Mono<Void> create(@Valid Mono<TaskDto> task) {
+        return taskFacade.create(task);
+    }
+
     @GetMapping
-    public Flux<TaskDto> findAllForCurrent() {
-        return taskFacade.findAllForCurrentUser();
+    public Flux<TaskDto> findAll() {
+        return taskFacade.findAll();
     }
 
     @GetMapping("/{id}")
@@ -27,8 +32,13 @@ public class TaskController {
         return taskFacade.findById(id);
     }
 
-    @PostMapping
-    public Mono<Void> createTaskForCurrentUser(@Valid Mono<TaskDto> task) {
-        return taskFacade.createTaskForCurrentUser(task);
+    @PutMapping
+    public Mono<Void> update(@Valid Mono<TaskDto> task) {
+        return taskFacade.update(task);
+    }
+
+    @DeleteMapping("/{id}")
+    public Mono<Void> remove(@PathVariable("id") String id) {
+        return taskFacade.remove(id);
     }
 }

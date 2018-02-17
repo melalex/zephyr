@@ -21,8 +21,14 @@ public class TaskFacadeImpl implements TaskFacade {
     private ExtendedMapper mapper;
 
     @Override
-    public Flux<TaskDto> findAllForCurrentUser() {
-        return taskService.findAllForCurrentUser()
+    public Mono<Void> create(Mono<TaskDto> task) {
+        return task.map(mapper.mapperFor(Task.class))
+                .flatMap(taskService::create);
+    }
+
+    @Override
+    public Flux<TaskDto> findAll() {
+        return taskService.findAll()
                 .map(mapper.mapperFor(TaskDto.class));
     }
 
@@ -33,8 +39,13 @@ public class TaskFacadeImpl implements TaskFacade {
     }
 
     @Override
-    public Mono<Void> createTaskForCurrentUser(Mono<TaskDto> task) {
+    public Mono<Void> update(Mono<TaskDto> task) {
         return task.map(mapper.mapperFor(Task.class))
-                .flatMap(t -> taskService.createTaskForCurrentUser(t));
+                .flatMap(taskService::update);
+    }
+
+    @Override
+    public Mono<Void> remove(String id) {
+        return taskService.remove(id);
     }
 }
