@@ -16,6 +16,7 @@ public class Task {
 
     @Id
     private String id;
+    private String name;
     private String userId;
     private String url;
     

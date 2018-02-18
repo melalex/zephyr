@@ -5,9 +5,11 @@ import com.zephyr.data.protocol.dto.StatisticsDto;
 import org.springframework.data.domain.Pageable;
 import reactor.core.publisher.Flux;
 
+import java.security.Principal;
+
 public interface RatingService {
 
     Flux<RatingDto> findRatingForUrl(String url, Pageable pageable);
 
-    Flux<StatisticsDto> findStatisticsAndSubscribeForTask(String task);
+    Flux<StatisticsDto> findStatisticsAndSubscribeForTask(String task, Principal principal);
 }

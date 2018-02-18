@@ -29,13 +29,11 @@ apply plugin: 'application'
 mainClassName = 'com.zephyr.auth.AuthApplication'
 
 dependencies {
-    compile libraries['webFlux']
+    compile libraries['spring']
     compile libraries['acutator']
     compile libraries['acutatorDocs']
     compile libraries['security']
     compile libraries['securityOAuth2']
-    compile libraries['validation']
-    compile libraries['mongodb']
     compile libraries['configClient']
     compile libraries['discoveryClient']
     compile libraries['messaging']

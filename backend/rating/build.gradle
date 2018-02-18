@@ -33,10 +33,12 @@ dependencies {
     compile libraries['acutator']
     compile libraries['acutatorDocs']
 //    compile libraries['mongodb']
-    compile libraries['redis']
     compile libraries['configClient']
     compile libraries['discoveryClient']
     compile libraries['messaging']
+    compile libraries['security']
+    compile libraries['securityCloud']
+    compile libraries['securityOAuth2']
 
     // TODO: remove this dependencies
     compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: '2.0.0.RELEASE'
@@ -51,6 +53,7 @@ dependencies {
     compileOnly libraries['ideaAnnotations']
 
     testCompile libraries['test']
+    testCompile libraries['securityTest']
 }
 
 dependencyManagement {

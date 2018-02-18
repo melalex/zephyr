@@ -5,6 +5,7 @@ import com.zephyr.commons.interfaces.Transformer;
 import com.zephyr.data.protocol.dto.RatingDto;
 import com.zephyr.data.protocol.dto.StatisticsDto;
 import com.zephyr.data.protocol.dto.TaskDto;
+import com.zephyr.errors.utils.ExceptionUtils;
 import com.zephyr.rating.cliensts.TaskServiceClient;
 import com.zephyr.rating.domain.Rating;
 import com.zephyr.rating.domain.RequestCriteria;
@@ -20,10 +21,13 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.security.Principal;
+
 @Slf4j
 @Service
 public class RatingServiceImpl implements RatingService {
     private static final String NEW_SUBSCRIPTION_MESSAGE = "New subscription to Task '{}'";
+    private static final String USER_ID_FIELD = "userId";
 
     @Setter(onMethod = @__(@Autowired))
     private RequestUpdatesBus requestUpdatesBus;
@@ -50,12 +54,19 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public Flux<StatisticsDto> findStatisticsAndSubscribeForTask(String task) {
+    public Flux<StatisticsDto> findStatisticsAndSubscribeForTask(String task, Principal principal) {
         log.info(NEW_SUBSCRIPTION_MESSAGE, task);
 
         return taskServiceClient.findById(task)
+                .doOnNext(t -> checkOwner(t, principal.getName()))
                 .flatMapIterable(taskTransformer::transform)
                 .flatMap(this::findStatisticsAndSubscribeForTask);
+    }
+
+    private void checkOwner(TaskDto task, String id) {
+        if (!id.equalsIgnoreCase(task.getUserId()) && !task.isShared()) {
+            ExceptionUtils.notOwner(TaskDto.class, USER_ID_FIELD, id);
+        }
     }
 
     private Flux<StatisticsDto> findStatisticsAndSubscribeForTask(RequestCriteria criteria) {

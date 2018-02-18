@@ -5,7 +5,7 @@ import com.zephyr.errors.domain.Path;
 import com.zephyr.errors.domain.Reasons;
 import com.zephyr.errors.domain.Subject;
 import com.zephyr.errors.dsl.Problems;
-import com.zephyr.errors.exceptions.CurrentUserNotSetException;
+import com.zephyr.errors.exceptions.OwnershipException;
 import com.zephyr.errors.exceptions.ParameterizedException;
 import com.zephyr.errors.exceptions.ResourceNotFoundException;
 import lombok.NonNull;
@@ -19,9 +19,7 @@ import java.util.function.Supplier;
 @UtilityClass
 public class ExceptionUtils {
     private static final String NOT_FOUND_ERROR_MESSAGE = "Resource '%s' with id '%s' not found";
-
-    private static final String NO_CURRENT_USER_ROOT = "user";
-    private static final String NO_CURRENT_USER_MESSAGE = "Current User not set";
+    private static final String OWNERSHIP_ERROR_MESSAGE = "Requested task belongs to another User";
 
     public void assertErrors(@NonNull ParameterizedException exception, @NonNull Collection<Subject> errors) {
         if (!errors.isEmpty()) {
@@ -57,15 +55,14 @@ public class ExceptionUtils {
                 .populatingFunction();
     }
 
-    public <T> Mono<T> noCurrentUserAsync() {
-        return Mono.error(noCurrentUser());
-    }
+    public void notOwner(Class<?> subject, String field, String id) {
+        Problems.simpleException(new OwnershipException(OWNERSHIP_ERROR_MESSAGE))
+                .status(HttpStatus.FORBIDDEN)
+                .path(Path.of(subject).to(field))
+                .actual(Actual.isA(id))
+                .reason(Reasons.NOT_MATCH)
+                .payload(id)
+                .populateAndThrow();
 
-    public CurrentUserNotSetException noCurrentUser() {
-        return Problems.simpleException(new CurrentUserNotSetException(NO_CURRENT_USER_MESSAGE))
-                .status(HttpStatus.UNAUTHORIZED)
-                .path(Path.of(NO_CURRENT_USER_ROOT))
-                .reason(Reasons.NOT_SET)
-                .populate();
     }
 }

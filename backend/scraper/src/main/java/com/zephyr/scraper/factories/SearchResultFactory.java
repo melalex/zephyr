@@ -1,4 +1,4 @@
-package com.zephyr.scraper.domain.factories;
+package com.zephyr.scraper.factories;
 
 import com.zephyr.data.internal.dto.SearchResultDto;
 import com.zephyr.scraper.domain.EngineRequest;

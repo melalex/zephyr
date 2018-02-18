@@ -1,31 +1,14 @@
 package com.zephyr.auth.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-import java.util.Set;
+import java.security.Principal;
 
 @Data
-@Document(collection = "user")
-public class User implements Serializable {
-    private static final long serialVersionUID = 5222158829992191818L;
-
-    @Id
-    private String username;
-
-    private String email;
-
-    private String password;
-
-    private Set<Role> roles;
-
-    private boolean emailConfirmed;
-    private boolean enabled;
-
-    public enum Role {
-        ADMIN,
-        CUSTOMER
-    }
+@NoArgsConstructor
+@AllArgsConstructor
+public class User implements Principal {
+    private String name;
 }

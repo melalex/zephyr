@@ -7,7 +7,7 @@ import com.zephyr.scraper.browser.Browser;
 import com.zephyr.scraper.crawler.Crawler;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.exceptions.FraudException;
-import com.zephyr.scraper.domain.factories.SearchResultFactory;
+import com.zephyr.scraper.factories.SearchResultFactory;
 import com.zephyr.scraper.flow.ScrapingFlow;
 import com.zephyr.scraper.request.RequestConstructor;
 import lombok.Setter;

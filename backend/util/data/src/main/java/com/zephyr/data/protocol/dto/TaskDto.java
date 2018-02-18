@@ -22,10 +22,16 @@ public class TaskDto {
     private String url;
 
     @NotEmpty
+    private String name;
+
+    @NotEmpty
     private Set<SearchEngine> engines;
 
     private LocalDate from;
     private LocalDate to;
+
+    private String userId;
+    private boolean isShared;
 
     @Valid
     @NotNull

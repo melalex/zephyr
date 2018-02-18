@@ -6,13 +6,6 @@ services:
     ports:
       - "15672:15672"
 
-  redis:
-    image: 'bitnami/redis:latest'
-    ports:
-      - '6379:6379'
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-
   config:
     image: melalex/zephyr-config
     restart: always

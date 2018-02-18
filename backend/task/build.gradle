@@ -37,6 +37,9 @@ dependencies {
     compile libraries['discoveryClient']
     compile libraries['messaging']
     compile libraries['modelMapperStarter']
+    compile libraries['security']
+    compile libraries['securityCloud']
+    compile libraries['securityOAuth2']
 
     // TODO: remove this dependencies
     compile group: 'org.springframework.data', name: 'spring-data-commons', version: '2.0.2.RELEASE'

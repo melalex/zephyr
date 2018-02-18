@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.security.Principal;
+
 @Facade
 public class TaskFacadeImpl implements TaskFacade {
 
@@ -21,14 +23,14 @@ public class TaskFacadeImpl implements TaskFacade {
     private ExtendedMapper mapper;
 
     @Override
-    public Mono<Void> create(Mono<TaskDto> task) {
+    public Mono<Void> create(Mono<TaskDto> task, Principal principal) {
         return task.map(mapper.mapperFor(Task.class))
-                .flatMap(taskService::create);
+                .flatMap(t -> taskService.create(t, principal));
     }
 
     @Override
-    public Flux<TaskDto> findAll() {
-        return taskService.findAll()
+    public Flux<TaskDto> findAll(Principal principal) {
+        return taskService.findAll(principal)
                 .map(mapper.mapperFor(TaskDto.class));
     }
 
@@ -39,13 +41,13 @@ public class TaskFacadeImpl implements TaskFacade {
     }
 
     @Override
-    public Mono<Void> update(Mono<TaskDto> task) {
+    public Mono<Void> update(Mono<TaskDto> task, Principal principal) {
         return task.map(mapper.mapperFor(Task.class))
-                .flatMap(taskService::update);
+                .flatMap(t -> taskService.update(t, principal));
     }
 
     @Override
-    public Mono<Void> remove(String id) {
-        return taskService.remove(id);
+    public Mono<Void> remove(String id, Principal principal) {
+        return taskService.remove(id, principal);
     }
 }
