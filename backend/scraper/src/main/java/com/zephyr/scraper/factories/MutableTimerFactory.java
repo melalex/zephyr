@@ -1,7 +1,6 @@
-package com.zephyr.scheduling.factories.impl;
+package com.zephyr.scraper.factories;
 
-import com.zephyr.scheduling.domain.MutableTimer;
-import com.zephyr.scheduling.factories.MutableTimerFactory;
+import com.zephyr.scraper.domain.MutableTimer;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Component
-public class MutableTimerFactoryImpl implements MutableTimerFactory {
+public class MutableTimerFactory {
 
     @Setter(onMethod = @__(@Autowired))
     private Clock clock;
@@ -22,7 +21,6 @@ public class MutableTimerFactoryImpl implements MutableTimerFactory {
     @Setter(onMethod = @__(@Autowired))
     private Scheduler scheduler;
 
-    @Override
     public MutableTimer create(MonoSink<Void> sink, LocalDateTime dateTime) {
         return MutableTimer.builder()
                 .sink(sink)

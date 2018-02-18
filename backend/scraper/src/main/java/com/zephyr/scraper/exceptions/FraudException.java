@@ -1,4 +1,4 @@
-package com.zephyr.scraper.domain.exceptions;
+package com.zephyr.scraper.exceptions;
 
 import com.zephyr.scraper.domain.EngineResponse;
 import lombok.AllArgsConstructor;

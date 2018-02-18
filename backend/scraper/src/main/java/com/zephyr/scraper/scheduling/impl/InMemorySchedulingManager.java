@@ -1,8 +1,8 @@
-package com.zephyr.scheduling.managers.impl;
+package com.zephyr.scraper.scheduling.impl;
 
-import com.zephyr.scheduling.domain.MutableTimer;
-import com.zephyr.scheduling.factories.MutableTimerFactory;
-import com.zephyr.scheduling.managers.SchedulingManager;
+import com.zephyr.scraper.domain.MutableTimer;
+import com.zephyr.scraper.factories.MutableTimerFactory;
+import com.zephyr.scraper.scheduling.SchedulingManager;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
@@ -23,6 +23,9 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 @Slf4j
 @Component
 public class InMemorySchedulingManager implements SchedulingManager {
+    private static final String NEW_TASK_MESSAGE = "Schedule new task for group {} on {}";
+    private static final String RESCHEDULE_MESSAGE = "Reschedule all tasks in group with {} duration";
+
     private final Map<String, Deque<MutableTimer>> state = new ConcurrentHashMap<>();
     private final Map<String, LocalDateTime> lastAdded = new ConcurrentHashMap<>();
 
@@ -41,24 +44,24 @@ public class InMemorySchedulingManager implements SchedulingManager {
     public Publisher<Void> scheduleNext(String groupName, Duration duration) {
         Deque<MutableTimer> group = group(groupName);
         LocalDateTime dateTime = pushLast(groupName, duration);
-        log.info("Schedule new task for group {} on {}", group, dateTime);
+        log.info(NEW_TASK_MESSAGE, group, dateTime);
 
         return Mono.<Void>create(s -> group.addLast(timerFactory.create(s, dateTime)))
                 .doOnSuccess(ignore -> group.poll());
     }
 
     @Override
-    public void onError(Enum<?> group, Duration duration) {
-        onError(group.name(), duration);
+    public void reSchedule(Enum<?> group, Duration duration) {
+        reSchedule(group.name(), duration);
     }
 
     @Override
-    public void onError(String groupName, Duration duration) {
+    public void reSchedule(String groupName, Duration duration) {
         Deque<MutableTimer> group = group(groupName);
         pushLast(groupName, duration);
         group.forEach(t -> t.reSchedule(duration));
 
-        log.info("Reschedule all tasks in group with {} duration", groupName, duration);
+        log.info(RESCHEDULE_MESSAGE, groupName, duration);
     }
 
     private LocalDateTime pushLast(String group, Duration duration) {

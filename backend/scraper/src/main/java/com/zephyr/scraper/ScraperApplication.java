@@ -1,9 +1,12 @@
 package com.zephyr.scraper;
 
+import com.zephyr.commons.LoggingUtils;
 import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.data.internal.dto.SearchResultDto;
-import com.zephyr.scraper.flow.ScrapingFlow;
+import com.zephyr.scraper.browser.Browser;
+import com.zephyr.scraper.request.RequestConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.DefaultAsyncHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +21,26 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.context.annotation.Bean;
 import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
 
 import java.time.Clock;
 
+@Slf4j
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableBinding(Processor.class)
 public class ScraperApplication {
+    private static final String NEW_QUERY_MSG = "Received new Query: {}";
+    private static final String RECEIVED_SEARCH_RESULT_MSG = "Received SearchResult: {}";
+    private static final String UNEXPECTED_EXCEPTION_MSG = "Unexpected exception";
 
     @Setter(onMethod = @__(@Autowired))
-    private ScrapingFlow scrapingFlow;
+    private RequestConstructor requestConstructor;
+
+    @Setter(onMethod = @__(@Autowired))
+    private Browser browser;
+
 
     public static void main(String[] args) {
         new SpringApplicationBuilder()
@@ -39,12 +52,23 @@ public class ScraperApplication {
     @StreamListener
     @Output(Processor.OUTPUT)
     public Flux<SearchResultDto> receive(@Input(Processor.INPUT) Flux<QueryDto> input) {
-        return scrapingFlow.handle(input);
+        return input.doOnNext(LoggingUtils.info(log, NEW_QUERY_MSG))
+                .flatMap(requestConstructor::construct)
+                .parallel()
+                .flatMap(browser::get)
+                .sequential()
+                .doOnNext(LoggingUtils.debug(log, RECEIVED_SEARCH_RESULT_MSG))
+                .doOnError(LoggingUtils.error(log, UNEXPECTED_EXCEPTION_MSG));
     }
 
     @Bean
     public Clock clock() {
         return Clock.systemDefaultZone();
+    }
+
+    @Bean
+    public Scheduler scheduler() {
+        return Schedulers.elastic();
     }
 
     @Bean

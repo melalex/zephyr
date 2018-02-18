@@ -1,4 +1,4 @@
-package com.zephyr.scheduling.managers;
+package com.zephyr.scraper.scheduling;
 
 import org.reactivestreams.Publisher;
 
@@ -10,7 +10,7 @@ public interface SchedulingManager {
 
     Publisher<Void> scheduleNext(String group, Duration duration);
 
-    void onError(Enum<?> group, Duration duration);
+    void reSchedule(Enum<?> group, Duration duration);
 
-    void onError(String group, Duration duration);
+    void reSchedule(String group, Duration duration);
 }

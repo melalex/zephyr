@@ -13,7 +13,6 @@ ext {
             commons   : project(':backend:util:commons'),
             data      : project(':backend:util:data'),
             errors    : project(':backend:util:errors'),
-            scheduling: project(':backend:util:scheduling'),
             validation: project(':backend:util:validation'),
     ]
 

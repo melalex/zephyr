@@ -1,4 +1,4 @@
-package com.zephyr.scheduling.domain;
+package com.zephyr.scraper.domain;
 
 import com.zephyr.commons.TimeUtils;
 import lombok.Builder;

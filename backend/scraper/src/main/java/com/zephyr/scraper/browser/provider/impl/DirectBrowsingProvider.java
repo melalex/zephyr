@@ -2,11 +2,11 @@ package com.zephyr.scraper.browser.provider.impl;
 
 import com.zephyr.commons.LoggingUtils;
 import com.zephyr.data.protocol.enums.SearchEngine;
-import com.zephyr.scheduling.managers.SchedulingManager;
 import com.zephyr.scraper.browser.provider.BrowsingProvider;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.EngineResponse;
 import com.zephyr.scraper.properties.ScraperProperties;
+import com.zephyr.scraper.scheduling.SchedulingManager;
 import io.netty.handler.codec.http.HttpHeaders;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -81,7 +81,7 @@ public class DirectBrowsingProvider implements BrowsingProvider {
     }
 
     private void report(SearchEngine engine) {
-        schedulingManager.onError(engine, errorDelay(engine).minus(delay(engine)));
+        schedulingManager.reSchedule(engine, errorDelay(engine).minus(delay(engine)));
     }
 
     private Function<Flux<Throwable>, ? extends Publisher<?>> requestException() {

@@ -1,58 +1,63 @@
 package com.zephyr.scraper.browser.impl;
 
-import com.zephyr.data.protocol.enums.SearchEngine;
+import com.zephyr.data.internal.dto.SearchResultDto;
 import com.zephyr.scraper.browser.Browser;
-import com.zephyr.scraper.browser.provider.BrowsingProvider;
+import com.zephyr.scraper.browser.manager.BrowsingManager;
+import com.zephyr.scraper.crawler.Crawler;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.EngineResponse;
-import com.zephyr.scraper.properties.ScraperProperties;
+import com.zephyr.scraper.exceptions.FraudException;
+import com.zephyr.scraper.factories.SearchResultFactory;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.retry.Retry;
 
+import java.util.function.Function;
+
+@Slf4j
 @Component
 public class BrowserImpl implements Browser {
-    private static final String UNSUPPORTED_REQUEST_TYPE = "Browser doesn't support RequestType '%s' of '%s' engine";
+    private static final String FRAUD_EXCEPTION_MSG = "Fraud detected. Reporting...";
 
     @Setter(onMethod = @__(@Autowired))
-    private ScraperProperties scraperProperties;
+    private BrowsingManager browsingManager;
 
     @Setter(onMethod = @__(@Autowired))
-    private BrowsingProvider directBrowsingProvider;
+    private Crawler crawler;
 
     @Setter(onMethod = @__(@Autowired))
-    private BrowsingProvider proxiedBrowsingProvider;
-
-    @Setter(onMethod = @__(@Autowired))
-    private BrowsingProvider vpnBrowsingProvider;
-
-    @Setter(onMethod = @__(@Autowired))
-    private BrowsingProvider torBrowsingProvider;
+    private SearchResultFactory searchResultFactory;
 
     @Override
-    public Mono<EngineResponse> get(EngineRequest engineRequest) {
-        return manage(engineRequest.getProvider()).get(engineRequest);
+    public Mono<SearchResultDto> get(EngineRequest request) {
+        return Mono.defer(() -> makeRequest(request))
+                .map(crawler::crawl)
+                .retryWhen(fraudException())
+                .map(l -> searchResultFactory.create(request, l));
     }
 
-    @Override
-    public void report(EngineResponse response) {
-        manage(response.getProvider()).report(response);
+    private Function<Flux<Throwable>, ? extends Publisher<?>> fraudException() {
+        return Retry.anyOf(FraudException.class)
+                .doOnRetry(c -> report(getResponse(c.exception())));
     }
 
-    private BrowsingProvider manage(SearchEngine engine) {
-        ScraperProperties.RequestType requestType = scraperProperties.getScraper(engine).getRequestType();
-        switch (requestType) {
-            case DIRECT:
-                return directBrowsingProvider;
-            case PROXY:
-                return proxiedBrowsingProvider;
-            case VPN:
-                return vpnBrowsingProvider;
-            case TOR:
-                return torBrowsingProvider;
-            default:
-                throw new IllegalArgumentException(String.format(UNSUPPORTED_REQUEST_TYPE, requestType, engine));
-        }
+    private EngineResponse getResponse(Throwable throwable) {
+        return ((FraudException) throwable).getResponse();
     }
+
+
+    private Mono<EngineResponse> makeRequest(EngineRequest engineRequest) {
+        return browsingManager.manage(engineRequest.getProvider()).get(engineRequest);
+    }
+
+    private void report(EngineResponse response) {
+        log.info(FRAUD_EXCEPTION_MSG);
+        browsingManager.manage(response.getProvider()).report(response);
+    }
+
 }

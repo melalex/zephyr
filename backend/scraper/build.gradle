@@ -41,7 +41,6 @@ dependencies {
     compile libraries['asyncHttp']
 
     compile utils['commons']
-    compile utils['scheduling']
     compile utils['data']
 
     compileOnly libraries['lombok']
