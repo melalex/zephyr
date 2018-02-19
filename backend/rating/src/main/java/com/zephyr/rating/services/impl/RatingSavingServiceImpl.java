@@ -1,23 +1,24 @@
-package com.zephyr.rating.services.handlers;
+package com.zephyr.rating.services.impl;
 
 import com.zephyr.commons.ReactorUtils;
 import com.zephyr.commons.interfaces.EventPublisher;
-import com.zephyr.commons.interfaces.Handler;
 import com.zephyr.rating.domain.Rating;
 import com.zephyr.rating.domain.Request;
 import com.zephyr.rating.repository.RatingRepository;
 import com.zephyr.rating.repository.RequestRepository;
+import com.zephyr.rating.services.RatingSavingService;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.stereotype.Component;
+import org.springframework.integration.annotation.ServiceActivator;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-@Component
-public class RatingHandler implements Handler<List<Rating>> {
+@Service
+public class RatingSavingServiceImpl implements RatingSavingService {
 
     @Setter(onMethod = @__(@Autowired))
     private RequestRepository requestRepository;
@@ -29,9 +30,11 @@ public class RatingHandler implements Handler<List<Rating>> {
     private EventPublisher<Request> requestUpdatePublisher;
 
     @Override
-    public void handle(List<Rating> target) {
+    @ServiceActivator
+    public void save(List<Rating> target) {
         Mono.justOrEmpty(target.stream().findFirst())
-                .flatMap(r -> findOrSave(r.getRequest()))
+                .map(Rating::getRequest)
+                .flatMap(this::findOrSave)
                 .transform(ReactorUtils.doOnNextAsync(r -> save(target, r)))
                 .subscribe(requestUpdatePublisher::publish);
     }

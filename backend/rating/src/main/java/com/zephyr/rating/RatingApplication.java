@@ -1,10 +1,10 @@
 package com.zephyr.rating;
 
 import com.zephyr.commons.extensions.ExtendedMapper;
-import com.zephyr.commons.interfaces.Handler;
 import com.zephyr.commons.interfaces.Transformer;
 import com.zephyr.data.internal.dto.SearchResultDto;
 import com.zephyr.rating.domain.Rating;
+import com.zephyr.rating.services.RatingSavingService;
 import org.intellij.lang.annotations.Language;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
@@ -43,11 +43,11 @@ public class RatingApplication {
 
     @Bean
     public IntegrationFlow updateRatingFlow(Transformer<SearchResultDto, List<Rating>> searchResultTransformer,
-                                            Handler<List<Rating>> ratingHandler) {
+                                            RatingSavingService ratingSavingService) {
         return IntegrationFlows.from(Sink.INPUT)
                 .log(new LiteralExpression(NEW_SEARCH_RESULT_MESSAGE))
-                .transform(searchResultTransformer)
-                .handle(ratingHandler)
+                .transform(searchResultTransformer::transform)
+                .handle(ratingSavingService)
                 .get();
     }
 }

@@ -1,4 +1,4 @@
-package com.zephyr.rating.services.publishers;
+package com.zephyr.rating.services.bus;
 
 import com.zephyr.commons.interfaces.EventPublisher;
 import com.zephyr.rating.domain.Request;
