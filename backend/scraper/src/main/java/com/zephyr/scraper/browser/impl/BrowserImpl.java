@@ -22,7 +22,7 @@ import java.util.function.Function;
 @Slf4j
 @Component
 public class BrowserImpl implements Browser {
-    private static final String FRAUD_EXCEPTION_MSG = "Fraud detected. Reporting...";
+    private static final String FRAUD_EXCEPTION_MSG = "Fraud detected for response with id '{}'. Reporting...";
 
     @Setter(onMethod = @__(@Autowired))
     private BrowsingManager browsingManager;
@@ -56,7 +56,7 @@ public class BrowserImpl implements Browser {
     }
 
     private void report(EngineResponse response) {
-        log.info(FRAUD_EXCEPTION_MSG);
+        log.warn(FRAUD_EXCEPTION_MSG, response.getId());
         browsingManager.manage(response.getProvider()).report(response);
     }
 

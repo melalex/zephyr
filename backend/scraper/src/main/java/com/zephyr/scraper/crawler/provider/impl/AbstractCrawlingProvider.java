@@ -17,8 +17,8 @@ import java.util.List;
 @Slf4j
 @Component
 public abstract class AbstractCrawlingProvider implements CrawlingProvider {
-    private static final String START_CRAWLING_MSG = "Start crawling of response with id {}";
-    private static final String START_FRAUD_ANALIS_MSG = "Performing Fraud analyze for response with id {}";
+    private static final String START_CRAWLING_MSG = "Start crawling of response with id '{}'";
+    private static final String START_FRAUD_ANALYSIS_MSG = "Performing Fraud analyze for response with id '{}'";
 
     @Setter(onMethod = @__(@Autowired))
     private ScraperProperties scraperProperties;
@@ -36,7 +36,7 @@ public abstract class AbstractCrawlingProvider implements CrawlingProvider {
                 .getScraper(engine)
                 .getLinkSelector();
 
-        log.info(START_CRAWLING_MSG, engineResponse.getId());
+        log.info(START_FRAUD_ANALYSIS_MSG, engineResponse.getId());
         fraudAnalyzer.analyze(engineResponse, document);
 
         return parse(document, linkSelector);
