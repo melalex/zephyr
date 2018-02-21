@@ -11,5 +11,5 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "keyword")
 public class KeywordProperties {
 
-    private Provider provider;
+    private KeywordSource provider;
 }

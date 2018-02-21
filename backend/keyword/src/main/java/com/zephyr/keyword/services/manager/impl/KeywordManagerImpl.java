@@ -1,7 +1,7 @@
 package com.zephyr.keyword.services.manager.impl;
 
 import com.zephyr.keyword.properties.KeywordProperties;
-import com.zephyr.keyword.properties.Provider;
+import com.zephyr.keyword.properties.KeywordSource;
 import com.zephyr.keyword.services.manager.KeywordManager;
 import com.zephyr.keyword.services.provider.KeywordsProvider;
 import lombok.Setter;
@@ -23,7 +23,7 @@ public class KeywordManagerImpl implements KeywordManager {
 
     @Override
     public KeywordsProvider manage() {
-        Provider provider = properties.getProvider();
+        KeywordSource provider = properties.getProvider();
         switch (provider) {
             case AD_WORDS:
                 return adWordsKeywordsProvider;
