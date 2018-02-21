@@ -1,7 +1,6 @@
 package com.zephyr.rating.services.impl;
 
 import com.zephyr.commons.extensions.ExtendedMapper;
-import com.zephyr.commons.interfaces.Transformer;
 import com.zephyr.data.protocol.dto.RatingDto;
 import com.zephyr.data.protocol.dto.StatisticsDto;
 import com.zephyr.data.protocol.dto.TaskDto;
@@ -16,6 +15,7 @@ import com.zephyr.rating.services.factories.RatingDtoFactory;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -45,7 +45,7 @@ public class RatingServiceImpl implements RatingService {
     private ExtendedMapper mapper;
 
     @Setter(onMethod = @__(@Autowired))
-    private Transformer<TaskDto, Iterable<RequestCriteria>> taskTransformer;
+    private Converter<TaskDto, Iterable<RequestCriteria>> taskTransformer;
 
     @Override
     public Flux<RatingDto> findRatingForUrl(String url, Pageable pageable) {
@@ -59,7 +59,7 @@ public class RatingServiceImpl implements RatingService {
 
         return taskServiceClient.findById(task)
                 .doOnNext(t -> checkOwner(t, principal.getName()))
-                .flatMapIterable(taskTransformer::transform)
+                .flatMapIterable(taskTransformer::convert)
                 .flatMap(this::findStatisticsAndSubscribeForTask);
     }
 
