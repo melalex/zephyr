@@ -4,8 +4,8 @@ import com.zephyr.commons.MapUtils;
 import com.zephyr.commons.support.Page;
 import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.data.protocol.enums.SearchEngine;
+import com.zephyr.scraper.configuration.ScraperConfiguration;
 import com.zephyr.scraper.domain.EngineRequest;
-import com.zephyr.scraper.properties.ScraperProperties;
 import com.zephyr.scraper.request.provider.RequestProvider;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +28,8 @@ public abstract class AbstractRequestProvider implements RequestProvider {
     private static final String KEEP_ALIVE = "keep-alive";
     private static final String TRUE = "1";
 
-    private static final int FIRST = 0;
-
     @Setter(onMethod = @__(@Autowired))
-    private ScraperProperties properties;
+    private ScraperConfiguration configuration;
 
     @NonNull
     private SearchEngine engine;
@@ -39,7 +37,7 @@ public abstract class AbstractRequestProvider implements RequestProvider {
     @Override
     public List<EngineRequest> provide(QueryDto query) {
         Map<String, List<String>> headers = MapUtils.merge(defaultHeaders(query), provideHeaders(query));
-        return Stream.iterate(firstPage(), Page::isNotLast, Page::getNext)
+        return Stream.iterate(configuration.getFirstPage(engine), Page::isNotLast, Page::getNext)
                 .map(p -> getPage(query, p, headers))
                 .collect(Collectors.toList());
     }
@@ -52,15 +50,6 @@ public abstract class AbstractRequestProvider implements RequestProvider {
                 .headers(headers)
                 .params(provideParams(query, page))
                 .offset(page.getStart())
-                .build();
-    }
-
-    private Page firstPage() {
-        return Page.builder()
-                .page(FIRST)
-                .first(properties.getScraper(engine).getFirst())
-                .pageSize(properties.getScraper(engine).getPageSize())
-                .count(properties.getScraper(engine).getResultCount())
                 .build();
     }
 

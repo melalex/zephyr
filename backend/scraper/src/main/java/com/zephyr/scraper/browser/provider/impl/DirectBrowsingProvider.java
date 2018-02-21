@@ -2,9 +2,10 @@ package com.zephyr.scraper.browser.provider.impl;
 
 import com.zephyr.commons.LoggingUtils;
 import com.zephyr.data.protocol.enums.SearchEngine;
+import com.zephyr.scraper.configuration.ScraperConfiguration;
+import com.zephyr.scraper.configuration.properties.ScraperProperties;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.EngineResponse;
-import com.zephyr.scraper.properties.ScraperProperties;
 import com.zephyr.scraper.scheduling.SchedulingManager;
 import io.netty.handler.codec.http.HttpHeaders;
 import lombok.Setter;
@@ -44,7 +45,7 @@ public class DirectBrowsingProvider extends AbstractBrowsingProvider {
     private AsyncHttpClient asyncHttpClient;
 
     @Setter(onMethod = @__(@Autowired))
-    private ScraperProperties properties;
+    private ScraperConfiguration configuration;
 
     public DirectBrowsingProvider() {
         super(ScraperProperties.RequestType.DIRECT);
@@ -57,7 +58,7 @@ public class DirectBrowsingProvider extends AbstractBrowsingProvider {
         log.info(NEW_REQUEST_MSG, request.getId());
 
         return Mono.empty()
-                .delaySubscription(schedulingManager.scheduleNext(engine, delay(engine)))
+                .delaySubscription(schedulingManager.scheduleNext(engine, configuration.getDelay(engine)))
                 .then(makeRequest(request))
                 .doOnError(LoggingUtils.error(log, BROWSER_EXCEPTION_MSG))
                 .retryWhen(browserException(request));
@@ -84,13 +85,13 @@ public class DirectBrowsingProvider extends AbstractBrowsingProvider {
     }
 
     private void report(SearchEngine engine) {
-        schedulingManager.reSchedule(engine, errorDelay(engine).minus(delay(engine)));
+        schedulingManager.reSchedule(engine, configuration.getErrorDelay(engine).minus(configuration.getDelay(engine)));
     }
 
     private Function<Flux<Throwable>, ? extends Publisher<?>> requestException() {
         return Retry.any()
-                .retryMax(properties.getBrowser().getRetryCount())
-                .fixedBackoff(Duration.ofMillis(properties.getBrowser().getBackOff()))
+                .retryMax(configuration.getRetryCount())
+                .fixedBackoff(Duration.ofMillis(configuration.getBackOff()))
                 .doOnRetry(LoggingUtils.retryableError(log, REQUEST_EXCEPTION_MSG));
     }
 
@@ -98,14 +99,6 @@ public class DirectBrowsingProvider extends AbstractBrowsingProvider {
         return Retry.<EngineRequest>any()
                 .withApplicationContext(engineRequest)
                 .doOnRetry(c -> report(c.applicationContext().getProvider()));
-    }
-
-    private Duration delay(SearchEngine engine) {
-        return Duration.ofMillis(properties.getScraper(engine).getDelay());
-    }
-
-    private Duration errorDelay(SearchEngine engine) {
-        return Duration.ofMillis(properties.getScraper(engine).getErrorDelay());
     }
 
     private EngineResponse toEngineResponse(Response response, EngineRequest engineRequest) {

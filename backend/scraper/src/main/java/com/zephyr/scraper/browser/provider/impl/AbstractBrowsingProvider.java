@@ -2,7 +2,7 @@ package com.zephyr.scraper.browser.provider.impl;
 
 import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.scraper.browser.provider.BrowsingProvider;
-import com.zephyr.scraper.properties.ScraperProperties;
+import com.zephyr.scraper.configuration.properties.ScraperProperties;
 import com.zephyr.scraper.locator.SearchEngineProvider;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

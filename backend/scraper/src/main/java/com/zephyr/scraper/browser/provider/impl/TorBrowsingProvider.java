@@ -1,8 +1,8 @@
 package com.zephyr.scraper.browser.provider.impl;
 
+import com.zephyr.scraper.configuration.properties.ScraperProperties;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.EngineResponse;
-import com.zephyr.scraper.properties.ScraperProperties;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 

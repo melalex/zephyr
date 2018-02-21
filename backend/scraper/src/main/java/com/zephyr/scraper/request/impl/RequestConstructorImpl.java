@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 @Component
 public class RequestConstructorImpl implements RequestConstructor {
-    private static final String NEW_REQUEST_MESSAGE = "Constructed Request: {}";
+    private static final String NEW_REQUEST_MESSAGE = "Constructed Request with id '{}'";
 
     @Setter(onMethod = @__(@Autowired))
     private List<RequestProvider> providers;
@@ -26,6 +26,6 @@ public class RequestConstructorImpl implements RequestConstructor {
         return Flux.fromIterable(providers)
                 .map(p -> p.provide(query))
                 .flatMap(Flux::fromIterable)
-                .doOnNext(LoggingUtils.info(log, NEW_REQUEST_MESSAGE));
+                .doOnNext(LoggingUtils.info(log, EngineRequest::getId, NEW_REQUEST_MESSAGE));
     }
 }
