@@ -3,20 +3,18 @@ package com.zephyr.commons.support;
 import com.zephyr.commons.MapUtils;
 import com.zephyr.commons.interfaces.Manager;
 import com.zephyr.commons.interfaces.Provider;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DefaultManager<K, P extends Provider<K>> implements Manager<K, P> {
 
     private Map<K, P> providers;
-
-    private DefaultManager(Map<K, P> providers) {
-        this.providers = providers;
-    }
 
     public static <K, P extends Provider<K>> DefaultManager<K, P> of(Collection<P> providers) {
         Map<K, P> map = new HashSet<>(providers).stream()

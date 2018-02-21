@@ -36,7 +36,7 @@ public class ScraperProperties {
 
     @Data
     public static class BrowserProperties {
-        private long backoff;
+        private long backOff;
         private int retryCount;
     }
 

@@ -1,4 +1,4 @@
-package com.zephyr.scraper.provider;
+package com.zephyr.scraper.locator;
 
 import com.zephyr.commons.interfaces.Provider;
 import com.zephyr.data.protocol.enums.SearchEngine;

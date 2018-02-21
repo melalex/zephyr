@@ -1,14 +1,18 @@
 package com.zephyr.scraper.browser.provider.impl;
 
-import com.zephyr.scraper.browser.provider.BrowsingProvider;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.EngineResponse;
+import com.zephyr.scraper.properties.ScraperProperties;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Component
-public class VpnBrowsingProvider implements BrowsingProvider {
+public class VpnBrowsingProvider extends AbstractBrowsingProvider {
     private static final String ERROR_MESSAGE = "No implementation";
+
+    public VpnBrowsingProvider() {
+        super(ScraperProperties.RequestType.VPN);
+    }
 
     @Override
     public Mono<EngineResponse> get(EngineRequest engineRequest) {

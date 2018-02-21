@@ -2,12 +2,14 @@ package com.zephyr.scraper.browser.impl;
 
 import com.zephyr.data.internal.dto.SearchResultDto;
 import com.zephyr.scraper.browser.Browser;
-import com.zephyr.scraper.browser.manager.BrowsingManager;
+import com.zephyr.scraper.browser.provider.BrowsingProvider;
 import com.zephyr.scraper.crawler.Crawler;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.EngineResponse;
 import com.zephyr.scraper.exceptions.FraudException;
 import com.zephyr.scraper.factories.SearchResultFactory;
+import com.zephyr.scraper.locator.SearchEngineManager;
+import com.zephyr.scraper.locator.impl.DefaultSearchEngineManager;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
@@ -17,6 +19,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.retry.Retry;
 
+import java.util.List;
 import java.util.function.Function;
 
 @Slf4j
@@ -24,14 +27,18 @@ import java.util.function.Function;
 public class BrowserImpl implements Browser {
     private static final String FRAUD_EXCEPTION_MSG = "Fraud detected for response with id '{}'. Reporting...";
 
-    @Setter(onMethod = @__(@Autowired))
-    private BrowsingManager browsingManager;
+    private SearchEngineManager<BrowsingProvider> browsingManager;
 
     @Setter(onMethod = @__(@Autowired))
     private Crawler crawler;
 
     @Setter(onMethod = @__(@Autowired))
     private SearchResultFactory searchResultFactory;
+
+    @Autowired
+    public void setBrowsingManager(List<BrowsingProvider> providers) {
+        this.browsingManager = DefaultSearchEngineManager.of(providers);
+    }
 
     @Override
     public Mono<SearchResultDto> get(EngineRequest request) {
@@ -59,5 +66,4 @@ public class BrowserImpl implements Browser {
         log.warn(FRAUD_EXCEPTION_MSG, response.getId());
         browsingManager.manage(response.getProvider()).report(response);
     }
-
 }

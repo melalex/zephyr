@@ -2,7 +2,6 @@ package com.zephyr.scraper.browser.provider.impl;
 
 import com.zephyr.commons.LoggingUtils;
 import com.zephyr.data.protocol.enums.SearchEngine;
-import com.zephyr.scraper.browser.provider.BrowsingProvider;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.EngineResponse;
 import com.zephyr.scraper.properties.ScraperProperties;
@@ -31,7 +30,7 @@ import java.util.stream.StreamSupport;
 
 @Slf4j
 @Component
-public class DirectBrowsingProvider implements BrowsingProvider {
+public class DirectBrowsingProvider extends AbstractBrowsingProvider {
     private static final String NEW_REQUEST_MSG = "Scheduled new request with id {}";
     private static final String NEW_RESPONSE_MSG = "Received response for request with id %s";
     private static final String NEW_RESPONSE_FULL_MSG = "Received response for\n{}";
@@ -46,6 +45,10 @@ public class DirectBrowsingProvider implements BrowsingProvider {
 
     @Setter(onMethod = @__(@Autowired))
     private ScraperProperties properties;
+
+    public DirectBrowsingProvider() {
+        super(ScraperProperties.RequestType.DIRECT);
+    }
 
     @Override
     public Mono<EngineResponse> get(EngineRequest request) {
@@ -87,7 +90,7 @@ public class DirectBrowsingProvider implements BrowsingProvider {
     private Function<Flux<Throwable>, ? extends Publisher<?>> requestException() {
         return Retry.any()
                 .retryMax(properties.getBrowser().getRetryCount())
-                .fixedBackoff(Duration.ofMillis(properties.getBrowser().getBackoff()))
+                .fixedBackoff(Duration.ofMillis(properties.getBrowser().getBackOff()))
                 .doOnRetry(LoggingUtils.retryableError(log, REQUEST_EXCEPTION_MSG));
     }
 
