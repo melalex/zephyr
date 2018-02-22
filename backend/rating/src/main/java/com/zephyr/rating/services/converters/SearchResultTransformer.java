@@ -25,7 +25,7 @@ public class SearchResultTransformer implements Converter<SearchResultDto, List<
         Request request = modelMapper.map(source, Request.class);
 
         return StreamUtils.zipWithIndexes(source.getLinks(), source.getOffset())
-                .map(p -> new Rating(request, p.getKey(), p.getValue()))
+                .map(p -> new Rating(request, p.getIndex(), p.getElement()))
                 .collect(Collectors.toList());
     }
 }
