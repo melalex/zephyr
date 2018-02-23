@@ -46,7 +46,7 @@ dependencies {
     compile group: 'org.mongodb', name: 'mongodb-driver-reactivestreams', version: '1.7.0-beta1'
 
     compile utils['data']
-    compile utils['errors']
+    compile utils['errorsStarter']
     compile utils['commons']
 
     compileOnly libraries['lombok']

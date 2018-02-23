@@ -39,7 +39,7 @@ dependencies {
     compile libraries['messaging']
 
     compile utils['commons']
-    compile utils['errors']
+    compile utils['errorsStarter']
 
     compileOnly libraries['lombok']
 

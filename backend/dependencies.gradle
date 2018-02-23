@@ -10,10 +10,11 @@ ext {
     ]
 
     utils = [
-            commons   : project(':backend:util:commons'),
-            data      : project(':backend:util:data'),
-            errors    : project(':backend:util:errors'),
-            validation: project(':backend:util:validation'),
+            commons      : project(':backend:util:commons'),
+            data         : project(':backend:util:data'),
+            errorsCore   : project(':backend:util:errors:core'),
+            errorsStarter: project(':backend:util:errors:starter'),
+            validation   : project(':backend:util:validation'),
     ]
 
     def lombokVersion = '1.16.20'

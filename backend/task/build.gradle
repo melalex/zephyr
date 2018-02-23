@@ -50,7 +50,7 @@ dependencies {
     compile 'org.springframework.integration:spring-integration-core:5.0.1.BUILD-SNAPSHOT'
 
     compile utils['data']
-    compile utils['errors']
+    compile utils['errorsStarter']
     compile utils['commons']
 
     compileOnly libraries['lombok']

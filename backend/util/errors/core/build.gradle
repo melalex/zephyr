@@ -1,0 +1,8 @@
+dependencies {
+    compile libraries['guava']
+
+    compileOnly libraries['reactor']
+    compileOnly libraries['lombok']
+
+    testCompile libraries['test']
+}

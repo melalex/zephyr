@@ -51,5 +51,11 @@ findProject(':backend:util:data')?.name = 'data'
 include 'backend:util:errors'
 findProject(':backend:util:errors')?.name = 'errors'
 
+include 'backend:util:errors:core'
+findProject(':backend:util:errors:core')?.name = 'core'
+
+include 'backend:util:errors:starter'
+findProject(':backend:util:errors:starter')?.name = 'starter'
+
 include 'backend:util:validation'
 findProject(':backend:util:validation')?.name = 'validation'

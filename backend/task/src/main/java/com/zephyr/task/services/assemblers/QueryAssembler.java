@@ -8,9 +8,9 @@ import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.errors.domain.Path;
 import com.zephyr.errors.domain.Reasons;
 import com.zephyr.errors.domain.Subject;
+import com.zephyr.errors.dsl.Exceptions;
 import com.zephyr.errors.dsl.Problems;
 import com.zephyr.errors.dsl.SubjectSpec;
-import com.zephyr.errors.exceptions.InconsistentModelException;
 import com.zephyr.errors.utils.ErrorUtil;
 import com.zephyr.errors.utils.ExceptionUtils;
 import com.zephyr.task.domain.SearchCriteria;
@@ -56,7 +56,7 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
                 .map(mapper.mapperFor(QueryDto.class))
                 .transform(ReactorUtils.doOnNextAsync(q -> populatePlace(source, q, errors)))
                 .transform(ReactorUtils.doOnNextAsync(q -> populateAgent(source, q, errors)))
-                .doOnNext(q -> ExceptionUtils.assertErrors(new InconsistentModelException(ERROR_MESSAGE), errors))
+                .doOnNext(q -> ExceptionUtils.assertErrors(Exceptions.inconsistent(ERROR_MESSAGE), errors))
                 .doOnNext(LoggingUtils.info(log, FINISH_ASSEMBLE_MESSAGE));
     }
 
