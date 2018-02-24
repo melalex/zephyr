@@ -15,6 +15,15 @@ findProject(':backend:config')?.name = 'config'
 include 'backend:gateway'
 findProject(':backend:gateway')?.name = 'gateway'
 
+include 'backend:jobs'
+findProject(':backend:jobs')?.name = 'jobs'
+
+include 'backend:jobs:mock-data'
+findProject(':backend:jobs:mock-data')?.name = 'mock-data'
+
+include 'backend:jobs:init-data'
+findProject(':backend:jobs:init-data')?.name = 'init-data'
+
 include 'backend:keyword'
 findProject(':backend:keyword')?.name = 'keyword'
 

@@ -1,12 +1,16 @@
 ext {
-    def springCloudVersion = 'Finchley.M4'
-    def springBootVersion = '2.0.0.M7'
     def springBusVersion = '2.0.0.M4'
+    def springBootVersion = '2.0.0.M7'
+    def springTaskVersion = '2.0.0.M3'
+    def springCloudVersion = 'Finchley.M4'
+    def springConfigVersion = '2.0.0.M6'
 
     imports = [
-            springBootBom : "org.springframework.boot:spring-boot-dependencies:${springBootVersion}",
-            springCloudBom: "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}",
-            springBusBom  : "org.springframework.cloud:spring-cloud-bus:${springBusVersion}"
+            springBusBom   : "org.springframework.cloud:spring-cloud-bus:${springBusVersion}",
+            springBootBom  : "org.springframework.boot:spring-boot-dependencies:${springBootVersion}",
+            springTaskBom  : "org.springframework.cloud:spring-cloud-task-dependencies:${springTaskVersion}",
+            springCloudBom : "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}",
+            springConfigBom: "org.springframework.cloud:spring-cloud-config:${springConfigVersion}",
     ]
 
     utils = [
@@ -93,20 +97,18 @@ ext {
             dataCommons           : 'org.springframework.data:spring-data-commons',
             messaging             : 'org.springframework.cloud:spring-cloud-starter-bus-amqp',
             configurationProcessor: 'org.springframework.boot:spring-boot-configuration-processor',
+            jpa                   : 'org.springframework.boot:spring-boot-starter-data-jpa',
+            mysql                 : 'mysql:mysql-connector-java',
             mongodb               : 'org.springframework.boot:spring-boot-starter-data-mongodb:2.0.0.M7',
             neo4j                 : 'org.springframework.data:spring-data-neo4j:5.0.2.RELEASE',
-            redis                 : 'org.springframework.data:spring-data-redis',
             test                  : 'org.springframework.boot:spring-boot-starter-test:2.0.0.M7',
 
-            mongoIntegration      : 'org.springframework.integration:spring-integration-redis:5.0.1.RELEASE',
-            redisIntegration      : 'org.springframework.integration:spring-integration-mongodb:5.0.1.RELEASE',
+            task                  : 'org.springframework.cloud:spring-cloud-starter-task',
+            batch                 : 'org.springframework.boot:spring-boot-starter-batch',
+            batchTest             : 'org.springframework.batch:spring-batch-test',
 
             web                   : 'org.springframework.boot:spring-boot-starter-web',
             webFlux               : 'org.springframework.boot:spring-boot-starter-webflux:2.0.0.M7',
-            webFluxLib            : 'org.springframework:spring-webflux',
-
-            hal                   : 'org.springframework.boot:spring-boot-starter-hateoas',
-            halBrowser            : 'org.springframework.data:spring-data-rest-hal-browser',
 
             cache                 : 'org.springframework.boot:spring-boot-starter-cache',
             validation            : 'org.springframework.boot:spring-boot-starter-validation',
