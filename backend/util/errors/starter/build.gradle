@@ -1,27 +1,11 @@
-buildscript {
-    ext {
-        springBootVersion = '2.0.0.M7'
-    }
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        jcenter()
-
-        maven { url "http://repo1.maven.org/maven2/" }
-        maven { url "https://repo.spring.io/snapshot" }
-        maven { url "https://repo.spring.io/milestone" }
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
+plugins {
+    id 'io.spring.dependency-management' version '1.0.4.RELEASE'
 }
-
-apply plugin: 'io.spring.dependency-management'
 
 dependencies {
     compile libraries['validationApi']
 
-    compile utils['errorsCore']
+    compileOnly utils['errorsCore']
 
     compileOnly libraries['webFlux']
     compileOnly libraries['jackson']

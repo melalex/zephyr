@@ -1,0 +1,17 @@
+plugins {
+	id 'io.spring.dependency-management' version '1.0.4.RELEASE'
+}
+
+dependencies {
+	compile libraries['neo4j']
+
+	compileOnly libraries['lombok']
+
+	testCompile libraries['test']
+}
+
+dependencyManagement {
+	imports {
+		mavenBom imports['springBootBom']
+	}
+}

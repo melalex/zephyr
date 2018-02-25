@@ -1,0 +1,21 @@
+plugins {
+    id 'io.spring.dependency-management' version '1.0.4.RELEASE'
+}
+
+dependencies {
+    compile cores['location']
+
+    compile utils['data']
+    compile utils['errorsCore']
+    compile utils['commons']
+
+    compileOnly libraries['lombok']
+    
+    testCompile libraries['test']
+}
+
+dependencyManagement {
+    imports {
+        mavenBom imports['springBootBom']
+    }
+}

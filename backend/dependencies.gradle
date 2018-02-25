@@ -21,6 +21,20 @@ ext {
             validation   : project(':backend:util:validation'),
     ]
 
+    cores = [
+            agent   : project(':backend:agent:core'),
+            location: project(':backend:location:core'),
+            rating  : project(':backend:rating:core'),
+            task    : project(':backend:task:core'),
+    ]
+
+    service = [
+            agent   : project(':backend:agent:services'),
+            location: project(':backend:location:services'),
+            rating  : project(':backend:rating:services'),
+            task    : project(':backend:task:services'),
+    ]
+
     def lombokVersion = '1.16.20'
     def validationApiVersion = '2.0.0.Final'
     def apacheCommonsVersion = '3.6'
@@ -100,6 +114,7 @@ ext {
             jpa                   : 'org.springframework.boot:spring-boot-starter-data-jpa',
             mysql                 : 'mysql:mysql-connector-java',
             mongodb               : 'org.springframework.boot:spring-boot-starter-data-mongodb:2.0.0.M7',
+            mongodbDriver         : 'org.mongodb:mongodb-driver-reactivestreams',
             neo4j                 : 'org.springframework.data:spring-data-neo4j:5.0.2.RELEASE',
             test                  : 'org.springframework.boot:spring-boot-starter-test:2.0.0.M7',
 

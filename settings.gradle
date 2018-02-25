@@ -6,6 +6,15 @@ include 'backend'
 include 'backend:agent'
 findProject(':backend:agent')?.name = 'agent'
 
+include 'backend:agent:core'
+findProject(':backend:agent:core')?.name = 'core'
+
+include 'backend:agent:services'
+findProject(':backend:agent:service')?.name = 'services'
+
+include 'backend:agent:web'
+findProject(':backend:agent:web')?.name = 'web'
+
 include 'backend:auth'
 findProject(':backend:auth')?.name = 'auth'
 
@@ -30,14 +39,29 @@ findProject(':backend:keyword')?.name = 'keyword'
 include 'backend:location'
 findProject(':backend:location')?.name = 'location'
 
+include 'backend:location:core'
+findProject(':backend:location:core')?.name = 'core'
+
+include 'backend:location:services'
+findProject(':backend:location:services')?.name = 'services'
+
+include 'backend:location:web'
+findProject(':backend:location:web')?.name = 'web'
+
 include 'backend:monitoring'
 findProject(':backend:monitoring')?.name = 'monitoring'
 
-include 'backend:proxy'
-findProject(':backend:proxy')?.name = 'proxy'
-
 include 'backend:rating'
 findProject(':backend:rating')?.name = 'rating'
+
+include 'backend:rating:core'
+findProject(':backend:rating:core')?.name = 'core'
+
+include 'backend:rating:services'
+findProject(':backend:rating:services')?.name = 'services'
+
+include 'backend:rating:web'
+findProject(':backend:rating:web')?.name = 'web'
 
 include 'backend:registry'
 findProject(':backend:registry')?.name = 'registry'
@@ -47,6 +71,15 @@ findProject(':backend:scraper')?.name = 'scraper'
 
 include 'backend:task'
 findProject(':backend:task')?.name = 'task'
+
+include 'backend:task:core'
+findProject(':backend:task:core')?.name = 'core'
+
+include 'backend:task:services'
+findProject(':backend:task:services')?.name = 'services'
+
+include 'backend:task:web'
+findProject(':backend:task:web')?.name = 'web'
 
 include 'backend:util'
 findProject(':backend:util')?.name = 'util'

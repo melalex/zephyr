@@ -27,14 +27,18 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'application'
 
-mainClassName = 'com.zephyr.jobs.LoadTestDataApplication'
+mainClassName = 'com.zephyr.jobs.MockDataApplication'
 
 dependencies {
+    compile cores['rating']
+    compile cores['task']
+
     compile libraries['task']
     compile libraries['batch']
     compile libraries['configClient']
     compile libraries['jpa']
     compile libraries['mysql']
+    compile libraries['mongodb']
 
     compileOnly libraries['lombok']
 
