@@ -1,10 +1,12 @@
 package com.zephyr.jobs.generators;
 
 import com.zephyr.rating.domain.Rating;
-import com.zephyr.task.domain.SearchCriteria;
+import com.zephyr.rating.domain.Request;
+
+import java.util.List;
 
 @FunctionalInterface
 public interface RatingGenerator {
 
-    Rating generate(SearchCriteria criteria);
+    List<Rating> generate(Request request);
 }

@@ -5,6 +5,7 @@ import com.zephyr.task.domain.Task;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
 import java.util.List;
 
 @Component
@@ -14,6 +15,7 @@ public class RatingWriter implements ItemWriter<Task> {
 
     @Override
     public void write(List<? extends Task> items) {
-
+        items.stream()
+                .flatMap(t -> t.getSearchCriteria().stream());
     }
 }

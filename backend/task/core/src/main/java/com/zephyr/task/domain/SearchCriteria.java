@@ -12,7 +12,6 @@ public class SearchCriteria {
 
     @Id
     private String id;
-
     private String query;
     private PlaceCriteria place;
     private String languageIso;
