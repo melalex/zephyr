@@ -40,8 +40,13 @@ dependencies {
     compile libraries['mysql']
     compile libraries['mongodb']
     compile libraries['progressBar']
+    compile libraries['javaFaker']
+    compileOnly libraries['configurationProcessor']
+
+    compile utils['commons']
 
     compileOnly libraries['lombok']
+    compileOnly libraries['configurationProcessor']
 
     testCompile libraries['test']
     testCompile libraries['batchTest']

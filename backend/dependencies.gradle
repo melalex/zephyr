@@ -61,6 +61,7 @@ ext {
     def modelMapperStarter = '1.1.0'
     def ideaAnnotationsVersion = '12.0'
     def progressBarVersion = '0.5.5'
+    def javaFakerVersion = '0.14'
 
     def librariesDependencies = [
             lombok             : "org.projectlombok:lombok:${lombokVersion}",
@@ -101,7 +102,8 @@ ext {
             netty              : "io.netty:netty-all:${nettyVersion}",
             asyncHttp          : "org.asynchttpclient:async-http-client:${asyncHttpVersion}",
             ideaAnnotations    : "com.intellij:annotations:${ideaAnnotationsVersion}",
-            progressBar        : "me.tongfei:progressbar:${progressBarVersion}"
+            progressBar        : "me.tongfei:progressbar:${progressBarVersion}",
+            javaFaker          : "com.github.javafaker:javafaker:${javaFakerVersion}"
     ]
 
     // TODO: Remove artifact version

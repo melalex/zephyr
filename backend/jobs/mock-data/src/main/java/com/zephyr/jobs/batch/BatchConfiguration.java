@@ -1,5 +1,6 @@
 package com.zephyr.jobs.batch;
 
+import com.zephyr.jobs.properties.MockDataProperties;
 import com.zephyr.task.domain.Task;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -11,6 +12,7 @@ import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.support.CompositeItemWriter;
@@ -33,33 +35,46 @@ public class BatchConfiguration {
     public static final String RATING_PER_REQUEST_JOB_PARAM = "rating.count";
 
     private static final String LOAD_MOCK_DATA_JOB_NAME = "loadMockDataJob";
+    private static final String CLEAR_DATA_STEP_NAME = "clearDataStep";
     private static final String LOAD_MOCK_DATA_STEP_NAME = "loadMockDataStep";
     private static final String LOAD_MOCK_DATA_TASK = "Load mock data";
 
     @Setter(onMethod = @__(@Autowired))
-    public JobBuilderFactory jobs;
+    private JobBuilderFactory jobs;
 
     @Setter(onMethod = @__(@Autowired))
-    public StepBuilderFactory steps;
+    private StepBuilderFactory steps;
 
     @Setter(onMethod = @__(@Autowired))
-    public ItemReader<Task> taskReader;
+    private ItemReader<Task> taskReader;
 
     @Setter(onMethod = @__(@Autowired))
-    public StepExecutionListener mockDataStepListener;
+    private StepExecutionListener mockDataStepListener;
+
+    @Setter(onMethod = @__(@Autowired))
+    private MockDataProperties properties;
 
     @Bean
-    public Job loadMockDataJob(Step loadMockDataStep) {
+    public Job loadMockDataJob(Step loadMockDataStep, Step clearData) {
         return jobs.get(LOAD_MOCK_DATA_JOB_NAME)
-                .start(loadMockDataStep)
+                .start(clearData)
+                .next(loadMockDataStep)
                 .build();
     }
 
     @Bean
-    public Step loadMockDataStep(ItemWriter<Task> compositeTaskWriter, @Value("${data.batchSize}") int batchSize) {
+    public Step clearData(Tasklet clearTaskDataTasklet, Tasklet clearRatingDataTasklet) {
+        return steps.get(CLEAR_DATA_STEP_NAME)
+                .tasklet(clearTaskDataTasklet)
+                .tasklet(clearRatingDataTasklet)
+                .build();
+    }
+
+    @Bean
+    public Step loadMockDataStep(ItemWriter<Task> compositeTaskWriter) {
         return steps.get(LOAD_MOCK_DATA_STEP_NAME)
                 .listener(mockDataStepListener)
-                .<Task, Task>chunk(batchSize)
+                .<Task, Task>chunk(properties.getBatchSize())
                 .reader(taskReader)
                 .writer(compositeTaskWriter)
                 .taskExecutor(taskExecutor())

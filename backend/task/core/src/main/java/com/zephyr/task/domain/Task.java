@@ -19,7 +19,7 @@ public class Task {
     private String userId;
     private String url;
     
-    private Set<String> engines;
+    private Set<SearchEngine> engines;
 
     private LocalDate from;
     private LocalDate to;
