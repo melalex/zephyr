@@ -17,10 +17,6 @@ public class ScraperProperties {
     private BrowserProperties browser;
     private Map<SearchEngine, EngineProperties> scraper;
 
-    public EngineProperties getScraper(SearchEngine engine) {
-        return scraper.get(engine);
-    }
-
     @Data
     public static class EngineProperties {
         private boolean enabled;

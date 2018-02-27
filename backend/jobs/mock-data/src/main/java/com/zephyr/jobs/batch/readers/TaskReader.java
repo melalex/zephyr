@@ -7,22 +7,22 @@ import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemStream;
-import org.springframework.batch.item.ItemStreamException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.zephyr.jobs.batch.BatchConfiguration.CURRENT_INDEX;
+
 @Component
 @StepScope
 public class TaskReader implements ItemReader<Task>, ItemStream {
-    private static final String CURRENT_INDEX = "current.index";
 
     @Setter(onMethod = @__(@Autowired))
     private TaskGenerator generator;
 
-    @Setter(onMethod = @__(@Value("#{jobParameters['task.count']}")))
+    @Setter(onMethod = @__(@Value("#{jobParameters[T(com.zephyr.jobs.batch.BatchConfiguration).TASK_COUNT_JOB_PARAM]}")))
     private int count;
 
     private AtomicInteger index;
@@ -40,7 +40,7 @@ public class TaskReader implements ItemReader<Task>, ItemStream {
     }
 
     @Override
-    public void open(ExecutionContext executionContext) throws ItemStreamException {
+    public void open(ExecutionContext executionContext) {
         if (executionContext.containsKey(CURRENT_INDEX)) {
             index = new AtomicInteger(executionContext.getInt(CURRENT_INDEX));
         } else {
@@ -49,12 +49,12 @@ public class TaskReader implements ItemReader<Task>, ItemStream {
     }
 
     @Override
-    public void update(ExecutionContext executionContext) throws ItemStreamException {
+    public void update(ExecutionContext executionContext) {
         executionContext.putInt(CURRENT_INDEX, index.intValue());
     }
 
     @Override
-    public void close() throws ItemStreamException {
+    public void close() {
 
     }
 }

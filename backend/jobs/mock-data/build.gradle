@@ -30,8 +30,8 @@ apply plugin: 'application'
 mainClassName = 'com.zephyr.jobs.MockDataApplication'
 
 dependencies {
-    compile cores['rating']
     compile cores['task']
+    compile cores['rating']
 
     compile libraries['task']
     compile libraries['batch']
@@ -39,6 +39,7 @@ dependencies {
     compile libraries['jpa']
     compile libraries['mysql']
     compile libraries['mongodb']
+    compile libraries['progressBar']
 
     compileOnly libraries['lombok']
 

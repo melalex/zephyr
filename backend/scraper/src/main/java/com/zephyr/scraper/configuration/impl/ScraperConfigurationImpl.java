@@ -19,26 +19,28 @@ public class ScraperConfigurationImpl implements ScraperConfiguration {
 
     @Override
     public String getLinkSelector(SearchEngine engine) {
-        return properties.getScraper(engine).getLinkSelector();
+        return getEngineProperties(engine).getLinkSelector();
     }
 
     @Override
     public Duration getDelay(SearchEngine engine) {
-        return Duration.ofMillis(properties.getScraper(engine).getDelay());
+        return Duration.ofMillis(getEngineProperties(engine).getDelay());
     }
 
     @Override
     public Duration getErrorDelay(SearchEngine engine) {
-        return Duration.ofMillis(properties.getScraper(engine).getErrorDelay());
+        return Duration.ofMillis(getEngineProperties(engine).getErrorDelay());
     }
 
     @Override
     public Page getFirstPage(SearchEngine engine) {
+        ScraperProperties.EngineProperties engineProperties = getEngineProperties(engine);
+
         return Page.builder()
                 .page(FIRST_PAGE)
-                .first(properties.getScraper(engine).getFirst())
-                .pageSize(properties.getScraper(engine).getPageSize())
-                .count(properties.getScraper(engine).getResultCount())
+                .first(engineProperties.getFirst())
+                .pageSize(engineProperties.getPageSize())
+                .count(engineProperties.getResultCount())
                 .build();
     }
 
@@ -50,5 +52,9 @@ public class ScraperConfigurationImpl implements ScraperConfiguration {
     @Override
     public long getBackOff() {
         return properties.getBrowser().getBackOff();
+    }
+
+    private ScraperProperties.EngineProperties getEngineProperties(SearchEngine engine) {
+        return properties.getScraper().get(engine);
     }
 }
