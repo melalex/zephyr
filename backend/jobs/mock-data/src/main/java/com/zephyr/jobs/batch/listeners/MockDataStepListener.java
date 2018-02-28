@@ -43,8 +43,9 @@ public class MockDataStepListener extends StepExecutionListenerSupport {
     }
 
     private String getImportScope(long tasksCount, StepExecution stepExecution) {
+        long providersCount = getJobParam(stepExecution, PROVIDERS_PER_TASK_JOB_PARAM);
         long searchCriteriaCount = tasksCount * getJobParam(stepExecution, CRITERIA_PER_TASK_JOB_PARAM);
-        long requestCount = searchCriteriaCount * getJobParam(stepExecution, REQUEST_PER_CRITERIA_JOB_PARAM);
+        long requestCount = searchCriteriaCount * providersCount * getJobParam(stepExecution, REQUEST_PER_CRITERIA_JOB_PARAM);
         long ratingCount = requestCount * getJobParam(stepExecution, RATING_PER_REQUEST_JOB_PARAM);
 
         return String.format(SCOPE_FORMAT, Task.class.getSimpleName(), tasksCount)

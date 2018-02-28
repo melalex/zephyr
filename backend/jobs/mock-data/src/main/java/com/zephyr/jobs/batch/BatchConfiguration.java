@@ -30,6 +30,7 @@ public class BatchConfiguration {
 
     public static final String CURRENT_INDEX = "current.index";
     public static final String TASK_COUNT_JOB_PARAM = "task.count";
+    public static final String PROVIDERS_PER_TASK_JOB_PARAM = "providers.count";
     public static final String CRITERIA_PER_TASK_JOB_PARAM = "criteria.count";
     public static final String REQUEST_PER_CRITERIA_JOB_PARAM = "request.count";
     public static final String RATING_PER_REQUEST_JOB_PARAM = "rating.count";
