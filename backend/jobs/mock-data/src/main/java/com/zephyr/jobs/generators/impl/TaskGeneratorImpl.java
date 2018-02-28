@@ -55,7 +55,7 @@ public class TaskGeneratorImpl implements TaskGenerator {
         return IntStream.range(0, criteriaPerTask)
                 .mapToObj(i -> new SearchCriteria())
                 .peek(s -> s.setLanguageIso(properties.getFaker().getLang()))
-                .peek(s -> s.setQuery(faker.commerce().productName()))
+                .peek(s -> s.setQuery(faker.hipster().word()))
                 .peek(s -> s.setPlace(fakePlace()))
                 .peek(s -> s.setUserAgent(fakeAgent()))
                 .collect(Collectors.toList());
@@ -64,7 +64,7 @@ public class TaskGeneratorImpl implements TaskGenerator {
     private PlaceCriteria fakePlace() {
         PlaceCriteria result = new PlaceCriteria();
         result.setCountry(faker.address().country());
-        result.setPlaceName(faker.address().cityName());
+        result.setPlaceName(faker.address().country());
 
         return result;
     }
