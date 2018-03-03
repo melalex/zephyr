@@ -16,8 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Clock;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -27,6 +26,9 @@ public class TaskGeneratorImpl implements TaskGenerator {
 
     @Setter(onMethod = @__(@Value("#{jobParameters[T(com.zephyr.jobs.batch.BatchConfiguration).CRITERIA_PER_TASK_JOB_PARAM]}")))
     private int criteriaPerTask;
+
+    @Setter(onMethod = @__(@Value("#{jobParameters[T(com.zephyr.jobs.batch.BatchConfiguration).PROVIDERS_PER_TASK_JOB_PARAM]}")))
+    private int providersPerTask;
 
     @Setter(onMethod = @__(@Autowired))
     private MockDataProperties properties;
@@ -44,7 +46,7 @@ public class TaskGeneratorImpl implements TaskGenerator {
         LocalDate launchDate = properties.getLaunchDate(now);
 
         result.setUserId(faker.internet().emailAddress());
-        result.setEngines(Set.of(SearchEngine.values()));
+        result.setEngines(fakeEngines());
         result.setName(faker.book().title());
         result.setUrl(faker.internet().url());
         result.setShared(faker.random().nextBoolean());
@@ -59,16 +61,23 @@ public class TaskGeneratorImpl implements TaskGenerator {
         return IntStream.range(0, criteriaPerTask)
                 .mapToObj(i -> new SearchCriteria())
                 .peek(s -> s.setLanguageIso(properties.getFaker().getLang()))
-                .peek(s -> s.setQuery(faker.commerce().productName()))
+                .peek(s -> s.setQuery(faker.hipster().word()))
                 .peek(s -> s.setPlace(fakePlace()))
                 .peek(s -> s.setUserAgent(fakeAgent()))
                 .collect(Collectors.toList());
     }
 
+    private Set<SearchEngine> fakeEngines() {
+        List<SearchEngine> engines = new ArrayList<>(List.of(SearchEngine.values()));
+        Collections.shuffle(engines);
+
+        return new HashSet<>(engines.subList(0, providersPerTask));
+    }
+
     private PlaceCriteria fakePlace() {
         PlaceCriteria result = new PlaceCriteria();
         result.setCountry(faker.address().country());
-        result.setPlaceName(faker.address().cityName());
+        result.setPlaceName(faker.address().country());
 
         return result;
     }
