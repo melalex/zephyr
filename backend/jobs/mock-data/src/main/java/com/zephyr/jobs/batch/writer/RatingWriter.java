@@ -35,8 +35,8 @@ public class RatingWriter implements ItemWriter<Task> {
     }
 
     private Function<Task, Stream<Request>> convertAndSaveRequest() {
-        return task -> task.getSearchCriteria().stream()
-                .flatMap(s -> requestGenerator.generate(s).stream())
+        return task -> requestGenerator.generate(task)
+                .stream()
                 .peek(mongo::save);
     }
 }

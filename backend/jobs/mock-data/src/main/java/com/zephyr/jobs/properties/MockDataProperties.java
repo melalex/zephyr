@@ -1,12 +1,10 @@
 package com.zephyr.jobs.properties;
 
-import com.zephyr.commons.TimeUtils;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Locale;
 
 @Data
@@ -21,8 +19,8 @@ public class MockDataProperties {
         return new Locale(faker.getLang(), faker.getCountry());
     }
 
-    public Date getLaunchDate(LocalDate now) {
-        return TimeUtils.toDate(now.minusDays(daysUptime));
+    public LocalDate getLaunchDate(LocalDate now) {
+        return now.minusDays(daysUptime);
     }
 
     @Data

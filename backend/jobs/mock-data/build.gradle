@@ -41,7 +41,7 @@ dependencies {
     compile libraries['mongodb']
     compile libraries['progressBar']
     compile libraries['javaFaker']
-    compileOnly libraries['configurationProcessor']
+    compile libraries['modelMapper']
 
     compile utils['commons']
 

@@ -1,11 +1,11 @@
 package com.zephyr.jobs.generators;
 
 import com.zephyr.rating.domain.Request;
-import com.zephyr.task.domain.SearchCriteria;
+import com.zephyr.task.domain.Task;
 
 import java.util.List;
 
 public interface RequestGenerator {
 
-    List<Request> generate(SearchCriteria criteria);
+    List<Request> generate(Task task);
 }

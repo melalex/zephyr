@@ -20,6 +20,10 @@ public class StreamUtils {
         return zipWithIndexes(list, 0);
     }
 
+    public IntStream counter(int to) {
+        return IntStream.range(0, to);
+    }
+
     @Value(staticConstructor = "of")
     public static class ZippedWithIndex<T> {
         private int index;

@@ -1,7 +1,6 @@
 package com.zephyr.jobs.generators.impl;
 
-import com.github.javafaker.Faker;
-import com.zephyr.jobs.generators.DateTimeGenerator;
+import com.zephyr.jobs.extensions.ExtendedFaker;
 import com.zephyr.jobs.generators.TaskGenerator;
 import com.zephyr.jobs.properties.MockDataProperties;
 import com.zephyr.task.domain.SearchCriteria;
@@ -15,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.time.Clock;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,21 +32,24 @@ public class TaskGeneratorImpl implements TaskGenerator {
     private MockDataProperties properties;
 
     @Setter(onMethod = @__(@Autowired))
-    private DateTimeGenerator dateTimeGenerator;
+    private ExtendedFaker faker;
 
     @Setter(onMethod = @__(@Autowired))
-    private Faker faker;
+    private Clock clock;
 
     @Override
     public Task generate() {
         Task result = new Task();
+        LocalDate now = LocalDate.now(clock);
+        LocalDate launchDate = properties.getLaunchDate(now);
+
         result.setUserId(faker.internet().emailAddress());
         result.setEngines(Set.of(SearchEngine.values()));
         result.setName(faker.book().title());
         result.setUrl(faker.internet().url());
         result.setShared(faker.random().nextBoolean());
-        result.setTo(dateTimeGenerator.generateDate());
-        result.setFrom(dateTimeGenerator.generateDate(result.getTo()));
+        result.setTo(faker.time().date(now, launchDate));
+        result.setFrom(faker.time().date(now, result.getTo()));
         result.setSearchCriteria(fakeCriteria());
 
         return result;
@@ -70,6 +74,7 @@ public class TaskGeneratorImpl implements TaskGenerator {
     }
 
     private UserAgentCriteria fakeAgent() {
+//        TODO: Populate userAgent
 //        UserAgentCriteria result = new UserAgentCriteria();
 //        result.setBrowserName();
 //        result.setBrowserVersion();
