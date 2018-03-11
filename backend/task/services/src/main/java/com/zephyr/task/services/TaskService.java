@@ -8,13 +8,13 @@ import java.security.Principal;
 
 public interface TaskService {
 
-    Mono<Void> create(Task task, Principal principal);
+    Mono<Task> create(Task task, Principal principal);
 
     Flux<Task> findAll(Principal principal);
 
     Mono<Task> findById(String id);
 
-    Mono<Void> update(Task task, Principal principal);
+    Mono<Task> update(Task task, Principal principal);
 
     Mono<Void> remove(String id, Principal principal);
 }

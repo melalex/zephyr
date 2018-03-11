@@ -20,7 +20,7 @@ public class TaskController {
     private TaskFacade taskFacade;
 
     @PostMapping
-    public Mono<Void> create(@Valid Mono<TaskDto> task, Principal principal) {
+    public Mono<TaskDto> create(@Valid Mono<TaskDto> task, Principal principal) {
         return taskFacade.create(task, principal);
     }
 
@@ -36,7 +36,7 @@ public class TaskController {
     }
 
     @PutMapping
-    public Mono<Void> update(@Valid Mono<TaskDto> task, Principal principal) {
+    public Mono<TaskDto> update(@Valid Mono<TaskDto> task, Principal principal) {
         return taskFacade.update(task, principal);
     }
 

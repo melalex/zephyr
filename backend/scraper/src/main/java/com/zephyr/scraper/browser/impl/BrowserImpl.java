@@ -57,7 +57,6 @@ public class BrowserImpl implements Browser {
         return ((FraudException) throwable).getResponse();
     }
 
-
     private Mono<EngineResponse> makeRequest(EngineRequest engineRequest) {
         return browsingManager.manage(engineRequest.getProvider()).get(engineRequest);
     }

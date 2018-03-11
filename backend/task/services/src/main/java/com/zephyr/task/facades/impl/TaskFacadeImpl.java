@@ -23,9 +23,10 @@ public class TaskFacadeImpl implements TaskFacade {
     private ExtendedMapper mapper;
 
     @Override
-    public Mono<Void> create(Mono<TaskDto> task, Principal principal) {
+    public Mono<TaskDto> create(Mono<TaskDto> task, Principal principal) {
         return task.map(mapper.mapperFor(Task.class))
-                .flatMap(t -> taskService.create(t, principal));
+                .flatMap(t -> taskService.create(t, principal))
+                .map(mapper.mapperFor(TaskDto.class));
     }
 
     @Override
@@ -41,9 +42,10 @@ public class TaskFacadeImpl implements TaskFacade {
     }
 
     @Override
-    public Mono<Void> update(Mono<TaskDto> task, Principal principal) {
+    public Mono<TaskDto> update(Mono<TaskDto> task, Principal principal) {
         return task.map(mapper.mapperFor(Task.class))
-                .flatMap(t -> taskService.update(t, principal));
+                .flatMap(t -> taskService.update(t, principal))
+                .map(mapper.mapperFor(TaskDto.class));
     }
 
     @Override

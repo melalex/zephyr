@@ -8,13 +8,13 @@ import java.security.Principal;
 
 public interface TaskFacade {
 
-    Mono<Void> create(Mono<TaskDto> task, Principal principal);
+    Mono<TaskDto> create(Mono<TaskDto> task, Principal principal);
 
     Flux<TaskDto> findAll(Principal principal);
 
     Mono<TaskDto> findById(String id);
 
-    Mono<Void> update(Mono<TaskDto> task, Principal principal);
+    Mono<TaskDto> update(Mono<TaskDto> task, Principal principal);
 
     Mono<Void> remove(String id, Principal principal);
 }

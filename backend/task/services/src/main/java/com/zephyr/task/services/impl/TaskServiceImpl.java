@@ -31,15 +31,14 @@ public class TaskServiceImpl implements TaskService {
     private TaskRepository taskRepository;
 
     @Override
-    public Mono<Void> create(Task task, Principal principal) {
+    public Mono<Task> create(Task task, Principal principal) {
         task.setId(null);
         task.setUserId(principal.getName());
 
         return Flux.fromIterable(task.getSearchCriteria())
                 .flatMap(searchCriteriaService::updateSearchCriteria)
                 .then(taskRepository.save(task))
-                .doOnNext(LoggingUtils.info(log, Task::getId, CREATE_TASK_MESSAGE))
-                .then();
+                .doOnNext(LoggingUtils.info(log, Task::getId, CREATE_TASK_MESSAGE));
     }
 
     @Override
@@ -53,11 +52,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Mono<Void> update(Task task, Principal principal) {
+    public Mono<Task> update(Task task, Principal principal) {
         return findById(task.getId(), principal.getName(), true)
                 .then(taskRepository.save(task))
-                .doOnNext(LoggingUtils.info(log, Task::getId, UPDATE_TASK_MESSAGE))
-                .then();
+                .doOnNext(LoggingUtils.info(log, Task::getId, UPDATE_TASK_MESSAGE));
     }
 
     @Override
