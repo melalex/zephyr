@@ -12,6 +12,7 @@ dependencies {
     compile utils['data']
     compile utils['errorsCore']
 
+    compileOnly libraries['ideaAnnotations']
     compileOnly libraries['lombok']
     compileOnly libraries['reactor']
 

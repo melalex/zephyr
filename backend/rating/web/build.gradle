@@ -42,7 +42,6 @@ dependencies {
     compile utils['errorsStarter']
 
     compileOnly libraries['lombok']
-    compileOnly libraries['ideaAnnotations']
 
     testCompile libraries['test']
     testCompile libraries['securityTest']

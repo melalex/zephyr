@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -18,17 +17,7 @@ public class UserAgentController {
     private UserAgentService userAgentService;
 
     @GetMapping
-    public Flux<UserAgentDto> findAllByExample(UserAgentDto userAgentDto) {
-        return userAgentService.findAllByExample(userAgentDto);
-    }
-
-    @GetMapping("/first")
-    public Mono<UserAgentDto> findOneByExample(UserAgentDto userAgentDto) {
-        return userAgentService.findOneByExample(userAgentDto);
-    }
-
-    @GetMapping("/random")
-    public Mono<UserAgentDto> random() {
-        return userAgentService.random();
+    public Mono<UserAgentDto> findOne(String device, String osName, String browser) {
+        return userAgentService.findOneByExample(device, osName, browser);
     }
 }

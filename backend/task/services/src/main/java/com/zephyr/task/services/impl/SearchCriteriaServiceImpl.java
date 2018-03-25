@@ -70,7 +70,7 @@ public class SearchCriteriaServiceImpl implements SearchCriteriaService {
     @Override
     public Flux<MeteredSearchCriteria> updateSearchCriteria(SearchCriteria searchCriteria) {
         return searchCriteriaRepository.findAll(Example.of(searchCriteria))
-                .flatMap(m -> meteredSearchCriteriaRepository.updateUsage(m))
+                .flatMap(meteredSearchCriteriaRepository::updateUsage)
                 .doOnNext(LoggingUtils.info(log, UPDATE_USAGE_MESSAGE))
                 .switchIfEmpty(createSearchCriteriaFlow(searchCriteria));
     }
@@ -80,6 +80,7 @@ public class SearchCriteriaServiceImpl implements SearchCriteriaService {
 
         return queryAssembler.assemble(searchCriteria)
                 .flatMap(newCriteriaGateway::send)
+                .then(searchCriteriaRepository.save(searchCriteria))
                 .then(meteredSearchCriteriaRepository.save(meteredSearchCriteria))
                 .doOnNext(LoggingUtils.info(log, NEW_CRITERIA_MESSAGE));
     }

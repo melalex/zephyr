@@ -2,6 +2,7 @@ package com.zephyr.rating.services.impl;
 
 import com.zephyr.commons.ReactorUtils;
 import com.zephyr.commons.interfaces.EventPublisher;
+import com.zephyr.commons.support.Indexed;
 import com.zephyr.rating.domain.Rating;
 import com.zephyr.rating.domain.Request;
 import com.zephyr.rating.repository.RatingRepository;
@@ -14,6 +15,7 @@ import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.util.function.Tuple2;
 
 import java.util.List;
 
@@ -31,11 +33,10 @@ public class RatingSavingServiceImpl implements RatingSavingService {
 
     @Override
     @ServiceActivator
-    public void save(List<Rating> target) {
-        Mono.justOrEmpty(target.stream().findFirst())
-                .map(Rating::getRequest)
-                .flatMap(this::findOrSave)
-                .transform(ReactorUtils.doOnNextAsync(r -> save(target, r)))
+    public void save(Tuple2<Request, List<Indexed<String>>> target) {
+        Mono.just(target)
+                .transform(ReactorUtils.flatMapFirst(this::findOrSave))
+                .flatMap(this::saveRating)
                 .subscribe(requestUpdatePublisher::publish);
     }
 
@@ -44,9 +45,10 @@ public class RatingSavingServiceImpl implements RatingSavingService {
                 .switchIfEmpty(requestRepository.save(request));
     }
 
-    private Flux<Rating> save(List<Rating> ratings, Request request) {
-        return Flux.fromIterable(ratings)
-                .doOnNext(t -> t.setRequest(request))
-                .flatMap(ratingRepository::save);
+    private Mono<Request> saveRating(Tuple2<Request, List<Indexed<String>>> target) {
+        return Flux.fromIterable(target.getT2())
+                .map(r -> new Rating(target.getT1(), r.getIndex(), r.getElement()))
+                .flatMap(ratingRepository::save)
+                .then(Mono.just(target.getT1()));
     }
 }
