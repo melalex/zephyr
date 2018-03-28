@@ -26,7 +26,6 @@ public class Place {
     private Country country;
 
     private PlaceType type;
-    private String location;
 
     public enum PlaceType {
         AIRPORT,

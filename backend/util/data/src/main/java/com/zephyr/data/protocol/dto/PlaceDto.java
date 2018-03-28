@@ -11,5 +11,5 @@ public class PlaceDto {
     private String canonicalName;
     private CountryDto country;
     private PlaceType type;
-    private String location;
+    private String uule;
 }

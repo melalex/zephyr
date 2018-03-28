@@ -3,6 +3,7 @@ package com.zephyr.commons;
 import com.zephyr.commons.support.Indexed;
 import lombok.experimental.UtilityClass;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -21,5 +22,17 @@ public class StreamUtils {
 
     public IntStream counter(int to) {
         return IntStream.range(0, to);
+    }
+
+    @SafeVarargs
+    public <T> Stream<T> concat(Stream<T>... streams) {
+        return Arrays.stream(streams)
+                .reduce(Stream::concat)
+                .orElseGet(Stream::empty);
+    }
+
+    public Stream<String> range(char first, char last) {
+        return IntStream.rangeClosed(first, last)
+                .mapToObj(i -> Character.toString((char) i));
     }
 }

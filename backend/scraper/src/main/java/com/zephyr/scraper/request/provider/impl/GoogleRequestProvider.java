@@ -60,7 +60,7 @@ public class GoogleRequestProvider extends AbstractRequestProvider {
                 .put(QUERY, query.getQuery())
                 .put(NUMBER, page.getPageSize())
                 .put(PARENT, getParent(query))
-                .put(LOCATION, query.getPlace().getLocation())
+                .put(LOCATION, query.getPlace().getUule())
                 .putIfTrue(START, page.getStart(), page.isNotFirst())
                 .putIfNotNull(INTERFACE, query.getLanguageIso())
                 .putIfNotNull(LANGUAGE, getLanguage(query))
