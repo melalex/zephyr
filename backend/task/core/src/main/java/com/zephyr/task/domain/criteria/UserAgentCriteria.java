@@ -4,8 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserAgentCriteria {
+    private String device;
     private String osName;
-    private String osVersion;
     private String browserName;
-    private String browserVersion;
 }
