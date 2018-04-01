@@ -1,7 +1,5 @@
 package com.zephyr.task.domain;
 
-import com.zephyr.task.domain.criteria.PlaceCriteria;
-import com.zephyr.task.domain.criteria.UserAgentCriteria;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;

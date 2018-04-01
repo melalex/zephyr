@@ -5,10 +5,16 @@ import lombok.Data;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Data
 public class SearchCriteriaDto {
+
     private String id;
+
+    private LocalDateTime lastHit;
+    private LocalDateTime lastUpdate;
+    private long hitsCount;
 
     @NotEmpty
     private String query;

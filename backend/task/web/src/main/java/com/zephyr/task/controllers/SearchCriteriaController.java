@@ -1,8 +1,7 @@
 package com.zephyr.task.controllers;
 
-import com.zephyr.data.protocol.dto.MeteredSearchCriteriaDto;
 import com.zephyr.data.protocol.dto.SearchCriteriaDto;
-import com.zephyr.task.facades.MeteredSearchCriteriaFacade;
+import com.zephyr.task.facades.SearchCriteriaFacade;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -18,15 +17,15 @@ import reactor.core.publisher.Mono;
 public class SearchCriteriaController {
 
     @Setter(onMethod = @__(@Autowired))
-    private MeteredSearchCriteriaFacade meteredSearchCriteriaFacade;
+    private SearchCriteriaFacade searchCriteriaFacade;
 
     @GetMapping
-    public Flux<MeteredSearchCriteriaDto> findAll(Pageable pageable) {
-        return meteredSearchCriteriaFacade.findAll(pageable);
+    public Flux<SearchCriteriaDto> findAll(Pageable pageable) {
+        return searchCriteriaFacade.findAll(pageable);
     }
 
     @GetMapping("/similar")
-    public Flux<MeteredSearchCriteriaDto> findByExample(Mono<SearchCriteriaDto> example, Sort sort) {
-        return meteredSearchCriteriaFacade.findByExample(example, sort);
+    public Flux<SearchCriteriaDto> findByExample(Mono<SearchCriteriaDto> example, Sort sort) {
+        return searchCriteriaFacade.findByExample(example, sort);
     }
 }

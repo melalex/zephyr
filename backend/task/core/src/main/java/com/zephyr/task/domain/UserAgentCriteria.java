@@ -1,4 +1,4 @@
-package com.zephyr.task.domain.criteria;
+package com.zephyr.task.domain;
 
 import lombok.Data;
 
