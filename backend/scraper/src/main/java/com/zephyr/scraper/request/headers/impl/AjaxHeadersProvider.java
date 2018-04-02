@@ -1,7 +1,7 @@
 package com.zephyr.scraper.request.headers.impl;
 
 import com.google.common.net.HttpHeaders;
-import com.zephyr.commons.MapUtils;
+import com.zephyr.commons.support.MultiValueMapBuilder;
 import com.zephyr.scraper.request.headers.EngineSpecificHeadersProvider;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ public class AjaxHeadersProvider implements EngineSpecificHeadersProvider {
 
     @Override
     public Map<String, List<String>> provide(String baseUrl) {
-        return MapUtils.multiValueMapBuilder()
+        return MultiValueMapBuilder.create()
                 .put(HttpHeaders.ACCEPT, ACCEPT)
                 .put(HttpHeaders.HOST, baseUrl)
                 .put(HttpHeaders.ORIGIN, baseUrl)

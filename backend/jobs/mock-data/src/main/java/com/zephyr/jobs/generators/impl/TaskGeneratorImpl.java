@@ -3,11 +3,8 @@ package com.zephyr.jobs.generators.impl;
 import com.zephyr.jobs.extensions.ExtendedFaker;
 import com.zephyr.jobs.generators.TaskGenerator;
 import com.zephyr.jobs.properties.MockDataProperties;
-import com.zephyr.task.domain.SearchCriteria;
-import com.zephyr.task.domain.SearchEngine;
-import com.zephyr.task.domain.Task;
-import com.zephyr.task.domain.PlaceCriteria;
-import com.zephyr.task.domain.UserAgentCriteria;
+import com.zephyr.task.domain.*;
+import com.zephyr.task.domain.UserAgent;
 import lombok.Setter;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,17 +71,17 @@ public class TaskGeneratorImpl implements TaskGenerator {
         return new HashSet<>(engines.subList(0, providersPerTask));
     }
 
-    private PlaceCriteria fakePlace() {
-        PlaceCriteria result = new PlaceCriteria();
+    private Place fakePlace() {
+        Place result = new Place();
         result.setCountry(faker.address().country());
         result.setPlaceName(faker.address().country());
 
         return result;
     }
 
-    private UserAgentCriteria fakeAgent() {
+    private UserAgent fakeAgent() {
 //        TODO: Populate userAgent
-//        UserAgentCriteria result = new UserAgentCriteria();
+//        UserAgent result = new UserAgent();
 //        result.setBrowserName();
 //        result.setBrowserVersion();
 //        result.setOsName();

@@ -21,7 +21,7 @@ public class SearchCriteria {
     private String transactionId;
 
     private String query;
-    private PlaceCriteria place;
+    private Place place;
     private String languageIso;
-    private UserAgentCriteria userAgent;
+    private UserAgent userAgent;
 }

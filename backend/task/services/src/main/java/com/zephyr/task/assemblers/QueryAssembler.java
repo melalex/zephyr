@@ -14,8 +14,8 @@ import com.zephyr.errors.dsl.SubjectSpec;
 import com.zephyr.errors.utils.ErrorUtil;
 import com.zephyr.errors.utils.ExceptionUtils;
 import com.zephyr.task.domain.SearchCriteria;
-import com.zephyr.task.domain.PlaceCriteria;
-import com.zephyr.task.domain.UserAgentCriteria;
+import com.zephyr.task.domain.Place;
+import com.zephyr.task.domain.UserAgent;
 import com.zephyr.task.clients.AgentServiceClient;
 import com.zephyr.task.clients.LocationServiceClient;
 import lombok.Setter;
@@ -61,7 +61,7 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
     }
 
     private Publisher<QueryDto> populatePlace(SearchCriteria source, QueryDto query, Collection<Subject> errors) {
-        PlaceCriteria place = source.getPlace();
+        Place place = source.getPlace();
 
         return locationServiceClient.findByCountryIsoAndNameStartsWith(place.getCountry(), place.getPlaceName())
                 .doOnNext(query::setPlace)
@@ -70,7 +70,7 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
     }
 
     private Publisher<QueryDto> populateAgent(SearchCriteria source, QueryDto query, Collection<Subject> errors) {
-        UserAgentCriteria agent = source.getUserAgent();
+        UserAgent agent = source.getUserAgent();
 
         return agentServiceClient.findByOneExample(agent)
                 .doOnNext(query::setUserAgent)
@@ -78,7 +78,7 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
                 .switchIfEmpty(Mono.just(query).doOnNext(q -> errors.add(newError(agent))));
     }
 
-    private Subject newError(PlaceCriteria place) {
+    private Subject newError(Place place) {
         // @formatter:off
         return newSubjectSpec(PLACE_FIELD)
                 .payload()
@@ -89,14 +89,13 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
         // @formatter:on
     }
 
-    private Subject newError(UserAgentCriteria agent) {
+    private Subject newError(UserAgent agent) {
         // @formatter:off
         return newSubjectSpec(AGENT_FIELD)
                 .payload()
                     .with(agent.getOsName())
-                    .with(agent.getOsVersion())
                     .with(agent.getBrowserName())
-                    .with(agent.getBrowserVersion())
+                    .with(agent.getDevice())
                     .completePayload()
                 .completeSubject();
         // @formatter:on

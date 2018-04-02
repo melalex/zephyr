@@ -1,6 +1,6 @@
 package com.zephyr.scraper.request.provider.impl;
 
-import com.zephyr.commons.MapUtils;
+import com.zephyr.commons.support.MultiValueMapBuilder;
 import com.zephyr.commons.support.Page;
 import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.data.protocol.enums.SearchEngine;
@@ -53,7 +53,7 @@ public class GoogleRequestProvider extends AbstractRequestProvider {
 
     @Override
     protected Map<String, List<String>> provideParams(QueryDto query, Page page) {
-        return MapUtils.multiValueMapBuilder()
+        return MultiValueMapBuilder.create()
                 .put(SAFE, IMAGE)
                 .put(AD_TEST, ON)
                 .put(GLP, ONE)

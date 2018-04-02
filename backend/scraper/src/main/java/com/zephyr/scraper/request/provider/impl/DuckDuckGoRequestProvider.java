@@ -1,6 +1,6 @@
 package com.zephyr.scraper.request.provider.impl;
 
-import com.zephyr.commons.MapUtils;
+import com.zephyr.commons.support.MultiValueMapBuilder;
 import com.zephyr.commons.support.Page;
 import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.data.protocol.enums.SearchEngine;
@@ -42,7 +42,7 @@ public class DuckDuckGoRequestProvider extends AbstractRequestProvider {
 
     @Override
     protected Map<String, List<String>> provideParams(QueryDto query, Page page) {
-        return MapUtils.multiValueMapBuilder()
+        return MultiValueMapBuilder.create()
                 .put(QUERY, query.getQuery())
                 .put(SAFE, NOT_SAFE)
                 .put(AUTO_LOAD, NO_AUTO_LOAD)

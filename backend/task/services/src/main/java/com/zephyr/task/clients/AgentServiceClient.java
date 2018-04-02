@@ -1,7 +1,7 @@
 package com.zephyr.task.clients;
 
 import com.zephyr.data.protocol.dto.UserAgentDto;
-import com.zephyr.task.domain.UserAgentCriteria;
+import com.zephyr.task.domain.UserAgent;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import reactor.core.publisher.Mono;
@@ -10,5 +10,5 @@ import reactor.core.publisher.Mono;
 public interface AgentServiceClient {
 
     @GetMapping("/first")
-    Mono<UserAgentDto> findByOneExample(UserAgentCriteria userAgent);
+    Mono<UserAgentDto> findByOneExample(UserAgent userAgent);
 }

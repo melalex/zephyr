@@ -1,6 +1,6 @@
 package com.zephyr.scraper.request.headers.impl;
 
-import com.zephyr.commons.MapUtils;
+import com.zephyr.commons.support.MultiValueMapBuilder;
 import com.zephyr.scraper.request.headers.EngineSpecificHeadersProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ public class HtmlHeadersProvider implements EngineSpecificHeadersProvider {
 
     @Override
     public Map<String, List<String>> provide(String baseUrl) {
-        return MapUtils.multiValueMapBuilder()
+        return MultiValueMapBuilder.create()
                 .put(HttpHeaders.REFERER, baseUrl)
                 .put(com.google.common.net.HttpHeaders.ACCEPT, ACCEPT)
                 .put(UPGRADE_INSECURE_REQUESTS, TRUE)
