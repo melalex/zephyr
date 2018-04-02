@@ -2,18 +2,20 @@ package com.zephyr.scraper.request.headers.impl;
 
 import com.google.common.net.HttpHeaders;
 import com.zephyr.commons.support.MultiValueMapBuilder;
-import com.zephyr.scraper.request.headers.EngineSpecificHeadersProvider;
+import com.zephyr.data.internal.dto.QueryDto;
+import com.zephyr.scraper.request.headers.HeadersProvider;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 
 @Component
-public class AjaxHeadersProvider implements EngineSpecificHeadersProvider {
+public class AjaxHeadersProvider implements HeadersProvider {
+
     private static final String ACCEPT = "*/*";
 
     @Override
-    public Map<String, List<String>> provide(String baseUrl) {
+    public Map<String, List<String>> provide(QueryDto query, String baseUrl) {
         return MultiValueMapBuilder.create()
                 .put(HttpHeaders.ACCEPT, ACCEPT)
                 .put(HttpHeaders.HOST, baseUrl)

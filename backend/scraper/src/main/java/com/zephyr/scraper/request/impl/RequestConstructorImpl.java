@@ -24,7 +24,7 @@ public class RequestConstructorImpl implements RequestConstructor {
     @Override
     public Flux<EngineRequest> construct(QueryDto query) {
         return Flux.fromIterable(providers)
-                .map(p -> p.provide(query))
+                .map(RequestProvider.from(query))
                 .flatMap(Flux::fromIterable)
                 .doOnNext(LoggingUtils.info(log, EngineRequest::getId, NEW_REQUEST_MESSAGE));
     }

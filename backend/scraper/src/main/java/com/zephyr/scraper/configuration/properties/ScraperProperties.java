@@ -2,6 +2,7 @@ package com.zephyr.scraper.configuration.properties;
 
 import com.zephyr.data.protocol.enums.SearchEngine;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ public class ScraperProperties {
 
     @Data
     public static class EngineProperties {
+        private UrlMapping url;
         private boolean enabled;
         private boolean saveResponse;
         private long delay;
@@ -28,6 +30,12 @@ public class ScraperProperties {
         private int pageSize;
         private String linkSelector;
         private RequestType requestType;
+    }
+
+    @Data
+    public static class UrlMapping {
+        private String base;
+        private String path = StringUtils.EMPTY;
     }
 
     @Data

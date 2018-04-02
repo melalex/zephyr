@@ -2,9 +2,12 @@ package com.zephyr.commons;
 
 import lombok.experimental.UtilityClass;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -19,9 +22,21 @@ public class MapUtils {
 
     @SafeVarargs
     public <K, V> Map<K, V> merge(Map<K, V>... maps) {
-        return Stream.of(maps)
+        return merge(Arrays.asList(maps));
+    }
+
+    public <K, V> Map<K, V> merge(Collection<Map<K, V>> maps) {
+        return maps.stream()
                 .map(Map::entrySet)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    public <K, U> Collector<Map.Entry<K, U>, ?, Map<K, U>> toMap() {
+        return Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (o, n) -> n);
+    }
+
+    public <K, V> Function<Map<K, V>, Stream<Map.Entry<K, V>>> unwrap() {
+        return m -> m.entrySet().stream();
     }
 }

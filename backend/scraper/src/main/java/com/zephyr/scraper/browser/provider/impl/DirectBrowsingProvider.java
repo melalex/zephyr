@@ -2,7 +2,7 @@ package com.zephyr.scraper.browser.provider.impl;
 
 import com.zephyr.commons.LoggingUtils;
 import com.zephyr.data.protocol.enums.SearchEngine;
-import com.zephyr.scraper.configuration.ScraperConfiguration;
+import com.zephyr.scraper.configuration.ScraperConfigurationService;
 import com.zephyr.scraper.configuration.properties.ScraperProperties;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.EngineResponse;
@@ -45,7 +45,7 @@ public class DirectBrowsingProvider extends AbstractBrowsingProvider {
     private AsyncHttpClient asyncHttpClient;
 
     @Setter(onMethod = @__(@Autowired))
-    private ScraperConfiguration configuration;
+    private ScraperConfigurationService configuration;
 
     public DirectBrowsingProvider() {
         super(ScraperProperties.RequestType.DIRECT);

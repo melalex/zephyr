@@ -5,9 +5,15 @@ import com.zephyr.data.protocol.enums.SearchEngine;
 
 import java.time.Duration;
 
-public interface ScraperConfiguration {
+public interface ScraperConfigurationService {
 
-    String getLinkSelector(SearchEngine searchEngine);
+    String getUrl(SearchEngine engine);
+
+    String getBaseUrl(SearchEngine engine);
+
+    String getPath(SearchEngine engine);
+
+    String getLinkSelector(SearchEngine engine);
 
     Duration getDelay(SearchEngine engine);
 

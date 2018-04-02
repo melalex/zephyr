@@ -23,7 +23,6 @@ public class ExceptionUtils {
     private static final int FORBIDDEN = 403;
     private static final int NOT_FOUND = 404;
 
-
     public void assertErrors(@NonNull ParameterizedException exception, @NonNull Collection<Subject> errors) {
         if (!errors.isEmpty()) {
             // @formatter:off

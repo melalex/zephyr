@@ -15,6 +15,9 @@ browser:
 
 scraper:
   google:
+    url:
+      base: https://www.google.com
+      path: /search
     enabled: true
     saveResponse: true
     delay: 480000
@@ -26,6 +29,9 @@ scraper:
     requestType: DIRECT
 
   bing:
+    url:
+      base: https://www.bing.com
+      path: /search
     enabled: true
     saveResponse: true
     delay: 480000
@@ -37,6 +43,9 @@ scraper:
     requestType: DIRECT
 
   yahoo:
+    url:
+      base: https://search.yahoo.com
+      path: /search
     enabled: true
     saveResponse: true
     delay: 480000
@@ -48,6 +57,9 @@ scraper:
     requestType: DIRECT
 
   yandex:
+    url:
+      base: https://yandex.ru
+      path:
     enabled: false
     saveResponse: false
     delay: 480000
@@ -59,6 +71,9 @@ scraper:
     requestType: DIRECT
 
   duckduckgo:
+    url:
+      base: https://duckduckgo.com
+      path:
     enabled: false
     saveResponse: false
     delay: 480000

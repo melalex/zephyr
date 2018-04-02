@@ -7,8 +7,6 @@ import com.zephyr.scraper.browser.Browser;
 import com.zephyr.scraper.request.RequestConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.asynchttpclient.AsyncHttpClient;
-import org.asynchttpclient.DefaultAsyncHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,18 +17,14 @@ import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Processor;
-import org.springframework.context.annotation.Bean;
 import reactor.core.publisher.Flux;
-import reactor.core.scheduler.Scheduler;
-import reactor.core.scheduler.Schedulers;
-
-import java.time.Clock;
 
 @Slf4j
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableBinding(Processor.class)
 public class ScraperApplication {
+
     private static final String NEW_QUERY_MSG = "Received new Query: {}";
     private static final String RECEIVED_SEARCH_RESULT_MSG = "Received SearchResult: {}";
     private static final String UNEXPECTED_EXCEPTION_MSG = "Unexpected exception";
@@ -59,20 +53,5 @@ public class ScraperApplication {
                 .sequential()
                 .doOnNext(LoggingUtils.debug(log, RECEIVED_SEARCH_RESULT_MSG))
                 .doOnError(LoggingUtils.error(log, UNEXPECTED_EXCEPTION_MSG));
-    }
-
-    @Bean
-    public Clock clock() {
-        return Clock.systemDefaultZone();
-    }
-
-    @Bean
-    public Scheduler scheduler() {
-        return Schedulers.elastic();
-    }
-
-    @Bean
-    public AsyncHttpClient asyncHttpClient() {
-        return new DefaultAsyncHttpClient();
     }
 }

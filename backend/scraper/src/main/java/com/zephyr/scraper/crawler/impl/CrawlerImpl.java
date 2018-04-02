@@ -1,7 +1,7 @@
 package com.zephyr.scraper.crawler.impl;
 
 import com.zephyr.data.protocol.enums.SearchEngine;
-import com.zephyr.scraper.configuration.ScraperConfiguration;
+import com.zephyr.scraper.configuration.ScraperConfigurationService;
 import com.zephyr.scraper.crawler.Crawler;
 import com.zephyr.scraper.crawler.fraud.FraudAnalysisProvider;
 import com.zephyr.scraper.crawler.parsers.ParsingProvider;
@@ -28,7 +28,7 @@ public class CrawlerImpl implements Crawler {
     private SearchEngineManager<ParsingProvider> parsingProviders;
 
     @Setter(onMethod = @__(@Autowired))
-    private ScraperConfiguration scraperConfiguration;
+    private ScraperConfigurationService scraperConfigurationService;
 
     @Autowired
     public void setFraudAnalysisProviders(List<FraudAnalysisProvider> providers) {
@@ -46,7 +46,7 @@ public class CrawlerImpl implements Crawler {
 
         SearchEngine engine = response.getProvider();
         Document document = Jsoup.parse(response.getBody());
-        String linkSelector = scraperConfiguration.getLinkSelector(engine);
+        String linkSelector = scraperConfigurationService.getLinkSelector(engine);
 
         log.info(START_FRAUD_ANALYSIS_MSG, response.getId());
 

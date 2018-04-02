@@ -10,18 +10,21 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class HtmlHeadersProvider implements HeadersProvider {
+public class DefaultHeadersProvider implements HeadersProvider {
 
-    private static final String UPGRADE_INSECURE_REQUESTS = "Upgrade-Insecure-Requests";
-    private static final String ACCEPT = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
+    private static final String DO_NOT_TRACK = "DNT";
+    private static final String ENCODING = "gzip, deflate, br";
+    private static final String KEEP_ALIVE = "keep-alive";
     private static final String TRUE = "1";
 
     @Override
     public Map<String, List<String>> provide(QueryDto query, String baseUrl) {
         return MultiValueMapBuilder.create()
-                .put(HttpHeaders.REFERER, baseUrl)
-                .put(com.google.common.net.HttpHeaders.ACCEPT, ACCEPT)
-                .put(UPGRADE_INSECURE_REQUESTS, TRUE)
+                .put(HttpHeaders.USER_AGENT, query.getUserAgent().getHeader())
+                .put(HttpHeaders.ACCEPT_LANGUAGE, query.getLanguageIso())
+                .put(HttpHeaders.ACCEPT_ENCODING, ENCODING)
+                .put(HttpHeaders.CONNECTION, KEEP_ALIVE)
+                .put(DO_NOT_TRACK, TRUE)
                 .build();
     }
 }
