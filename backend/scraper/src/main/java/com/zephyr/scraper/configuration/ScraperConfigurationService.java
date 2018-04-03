@@ -2,6 +2,7 @@ package com.zephyr.scraper.configuration;
 
 import com.zephyr.commons.support.Page;
 import com.zephyr.data.protocol.enums.SearchEngine;
+import com.zephyr.scraper.configuration.properties.RequestType;
 
 import java.time.Duration;
 
@@ -20,6 +21,8 @@ public interface ScraperConfigurationService {
     Duration getErrorDelay(SearchEngine engine);
 
     Page getFirstPage(SearchEngine engine);
+
+    RequestType getRequestType(SearchEngine engine);
 
     int getRetryCount();
 

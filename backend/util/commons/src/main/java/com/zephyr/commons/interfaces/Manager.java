@@ -1,6 +1,6 @@
 package com.zephyr.commons.interfaces;
 
-public interface Manager<K, P extends Provider<K>> {
+public interface Manager<K, V> {
 
-    P manage(K selector);
+    V manage(K key);
 }

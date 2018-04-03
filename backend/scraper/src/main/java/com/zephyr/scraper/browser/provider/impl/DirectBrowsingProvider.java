@@ -2,8 +2,8 @@ package com.zephyr.scraper.browser.provider.impl;
 
 import com.zephyr.commons.LoggingUtils;
 import com.zephyr.data.protocol.enums.SearchEngine;
+import com.zephyr.scraper.browser.provider.BrowsingProvider;
 import com.zephyr.scraper.configuration.ScraperConfigurationService;
-import com.zephyr.scraper.configuration.properties.ScraperProperties;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.EngineResponse;
 import com.zephyr.scraper.scheduling.SchedulingManager;
@@ -31,7 +31,7 @@ import java.util.stream.StreamSupport;
 
 @Slf4j
 @Component
-public class DirectBrowsingProvider extends AbstractBrowsingProvider {
+public class DirectBrowsingProvider implements BrowsingProvider {
     private static final String NEW_REQUEST_MSG = "Scheduled new request with id {}";
     private static final String NEW_RESPONSE_MSG = "Received response for request with id %s";
     private static final String NEW_RESPONSE_FULL_MSG = "Received response for\n{}";
@@ -47,10 +47,6 @@ public class DirectBrowsingProvider extends AbstractBrowsingProvider {
     @Setter(onMethod = @__(@Autowired))
     private ScraperConfigurationService configuration;
 
-    public DirectBrowsingProvider() {
-        super(ScraperProperties.RequestType.DIRECT);
-    }
-
     @Override
     public Mono<EngineResponse> get(EngineRequest request) {
         SearchEngine engine = request.getProvider();
@@ -65,7 +61,7 @@ public class DirectBrowsingProvider extends AbstractBrowsingProvider {
     }
 
     @Override
-    public void report(EngineResponse response) {
+    public void onFail(EngineResponse response) {
         report(response.getProvider());
     }
 

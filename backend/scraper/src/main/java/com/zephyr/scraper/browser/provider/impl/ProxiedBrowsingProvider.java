@@ -1,18 +1,14 @@
 package com.zephyr.scraper.browser.provider.impl;
 
-import com.zephyr.scraper.configuration.properties.ScraperProperties;
+import com.zephyr.scraper.browser.provider.BrowsingProvider;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.EngineResponse;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Component
-public class ProxiedBrowsingProvider extends AbstractBrowsingProvider {
+public class ProxiedBrowsingProvider implements BrowsingProvider {
     private static final String ERROR_MESSAGE = "No implementation";
-
-    public ProxiedBrowsingProvider() {
-        super(ScraperProperties.RequestType.PROXY);
-    }
 
     @Override
     public Mono<EngineResponse> get(EngineRequest engineRequest) {
@@ -20,7 +16,7 @@ public class ProxiedBrowsingProvider extends AbstractBrowsingProvider {
     }
 
     @Override
-    public void report(EngineResponse response) {
+    public void onFail(EngineResponse response) {
         throw new UnsupportedOperationException(ERROR_MESSAGE);
     }
 }

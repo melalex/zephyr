@@ -20,7 +20,7 @@ public class ScraperProperties {
 
     @Data
     public static class EngineProperties {
-        private UrlMapping url;
+        private UrlProperties url;
         private boolean enabled;
         private boolean saveResponse;
         private long delay;
@@ -33,7 +33,7 @@ public class ScraperProperties {
     }
 
     @Data
-    public static class UrlMapping {
+    public static class UrlProperties {
         private String base;
         private String path = StringUtils.EMPTY;
     }
@@ -42,12 +42,5 @@ public class ScraperProperties {
     public static class BrowserProperties {
         private long backOff;
         private int retryCount;
-    }
-
-    public enum RequestType {
-        DIRECT,
-        PROXY,
-        VPN,
-        TOR
     }
 }

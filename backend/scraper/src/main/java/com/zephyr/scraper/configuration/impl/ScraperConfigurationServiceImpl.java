@@ -3,6 +3,7 @@ package com.zephyr.scraper.configuration.impl;
 import com.zephyr.commons.support.Page;
 import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.scraper.configuration.ScraperConfigurationService;
+import com.zephyr.scraper.configuration.properties.RequestType;
 import com.zephyr.scraper.configuration.properties.ScraperProperties;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,11 @@ public class ScraperConfigurationServiceImpl implements ScraperConfigurationServ
                 .pageSize(engineProperties.getPageSize())
                 .count(engineProperties.getResultCount())
                 .build();
+    }
+
+    @Override
+    public RequestType getRequestType(SearchEngine engine) {
+        return getEngineProperties(engine).getRequestType();
     }
 
     @Override

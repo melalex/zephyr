@@ -1,8 +1,6 @@
 package com.zephyr.scraper.crawler.parsers.impl;
 
-import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.scraper.crawler.parsers.ParsingProvider;
-import com.zephyr.scraper.locator.AbstractSearchEngineProvider;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,11 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class YahooParsingProvider extends AbstractSearchEngineProvider implements ParsingProvider {
-
-    public YahooParsingProvider() {
-        super(SearchEngine.YAHOO);
-    }
+public class YahooParsingProvider implements ParsingProvider {
 
     @Override
     public List<String> parse(Document document, String linkSelector) {
