@@ -11,8 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import java.util.Optional;
 
 @Component
 @RefreshScope
@@ -20,7 +19,7 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 public class BingParamsProvider implements ParamsProvider {
 
     private static final String QUERY = "q";
-    private static final String LANGUAGE = " language:";
+    private static final String LANGUAGE_FORMAT = " language:%s";
     private static final String FIRST = "first";
     private static final String COUNT = "count";
 
@@ -38,8 +37,8 @@ public class BingParamsProvider implements ParamsProvider {
     }
 
     private String getLanguage(QueryDto query) {
-        return isNotBlank(query.getLanguageIso())
-                ? LANGUAGE + query.getLanguageIso()
-                : StringUtils.EMPTY;
+        return Optional.ofNullable(query.getLanguageIso())
+                .map(l -> String.format(LANGUAGE_FORMAT, l))
+                .orElse(StringUtils.EMPTY);
     }
 }
