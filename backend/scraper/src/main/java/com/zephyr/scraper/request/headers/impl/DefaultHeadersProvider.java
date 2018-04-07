@@ -1,7 +1,7 @@
 package com.zephyr.scraper.request.headers.impl;
 
 import com.zephyr.commons.support.MultiValueMapBuilder;
-import com.zephyr.data.internal.dto.QueryDto;
+import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.request.headers.HeadersProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ public class DefaultHeadersProvider implements HeadersProvider {
     private static final String TRUE = "1";
 
     @Override
-    public Map<String, List<String>> provide(QueryDto query, String baseUrl) {
+    public Map<String, List<String>> provide(Query query, String baseUrl) {
         return MultiValueMapBuilder.create()
                 .put(HttpHeaders.USER_AGENT, query.getUserAgent().getHeader())
                 .put(HttpHeaders.ACCEPT_LANGUAGE, query.getLanguageIso())

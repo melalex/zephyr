@@ -2,7 +2,7 @@ package com.zephyr.scraper.request.params.impl;
 
 import com.zephyr.commons.support.MultiValueMapBuilder;
 import com.zephyr.commons.support.Page;
-import com.zephyr.data.internal.dto.QueryDto;
+import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.request.params.ParamsProvider;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -24,7 +24,7 @@ public class BingParamsProvider implements ParamsProvider {
     private static final String COUNT = "count";
 
     @Override
-    public Map<String, List<String>> provide(QueryDto query, Page page) {
+    public Map<String, List<String>> provide(Query query, Page page) {
         return MultiValueMapBuilder.create()
                 .put(QUERY, getQuery(query))
                 .put(COUNT, page.getPageSize())
@@ -32,11 +32,11 @@ public class BingParamsProvider implements ParamsProvider {
                 .build();
     }
 
-    private String getQuery(QueryDto query) {
+    private String getQuery(Query query) {
         return query.getQuery() + getLanguage(query);
     }
 
-    private String getLanguage(QueryDto query) {
+    private String getLanguage(Query query) {
         return Optional.ofNullable(query.getLanguageIso())
                 .map(l -> String.format(LANGUAGE_FORMAT, l))
                 .orElse(StringUtils.EMPTY);

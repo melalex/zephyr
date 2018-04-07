@@ -2,7 +2,7 @@ package com.zephyr.scraper.request.params.impl;
 
 import com.zephyr.commons.support.MultiValueMapBuilder;
 import com.zephyr.commons.support.Page;
-import com.zephyr.data.internal.dto.QueryDto;
+import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.request.params.ParamsProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -32,7 +32,7 @@ public class GoogleParamsProvider implements ParamsProvider {
     private static final String NUMBER = "num";
 
     @Override
-    public Map<String, List<String>> provide(QueryDto query, Page page) {
+    public Map<String, List<String>> provide(Query query, Page page) {
         return MultiValueMapBuilder.create()
                 .put(SAFE, IMAGE)
                 .put(AD_TEST, ON)
@@ -47,11 +47,11 @@ public class GoogleParamsProvider implements ParamsProvider {
                 .build();
     }
 
-    private String getParent(QueryDto queryDto) {
+    private String getParent(Query queryDto) {
         return "g:" + queryDto.getPlace().getParent();
     }
 
-    private String getLanguage(QueryDto query) {
+    private String getLanguage(Query query) {
         String iso = query.getLanguageIso();
 
         return Objects.nonNull(iso) ? "lang_" + query.getLanguageIso() : null;

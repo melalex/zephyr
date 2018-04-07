@@ -3,10 +3,10 @@ package com.zephyr.scraper.request.provider.impl;
 import com.zephyr.commons.MapUtils;
 import com.zephyr.commons.StreamUtils;
 import com.zephyr.commons.support.Page;
-import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.scraper.configuration.ScraperConfigurationService;
 import com.zephyr.scraper.domain.EngineRequest;
+import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.request.headers.HeadersProvider;
 import com.zephyr.scraper.request.params.ParamsProvider;
 import com.zephyr.scraper.request.provider.RequestProvider;
@@ -30,7 +30,7 @@ public class RequestProviderImpl implements RequestProvider {
     private ScraperConfigurationService configuration;
 
     @Override
-    public List<EngineRequest> provide(QueryDto query) {
+    public List<EngineRequest> provide(Query query) {
         Map<String, List<String>> headers = headersProviders.stream()
                 .map(HeadersProvider.from(query, urlProvider.provideBaseUrl(query)))
                 .flatMap(MapUtils.unwrap())
@@ -41,9 +41,10 @@ public class RequestProviderImpl implements RequestProvider {
                 .collect(Collectors.toList());
     }
 
-    private Function<Page, EngineRequest> getPage(QueryDto query, Map<String, List<String>> headers) {
+    private Function<Page, EngineRequest> getPage(Query query, Map<String, List<String>> headers) {
         return p -> EngineRequest.builder()
                 .id(UUID.randomUUID().toString())
+                .query(query)
                 .provider(engine)
                 .url(urlProvider.provideBaseUrl(query))
                 .uri(urlProvider.provideUri(query))

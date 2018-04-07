@@ -1,6 +1,5 @@
 package com.zephyr.scraper.domain;
 
-import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.data.protocol.enums.SearchEngine;
 import lombok.Builder;
 import lombok.Value;
@@ -13,7 +12,7 @@ import java.util.Map;
 public class EngineRequest {
     private String id;
 
-    private QueryDto query;
+    private Query query;
 
     private SearchEngine provider;
     private String url;

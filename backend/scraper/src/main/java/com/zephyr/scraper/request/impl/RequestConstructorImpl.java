@@ -1,8 +1,8 @@
 package com.zephyr.scraper.request.impl;
 
 import com.zephyr.commons.LoggingUtils;
-import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.scraper.domain.EngineRequest;
+import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.request.RequestConstructor;
 import com.zephyr.scraper.request.provider.RequestProvider;
 import lombok.Setter;
@@ -22,7 +22,7 @@ public class RequestConstructorImpl implements RequestConstructor {
     private List<RequestProvider> providers;
 
     @Override
-    public Flux<EngineRequest> construct(QueryDto query) {
+    public Flux<EngineRequest> construct(Query query) {
         return Flux.fromIterable(providers)
                 .map(RequestProvider.from(query))
                 .flatMap(Flux::fromIterable)

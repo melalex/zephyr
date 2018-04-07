@@ -1,12 +1,15 @@
 package com.zephyr.scraper;
 
 import com.zephyr.commons.LoggingUtils;
+import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.data.internal.dto.SearchResultDto;
 import com.zephyr.scraper.browser.Browser;
+import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.request.RequestConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +20,13 @@ import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Processor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
+
+import java.time.Clock;
 
 @Slf4j
 @SpringBootApplication
@@ -35,7 +44,6 @@ public class ScraperApplication {
     @Setter(onMethod = @__(@Autowired))
     private Browser browser;
 
-
     public static void main(String[] args) {
         new SpringApplicationBuilder()
                 .web(WebApplicationType.NONE)
@@ -47,11 +55,37 @@ public class ScraperApplication {
     @Output(Processor.OUTPUT)
     public Flux<SearchResultDto> receive(@Input(Processor.INPUT) Flux<QueryDto> input) {
         return input.doOnNext(LoggingUtils.info(log, NEW_QUERY_MSG))
+                .map(extendedMapper().mapperFor(Query.class))
                 .flatMap(requestConstructor::construct)
                 .parallel()
                 .flatMap(browser::get)
                 .sequential()
                 .doOnNext(LoggingUtils.debug(log, RECEIVED_SEARCH_RESULT_MSG))
                 .doOnError(LoggingUtils.error(log, UNEXPECTED_EXCEPTION_MSG));
+    }
+
+    @Bean
+    public Clock clock() {
+        return Clock.systemDefaultZone();
+    }
+
+    @Bean
+    public Scheduler scheduler() {
+        return Schedulers.elastic();
+    }
+
+    @Bean
+    public WebClient asyncHttpClient() {
+        return WebClient.create();
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
+    @Bean
+    public ExtendedMapper extendedMapper() {
+        return new ExtendedMapper(modelMapper());
     }
 }

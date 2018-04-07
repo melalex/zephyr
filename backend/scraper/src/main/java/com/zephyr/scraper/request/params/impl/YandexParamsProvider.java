@@ -2,7 +2,7 @@ package com.zephyr.scraper.request.params.impl;
 
 import com.zephyr.commons.support.MultiValueMapBuilder;
 import com.zephyr.commons.support.Page;
-import com.zephyr.data.internal.dto.QueryDto;
+import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.request.params.ParamsProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -21,7 +21,7 @@ public class YandexParamsProvider implements ParamsProvider {
     private static final String COUNT = "n";
 
     @Override
-    public Map<String, List<String>> provide(QueryDto query, Page page) {
+    public Map<String, List<String>> provide(Query query, Page page) {
         return MultiValueMapBuilder.create()
                 .put(QUERY, query.getQuery())
                 .put(COUNT, page.getPageSize())

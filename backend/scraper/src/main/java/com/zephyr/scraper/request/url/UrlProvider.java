@@ -1,10 +1,10 @@
 package com.zephyr.scraper.request.url;
 
-import com.zephyr.data.internal.dto.QueryDto;
+import com.zephyr.scraper.domain.Query;
 
 public interface UrlProvider {
 
-    String provideBaseUrl(QueryDto query);
+    String provideBaseUrl(Query query);
 
-    String provideUri(QueryDto query);
+    String provideUri(Query query);
 }

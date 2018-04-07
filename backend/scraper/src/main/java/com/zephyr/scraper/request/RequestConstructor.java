@@ -1,11 +1,11 @@
 package com.zephyr.scraper.request;
 
-import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.scraper.domain.EngineRequest;
+import com.zephyr.scraper.domain.Query;
 import reactor.core.publisher.Flux;
 
 @FunctionalInterface
 public interface RequestConstructor {
 
-    Flux<EngineRequest> construct(QueryDto query);
+    Flux<EngineRequest> construct(Query query);
 }

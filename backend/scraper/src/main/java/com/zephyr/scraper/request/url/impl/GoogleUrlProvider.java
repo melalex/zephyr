@@ -1,9 +1,7 @@
 package com.zephyr.scraper.request.url.impl;
 
-import com.zephyr.data.internal.dto.QueryDto;
-import com.zephyr.data.protocol.dto.CountryDto;
-import com.zephyr.data.protocol.dto.PlaceDto;
 import com.zephyr.data.protocol.enums.SearchEngine;
+import com.zephyr.scraper.domain.Query;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -16,11 +14,11 @@ public class GoogleUrlProvider extends AbstractUrlProvider {
     }
 
     @Override
-    public String provideBaseUrl(QueryDto query) {
+    public String provideBaseUrl(Query query) {
         return Optional.ofNullable(query)
-                .map(QueryDto::getPlace)
-                .map(PlaceDto::getCountry)
-                .map(CountryDto::getLocaleGoogle)
+                .map(Query::getPlace)
+                .map(Query.Place::getCountry)
+                .map(Query.Country::getLocaleGoogle)
                 .orElse(getScraperConfigurationService().getBaseUrl(getEngine()));
     }
 }

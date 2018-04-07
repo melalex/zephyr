@@ -1,7 +1,7 @@
 package com.zephyr.scraper.request.provider;
 
-import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.scraper.domain.EngineRequest;
+import com.zephyr.scraper.domain.Query;
 
 import java.util.List;
 import java.util.function.Function;
@@ -9,9 +9,9 @@ import java.util.function.Function;
 @FunctionalInterface
 public interface RequestProvider {
 
-    List<EngineRequest> provide(QueryDto query);
+    List<EngineRequest> provide(Query query);
 
-    static Function<RequestProvider, List<EngineRequest>> from(QueryDto query) {
+    static Function<RequestProvider, List<EngineRequest>> from(Query query) {
         return p -> p.provide(query);
     }
 }
