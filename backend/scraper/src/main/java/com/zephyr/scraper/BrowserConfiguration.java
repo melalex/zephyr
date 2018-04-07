@@ -1,5 +1,7 @@
 package com.zephyr.scraper;
 
+import static java.util.Map.entry;
+
 import com.zephyr.commons.interfaces.Manager;
 import com.zephyr.commons.support.DefaultManager;
 import com.zephyr.scraper.browser.provider.BrowsingProvider;
@@ -13,8 +15,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Map;
 
-import static java.util.Map.entry;
-
 @Configuration
 public class BrowserConfiguration {
 
@@ -26,11 +26,11 @@ public class BrowserConfiguration {
     @Bean
     public Map<RequestType, BrowsingProvider> browserMapping() {
         return Map.ofEntries(
-                    entry(RequestType.DIRECT, directBrowsingProvider()),
-                    entry(RequestType.PROXY, proxyBrowsingProvider()),
-                    entry(RequestType.TOR, torBrowsingProvider()),
-                    entry(RequestType.VPN, vpnBrowsingProvider())
-            );
+                entry(RequestType.DIRECT, directBrowsingProvider()),
+                entry(RequestType.PROXY, proxyBrowsingProvider()),
+                entry(RequestType.TOR, torBrowsingProvider()),
+                entry(RequestType.VPN, vpnBrowsingProvider())
+        );
     }
 
     @Bean

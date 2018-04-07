@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class RatingDto {
+
     private String id;
 
     private int position;

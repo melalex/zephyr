@@ -1,5 +1,7 @@
 package com.zephyr.keyword;
 
+import static java.util.Map.entry;
+
 import com.zephyr.commons.interfaces.Manager;
 import com.zephyr.commons.support.DefaultManager;
 import com.zephyr.keyword.properties.KeywordSource;
@@ -12,8 +14,6 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Map;
-
-import static java.util.Map.entry;
 
 @EnableFeignClients
 @SpringBootApplication

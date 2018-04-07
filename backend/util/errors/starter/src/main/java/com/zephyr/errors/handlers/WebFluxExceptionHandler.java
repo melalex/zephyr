@@ -17,15 +17,16 @@ import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebExceptionHandler;
 import reactor.core.publisher.Mono;
 
-import javax.validation.ConstraintViolationException;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Optional;
+import javax.validation.ConstraintViolationException;
 
 // TODO: Replace with controller advice
 @Slf4j
 @Component
 public class WebFluxExceptionHandler implements WebExceptionHandler {
+
     private static final String CONTENT_TYPE_HEADER_NAME = "Content-Type";
     private static final String CONTENT_TYPE_HEADER_VALUE = "application/json";
     private static final String DEFAULT_ERROR_MESSAGE = "Unexpected error";

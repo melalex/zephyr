@@ -8,6 +8,7 @@ import com.zephyr.errors.utils.ErrorUtil;
 import java.util.function.Supplier;
 
 public final class ExceptionSpec<T extends ParameterizedException> {
+
     private final T exception;
 
     private int status = 400;

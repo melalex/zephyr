@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 public final class ErrorDataSpec<T> {
+
     private final List<Subject> subjects = Lists.newLinkedList();
 
     private final AssembleCallback<T, ErrorData> callback;

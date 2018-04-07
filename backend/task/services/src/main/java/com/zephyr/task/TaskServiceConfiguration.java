@@ -25,6 +25,7 @@ import java.util.function.Consumer;
 @EnableFeignClients
 @EnableBinding(Source.class)
 public class TaskServiceConfiguration {
+
     private static final String PRIORITY_HEADER = "priority";
     private static final String NEW_CRITERIA_PRIORITY = "9";
     private static final String UPDATE_RATING_PRIORITY = "1";

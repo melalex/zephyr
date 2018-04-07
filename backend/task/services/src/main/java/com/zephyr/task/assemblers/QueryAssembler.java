@@ -13,11 +13,11 @@ import com.zephyr.errors.dsl.Problems;
 import com.zephyr.errors.dsl.SubjectSpec;
 import com.zephyr.errors.utils.ErrorUtil;
 import com.zephyr.errors.utils.ExceptionUtils;
-import com.zephyr.task.domain.SearchCriteria;
-import com.zephyr.task.domain.Place;
-import com.zephyr.task.domain.UserAgent;
 import com.zephyr.task.clients.AgentServiceClient;
 import com.zephyr.task.clients.LocationServiceClient;
+import com.zephyr.task.domain.Place;
+import com.zephyr.task.domain.SearchCriteria;
+import com.zephyr.task.domain.UserAgent;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
@@ -31,6 +31,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @Slf4j
 @Component
 public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
+
     private static final String BEGIN_ASSEMBLE_MESSAGE = "Start assemble QueryDto for SearchCriteria: {}";
     private static final String FINISH_ASSEMBLE_MESSAGE = "Finish assemble QueryDto: {}";
     private static final String ERROR_MESSAGE = "Can't convert SearchCriteria -> QueryDto";

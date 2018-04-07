@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 @UtilityClass
 public class MapUtils {
+
     private static final String GET_ERROR_MESSAGE = "Map doesn't contains key '%s'";
 
     public <K, V> V getOrThrow(Map<K, V> map, K key) {

@@ -16,6 +16,7 @@ import java.util.List;
 @Slf4j
 @Component
 public class RequestConstructorImpl implements RequestConstructor {
+
     private static final String NEW_REQUEST_MESSAGE = "Constructed Request with id '{}'";
 
     @Setter(onMethod = @__(@Autowired))

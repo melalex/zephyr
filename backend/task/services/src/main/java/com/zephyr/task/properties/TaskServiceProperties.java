@@ -6,7 +6,6 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.time.Period;
 import java.time.temporal.TemporalAmount;
 
 @Data
@@ -14,6 +13,7 @@ import java.time.temporal.TemporalAmount;
 @RefreshScope
 @ConfigurationProperties(prefix = "task")
 public class TaskServiceProperties {
+
     private int batchSize;
     private boolean enableUpdates;
     private String cron;
@@ -28,6 +28,7 @@ public class TaskServiceProperties {
 
     @Data
     private static class RelevancePeriod {
+
         private int days;
         private int hours;
         private int minutes;

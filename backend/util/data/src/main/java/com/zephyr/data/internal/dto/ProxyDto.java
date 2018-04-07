@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class ProxyDto {
+
     private String id;
     private String username;
     private String password;

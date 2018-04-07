@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class BingParsingProvider implements ParsingProvider {
+
     private static final String HREF = "href";
 
     @Override

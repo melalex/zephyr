@@ -11,6 +11,7 @@ import java.util.List;
 @Slf4j
 @Component
 public class DuckDuckGoParsingProvider implements ParsingProvider {
+
     private static final String WARNING = "DuckDuckGo Crawler not implemented yet";
 
     @Override

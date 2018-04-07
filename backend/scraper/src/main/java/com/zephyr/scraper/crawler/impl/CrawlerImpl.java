@@ -20,6 +20,7 @@ import java.util.List;
 @Slf4j
 @Component
 public class CrawlerImpl implements Crawler {
+
     private static final String START_CRAWLING_MSG = "Start crawling of response with id '{}'";
     private static final String START_FRAUD_ANALYSIS_MSG = "Performing Fraud analyze for response with id '{}'";
 

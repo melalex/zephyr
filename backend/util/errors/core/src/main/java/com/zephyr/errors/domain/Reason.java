@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 @Value
 public class Reason implements Serializable {
+
     private static final long serialVersionUID = -6657199748489928416L;
 
     private String value;

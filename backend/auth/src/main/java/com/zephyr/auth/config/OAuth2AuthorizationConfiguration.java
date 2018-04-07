@@ -32,6 +32,13 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationServerConfigu
     private Environment environment;
 
     @Override
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
+        oauthServer
+                .tokenKeyAccess("permitAll()")
+                .checkTokenAccess("isAuthenticated()");
+    }
+
+    @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         // TODO: store secrets in vault
         // @formatter:off
@@ -53,13 +60,6 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationServerConfigu
                 .tokenStore(tokenStore())
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userService);
-    }
-
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
-        oauthServer
-                .tokenKeyAccess("permitAll()")
-                .checkTokenAccess("isAuthenticated()");
     }
 
     @Bean

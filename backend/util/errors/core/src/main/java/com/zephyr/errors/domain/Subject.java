@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 @Value
 public class Subject implements Serializable {
+
     private static final long serialVersionUID = -5358302471268083113L;
 
     private Path path;

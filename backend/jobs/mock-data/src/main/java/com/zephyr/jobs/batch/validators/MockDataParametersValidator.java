@@ -18,10 +18,14 @@ public class MockDataParametersValidator implements JobParametersValidator {
 
     @Override
     public void validate(JobParameters parameters) throws JobParametersInvalidException {
-        checkParam(parameters.getLong(BatchConfiguration.TASK_COUNT_JOB_PARAM), BatchConfiguration.TASK_COUNT_JOB_PARAM);
-        checkParam(parameters.getLong(BatchConfiguration.CRITERIA_PER_TASK_JOB_PARAM), BatchConfiguration.CRITERIA_PER_TASK_JOB_PARAM);
-        checkParam(parameters.getLong(BatchConfiguration.REQUEST_PER_CRITERIA_JOB_PARAM), BatchConfiguration.REQUEST_PER_CRITERIA_JOB_PARAM);
-        checkParam(parameters.getLong(BatchConfiguration.RATING_PER_REQUEST_JOB_PARAM), BatchConfiguration.RATING_PER_REQUEST_JOB_PARAM);
+        checkParam(parameters.getLong(BatchConfiguration.TASK_COUNT_JOB_PARAM),
+                BatchConfiguration.TASK_COUNT_JOB_PARAM);
+        checkParam(parameters.getLong(BatchConfiguration.CRITERIA_PER_TASK_JOB_PARAM),
+                BatchConfiguration.CRITERIA_PER_TASK_JOB_PARAM);
+        checkParam(parameters.getLong(BatchConfiguration.REQUEST_PER_CRITERIA_JOB_PARAM),
+                BatchConfiguration.REQUEST_PER_CRITERIA_JOB_PARAM);
+        checkParam(parameters.getLong(BatchConfiguration.RATING_PER_REQUEST_JOB_PARAM),
+                BatchConfiguration.RATING_PER_REQUEST_JOB_PARAM);
 
         checkProvidersParam(parameters);
     }
@@ -45,7 +49,8 @@ public class MockDataParametersValidator implements JobParametersValidator {
         checkParam(providersPerTask, paramName);
 
         if (providersPerTask > maxProvidersCount) {
-            throw new JobParametersInvalidException(String.format(PARAM_MORE_THEN_ERROR_MESSAGE, paramName, maxProvidersCount, providersPerTask));
+            throw new JobParametersInvalidException(
+                    String.format(PARAM_MORE_THEN_ERROR_MESSAGE, paramName, maxProvidersCount, providersPerTask));
         }
     }
 }

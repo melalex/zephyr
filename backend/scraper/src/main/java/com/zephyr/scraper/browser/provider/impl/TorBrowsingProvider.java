@@ -8,6 +8,7 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class TorBrowsingProvider implements BrowsingProvider {
+
     private static final String ERROR_MESSAGE = "No implementation";
 
     @Override

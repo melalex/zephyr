@@ -1,8 +1,6 @@
 package com.zephyr.task.repositories.impl;
 
 import com.zephyr.task.domain.SearchCriteria;
-import com.zephyr.task.domain.MeteredSearchCriteria;
-import com.zephyr.task.domain.factories.MeteredSearchCriteriaFactory;
 import com.zephyr.task.repositories.SearchCriteriaOperations;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +20,7 @@ import java.util.UUID;
 
 @Repository
 public class SearchCriteriaOperationsImpl implements SearchCriteriaOperations {
+
     private static final String HITS_COUNT_FIELD = "hitsCount";
     private static final String LAST_HIT_FIELD = "lastHit";
     private static final String LAST_UPDATE_FIELD = "lastUpdate";
@@ -47,8 +46,9 @@ public class SearchCriteriaOperationsImpl implements SearchCriteriaOperations {
     public Flux<SearchCriteria> findAllForUpdate(TemporalAmount relevancePeriod, Pageable pageable) {
         String transactionId = createTransactionId();
 
-        Query queryUpdate = Query.query(Criteria.where(LAST_UPDATE_FIELD).lt(LocalDateTime.now().minus(relevancePeriod)))
-                .with(pageable);
+        Query queryUpdate =
+                Query.query(Criteria.where(LAST_UPDATE_FIELD).lt(LocalDateTime.now().minus(relevancePeriod)))
+                        .with(pageable);
 
         Query queryResult = Query.query(Criteria.where(TRANSACTION_ID_FIELD).is(transactionId))
                 .with(pageable);

@@ -11,6 +11,7 @@ import java.util.List;
 
 @Value
 public class Path implements Serializable {
+
     private static final long serialVersionUID = -1335468596895051110L;
 
     private String root;

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public final class PayloadSpec<T> {
+
     private static final String EMPTY = "' '";
 
     private final AssembleCallback<T, List<String>> callback;

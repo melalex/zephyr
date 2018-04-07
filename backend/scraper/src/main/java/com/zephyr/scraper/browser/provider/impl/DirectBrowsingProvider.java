@@ -24,6 +24,7 @@ import java.util.function.Function;
 @Slf4j
 @Component
 public class DirectBrowsingProvider implements BrowsingProvider {
+
     private static final String NEW_REQUEST_MSG = "Scheduled new request with id {}";
     private static final String NEW_RESPONSE_MSG = "Received response for request with id %s";
     private static final String NEW_RESPONSE_FULL_MSG = "Received response for\n{}";

@@ -19,6 +19,7 @@ import java.security.Principal;
 @Slf4j
 @Service
 public class TaskServiceImpl implements TaskService {
+
     private static final String CREATE_TASK_MESSAGE = "Received new task: {}";
     private static final String UPDATE_TASK_MESSAGE = "Updating task: {}";
     private static final String REMOVE_TASK_MESSAGE = "Removing task: {}";

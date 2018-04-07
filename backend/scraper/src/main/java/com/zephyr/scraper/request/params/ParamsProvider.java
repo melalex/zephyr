@@ -10,9 +10,9 @@ import java.util.function.Function;
 @FunctionalInterface
 public interface ParamsProvider {
 
-    Map<String, List<String>> provide(Query query, Page page);
-
     static Function<ParamsProvider, Map<String, List<String>>> from(Query query, Page page) {
         return p -> p.provide(query, page);
     }
+
+    Map<String, List<String>> provide(Query query, Page page);
 }

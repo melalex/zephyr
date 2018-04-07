@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @UtilityClass
 public class ErrorUtil {
+
     public static final String ERROR_CODE_PREFIX = "error";
     public static final Joiner ERROR_CODE_JOINER = Joiner.on(".");
 

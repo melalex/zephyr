@@ -9,9 +9,9 @@ import java.util.function.Function;
 @FunctionalInterface
 public interface RequestProvider {
 
-    List<EngineRequest> provide(Query query);
-
     static Function<RequestProvider, List<EngineRequest>> from(Query query) {
         return p -> p.provide(query);
     }
+
+    List<EngineRequest> provide(Query query);
 }

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
-import javax.validation.Valid;
 import java.security.Principal;
+import javax.validation.Valid;
 
 @RestController("/v1/rating")
 public class RatingController {
@@ -28,7 +28,8 @@ public class RatingController {
     }
 
     @GetMapping(path = "/{taskId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
-    public Flux<StatisticsDto> findStatisticsAndSubscribeForTask(@PathVariable("taskId") String taskId, Principal principal) {
+    public Flux<StatisticsDto> findStatisticsAndSubscribeForTask(@PathVariable("taskId") String taskId,
+                                                                 Principal principal) {
         return ratingService.findStatisticsAndSubscribeForTask(taskId, principal);
     }
 }

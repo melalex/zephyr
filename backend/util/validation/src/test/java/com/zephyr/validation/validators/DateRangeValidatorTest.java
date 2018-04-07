@@ -1,5 +1,9 @@
 package com.zephyr.validation.validators;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
+
 import com.zephyr.validation.DateRange;
 import lombok.Value;
 import org.joda.time.DateTime;
@@ -11,21 +15,17 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.validation.ConstraintValidatorContext;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
-
 @RunWith(MockitoJUnitRunner.class)
 public class DateRangeValidatorTest {
+
     private static final String FROM_PROPERTY = "from";
     private static final String TO_PROPERTY = "to";
     private static final long DURATION = 9999;
 
     private static final ConstraintValidatorContext CONSTRAINT_VALIDATOR_CONTEXT = null;
-
+    private final DateRangeValidator testInstance = new DateRangeValidator();
     @Mock
     private DateRange dateRange;
-
-    private final DateRangeValidator testInstance = new DateRangeValidator();
 
     @Before
     public void setUp() {
@@ -53,6 +53,7 @@ public class DateRangeValidatorTest {
 
     @Value
     private static class TestObject {
+
         private DateTime from;
         private DateTime to;
     }

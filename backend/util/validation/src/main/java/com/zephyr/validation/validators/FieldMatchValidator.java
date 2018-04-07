@@ -8,6 +8,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Object> {
+
     private String firstFieldName;
     private String secondFieldName;
 
@@ -24,6 +25,6 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Obje
         Object secondObj = BeanUtils.getProperty(value, secondFieldName);
 
         return firstObj == null && secondObj == null
-                || firstObj != null && firstObj.equals(secondObj);
+               || firstObj != null && firstObj.equals(secondObj);
     }
 }

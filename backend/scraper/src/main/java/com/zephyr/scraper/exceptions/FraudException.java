@@ -6,6 +6,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public class FraudException extends RuntimeException {
+
     private static final long serialVersionUID = -7579427673806004192L;
 
     @Getter

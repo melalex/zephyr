@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class CountryServiceImpl implements CountryService {
+
     private static final int ZERO_DEPTH = 0;
 
     @Setter(onMethod = @__(@Autowired))

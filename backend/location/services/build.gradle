@@ -10,7 +10,7 @@ dependencies {
     compile utils['commons']
 
     compileOnly libraries['lombok']
-    
+
     testCompile libraries['test']
 }
 

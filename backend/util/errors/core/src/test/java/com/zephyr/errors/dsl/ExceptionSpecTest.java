@@ -1,5 +1,7 @@
 package com.zephyr.errors.dsl;
 
+import static org.junit.Assert.assertEquals;
+
 import com.zephyr.errors.domain.Actual;
 import com.zephyr.errors.domain.Path;
 import com.zephyr.errors.domain.Reason;
@@ -9,9 +11,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-
 public class ExceptionSpecTest {
+
     private static final int STATUS_CODE = 500;
 
     private static final String EXCEPTION_CODE = "ParameterizedException";

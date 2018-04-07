@@ -3,7 +3,10 @@ package com.zephyr.jobs.generators.impl;
 import com.zephyr.jobs.extensions.ExtendedFaker;
 import com.zephyr.jobs.generators.TaskGenerator;
 import com.zephyr.jobs.properties.MockDataProperties;
-import com.zephyr.task.domain.*;
+import com.zephyr.task.domain.Place;
+import com.zephyr.task.domain.SearchCriteria;
+import com.zephyr.task.domain.SearchEngine;
+import com.zephyr.task.domain.Task;
 import com.zephyr.task.domain.UserAgent;
 import lombok.Setter;
 import org.springframework.batch.core.configuration.annotation.StepScope;
@@ -13,7 +16,11 @@ import org.springframework.stereotype.Component;
 
 import java.time.Clock;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 

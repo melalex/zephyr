@@ -14,6 +14,7 @@ import java.time.LocalDate;
 
 @Component
 public class MeteredSearchCriteriaGeneratorImpl implements MeteredSearchCriteriaGenerator {
+
     private static final int MAX_HIT_COUNT = 100;
 
     @Setter(onMethod = @__(@Autowired))

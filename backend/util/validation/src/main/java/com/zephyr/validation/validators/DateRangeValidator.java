@@ -5,11 +5,12 @@ import lombok.SneakyThrows;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.time.LocalDateTime;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.time.LocalDateTime;
 
 public class DateRangeValidator implements ConstraintValidator<DateRange, Object> {
+
     private String fromProperty;
     private String toProperty;
 

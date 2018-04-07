@@ -1,6 +1,7 @@
 package com.zephyr.errors.exceptions;
 
 public class InconsistentModelException extends ParameterizedException {
+
     private static final long serialVersionUID = -1165663331800746600L;
 
     public InconsistentModelException() {

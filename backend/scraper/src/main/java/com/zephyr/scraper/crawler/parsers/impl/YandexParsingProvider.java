@@ -11,6 +11,7 @@ import java.util.List;
 @Slf4j
 @Component
 public class YandexParsingProvider implements ParsingProvider {
+
     private static final String WARNING = "Yandex Crawler not implemented yet";
 
     @Override

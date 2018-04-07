@@ -8,6 +8,7 @@ import java.util.List;
 
 @Value
 public class ErrorData implements Serializable {
+
     private static final long serialVersionUID = 5782507593253190287L;
 
     private List<Subject> subjects;

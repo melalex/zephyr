@@ -8,6 +8,7 @@ import java.util.Objects;
 
 @Component
 public class GoogleFraudAnalysisProvider implements FraudAnalysisProvider {
+
     private static final String SELECTOR = "#captcha";
 
     @Override

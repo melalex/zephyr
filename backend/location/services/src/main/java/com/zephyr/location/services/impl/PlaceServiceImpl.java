@@ -1,5 +1,8 @@
 package com.zephyr.location.services.impl;
 
+import static com.zephyr.commons.StreamUtils.concat;
+import static com.zephyr.commons.StreamUtils.range;
+
 import com.zephyr.commons.FunctionUtils;
 import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.data.protocol.dto.PlaceDto;
@@ -19,23 +22,17 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.zephyr.commons.StreamUtils.concat;
-import static com.zephyr.commons.StreamUtils.range;
-
 @Service
 public class PlaceServiceImpl implements PlaceService {
 
     private static final String UULE_FORMAT = "w+CAIQICI%s%s";
 
     private static final int DEFAULT_DEPTH = 1;
-
+    private final List<String> secretMap;
     @Setter(onMethod = @__(@Autowired))
     private PlaceRepository placeRepository;
-
     @Setter(onMethod = @__(@Autowired))
     private ExtendedMapper mapper;
-
-    private final List<String> secretMap;
 
     public PlaceServiceImpl() {
         secretMap = concat(range('A', 'Z'), range('a', 'z'), range('0', '9'), Stream.of("-", "_"))

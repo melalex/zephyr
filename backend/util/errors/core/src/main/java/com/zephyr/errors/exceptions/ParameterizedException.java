@@ -9,6 +9,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class ParameterizedException extends RuntimeException {
+
     private static final long serialVersionUID = -4858804588507017853L;
 
     private int status;

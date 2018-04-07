@@ -29,6 +29,7 @@ public final class ExtendedFaker {
 
     @AllArgsConstructor
     public static final class TimeFaker {
+
         private Faker faker;
 
         public LocalDateTime dateTime(TemporalAccessor from, TemporalAccessor to) {

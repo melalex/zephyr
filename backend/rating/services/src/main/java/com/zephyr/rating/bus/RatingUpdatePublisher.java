@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RefreshScope
 public class RatingUpdatePublisher implements EventPublisher<Request> {
+
     private static final String PUBLISH_RATING_UPDATE_MESSAGE = "Publish update for Rating: {}";
 
     @Setter(onMethod = @__(@Autowired))

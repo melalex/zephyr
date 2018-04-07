@@ -2,9 +2,13 @@ package com.zephyr.validation;
 
 import com.zephyr.validation.validators.DateRangeValidator;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import java.lang.annotation.*;
 
 /**
  * @author Alexander Melashchenko
@@ -15,6 +19,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = DateRangeValidator.class)
 @Documented
 public @interface DateRange {
+
     String message() default "{constraints.dateRange}";
 
     String code() default "constraints.dateRange";

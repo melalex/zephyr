@@ -20,6 +20,7 @@ public class ScraperProperties {
 
     @Data
     public static class EngineProperties {
+
         private UrlProperties url;
         private boolean enabled;
         private boolean saveResponse;
@@ -34,12 +35,14 @@ public class ScraperProperties {
 
     @Data
     public static class UrlProperties {
+
         private String base;
         private String path = StringUtils.EMPTY;
     }
 
     @Data
     public static class BrowserProperties {
+
         private long backOff;
         private int retryCount;
     }

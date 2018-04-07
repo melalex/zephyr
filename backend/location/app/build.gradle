@@ -29,7 +29,7 @@ apply plugin: 'application'
 mainClassName = 'com.zephyr.location.LocationApplication'
 
 dependencies {
-	compile service['location']
+    compile service['location']
 
     compile libraries['web']
     compile libraries['acutator']

@@ -25,6 +25,7 @@ import java.util.function.Function;
 @Slf4j
 @Component
 public class BrowserImpl implements Browser {
+
     private static final String FRAUD_EXCEPTION_MSG = "Fraud detected for response with id '{}'. Reporting...";
 
 

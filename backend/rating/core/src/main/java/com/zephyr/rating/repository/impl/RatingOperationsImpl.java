@@ -15,6 +15,7 @@ import reactor.core.publisher.Flux;
 
 @Repository
 public class RatingOperationsImpl implements RatingOperations {
+
     private static final String COLLECTION_NAME = "Rating";
     private static final String URL_FIELD = "url";
     private static final String QUERY_FIELD = "request.query";

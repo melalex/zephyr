@@ -11,12 +11,12 @@ import com.zephyr.errors.utils.ErrorUtil;
 import java.util.stream.Collectors;
 
 public final class SubjectSpec<T> {
+
+    private final AssembleCallback<T, Subject> callback;
     private Path path;
     private Actual actual;
     private Reason reason;
     private Iterable<Object> payload;
-
-    private final AssembleCallback<T, Subject> callback;
 
     SubjectSpec(AssembleCallback<T, Subject> callback) {
         this.callback = callback;
@@ -53,7 +53,7 @@ public final class SubjectSpec<T> {
         return payload(ImmutableList.of(payload));
     }
 
-    public SubjectSpec<T> payload(Object first, Object ... other) {
+    public SubjectSpec<T> payload(Object first, Object... other) {
         Iterable<Object> payload = ImmutableList.builder()
                 .add(first)
                 .add(other)

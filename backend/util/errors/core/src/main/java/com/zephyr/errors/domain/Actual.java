@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 @Value
 public class Actual implements Serializable {
+
     private static final long serialVersionUID = -7410033108304395134L;
 
     private String value;

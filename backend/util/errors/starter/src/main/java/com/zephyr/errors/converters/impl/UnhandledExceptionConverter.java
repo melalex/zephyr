@@ -16,6 +16,7 @@ import java.util.Locale;
 
 @Component
 public class UnhandledExceptionConverter implements ProblemConverter<Throwable> {
+
     private static final String INTERNAL_SERVER_ERROR_MESSAGE = "error.server.manager";
 
     @Setter(onMethod = @__(@Autowired))

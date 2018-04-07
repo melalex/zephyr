@@ -1,13 +1,16 @@
 package com.zephyr.commons;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
 
 import java.util.Map;
 
-import static org.junit.Assert.*;
-
 public class MapUtilsTest {
+
     private static final String FIRST_KEY = "key1";
     private static final String FIRST_VALUE = "value1";
     private static final String SECOND_KEY = "key2";
@@ -31,12 +34,14 @@ public class MapUtilsTest {
 
     @Test
     public void shouldPutIfTrue() {
-        assertTrue(MapUtils.multiValueMapBuilder().putIfTrue(FIRST_KEY, FIRST_VALUE, true).build().containsKey(FIRST_KEY));
+        assertTrue(
+                MapUtils.multiValueMapBuilder().putIfTrue(FIRST_KEY, FIRST_VALUE, true).build().containsKey(FIRST_KEY));
     }
 
     @Test
     public void shouldNotPutIfFalse() {
-        assertFalse(MapUtils.multiValueMapBuilder().putIfTrue(FIRST_KEY, FIRST_VALUE, false).build().containsKey(FIRST_KEY));
+        assertFalse(MapUtils.multiValueMapBuilder().putIfTrue(FIRST_KEY, FIRST_VALUE, false).build()
+                .containsKey(FIRST_KEY));
     }
 
     @Test

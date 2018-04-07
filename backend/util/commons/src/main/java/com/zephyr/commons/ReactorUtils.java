@@ -24,11 +24,13 @@ public class ReactorUtils {
         };
     }
 
-    public <L, R, U> Function<? super Mono<Tuple2<L, R>>, ? extends Publisher<Tuple2<U, R>>> mapFirst(Function<L, U> mapper) {
+    public <L, R, U> Function<? super Mono<Tuple2<L, R>>, ? extends Publisher<Tuple2<U, R>>> mapFirst(
+            Function<L, U> mapper) {
         return i -> i.map(t -> Tuples.of(mapper.apply(t.getT1()), t.getT2()));
     }
 
-    public <L, R, U> Function<? super Mono<Tuple2<L, R>>, ? extends Publisher<Tuple2<U, R>>> flatMapFirst(Function<L, Mono<U>> mapper) {
+    public <L, R, U> Function<? super Mono<Tuple2<L, R>>, ? extends Publisher<Tuple2<U, R>>> flatMapFirst(
+            Function<L, Mono<U>> mapper) {
         return i -> i.flatMap(t -> mapper.apply(t.getT1()).map(t1 -> Tuples.of(t1, t.getT2())));
     }
 }

@@ -5,13 +5,13 @@ import com.zephyr.data.protocol.dto.RatingDto;
 import com.zephyr.data.protocol.dto.StatisticsDto;
 import com.zephyr.data.protocol.dto.TaskDto;
 import com.zephyr.errors.utils.ExceptionUtils;
+import com.zephyr.rating.bus.RequestUpdatesBus;
 import com.zephyr.rating.cliensts.TaskServiceClient;
 import com.zephyr.rating.domain.Rating;
 import com.zephyr.rating.domain.RequestCriteria;
+import com.zephyr.rating.factories.RatingDtoFactory;
 import com.zephyr.rating.repository.RatingRepository;
 import com.zephyr.rating.services.RatingService;
-import com.zephyr.rating.bus.RequestUpdatesBus;
-import com.zephyr.rating.factories.RatingDtoFactory;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +26,7 @@ import java.security.Principal;
 @Slf4j
 @Service
 public class RatingServiceImpl implements RatingService {
+
     private static final String NEW_SUBSCRIPTION_MESSAGE = "New subscription to Task '{}'";
     private static final String USER_ID_FIELD = "userId";
 

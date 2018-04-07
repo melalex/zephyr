@@ -8,12 +8,12 @@ import com.zephyr.errors.utils.ErrorUtil;
 import java.util.List;
 
 public final class PathSpec<T> {
+
     private static final String ROOT_ASSERTION_MESSAGE = "root can't be null";
 
     private final AssembleCallback<T, Path> callback;
-
-    private String root;
     private final List<String> path = Lists.newLinkedList();
+    private String root;
 
     PathSpec(AssembleCallback<T, Path> callback) {
         this.callback = callback;

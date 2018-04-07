@@ -11,6 +11,7 @@ import java.util.Locale;
 @Component
 @ConfigurationProperties("data")
 public class MockDataProperties {
+
     private int batchSize;
     private long daysUptime;
     private FakerProperties faker;
@@ -25,6 +26,7 @@ public class MockDataProperties {
 
     @Data
     public static class FakerProperties {
+
         private String lang;
         private String country;
     }

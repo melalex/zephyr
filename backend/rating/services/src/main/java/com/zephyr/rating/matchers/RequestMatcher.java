@@ -2,7 +2,11 @@ package com.zephyr.rating.matchers;
 
 import com.zephyr.commons.ObjectUtils;
 import com.zephyr.commons.interfaces.Matcher;
-import com.zephyr.rating.domain.*;
+import com.zephyr.rating.domain.Place;
+import com.zephyr.rating.domain.Query;
+import com.zephyr.rating.domain.Request;
+import com.zephyr.rating.domain.RequestCriteria;
+import com.zephyr.rating.domain.UserAgent;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -13,28 +17,28 @@ public class RequestMatcher implements Matcher<RequestCriteria, Request> {
     @Override
     public boolean matches(RequestCriteria example, Request target) {
         return checkProvider(example, target)
-                && checkQueries(example.getQuery(), target.getQuery())
-                && checkDateRangeBefore(example, target)
-                && checkDateRangeAfter(example, target);
+               && checkQueries(example.getQuery(), target.getQuery())
+               && checkDateRangeBefore(example, target)
+               && checkDateRangeAfter(example, target);
     }
 
     private boolean checkQueries(Query example, Query target) {
         return ObjectUtils.equalsOrNull(example.getQuery(), target.getQuery())
-                && ObjectUtils.equalsOrNull(example.getLanguageIso(), target.getLanguageIso())
-                && checkPlace(example.getPlace(), target.getPlace())
-                && checkUserAgent(example.getUserAgent(), target.getUserAgent());
+               && ObjectUtils.equalsOrNull(example.getLanguageIso(), target.getLanguageIso())
+               && checkPlace(example.getPlace(), target.getPlace())
+               && checkUserAgent(example.getUserAgent(), target.getUserAgent());
     }
 
     private boolean checkPlace(Place example, Place target) {
         return ObjectUtils.equalsOrNull(example.getCountry(), target.getCountry())
-                && ObjectUtils.equalsOrNull(example.getPlaceName(), target.getPlaceName());
+               && ObjectUtils.equalsOrNull(example.getPlaceName(), target.getPlaceName());
     }
 
     private boolean checkUserAgent(UserAgent example, UserAgent target) {
         return ObjectUtils.equalsOrNull(example.getOsName(), target.getOsName())
-                && ObjectUtils.equalsOrNull(example.getOsVersion(), target.getOsVersion())
-                && ObjectUtils.equalsOrNull(example.getBrowserName(), target.getBrowserName())
-                && ObjectUtils.equalsOrNull(example.getBrowserVersion(), target.getBrowserVersion());
+               && ObjectUtils.equalsOrNull(example.getOsVersion(), target.getOsVersion())
+               && ObjectUtils.equalsOrNull(example.getBrowserName(), target.getBrowserName())
+               && ObjectUtils.equalsOrNull(example.getBrowserVersion(), target.getBrowserVersion());
 
     }
 

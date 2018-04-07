@@ -16,6 +16,7 @@ public class ProblemDto {
 
     @Data
     public static class NestedError {
+
         private String field;
         private Object rejected;
         private String message;

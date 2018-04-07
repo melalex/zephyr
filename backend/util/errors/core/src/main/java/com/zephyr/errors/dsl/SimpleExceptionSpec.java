@@ -1,6 +1,10 @@
 package com.zephyr.errors.dsl;
 
-import com.zephyr.errors.domain.*;
+import com.zephyr.errors.domain.Actual;
+import com.zephyr.errors.domain.ErrorData;
+import com.zephyr.errors.domain.Path;
+import com.zephyr.errors.domain.Reason;
+import com.zephyr.errors.domain.Subject;
 import com.zephyr.errors.exceptions.ParameterizedException;
 import com.zephyr.errors.utils.ErrorUtil;
 

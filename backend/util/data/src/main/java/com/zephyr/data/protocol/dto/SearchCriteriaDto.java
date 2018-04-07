@@ -2,10 +2,10 @@ package com.zephyr.data.protocol.dto;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 @Data
 public class SearchCriteriaDto {

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SearchCriteriaPageableProvider implements PageableProvider {
+
     private static final int FIRST_PAGE = 0;
 
     private static final String HITS_COUNT_FIELD = "hitsCount";

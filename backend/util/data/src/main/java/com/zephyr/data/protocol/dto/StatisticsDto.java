@@ -7,6 +7,7 @@ import java.util.Map;
 
 @Data
 public class StatisticsDto {
+
     private SearchCriteriaDto criteria;
     private Map<LocalDateTime, Integer> position;
 }

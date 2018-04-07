@@ -1,6 +1,7 @@
 package com.zephyr.errors.exceptions;
 
 public class OwnershipException extends ParameterizedException {
+
     private static final long serialVersionUID = -5909114048852137225L;
 
     public OwnershipException() {

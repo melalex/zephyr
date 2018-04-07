@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserAgentDto {
+
     private String id;
     private String header;
     private String device;

@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class PlaceDto {
+
     private long id;
     private long parent;
     private String name;

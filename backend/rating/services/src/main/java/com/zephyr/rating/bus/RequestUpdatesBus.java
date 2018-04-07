@@ -18,6 +18,7 @@ import javax.annotation.PostConstruct;
 @Slf4j
 @Component
 public class RequestUpdatesBus implements Bus<RequestCriteria, Request> {
+
     private static final String RECEIVED_EVENT_MESSAGE = "Received new Rating: {}";
 
     private UnicastProcessor<Request> hotSource;

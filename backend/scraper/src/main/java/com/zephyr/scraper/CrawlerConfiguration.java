@@ -1,5 +1,7 @@
 package com.zephyr.scraper;
 
+import static java.util.Map.entry;
+
 import com.zephyr.commons.interfaces.Manager;
 import com.zephyr.commons.support.DefaultManager;
 import com.zephyr.data.protocol.enums.SearchEngine;
@@ -7,13 +9,15 @@ import com.zephyr.scraper.crawler.fraud.FraudAnalysisProvider;
 import com.zephyr.scraper.crawler.fraud.impl.DefaultFraudAnalysisProvider;
 import com.zephyr.scraper.crawler.fraud.impl.GoogleFraudAnalysisProvider;
 import com.zephyr.scraper.crawler.parsers.ParsingProvider;
-import com.zephyr.scraper.crawler.parsers.impl.*;
+import com.zephyr.scraper.crawler.parsers.impl.BingParsingProvider;
+import com.zephyr.scraper.crawler.parsers.impl.DuckDuckGoParsingProvider;
+import com.zephyr.scraper.crawler.parsers.impl.GoogleParsingProvider;
+import com.zephyr.scraper.crawler.parsers.impl.YahooParsingProvider;
+import com.zephyr.scraper.crawler.parsers.impl.YandexParsingProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Map;
-
-import static java.util.Map.entry;
 
 @Configuration
 public class CrawlerConfiguration {

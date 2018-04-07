@@ -1,5 +1,7 @@
 package com.zephyr.jobs.batch.readers;
 
+import static com.zephyr.jobs.batch.BatchConfiguration.CURRENT_INDEX;
+
 import com.zephyr.jobs.generators.TaskGenerator;
 import com.zephyr.task.domain.Task;
 import lombok.Setter;
@@ -12,8 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicInteger;
-
-import static com.zephyr.jobs.batch.BatchConfiguration.CURRENT_INDEX;
 
 @Component
 @StepScope

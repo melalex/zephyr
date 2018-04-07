@@ -30,6 +30,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @Slf4j
 @Component
 public class InMemorySchedulingManager implements SchedulingManager {
+
     private static final String NEW_TASK_MESSAGE = "Schedule new task for group {} on {}";
     private static final String RESCHEDULE_MESSAGE = "Reschedule all tasks in group with {} duration";
 
@@ -95,6 +96,7 @@ public class InMemorySchedulingManager implements SchedulingManager {
     @Value
     @Builder
     private class MutableTimer {
+
         private MonoSink<Void> sink;
         private AtomicReference<LocalDateTime> dateTime;
         private Scheduler scheduler;

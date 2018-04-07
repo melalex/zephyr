@@ -2,7 +2,10 @@ package com.zephyr.location.domain;
 
 import com.zephyr.location.domain.constants.Relations;
 import lombok.Data;
-import org.neo4j.ogm.annotation.*;
+import org.neo4j.ogm.annotation.GeneratedValue;
+import org.neo4j.ogm.annotation.Id;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 import java.util.Set;
 

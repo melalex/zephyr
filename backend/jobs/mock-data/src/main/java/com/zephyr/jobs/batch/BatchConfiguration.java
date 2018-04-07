@@ -98,7 +98,8 @@ public class BatchConfiguration {
 
     @Bean
     @StepScope
-    public ProgressBar progressBar(@Value("#{jobParameters[T(com.zephyr.jobs.batch.BatchConfiguration).TASK_COUNT_JOB_PARAM]}") int taskCount) {
+    public ProgressBar progressBar(
+            @Value("#{jobParameters[T(com.zephyr.jobs.batch.BatchConfiguration).TASK_COUNT_JOB_PARAM]}") int taskCount) {
         return new ProgressBar(LOAD_MOCK_DATA_TASK, taskCount, ProgressBarStyle.ASCII);
     }
 }

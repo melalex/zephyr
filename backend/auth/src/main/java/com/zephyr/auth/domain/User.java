@@ -10,5 +10,6 @@ import java.security.Principal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements Principal {
+
     private String name;
 }

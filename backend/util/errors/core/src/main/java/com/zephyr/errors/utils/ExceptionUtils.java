@@ -17,6 +17,7 @@ import java.util.function.Supplier;
 
 @UtilityClass
 public class ExceptionUtils {
+
     private static final String NOT_FOUND_ERROR_MESSAGE = "Resource '%s' with id '%s' not found";
     private static final String OWNERSHIP_ERROR_MESSAGE = "Requested task belongs to another User";
 

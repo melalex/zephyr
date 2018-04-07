@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class Query {
+
     private String query;
     private String languageIso;
     private Place place;

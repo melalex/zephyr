@@ -1,5 +1,9 @@
 package com.zephyr.validation.validators;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
+
 import com.zephyr.validation.FieldMatch;
 import lombok.Value;
 import org.junit.Before;
@@ -10,12 +14,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.validation.ConstraintValidatorContext;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
-
 @RunWith(MockitoJUnitRunner.class)
 public class FieldMatchValidatorTest {
+
     private static final String FIRST_PROPERTY = "first";
     private static final String SECOND_PROPERTY = "second";
 
@@ -24,11 +25,9 @@ public class FieldMatchValidatorTest {
     private static final String SECOND_VALUE = "second";
 
     private static final ConstraintValidatorContext CONSTRAINT_VALIDATOR_CONTEXT = null;
-
+    private final FieldMatchValidator testInstance = new FieldMatchValidator();
     @Mock
     private FieldMatch fieldMatch;
-
-    private final FieldMatchValidator testInstance = new FieldMatchValidator();
 
     @Before
     public void setUp() {
@@ -54,6 +53,7 @@ public class FieldMatchValidatorTest {
 
     @Value
     private static class TestObject {
+
         private String first;
         private String second;
     }
