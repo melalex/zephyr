@@ -30,6 +30,7 @@ ext {
 
     service = [
             agent   : project(':backend:agent:services'),
+            keyword : project(':backend:keyword:services'),
             location: project(':backend:location:services'),
             rating  : project(':backend:rating:services'),
             task    : project(':backend:task:services'),

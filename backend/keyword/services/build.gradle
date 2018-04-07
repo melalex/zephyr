@@ -1,0 +1,24 @@
+plugins {
+    id 'io.spring.dependency-management' version '1.0.4.RELEASE'
+}
+
+dependencies {
+    compile libraries['adWords']
+    compile libraries['feign']
+
+    compile utils['data']
+    compile utils['errorsCore']
+    compile utils['commons']
+
+    compileOnly libraries['lombok']
+    compileOnly libraries['configurationProcessor']
+
+    testCompile libraries['test']
+}
+
+dependencyManagement {
+    imports {
+        mavenBom imports['springBootBom']
+        mavenBom imports['springCloudBom']
+    }
+}

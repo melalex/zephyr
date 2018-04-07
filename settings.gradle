@@ -36,6 +36,12 @@ findProject(':backend:jobs:init-data')?.name = 'init-data'
 include 'backend:keyword'
 findProject(':backend:keyword')?.name = 'keyword'
 
+include 'backend:keyword:services'
+findProject(':backend:keyword:services')?.name = 'services'
+
+include 'backend:keyword:app'
+findProject(':backend:keyword:app')?.name = 'app'
+
 include 'backend:location'
 findProject(':backend:location')?.name = 'location'
 

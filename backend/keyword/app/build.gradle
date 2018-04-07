@@ -29,17 +29,16 @@ apply plugin: 'application'
 mainClassName = 'com.zephyr.keyword.KeywordApplication'
 
 dependencies {
+    compile service['keyword']
+
     compile libraries['webFlux']
     compile libraries['acutator']
     compile libraries['acutatorDocs']
     compile libraries['configClient']
     compile libraries['discoveryClient']
     compile libraries['messaging']
-    compile libraries['adWords']
 
-    compile utils['data']
     compile utils['errorsStarter']
-    compile utils['commons']
 
     compileOnly libraries['lombok']
     compileOnly libraries['configurationProcessor']
