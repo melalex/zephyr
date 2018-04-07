@@ -12,8 +12,8 @@ findProject(':backend:agent:core')?.name = 'core'
 include 'backend:agent:services'
 findProject(':backend:agent:service')?.name = 'services'
 
-include 'backend:agent:web'
-findProject(':backend:agent:web')?.name = 'web'
+include 'backend:agent:app'
+findProject(':backend:agent:app')?.name = 'app'
 
 include 'backend:auth'
 findProject(':backend:auth')?.name = 'auth'
@@ -45,8 +45,8 @@ findProject(':backend:location:core')?.name = 'core'
 include 'backend:location:services'
 findProject(':backend:location:services')?.name = 'services'
 
-include 'backend:location:web'
-findProject(':backend:location:web')?.name = 'web'
+include 'backend:location:app'
+findProject(':backend:location:app')?.name = 'app'
 
 include 'backend:monitoring'
 findProject(':backend:monitoring')?.name = 'monitoring'
@@ -60,8 +60,8 @@ findProject(':backend:rating:core')?.name = 'core'
 include 'backend:rating:services'
 findProject(':backend:rating:services')?.name = 'services'
 
-include 'backend:rating:web'
-findProject(':backend:rating:web')?.name = 'web'
+include 'backend:rating:app'
+findProject(':backend:rating:app')?.name = 'app'
 
 include 'backend:registry'
 findProject(':backend:registry')?.name = 'registry'
@@ -78,8 +78,8 @@ findProject(':backend:task:core')?.name = 'core'
 include 'backend:task:services'
 findProject(':backend:task:services')?.name = 'services'
 
-include 'backend:task:web'
-findProject(':backend:task:web')?.name = 'web'
+include 'backend:task:app'
+findProject(':backend:task:app')?.name = 'app'
 
 include 'backend:util'
 findProject(':backend:util')?.name = 'util'
