@@ -1,6 +1,7 @@
 package com.zephyr.scraper.request.provider.impl;
 
 import com.zephyr.commons.MapUtils;
+import com.zephyr.commons.StreamUtils;
 import com.zephyr.commons.support.Page;
 import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.data.protocol.enums.SearchEngine;
@@ -11,7 +12,6 @@ import com.zephyr.scraper.request.params.ParamsProvider;
 import com.zephyr.scraper.request.provider.RequestProvider;
 import com.zephyr.scraper.request.url.UrlProvider;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
@@ -20,21 +20,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Setter
 public class RequestProviderImpl implements RequestProvider {
 
-    @Setter
     private SearchEngine engine;
-
-    @Setter
     private List<HeadersProvider> headersProviders;
-
-    @Setter
     private ParamsProvider paramsProvider;
-
-    @Setter
     private UrlProvider urlProvider;
-
-    @Setter(onMethod = @__(@Autowired))
     private ScraperConfigurationService configuration;
 
     @Override
@@ -42,7 +34,7 @@ public class RequestProviderImpl implements RequestProvider {
         Map<String, List<String>> headers = headersProviders.stream()
                 .map(HeadersProvider.from(query, urlProvider.provideBaseUrl(query)))
                 .flatMap(MapUtils.unwrap())
-                .collect(MapUtils.toMap());
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, StreamUtils.mergeLists()));
 
         return Stream.iterate(configuration.getFirstPage(engine), Page::isNotLast, Page::getNext)
                 .map(getPage(query, headers))
@@ -53,7 +45,8 @@ public class RequestProviderImpl implements RequestProvider {
         return p -> EngineRequest.builder()
                 .id(UUID.randomUUID().toString())
                 .provider(engine)
-                .url(urlProvider.provideFullUrl(query))
+                .url(urlProvider.provideBaseUrl(query))
+                .uri(urlProvider.provideUri(query))
                 .headers(headers)
                 .params(paramsProvider.provide(query, p))
                 .offset(p.getStart())

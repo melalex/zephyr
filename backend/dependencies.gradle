@@ -56,8 +56,6 @@ ext {
     def collectionValidatorVersion = '2.2.0'
     def hateoasVersion = '0.23.0.RELEASE'
     def jsoupVersion = '1.10.3'
-    def nettyVersion = '4.1.17.Final'
-    def asyncHttpVersion = '2.0.37'
     def modelMapperStarter = '1.1.0'
     def ideaAnnotationsVersion = '12.0'
     def progressBarVersion = '0.5.5'
@@ -99,8 +97,6 @@ ext {
             hateoas            : "org.springframework.hateoas:spring-hateoas:${hateoasVersion}",
             jsoup              : "org.jsoup:jsoup:${jsoupVersion}",
 
-            netty              : "io.netty:netty-all:${nettyVersion}",
-            asyncHttp          : "org.asynchttpclient:async-http-client:${asyncHttpVersion}",
             ideaAnnotations    : "com.intellij:annotations:${ideaAnnotationsVersion}",
             progressBar        : "me.tongfei:progressbar:${progressBarVersion}",
             javaFaker          : "com.github.javafaker:javafaker:${javaFakerVersion}"

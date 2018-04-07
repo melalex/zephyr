@@ -11,11 +11,6 @@ public class DefaultUrlProvider extends AbstractUrlProvider {
 
     @Override
     public String provideBaseUrl(QueryDto query) {
-        return this.getScraperConfigurationService().getBaseUrl(getEngine());
-    }
-
-    @Override
-    public String provideFullUrl(QueryDto query) {
-        return this.getScraperConfigurationService().getUrl(getEngine());
+        return getScraperConfigurationService().getBaseUrl(getEngine());
     }
 }

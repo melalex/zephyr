@@ -17,8 +17,13 @@ public class EngineRequest {
 
     private SearchEngine provider;
     private String url;
+    private String uri;
 
     private int offset;
     private Map<String, List<String>> headers;
     private Map<String, List<String>> params;
+
+    public String getFullPath() {
+        return url + uri;
+    }
 }

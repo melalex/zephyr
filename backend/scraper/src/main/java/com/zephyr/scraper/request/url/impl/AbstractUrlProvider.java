@@ -1,5 +1,6 @@
 package com.zephyr.scraper.request.url.impl;
 
+import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.scraper.configuration.ScraperConfigurationService;
 import com.zephyr.scraper.request.url.UrlProvider;
@@ -18,4 +19,9 @@ abstract class AbstractUrlProvider implements UrlProvider {
 
     @Setter(onMethod = @__(@Autowired))
     private ScraperConfigurationService scraperConfigurationService;
+
+    @Override
+    public String provideUri(QueryDto query) {
+        return getScraperConfigurationService().getPath(getEngine());
+    }
 }

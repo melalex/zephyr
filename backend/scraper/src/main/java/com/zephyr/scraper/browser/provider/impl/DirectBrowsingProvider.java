@@ -7,27 +7,19 @@ import com.zephyr.scraper.configuration.ScraperConfigurationService;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.EngineResponse;
 import com.zephyr.scraper.scheduling.SchedulingManager;
-import io.netty.handler.codec.http.HttpHeaders;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.asynchttpclient.AsyncHttpClient;
-import org.asynchttpclient.Request;
-import org.asynchttpclient.RequestBuilder;
-import org.asynchttpclient.Response;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.ClientResponse;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.retry.Retry;
 
 import java.time.Duration;
-import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 @Slf4j
 @Component
@@ -42,7 +34,7 @@ public class DirectBrowsingProvider implements BrowsingProvider {
     private SchedulingManager schedulingManager;
 
     @Setter(onMethod = @__(@Autowired))
-    private AsyncHttpClient asyncHttpClient;
+    private WebClient webClient;
 
     @Setter(onMethod = @__(@Autowired))
     private ScraperConfigurationService configuration;
@@ -66,15 +58,11 @@ public class DirectBrowsingProvider implements BrowsingProvider {
     }
 
     private Mono<EngineResponse> makeRequest(EngineRequest engineRequest) {
-        Request request = new RequestBuilder()
-                .setFollowRedirect(true)
-                .setUrl(engineRequest.getUrl())
-                .setQueryParams(engineRequest.getParams())
-                .setHeaders(engineRequest.getHeaders())
-                .build();
-
-        return Mono.defer(() -> Mono.fromFuture(asyncHttpClient.executeRequest(request).toCompletableFuture()))
-                .map(r -> toEngineResponse(r, engineRequest))
+        return webClient.get()
+                .uri(engineRequest.getFullPath(), engineRequest.getParams())
+                .headers(h -> h.putAll(engineRequest.getHeaders()))
+                .exchange()
+                .flatMap(extractEngineResponse(engineRequest))
                 .doOnNext(LoggingUtils.info(log, EngineResponse::getId, NEW_RESPONSE_MSG))
                 .doOnNext(LoggingUtils.debug(log, NEW_RESPONSE_FULL_MSG))
                 .retryWhen(requestException());
@@ -97,21 +85,13 @@ public class DirectBrowsingProvider implements BrowsingProvider {
                 .doOnRetry(c -> report(c.applicationContext().getProvider()));
     }
 
-    private EngineResponse toEngineResponse(Response response, EngineRequest engineRequest) {
-        return EngineResponse.builder()
-                .id(engineRequest.getId())
-                .headers(getHeaders(response.getHeaders()))
-                .body(response.getResponseBody())
-                .provider(engineRequest.getProvider())
-                .build();
-    }
-
-    private Map<String, List<String>> getHeaders(HttpHeaders headers) {
-        return StreamSupport.stream(headers.spliterator(), false)
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        e -> headers.getAll(e.getKey()),
-                        (u, v) -> Stream.concat(u.stream(), v.stream()).collect(Collectors.toList())
-                ));
+    private Function<ClientResponse, Mono<EngineResponse>> extractEngineResponse(EngineRequest engineRequest) {
+        return c -> c.bodyToMono(String.class)
+                .map(b -> EngineResponse.builder()
+                        .id(engineRequest.getId())
+                        .headers(c.headers().asHttpHeaders())
+                        .body(b)
+                        .provider(engineRequest.getProvider())
+                        .build());
     }
 }

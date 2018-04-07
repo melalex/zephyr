@@ -21,11 +21,6 @@ public class GoogleUrlProvider extends AbstractUrlProvider {
                 .map(QueryDto::getPlace)
                 .map(PlaceDto::getCountry)
                 .map(CountryDto::getLocaleGoogle)
-                .orElse(this.getScraperConfigurationService().getBaseUrl(getEngine()));
-    }
-
-    @Override
-    public String provideFullUrl(QueryDto query) {
-        return provideBaseUrl(query) + this.getScraperConfigurationService().getPath(getEngine());
+                .orElse(getScraperConfigurationService().getBaseUrl(getEngine()));
     }
 }

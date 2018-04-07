@@ -2,8 +2,6 @@ package com.zephyr.commons;
 
 import lombok.experimental.UtilityClass;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -18,18 +16,6 @@ public class MapUtils {
     public <K, V> V getOrThrow(Map<K, V> map, K key) {
         return Optional.ofNullable(map.get(key))
                 .orElseThrow(() -> new IllegalArgumentException(String.format(GET_ERROR_MESSAGE, key)));
-    }
-
-    @SafeVarargs
-    public <K, V> Map<K, V> merge(Map<K, V>... maps) {
-        return merge(Arrays.asList(maps));
-    }
-
-    public <K, V> Map<K, V> merge(Collection<Map<K, V>> maps) {
-        return maps.stream()
-                .map(Map::entrySet)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public <K, U> Collector<Map.Entry<K, U>, ?, Map<K, U>> toMap() {

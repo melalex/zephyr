@@ -1,9 +1,8 @@
 package com.zephyr.scraper;
 
-import org.asynchttpclient.AsyncHttpClient;
-import org.asynchttpclient.DefaultAsyncHttpClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
@@ -23,7 +22,7 @@ public class ScraperConfiguration {
     }
 
     @Bean
-    public AsyncHttpClient asyncHttpClient() {
-        return new DefaultAsyncHttpClient();
+    public WebClient asyncHttpClient() {
+        return WebClient.create();
     }
 }
