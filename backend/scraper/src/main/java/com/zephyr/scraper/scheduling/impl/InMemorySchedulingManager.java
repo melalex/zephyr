@@ -95,7 +95,7 @@ public class InMemorySchedulingManager implements SchedulingManager {
 
     @Value
     @Builder
-    private class MutableTimer {
+    private static class MutableTimer {
 
         private MonoSink<Void> sink;
         private AtomicReference<LocalDateTime> dateTime;

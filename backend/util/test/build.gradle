@@ -1,0 +1,18 @@
+plugins {
+    id 'io.spring.dependency-management' version '1.0.4.RELEASE'
+}
+
+dependencies {
+    compileOnly utils['data']
+    compileOnly utils['commons']
+
+    compileOnly libraries['mockito']
+    compileOnly libraries['lombok']
+    compileOnly libraries['jUnit5Api']
+}
+
+dependencyManagement {
+    imports {
+        mavenBom imports['springBootBom']
+    }
+}

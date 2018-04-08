@@ -20,7 +20,7 @@ public class HtmlHeadersProvider implements HeadersProvider {
     public Map<String, List<String>> provide(Query query, String baseUrl) {
         return MultiMapBuilder.create()
                 .put(HttpHeaders.REFERER, baseUrl)
-                .put(com.google.common.net.HttpHeaders.ACCEPT, ACCEPT)
+                .put(HttpHeaders.ACCEPT, ACCEPT)
                 .put(UPGRADE_INSECURE_REQUESTS, TRUE)
                 .build();
     }

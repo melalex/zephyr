@@ -1,0 +1,15 @@
+scraper:
+  google:
+    enabled: true
+
+  bing:
+    enabled: true
+
+  yahoo:
+    enabled: true
+
+  yandex:
+    enabled: true
+
+  duckduckgo:
+    enabled: true

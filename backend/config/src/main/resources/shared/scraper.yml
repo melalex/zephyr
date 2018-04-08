@@ -1,6 +1,6 @@
 spring:
   main:
-    web-environment: false
+    webApplicationType: NONE
   cloud:
     stream:
       bindings:

@@ -120,5 +120,8 @@ findProject(':backend:util:errors:core')?.name = 'core'
 include 'backend:util:errors:starter'
 findProject(':backend:util:errors:starter')?.name = 'starter'
 
+include 'backend:util:test'
+findProject(':backend:util:test')?.name = 'test'
+
 include 'backend:util:validation'
 findProject(':backend:util:validation')?.name = 'validation'

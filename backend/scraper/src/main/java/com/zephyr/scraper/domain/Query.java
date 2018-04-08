@@ -12,7 +12,7 @@ public class Query {
     private UserAgent userAgent;
 
     @Data
-    public class Place {
+    public static class Place {
 
         private long id;
         private long parent;
@@ -24,7 +24,7 @@ public class Query {
     }
 
     @Data
-    public class Country {
+    public static class Country {
 
         private String iso;
         private String name;
@@ -33,7 +33,7 @@ public class Query {
     }
 
     @Data
-    public class UserAgent {
+    public static class UserAgent {
 
         private String id;
         private String header;

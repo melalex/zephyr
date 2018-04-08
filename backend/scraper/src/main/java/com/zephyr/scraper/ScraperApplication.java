@@ -2,6 +2,8 @@ package com.zephyr.scraper;
 
 import com.zephyr.commons.LoggingUtils;
 import com.zephyr.commons.extensions.ExtendedMapper;
+import com.zephyr.commons.interfaces.UidProvider;
+import com.zephyr.commons.support.DefaultUidProvider;
 import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.data.internal.dto.SearchResultDto;
 import com.zephyr.scraper.browser.Browser;
@@ -65,6 +67,11 @@ public class ScraperApplication {
     }
 
     @Bean
+    public UidProvider uidProvider() {
+        return new DefaultUidProvider();
+    }
+
+    @Bean
     public Clock clock() {
         return Clock.systemDefaultZone();
     }
@@ -75,7 +82,7 @@ public class ScraperApplication {
     }
 
     @Bean
-    public WebClient asyncHttpClient() {
+    public WebClient webClient() {
         return WebClient.create();
     }
 

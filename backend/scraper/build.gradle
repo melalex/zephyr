@@ -47,7 +47,10 @@ dependencies {
     compileOnly libraries['lombok']
     compileOnly libraries['configurationProcessor']
 
+    testCompile utils['test']
+
     testCompile libraries['test']
+    testCompile libraries['lombok']
     testCompile libraries['reactorTest']
     testCompile libraries['jUnit5Api']
     testRuntime libraries['jUnit5Engine']

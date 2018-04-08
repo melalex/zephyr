@@ -28,7 +28,6 @@ public class BrowserImpl implements Browser {
 
     private static final String FRAUD_EXCEPTION_MSG = "Fraud detected for response with id '{}'. Reporting...";
 
-
     @Setter(onMethod = @__(@Autowired))
     private Crawler crawler;
 
