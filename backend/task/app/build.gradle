@@ -29,7 +29,7 @@ apply plugin: 'application'
 mainClassName = 'com.zephyr.task.TaskApplication'
 
 dependencies {
-    compile service['task']
+    compile business['task']
 
     compile libraries['webFlux']
     compile libraries['acutator']

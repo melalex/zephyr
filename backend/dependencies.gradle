@@ -28,12 +28,12 @@ ext {
             task    : project(':backend:task:core'),
     ]
 
-    service = [
-            agent   : project(':backend:agent:services'),
-            keyword : project(':backend:keyword:services'),
-            location: project(':backend:location:services'),
-            rating  : project(':backend:rating:services'),
-            task    : project(':backend:task:services'),
+    business = [
+            agent   : project(':backend:agent:business'),
+            keyword : project(':backend:keyword:business'),
+            location: project(':backend:location:business'),
+            rating  : project(':backend:rating:business'),
+            task    : project(':backend:task:business'),
     ]
 
     def lombokVersion = '1.16.20'

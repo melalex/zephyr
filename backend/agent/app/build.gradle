@@ -29,7 +29,7 @@ apply plugin: 'application'
 mainClassName = 'com.zephyr.agent.AgentApplication'
 
 dependencies {
-    compile service['agent']
+    compile business['agent']
 
     compile libraries['webFlux']
     compile libraries['acutator']

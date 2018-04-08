@@ -29,7 +29,7 @@ apply plugin: 'application'
 mainClassName = 'com.zephyr.keyword.KeywordApplication'
 
 dependencies {
-    compile service['keyword']
+    compile business['keyword']
 
     compile libraries['webFlux']
     compile libraries['acutator']
