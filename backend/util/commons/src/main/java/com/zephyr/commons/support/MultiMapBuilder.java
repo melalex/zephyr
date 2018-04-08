@@ -4,42 +4,45 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class MultiValueMapBuilder {
+public final class MultiMapBuilder {
 
     private final Map<String, List<String>> prototype = new HashMap<>();
 
-    public static MultiValueMapBuilder create() {
-        return new MultiValueMapBuilder();
+    public static MultiMapBuilder create() {
+        return new MultiMapBuilder();
     }
 
-    public MultiValueMapBuilder put(String key, String value) {
-        prototype.put(key, List.of(value));
+    public MultiMapBuilder put(String key, String value) {
+        List<String> mapValue = prototype.getOrDefault(key, new LinkedList<>());
+        mapValue.add(value);
+        prototype.put(key, mapValue);
         return this;
     }
 
-    public MultiValueMapBuilder put(String key, int value) {
+    public MultiMapBuilder put(String key, int value) {
         return put(key, String.valueOf(value));
     }
 
-    public MultiValueMapBuilder putIfTrue(String key, String value, boolean condition) {
+    public MultiMapBuilder putIfTrue(String key, String value, boolean condition) {
         if (condition) {
-            prototype.put(key, List.of(value));
+            put(key, value);
         }
         return this;
     }
 
-    public MultiValueMapBuilder putIfTrue(String key, int value, boolean condition) {
+    public MultiMapBuilder putIfTrue(String key, int value, boolean condition) {
         return putIfTrue(key, String.valueOf(value), condition);
     }
 
-    public MultiValueMapBuilder putIfNotNull(String key, String value) {
+    public MultiMapBuilder putIfNotNull(String key, String value) {
         if (Objects.nonNull(value)) {
-            prototype.put(key, List.of(value));
+            put(key, value);
         }
         return this;
     }

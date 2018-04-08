@@ -1,6 +1,6 @@
 package com.zephyr.scraper.request.headers.impl;
 
-import com.zephyr.commons.support.MultiValueMapBuilder;
+import com.zephyr.commons.support.MultiMapBuilder;
 import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.request.headers.HeadersProvider;
 import org.springframework.http.HttpHeaders;
@@ -19,7 +19,7 @@ public class DefaultHeadersProvider implements HeadersProvider {
 
     @Override
     public Map<String, List<String>> provide(Query query, String baseUrl) {
-        return MultiValueMapBuilder.create()
+        return MultiMapBuilder.create()
                 .put(HttpHeaders.USER_AGENT, query.getUserAgent().getHeader())
                 .put(HttpHeaders.ACCEPT_LANGUAGE, query.getLanguageIso())
                 .put(HttpHeaders.ACCEPT_ENCODING, ENCODING)

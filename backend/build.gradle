@@ -16,13 +16,14 @@ allprojects {
         mavenCentral()
         jcenter()
 
-        maven { url "http://repo1.maven.org/maven2/" }
-        maven { url "https://repo.spring.io/snapshot" }
-        maven { url "https://repo.spring.io/milestone" }
+        maven { url = "http://repo1.maven.org/maven2/" }
+        maven { url = "https://repo.spring.io/snapshot" }
+        maven { url = "https://repo.spring.io/milestone" }
     }
 }
 
 subprojects {
+
     apply from: "${rootProject.projectDir}/backend/dependencies.gradle"
 
     apply plugin: 'java'
@@ -48,7 +49,7 @@ task codeCoverageReport(type: JacocoReport) {
     }
 
     reports {
-        xml.destination new File("${buildDir}/reports/jacoco/report.xml")
+        xml.destination = new File("${buildDir}/reports/jacoco/report.xml")
         xml.enabled = true
         html.enabled = false
         csv.enabled = false

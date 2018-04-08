@@ -1,6 +1,6 @@
 package com.zephyr.scraper.request.params.impl;
 
-import com.zephyr.commons.support.MultiValueMapBuilder;
+import com.zephyr.commons.support.MultiMapBuilder;
 import com.zephyr.commons.support.Page;
 import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.request.params.ParamsProvider;
@@ -25,7 +25,7 @@ public class BingParamsProvider implements ParamsProvider {
 
     @Override
     public Map<String, List<String>> provide(Query query, Page page) {
-        return MultiValueMapBuilder.create()
+        return MultiMapBuilder.create()
                 .put(QUERY, getQuery(query))
                 .put(COUNT, page.getPageSize())
                 .putIfTrue(FIRST, page.getStart(), page.isNotFirst())

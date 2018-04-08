@@ -1,6 +1,6 @@
 package com.zephyr.scraper.request.params.impl;
 
-import com.zephyr.commons.support.MultiValueMapBuilder;
+import com.zephyr.commons.support.MultiMapBuilder;
 import com.zephyr.commons.support.Page;
 import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.request.params.ParamsProvider;
@@ -24,7 +24,7 @@ public class YahooParamsProvider implements ParamsProvider {
 
     @Override
     public Map<String, List<String>> provide(Query query, Page page) {
-        return MultiValueMapBuilder.create()
+        return MultiMapBuilder.create()
                 .put(QUERY, query.getQuery())
                 .put(ENCODING, UTF8)
                 .put(COUNT, page.getPageSize())
