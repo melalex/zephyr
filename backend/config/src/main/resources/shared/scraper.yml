@@ -19,7 +19,6 @@ scraper:
       base: https://www.google.com
       path: /search
     enabled: true
-    saveResponse: true
     delay: 480000
     errorDelay: 480000
     linkSelector: "#rso > div > div > div> div > div > div > div > div.f.kv._SWb > cite"
@@ -33,7 +32,6 @@ scraper:
       base: https://www.bing.com
       path: /search
     enabled: true
-    saveResponse: true
     delay: 480000
     errorDelay: 480000
     linkSelector: "#b_results > li > h2 > a"
@@ -47,7 +45,6 @@ scraper:
       base: https://search.yahoo.com
       path: /search
     enabled: true
-    saveResponse: true
     delay: 480000
     errorDelay: 480000
     linkSelector: "#web > ol > li > div > div > div > span"
@@ -61,7 +58,6 @@ scraper:
       base: https://yandex.ru
       path:
     enabled: false
-    saveResponse: false
     delay: 480000
     errorDelay: 480000
     linkSelector:
@@ -75,7 +71,6 @@ scraper:
       base: https://duckduckgo.com
       path:
     enabled: false
-    saveResponse: false
     delay: 480000
     errorDelay: 480000
     linkSelector:

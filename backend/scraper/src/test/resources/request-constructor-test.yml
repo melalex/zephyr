@@ -1,15 +1,80 @@
+spring:
+  main:
+    webApplicationType: NONE
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: QUERIES
+        output:
+          destination: SEARCH_RESULTS
+
+browser:
+  backoff: 5000
+  retryCount: 2
+
 scraper:
   google:
+    url:
+      base: https://www.google.com
+      path: /search
     enabled: true
+    delay: 480000
+    errorDelay: 480000
+    linkSelector: "#rso > div > div > div> div > div > div > div > div.f.kv._SWb > cite"
+    first: 0
+    resultCount: 100
+    pageSize: 100
+    requestType: DIRECT
 
   bing:
+    url:
+      base: https://www.bing.com
+      path: /search
     enabled: true
+    delay: 480000
+    errorDelay: 480000
+    linkSelector: "#b_results > li > h2 > a"
+    first: 1
+    resultCount: 10
+    pageSize: 10
+    requestType: DIRECT
 
   yahoo:
+    url:
+      base: https://search.yahoo.com
+      path: /search
     enabled: true
+    delay: 480000
+    errorDelay: 480000
+    linkSelector: "#web > ol > li > div > div > div > span"
+    first: 1
+    resultCount: 10
+    pageSize: 10
+    requestType: DIRECT
 
   yandex:
+    url:
+      base: https://yandex.ru
+      path:
     enabled: true
+    delay: 480000
+    errorDelay: 480000
+    linkSelector:
+    first: 0
+    resultCount: 100
+    pageSize: 100
+    requestType: DIRECT
 
   duckduckgo:
+    url:
+      base: https://duckduckgo.com
+      path:
     enabled: true
+    delay: 480000
+    errorDelay: 480000
+    linkSelector:
+    first: 0
+    resultCount: 100
+    pageSize: 100
+    requestType: DIRECT

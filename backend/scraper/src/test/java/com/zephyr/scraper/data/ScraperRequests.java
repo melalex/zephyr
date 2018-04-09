@@ -11,6 +11,7 @@ import lombok.Builder;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
@@ -113,7 +114,7 @@ public final class ScraperRequests {
         private ScraperQueries queries;
         private SearchEngine provider;
 
-        private Function<String, Map<String, List<String>>> headers;
+        private BiFunction<String, String, Map<String, List<String>>> headers;
         private Function<Query, Map<String, List<String>>> firstPageParams;
         private Function<Query, Map<String, List<String>>> secondPageParams;
 
@@ -144,7 +145,7 @@ public final class ScraperRequests {
                     .provider(provider)
                     .url(url)
                     .uri(uri)
-                    .headers(headers.apply(url));
+                    .headers(headers.apply(url, query.getUserAgent().getHeader()));
         }
     }
 }
