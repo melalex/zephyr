@@ -5,11 +5,13 @@ import static java.util.Map.entry;
 
 import com.zephyr.commons.MapUtils;
 import com.zephyr.test.Queries;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 
 import java.util.List;
 import java.util.Map;
 
+@AllArgsConstructor
 public final class ScraperHeaders {
 
     private static final String DO_NOT_TRACK = "DNT";
@@ -19,6 +21,8 @@ public final class ScraperHeaders {
     private static final String UPGRADE_INSECURE_REQUESTS = "Upgrade-Insecure-Requests";
     private static final String ACCEPT_HTML = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
     private static final String ACCEPT_AJAX = "*/*";
+
+    private ScraperQueries queries;
 
     public Map<String, List<String>> htmlHeadersFull(String baseUrl, String userAgent) {
         return MapUtils.merge(defaultHeaders(userAgent), htmlHeaders(baseUrl));
@@ -42,6 +46,10 @@ public final class ScraperHeaders {
                 entry(HttpHeaders.HOST, of(baseUrl)),
                 entry(HttpHeaders.ORIGIN, of(baseUrl))
         );
+    }
+
+    public Map<String, List<String>> defaultHeaders() {
+        return defaultHeaders(queries.simple().getUserAgent().getHeader());
     }
 
     public Map<String, List<String>> defaultHeaders(String userAgent) {

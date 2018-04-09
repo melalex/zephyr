@@ -14,4 +14,8 @@ public class FunctionUtils {
             return t;
         };
     }
+
+    public <T, R> Function<T, R> constant(R constant) {
+        return v -> constant;
+    }
 }

@@ -23,7 +23,7 @@ public final class ScraperTestData {
         instance.userAgents = new ScraperUserAgents(CommonTestData.userAgents(), modelMapper);
         instance.places = new ScraperPlaces(CommonTestData.places(), modelMapper);
         instance.queries = new ScraperQueries(CommonTestData.queries(), modelMapper);
-        instance.headers = new ScraperHeaders();
+        instance.headers = new ScraperHeaders(instance.queries);
         instance.params = new ScraperParams();
         instance.requests = new ScraperRequests(instance.queries, instance.headers, instance.params);
 

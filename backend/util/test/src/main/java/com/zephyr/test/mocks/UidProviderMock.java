@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class MockUidProvider {
+public class UidProviderMock {
 
     public static final String DEFAULT_ID = UUID.randomUUID().toString();
 

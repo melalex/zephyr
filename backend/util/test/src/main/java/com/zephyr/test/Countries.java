@@ -9,8 +9,8 @@ public final class Countries {
 
     public static final String UA_ISO = "UA";
     public static final String UA_NAME = "Ukraine";
-    public static final String UA_LOCALE_GOOGLE = "www.google.com.ua";
-    public static final String UA_LOCALE_YANDEX = "yandex.ua";
+    public static final String UA_LOCALE_GOOGLE = "https://www.google.com.ua";
+    public static final String UA_LOCALE_YANDEX = "https://yandex.ua";
 
     public CountryDto ukraine() {
         CountryDto result = new CountryDto();

@@ -14,20 +14,13 @@ import java.util.Map;
 @Tag("request")
 class DefaultHeadersProviderTest {
 
-    private static final String USER_AGENT = "USER_AGENT";
-    private static final String ACCEPT_LANGUAGE = "ACCEPT_LANGUAGE";
-
     private DefaultHeadersProvider testInstance = new DefaultHeadersProvider();
 
     @Test
     void shouldProvide() {
-        Query query = new Query();
-        Query.UserAgent userAgent = new Query.UserAgent();
-        userAgent.setHeader(USER_AGENT);
-        query.setUserAgent(userAgent);
-        query.setLanguageIso(ACCEPT_LANGUAGE);
+        Query query = ScraperTestData.queries().simple();
 
-        Map<String, List<String>> expected = ScraperTestData.headers().defaultHeaders(USER_AGENT);
+        Map<String, List<String>> expected = ScraperTestData.headers().defaultHeaders();
         Map<String, List<String>> actual = testInstance.provide(query, StringUtils.EMPTY);
 
         assertEquals(expected, actual);

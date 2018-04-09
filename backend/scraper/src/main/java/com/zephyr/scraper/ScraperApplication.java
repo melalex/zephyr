@@ -46,6 +46,9 @@ public class ScraperApplication {
     @Setter(onMethod = @__(@Autowired))
     private Browser browser;
 
+    @Setter(onMethod = @__(@Autowired))
+    private ExtendedMapper mapper;
+
     public static void main(String[] args) {
         new SpringApplicationBuilder()
                 .web(WebApplicationType.NONE)
@@ -57,7 +60,7 @@ public class ScraperApplication {
     @Output(Processor.OUTPUT)
     public Flux<SearchResultDto> receive(@Input(Processor.INPUT) Flux<QueryDto> input) {
         return input.doOnNext(LoggingUtils.info(log, NEW_QUERY_MSG))
-                .map(extendedMapper().mapperFor(Query.class))
+                .map(mapper.mapperFor(Query.class))
                 .flatMap(requestConstructor::construct)
                 .parallel()
                 .flatMap(browser::get)

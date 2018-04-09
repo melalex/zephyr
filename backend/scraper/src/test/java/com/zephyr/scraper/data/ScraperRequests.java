@@ -1,10 +1,11 @@
 package com.zephyr.scraper.data;
 
+import com.zephyr.commons.FunctionUtils;
 import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.Query;
 import com.zephyr.test.Countries;
-import com.zephyr.test.mocks.MockUidProvider;
+import com.zephyr.test.mocks.UidProviderMock;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,7 +35,7 @@ public final class ScraperRequests {
 
     public PageRequests bing() {
         return PageRequests.builder()
-                .url(BING_URL)
+                .urls(FunctionUtils.constant(BING_URL))
                 .uri(BING_URI)
                 .firstPageOffset(ScraperParams.BING_FIRST_PAGE_OFFSET)
                 .firstPageOffset(ScraperParams.BING_SECOND_PAGE_OFFSET)
@@ -48,7 +49,7 @@ public final class ScraperRequests {
 
     public PageRequests duckDuckGo() {
         return PageRequests.builder()
-                .url(DUCKDUCKGO_URL)
+                .urls(FunctionUtils.constant(DUCKDUCKGO_URL))
                 .uri(DUCKDUCKGO_URI)
                 .firstPageOffset(ScraperParams.DUCKDUCKGO_FIRST_PAGE_OFFSET)
                 .firstPageOffset(ScraperParams.DUCKDUCKGO_SECOND_PAGE_OFFSET)
@@ -62,7 +63,7 @@ public final class ScraperRequests {
 
     public PageRequests google() {
         return PageRequests.builder()
-                .url(GOOGLE_URL)
+                .urls(q -> q.getPlace().getCountry().getLocaleGoogle())
                 .uri(GOOGLE_URI)
                 .firstPageOffset(ScraperParams.GOOGLE_FIRST_PAGE_OFFSET)
                 .firstPageOffset(ScraperParams.GOOGLE_SECOND_PAGE_OFFSET)
@@ -76,7 +77,7 @@ public final class ScraperRequests {
 
     public PageRequests yahoo() {
         return PageRequests.builder()
-                .url(YAHOO_URL)
+                .urls(FunctionUtils.constant(YAHOO_URL))
                 .uri(YAHOO_URI)
                 .firstPageOffset(ScraperParams.YAHOO_FIRST_PAGE_OFFSET)
                 .firstPageOffset(ScraperParams.YAHOO_SECOND_PAGE_OFFSET)
@@ -90,7 +91,7 @@ public final class ScraperRequests {
 
     public PageRequests yandex() {
         return PageRequests.builder()
-                .url(YANDEX_URL)
+                .urls(q -> q.getPlace().getCountry().getLocaleYandex())
                 .uri(YANDEX_URI)
                 .firstPageOffset(ScraperParams.YANDEX_FIRST_PAGE_OFFSET)
                 .firstPageOffset(ScraperParams.YANDEX_SECOND_PAGE_OFFSET)
@@ -105,7 +106,6 @@ public final class ScraperRequests {
     @Builder
     public static class PageRequests {
 
-        private String url;
         private String uri;
 
         private int firstPageOffset;
@@ -115,6 +115,7 @@ public final class ScraperRequests {
         private SearchEngine provider;
 
         private BiFunction<String, String, Map<String, List<String>>> headers;
+        private Function<Query, String> urls;
         private Function<Query, Map<String, List<String>>> firstPageParams;
         private Function<Query, Map<String, List<String>>> secondPageParams;
 
@@ -139,8 +140,9 @@ public final class ScraperRequests {
         }
 
         private EngineRequest.EngineRequestBuilder base(Query query) {
+            String url = urls.apply(query);
             return EngineRequest.builder()
-                    .id(MockUidProvider.DEFAULT_ID)
+                    .id(UidProviderMock.DEFAULT_ID)
                     .query(query)
                     .provider(provider)
                     .url(url)
