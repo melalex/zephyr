@@ -1,7 +1,7 @@
 package com.zephyr.task.core.repositories.impl;
 
+import com.zephyr.task.core.domain.SearchCriteria;
 import com.zephyr.task.core.repositories.SearchCriteriaOperations;
-import com.zephyr.task.domain.SearchCriteria;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;

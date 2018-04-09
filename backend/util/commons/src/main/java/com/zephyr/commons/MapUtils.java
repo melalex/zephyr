@@ -19,6 +19,18 @@ public class MapUtils {
                 .orElseThrow(() -> new IllegalArgumentException(String.format(GET_ERROR_MESSAGE, key)));
     }
 
+    public <K, V> Map<K, V> put(Map<K, V> map, K key, V value) {
+        map.put(key, value);
+        return map;
+    }
+
+    @SafeVarargs
+    public <K, V> Map<K, V> merge(Map<K, V>... maps) {
+        return Stream.of(maps)
+                .flatMap(unwrap())
+                .collect(toMap());
+    }
+
     public <K, U> Collector<Map.Entry<K, U>, ?, Map<K, U>> toMap() {
         return Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (o, n) -> n);
     }

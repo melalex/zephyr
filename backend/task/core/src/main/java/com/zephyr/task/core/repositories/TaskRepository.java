@@ -1,6 +1,6 @@
 package com.zephyr.task.core.repositories;
 
-import com.zephyr.task.domain.Task;
+import com.zephyr.task.core.domain.Task;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Flux;
 

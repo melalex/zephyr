@@ -2,52 +2,44 @@ package com.zephyr.scraper.util;
 
 import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.scraper.domain.EngineRequest;
+import com.zephyr.scraper.domain.Query;
 import com.zephyr.test.Countries;
+import com.zephyr.test.mocks.MockUidProvider;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public final class ScraperRequest {
 
-    public static final String GOOGLE_URI = "";
-    public static final String GOOGLE_FIRST_PAGE_ID = UUID.randomUUID().toString();
+    public static final String GOOGLE_URI = "/search";
     public static final int FIRST_PAGE_OFFSET = 0;
+    public static final int GOOGLE_SECOND_PAGE_OFFSET = 0;
 
     private ScraperQueries queries;
+    private ScraperHeaders headers;
+    private ScraperParams params;
 
-    private EngineRequest googleFirstPage() {
-        return google().id(GOOGLE_FIRST_PAGE_ID)
-                .offset(FIRST_PAGE_OFFSET)
-                .headers(googleHeaders())
-                .params(googleParams())
+    public EngineRequest googleFirstPage() {
+        Query query = queries.simple();
+        return googleBase(query).offset(FIRST_PAGE_OFFSET)
+                .params(params.googleFirstPage(query))
                 .build();
     }
 
-    private EngineRequest googleSecondPage() {
-        return google().id(GOOGLE_FIRST_PAGE_ID)
-                .offset(FIRST_PAGE_OFFSET)
-                .headers(googleHeaders())
-                .params(googleParams())
+    public EngineRequest googleSecondPage() {
+        Query query = queries.simple();
+        return googleBase(query).offset(GOOGLE_SECOND_PAGE_OFFSET)
+                .params(params.googleSecondPage(query))
                 .build();
     }
 
-    private EngineRequest.EngineRequestBuilder google() {
+    private EngineRequest.EngineRequestBuilder googleBase(Query query) {
         return EngineRequest.builder()
-                .query(queries.simple())
+                .id(MockUidProvider.DEFAULT_ID)
+                .query(query)
                 .provider(SearchEngine.GOOGLE)
                 .url(Countries.UA_LOCALE_GOOGLE)
-                .uri(GOOGLE_URI);
-    }
-
-    private Map<String, List<String>> googleParams() {
-        return null;
-    }
-
-    private Map<String, List<String>> googleHeaders() {
-        return null;
+                .uri(GOOGLE_URI)
+                .headers(headers.htmlHeadersFull(Countries.UA_LOCALE_GOOGLE));
     }
 }

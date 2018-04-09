@@ -1,7 +1,7 @@
 package com.zephyr.task.app.controllers;
 
 import com.zephyr.data.protocol.dto.SearchCriteriaDto;
-import com.zephyr.task.facades.SearchCriteriaFacade;
+import com.zephyr.task.business.facades.SearchCriteriaFacade;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

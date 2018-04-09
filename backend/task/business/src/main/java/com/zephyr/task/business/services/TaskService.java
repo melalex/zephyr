@@ -1,6 +1,6 @@
 package com.zephyr.task.business.services;
 
-import com.zephyr.task.domain.Task;
+import com.zephyr.task.core.domain.Task;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

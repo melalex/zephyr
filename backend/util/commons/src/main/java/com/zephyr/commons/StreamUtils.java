@@ -5,6 +5,7 @@ import lombok.experimental.UtilityClass;
 
 import java.util.List;
 import java.util.function.BinaryOperator;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -41,5 +42,9 @@ public class StreamUtils {
     public <T> BinaryOperator<List<T>> mergeLists() {
         return (l1, l2) -> Stream.concat(l1.stream(), l2.stream())
                 .collect(Collectors.toList());
+    }
+
+    public <T> Function<T, String> format(String template) {
+        return s -> String.format(template, s);
     }
 }

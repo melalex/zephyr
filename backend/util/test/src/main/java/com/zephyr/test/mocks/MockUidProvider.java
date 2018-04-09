@@ -1,38 +1,33 @@
 package com.zephyr.test.mocks;
 
+import static org.mockito.Mockito.when;
+
+import com.zephyr.commons.ListUtils;
 import com.zephyr.commons.interfaces.UidProvider;
 import lombok.AccessLevel;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.mockito.Mockito;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class MockUidProvider implements UidProvider {
+public class MockUidProvider {
 
     public static final String DEFAULT_ID = UUID.randomUUID().toString();
 
-    @NonNull
-    private List<String> ids;
-    private AtomicInteger index = new AtomicInteger(0);
-
-    public static MockUidProvider of(List<String> ids) {
-        return new MockUidProvider(new ArrayList<>(ids));
+    public static UidProvider of(List<String> ids) {
+        UidProvider mock = Mockito.mock(UidProvider.class);
+        ListUtils.SafeVarArg<String> args = ListUtils.toSafeVarArg(ids);
+        when(mock.provide()).thenReturn(args.getFirst(), args.getRest());
+        return mock;
     }
 
-    public static MockUidProvider of(String id) {
+    public static UidProvider of(String id) {
         return of(List.of(id));
     }
 
-    public static MockUidProvider of() {
+    public static UidProvider of() {
         return of(DEFAULT_ID);
-    }
-
-    @Override
-    public String provide() {
-        return ids.get(index.incrementAndGet() % ids.size());
     }
 }
