@@ -1,4 +1,4 @@
-package com.zephyr.scraper.util;
+package com.zephyr.scraper.data;
 
 import static java.util.List.*;
 import static java.util.Map.entry;

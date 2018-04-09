@@ -1,4 +1,4 @@
-package com.zephyr.scraper.util;
+package com.zephyr.scraper.data;
 
 import com.zephyr.scraper.domain.Query;
 import com.zephyr.test.Countries;

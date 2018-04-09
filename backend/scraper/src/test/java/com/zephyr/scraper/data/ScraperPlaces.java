@@ -1,18 +1,18 @@
-package com.zephyr.scraper.util;
+package com.zephyr.scraper.data;
 
 import com.zephyr.scraper.domain.Query;
-import com.zephyr.test.Queries;
+import com.zephyr.test.Places;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-public final class ScraperQueries {
+public final class ScraperPlaces {
 
-    private Queries queries;
+    private Places places;
     private ModelMapper modelMapper;
 
-    public Query simple() {
-        return modelMapper.map(queries, Query.class);
+    public Query.Place kiev() {
+        return modelMapper.map(places, Query.Place.class);
     }
 }

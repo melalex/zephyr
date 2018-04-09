@@ -1,7 +1,7 @@
 package com.zephyr.scraper.request.impl;
 
 import com.zephyr.scraper.request.provider.RequestProvider;
-import com.zephyr.scraper.util.ScraperTestData;
+import com.zephyr.scraper.data.ScraperTestData;
 import com.zephyr.test.extensions.MockitoExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;

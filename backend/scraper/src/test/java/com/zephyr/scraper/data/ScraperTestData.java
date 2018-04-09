@@ -1,4 +1,4 @@
-package com.zephyr.scraper.util;
+package com.zephyr.scraper.data;
 
 import com.zephyr.test.CommonTestData;
 import org.modelmapper.ModelMapper;
@@ -11,6 +11,9 @@ public final class ScraperTestData {
     private ScraperUserAgents userAgents;
     private ScraperPlaces places;
     private ScraperQueries queries;
+    private ScraperHeaders headers;
+    private ScraperParams params;
+    private ScraperRequests requests;
 
     private static ScraperTestData createInstance() {
         ScraperTestData instance = new ScraperTestData();
@@ -20,6 +23,9 @@ public final class ScraperTestData {
         instance.userAgents = new ScraperUserAgents(CommonTestData.userAgents(), modelMapper);
         instance.places = new ScraperPlaces(CommonTestData.places(), modelMapper);
         instance.queries = new ScraperQueries(CommonTestData.queries(), modelMapper);
+        instance.headers = new ScraperHeaders();
+        instance.params = new ScraperParams();
+        instance.requests = new ScraperRequests(instance.queries, instance.headers, instance.params);
 
         return instance;
     }
@@ -38,5 +44,17 @@ public final class ScraperTestData {
 
     public static ScraperQueries queries() {
         return INSTANCE.queries;
+    }
+
+    public static ScraperHeaders headers() {
+        return INSTANCE.headers;
+    }
+
+    public static ScraperParams params() {
+        return INSTANCE.params;
+    }
+
+    public static ScraperRequests requests() {
+        return INSTANCE.requests;
     }
 }

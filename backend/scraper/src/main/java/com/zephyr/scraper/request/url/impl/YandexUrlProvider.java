@@ -19,6 +19,6 @@ public class YandexUrlProvider extends AbstractUrlProvider {
                 .map(Query::getPlace)
                 .map(Query.Place::getCountry)
                 .map(Query.Country::getLocaleYandex)
-                .orElse(this.getScraperConfigurationService().getBaseUrl(getEngine()));
+                .orElse(getScraperConfigurationService().getBaseUrl(getEngine()));
     }
 }
