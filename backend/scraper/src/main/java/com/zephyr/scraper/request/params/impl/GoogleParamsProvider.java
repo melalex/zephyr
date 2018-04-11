@@ -15,7 +15,6 @@ import java.util.Optional;
 
 @Component
 @RefreshScope
-@ConditionalOnProperty(name = "scraper.google.enabled", havingValue = "true")
 public class GoogleParamsProvider implements ParamsProvider {
 
     private static final String LANGUAGE = "lr";

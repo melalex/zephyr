@@ -13,7 +13,6 @@ import java.util.Map;
 
 @Component
 @RefreshScope
-@ConditionalOnProperty(name = "scraper.duckduckgo.enabled", havingValue = "true")
 public class DuckDuckGoParamsProvider implements ParamsProvider {
 
     private static final String QUERY = "q";

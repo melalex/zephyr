@@ -4,7 +4,6 @@ import com.zephyr.commons.FunctionUtils;
 import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.Query;
-import com.zephyr.test.Countries;
 import com.zephyr.test.mocks.UidProviderMock;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,11 +21,9 @@ public final class ScraperRequests {
     public static final String BING_URI = "/search";
     public static final String DUCKDUCKGO_URL = "https://duckduckgo.com";
     public static final String DUCKDUCKGO_URI = "";
-    public static final String GOOGLE_URL = Countries.UA_LOCALE_GOOGLE;
     public static final String GOOGLE_URI = "/search";
     public static final String YAHOO_URL = "https://search.yahoo.com";
     public static final String YAHOO_URI = "/search";
-    public static final String YANDEX_URL = Countries.UA_LOCALE_YANDEX;
     public static final String YANDEX_URI = "";
 
     private ScraperQueries queries;

@@ -13,7 +13,6 @@ import java.util.Map;
 
 @Component
 @RefreshScope
-@ConditionalOnProperty(name = "scraper.yandex.enabled", havingValue = "true")
 public class YandexParamsProvider implements ParamsProvider {
 
     private static final String QUERY = "text";

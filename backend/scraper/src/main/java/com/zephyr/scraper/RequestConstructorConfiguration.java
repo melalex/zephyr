@@ -12,6 +12,7 @@ import com.zephyr.scraper.request.url.UrlProvider;
 import com.zephyr.scraper.request.url.impl.DefaultUrlProvider;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,6 +25,7 @@ public class RequestConstructorConfiguration {
     private ScraperConfigurationService configuration;
 
     @Bean
+    @ConditionalOnProperty(name = "scraper.bing.enabled", havingValue = "true")
     public RequestProvider bingRequestProvider(ParamsProvider bingParamsProvider) {
         RequestProviderImpl bean = new RequestProviderImpl();
         bean.setEngine(SearchEngine.BING);
@@ -36,6 +38,7 @@ public class RequestConstructorConfiguration {
     }
 
     @Bean
+    @ConditionalOnProperty(name = "scraper.duckduckgo.enabled", havingValue = "true")
     public RequestProvider duckDuckGoRequestProvider(ParamsProvider duckDuckGoParamsProvider) {
         RequestProviderImpl bean = new RequestProviderImpl();
         bean.setEngine(SearchEngine.DUCKDUCKGO);
@@ -48,6 +51,7 @@ public class RequestConstructorConfiguration {
     }
 
     @Bean
+    @ConditionalOnProperty(name = "scraper.google.enabled", havingValue = "true")
     public RequestProvider googleRequestProvider(ParamsProvider googleParamsProvider,
                                                  UrlProvider googleUrlProvider) {
         RequestProviderImpl bean = new RequestProviderImpl();
@@ -61,6 +65,7 @@ public class RequestConstructorConfiguration {
     }
 
     @Bean
+    @ConditionalOnProperty(name = "scraper.yahoo.enabled", havingValue = "true")
     public RequestProvider yahooRequestProvider(ParamsProvider yahooParamsProvider) {
         RequestProviderImpl bean = new RequestProviderImpl();
         bean.setEngine(SearchEngine.YAHOO);
@@ -73,6 +78,7 @@ public class RequestConstructorConfiguration {
     }
 
     @Bean
+    @ConditionalOnProperty(name = "scraper.yandex.enabled", havingValue = "true")
     public RequestProvider yandexRequestProvider(ParamsProvider yandexParamsProvider,
                                                  UrlProvider yandexUrlProvider) {
         RequestProviderImpl bean = new RequestProviderImpl();

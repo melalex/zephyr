@@ -13,6 +13,6 @@ public final class ScraperPlaces {
     private ModelMapper modelMapper;
 
     public Query.Place kiev() {
-        return modelMapper.map(places, Query.Place.class);
+        return modelMapper.map(places.kiev(), Query.Place.class);
     }
 }

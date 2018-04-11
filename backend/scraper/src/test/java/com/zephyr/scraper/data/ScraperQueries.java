@@ -13,6 +13,6 @@ public final class ScraperQueries {
     private ModelMapper modelMapper;
 
     public Query simple() {
-        return modelMapper.map(queries, Query.class);
+        return modelMapper.map(queries.simple(), Query.class);
     }
 }

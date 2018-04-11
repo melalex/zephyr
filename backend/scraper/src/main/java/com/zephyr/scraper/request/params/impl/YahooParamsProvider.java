@@ -13,7 +13,6 @@ import java.util.Map;
 
 @Component
 @RefreshScope
-@ConditionalOnProperty(name = "scraper.yahoo.enabled", havingValue = "true")
 public class YahooParamsProvider implements ParamsProvider {
 
     private static final String QUERY = "p";

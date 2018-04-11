@@ -7,16 +7,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.test.StepVerifier;
 
 @Tag("request")
 @SpringBootTest
+@ActiveProfiles("requestTest")
 @ExtendWith(SpringExtension.class)
-@TestPropertySource(locations = "classpath:request-constructor-test.yml")
+@Import(ScraperTestConfiguration.class)
 class RequestConstructorIntegrationTest {
 
     @Autowired
@@ -35,11 +35,5 @@ class RequestConstructorIntegrationTest {
                 .expectNext(ScraperTestData.requests().yahoo().secondPage())
                 .expectNext(ScraperTestData.requests().yandex().firstPage())
                 .expectNext(ScraperTestData.requests().yandex().secondPage());
-    }
-
-    @TestConfiguration
-    @Import(ScraperTestConfiguration.class)
-    public static class RequestConstructorIntegrationTestConfiguration {
-
     }
 }
