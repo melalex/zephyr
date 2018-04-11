@@ -4,15 +4,12 @@ import com.zephyr.commons.support.MultiMapBuilder;
 import com.zephyr.commons.support.Page;
 import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.request.params.ParamsProvider;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 
 @Component
-@RefreshScope
 public class YahooParamsProvider implements ParamsProvider {
 
     private static final String QUERY = "p";

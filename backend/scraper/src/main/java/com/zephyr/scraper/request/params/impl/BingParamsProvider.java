@@ -5,7 +5,6 @@ import com.zephyr.commons.support.Page;
 import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.request.params.ParamsProvider;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.Map;
 import java.util.Optional;
 
 @Component
-@RefreshScope
 public class BingParamsProvider implements ParamsProvider {
 
     private static final String QUERY = "q";

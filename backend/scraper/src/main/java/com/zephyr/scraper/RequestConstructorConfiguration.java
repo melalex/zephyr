@@ -13,6 +13,7 @@ import com.zephyr.scraper.request.url.impl.DefaultUrlProvider;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,6 +26,7 @@ public class RequestConstructorConfiguration {
     private ScraperConfigurationService configuration;
 
     @Bean
+    @RefreshScope
     @ConditionalOnProperty(name = "scraper.bing.enabled", havingValue = "true")
     public RequestProvider bingRequestProvider(ParamsProvider bingParamsProvider) {
         RequestProviderImpl bean = new RequestProviderImpl();
@@ -38,6 +40,7 @@ public class RequestConstructorConfiguration {
     }
 
     @Bean
+    @RefreshScope
     @ConditionalOnProperty(name = "scraper.duckduckgo.enabled", havingValue = "true")
     public RequestProvider duckDuckGoRequestProvider(ParamsProvider duckDuckGoParamsProvider) {
         RequestProviderImpl bean = new RequestProviderImpl();
@@ -51,6 +54,7 @@ public class RequestConstructorConfiguration {
     }
 
     @Bean
+    @RefreshScope
     @ConditionalOnProperty(name = "scraper.google.enabled", havingValue = "true")
     public RequestProvider googleRequestProvider(ParamsProvider googleParamsProvider,
                                                  UrlProvider googleUrlProvider) {
@@ -65,6 +69,7 @@ public class RequestConstructorConfiguration {
     }
 
     @Bean
+    @RefreshScope
     @ConditionalOnProperty(name = "scraper.yahoo.enabled", havingValue = "true")
     public RequestProvider yahooRequestProvider(ParamsProvider yahooParamsProvider) {
         RequestProviderImpl bean = new RequestProviderImpl();
@@ -78,6 +83,7 @@ public class RequestConstructorConfiguration {
     }
 
     @Bean
+    @RefreshScope
     @ConditionalOnProperty(name = "scraper.yandex.enabled", havingValue = "true")
     public RequestProvider yandexRequestProvider(ParamsProvider yandexParamsProvider,
                                                  UrlProvider yandexUrlProvider) {

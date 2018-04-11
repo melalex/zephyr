@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-@RefreshScope
 public class DuckDuckGoParamsProvider implements ParamsProvider {
 
     private static final String QUERY = "q";

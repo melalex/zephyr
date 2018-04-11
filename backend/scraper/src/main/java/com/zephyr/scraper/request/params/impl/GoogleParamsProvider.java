@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.Optional;
 
 @Component
-@RefreshScope
 public class GoogleParamsProvider implements ParamsProvider {
 
     private static final String LANGUAGE = "lr";
