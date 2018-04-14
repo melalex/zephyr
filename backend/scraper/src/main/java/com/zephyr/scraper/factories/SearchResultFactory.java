@@ -1,5 +1,6 @@
 package com.zephyr.scraper.factories;
 
+import com.zephyr.commons.interfaces.UidProvider;
 import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.data.internal.dto.SearchResultDto;
 import com.zephyr.scraper.domain.EngineRequest;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Component;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Component
 public class SearchResultFactory {
@@ -20,11 +20,14 @@ public class SearchResultFactory {
     private Clock clock;
 
     @Setter(onMethod = @__(@Autowired))
+    private UidProvider uidProvider;
+
+    @Setter(onMethod = @__(@Autowired))
     private ModelMapper modelMapper;
 
     public SearchResultDto create(EngineRequest request, List<String> links) {
         SearchResultDto searchResult = new SearchResultDto();
-        searchResult.setId(UUID.randomUUID().toString());
+        searchResult.setId(uidProvider.provide());
         searchResult.setOffset(request.getOffset());
         searchResult.setQuery(modelMapper.map(request.getQuery(), QueryDto.class));
         searchResult.setProvider(request.getProvider());

@@ -5,6 +5,8 @@ plugins {
 dependencies {
     compile libraries['mongodb']
 
+    compile utils['commons']
+
     compileOnly libraries['reactor']
     compileOnly libraries['lombok']
 

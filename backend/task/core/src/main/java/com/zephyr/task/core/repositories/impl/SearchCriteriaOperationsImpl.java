@@ -1,5 +1,6 @@
 package com.zephyr.task.core.repositories.impl;
 
+import com.zephyr.commons.interfaces.UidProvider;
 import com.zephyr.task.core.domain.SearchCriteria;
 import com.zephyr.task.core.repositories.SearchCriteriaOperations;
 import lombok.Setter;
@@ -16,7 +17,6 @@ import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAmount;
-import java.util.UUID;
 
 @Repository
 public class SearchCriteriaOperationsImpl implements SearchCriteriaOperations {
@@ -29,6 +29,9 @@ public class SearchCriteriaOperationsImpl implements SearchCriteriaOperations {
 
     @Setter(onMethod = @__(@Autowired))
     private ReactiveMongoOperations mongo;
+
+    @Setter(onMethod = @__(@Autowired))
+    private UidProvider uidProvider;
 
     @Override
     public Mono<SearchCriteria> updateUsage(SearchCriteria searchCriteria) {
@@ -44,7 +47,7 @@ public class SearchCriteriaOperationsImpl implements SearchCriteriaOperations {
 
     @Override
     public Flux<SearchCriteria> findAllForUpdate(TemporalAmount relevancePeriod, Pageable pageable) {
-        String transactionId = createTransactionId();
+        String transactionId = uidProvider.provide();
 
         Query queryUpdate =
                 Query.query(Criteria.where(LAST_UPDATE_FIELD).lt(LocalDateTime.now().minus(relevancePeriod)))
@@ -59,9 +62,5 @@ public class SearchCriteriaOperationsImpl implements SearchCriteriaOperations {
 
         return mongo.updateMulti(queryUpdate, update, SearchCriteria.class)
                 .thenMany(mongo.find(queryResult, SearchCriteria.class));
-    }
-
-    private String createTransactionId() {
-        return UUID.randomUUID().toString();
     }
 }

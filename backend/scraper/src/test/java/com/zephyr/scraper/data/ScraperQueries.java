@@ -15,4 +15,10 @@ public final class ScraperQueries {
     public Query simple() {
         return modelMapper.map(queries.simple(), Query.class);
     }
+
+    public Query simpleWithoutLanguage() {
+        Query simple = simple();
+        simple.setLanguageIso(null);
+        return simple;
+    }
 }

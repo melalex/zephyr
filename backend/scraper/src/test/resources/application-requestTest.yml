@@ -1,3 +1,8 @@
+spring:
+  cloud:
+    config:
+      enabled: false
+
 scraper:
   google:
     url:

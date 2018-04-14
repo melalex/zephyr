@@ -2,6 +2,8 @@ package com.zephyr.commons;
 
 import lombok.experimental.UtilityClass;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -19,9 +21,11 @@ public class MapUtils {
                 .orElseThrow(() -> new IllegalArgumentException(String.format(GET_ERROR_MESSAGE, key)));
     }
 
+    // TODO: Java 10 migration
     public <K, V> Map<K, V> put(Map<K, V> map, K key, V value) {
-        map.put(key, value);
-        return map;
+        HashMap<K, V> result = new HashMap<>(map);
+        result.put(key, value);
+        return Collections.unmodifiableMap(result);
     }
 
     @SafeVarargs

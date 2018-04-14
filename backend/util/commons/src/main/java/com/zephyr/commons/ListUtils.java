@@ -3,6 +3,7 @@ package com.zephyr.commons;
 import lombok.Value;
 import lombok.experimental.UtilityClass;
 
+import java.lang.reflect.Array;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -14,7 +15,7 @@ public class ListUtils {
         return list.get(ThreadLocalRandom.current().nextInt(list.size()));
     }
 
-    public <T> SafeVarArg<T> toSafeVarArg(List<T> list) {
+    public <T> SafeVarArg<T> toSafeVarArg(List<T> list, Class<T> clazz) {
         T first = list.stream()
                 .findFirst()
                 .orElse(null);
@@ -28,7 +29,8 @@ public class ListUtils {
         }
 
         @SuppressWarnings("unchecked")
-        T[] rest = (T[]) subList.toArray();
+        T[] rest = (T[]) Array.newInstance(clazz, subList.size());
+        rest = subList.toArray(rest);
 
         return SafeVarArg.of(first, rest);
     }

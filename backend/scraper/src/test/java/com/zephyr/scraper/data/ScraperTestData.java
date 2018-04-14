@@ -14,6 +14,7 @@ public final class ScraperTestData {
     private ScraperHeaders headers;
     private ScraperParams params;
     private ScraperRequests requests;
+    private ScraperPages pages;
 
     private static ScraperTestData createInstance() {
         ScraperTestData instance = new ScraperTestData();
@@ -26,6 +27,7 @@ public final class ScraperTestData {
         instance.headers = new ScraperHeaders(instance.queries);
         instance.params = new ScraperParams();
         instance.requests = new ScraperRequests(instance.queries, instance.headers, instance.params);
+        instance.pages = new ScraperPages();
 
         return instance;
     }
@@ -56,5 +58,9 @@ public final class ScraperTestData {
 
     public static ScraperRequests requests() {
         return INSTANCE.requests;
+    }
+
+    public static  ScraperPages pages() {
+        return INSTANCE.pages;
     }
 }

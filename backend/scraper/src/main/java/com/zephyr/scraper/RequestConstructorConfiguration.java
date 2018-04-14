@@ -1,5 +1,6 @@
 package com.zephyr.scraper;
 
+import com.zephyr.commons.interfaces.UidProvider;
 import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.scraper.configuration.ScraperConfigurationService;
 import com.zephyr.scraper.request.headers.HeadersProvider;
@@ -7,7 +8,7 @@ import com.zephyr.scraper.request.headers.impl.DefaultHeadersProvider;
 import com.zephyr.scraper.request.headers.impl.HtmlHeadersProvider;
 import com.zephyr.scraper.request.params.ParamsProvider;
 import com.zephyr.scraper.request.provider.RequestProvider;
-import com.zephyr.scraper.request.provider.impl.RequestProviderImpl;
+import com.zephyr.scraper.request.provider.impl.DefaultRequestProvider;
 import com.zephyr.scraper.request.url.UrlProvider;
 import com.zephyr.scraper.request.url.impl.DefaultUrlProvider;
 import lombok.Setter;
@@ -25,32 +26,35 @@ public class RequestConstructorConfiguration {
     @Setter(onMethod = @__(@Autowired))
     private ScraperConfigurationService configuration;
 
+    @Setter(onMethod = @__(@Autowired))
+    private UidProvider uidProvider;
+
     @Bean
     @RefreshScope
     @ConditionalOnProperty(name = "scraper.bing.enabled", havingValue = "true")
     public RequestProvider bingRequestProvider(ParamsProvider bingParamsProvider) {
-        RequestProviderImpl bean = new RequestProviderImpl();
-        bean.setEngine(SearchEngine.BING);
-        bean.setConfiguration(configuration);
-        bean.setUrlProvider(bingUrlProvider());
-        bean.setParamsProvider(bingParamsProvider);
-        bean.setHeadersProviders(List.of(defaultHeadersProvider(), htmlHeadersProvider()));
-
-        return bean;
+        return DefaultRequestProvider.builder()
+                .engine(SearchEngine.BING)
+                .configuration(configuration)
+                .uidProvider(uidProvider)
+                .urlProvider(bingUrlProvider())
+                .paramsProvider(bingParamsProvider)
+                .headersProviders(List.of(defaultHeadersProvider(), htmlHeadersProvider()))
+                .build();
     }
 
     @Bean
     @RefreshScope
     @ConditionalOnProperty(name = "scraper.duckduckgo.enabled", havingValue = "true")
     public RequestProvider duckDuckGoRequestProvider(ParamsProvider duckDuckGoParamsProvider) {
-        RequestProviderImpl bean = new RequestProviderImpl();
-        bean.setEngine(SearchEngine.DUCKDUCKGO);
-        bean.setConfiguration(configuration);
-        bean.setUrlProvider(duckDuckGoUrlProvider());
-        bean.setParamsProvider(duckDuckGoParamsProvider);
-        bean.setHeadersProviders(List.of(defaultHeadersProvider(), ajaxHeadersProvider()));
-
-        return bean;
+        return DefaultRequestProvider.builder()
+                .engine(SearchEngine.DUCKDUCKGO)
+                .configuration(configuration)
+                .uidProvider(uidProvider)
+                .urlProvider(duckDuckGoUrlProvider())
+                .paramsProvider(duckDuckGoParamsProvider)
+                .headersProviders(List.of(defaultHeadersProvider(), ajaxHeadersProvider()))
+                .build();
     }
 
     @Bean
@@ -58,28 +62,28 @@ public class RequestConstructorConfiguration {
     @ConditionalOnProperty(name = "scraper.google.enabled", havingValue = "true")
     public RequestProvider googleRequestProvider(ParamsProvider googleParamsProvider,
                                                  UrlProvider googleUrlProvider) {
-        RequestProviderImpl bean = new RequestProviderImpl();
-        bean.setEngine(SearchEngine.GOOGLE);
-        bean.setConfiguration(configuration);
-        bean.setUrlProvider(googleUrlProvider);
-        bean.setParamsProvider(googleParamsProvider);
-        bean.setHeadersProviders(List.of(defaultHeadersProvider(), htmlHeadersProvider()));
-
-        return bean;
+        return DefaultRequestProvider.builder()
+                .engine(SearchEngine.GOOGLE)
+                .configuration(configuration)
+                .uidProvider(uidProvider)
+                .urlProvider(googleUrlProvider)
+                .paramsProvider(googleParamsProvider)
+                .headersProviders(List.of(defaultHeadersProvider(), htmlHeadersProvider()))
+                .build();
     }
 
     @Bean
     @RefreshScope
     @ConditionalOnProperty(name = "scraper.yahoo.enabled", havingValue = "true")
     public RequestProvider yahooRequestProvider(ParamsProvider yahooParamsProvider) {
-        RequestProviderImpl bean = new RequestProviderImpl();
-        bean.setEngine(SearchEngine.YAHOO);
-        bean.setConfiguration(configuration);
-        bean.setUrlProvider(yahooUrlProvider());
-        bean.setParamsProvider(yahooParamsProvider);
-        bean.setHeadersProviders(List.of(defaultHeadersProvider(), htmlHeadersProvider()));
-
-        return bean;
+        return DefaultRequestProvider.builder()
+                .engine(SearchEngine.YAHOO)
+                .configuration(configuration)
+                .uidProvider(uidProvider)
+                .urlProvider(yahooUrlProvider())
+                .paramsProvider(yahooParamsProvider)
+                .headersProviders(List.of(defaultHeadersProvider(), htmlHeadersProvider()))
+                .build();
     }
 
     @Bean
@@ -87,14 +91,14 @@ public class RequestConstructorConfiguration {
     @ConditionalOnProperty(name = "scraper.yandex.enabled", havingValue = "true")
     public RequestProvider yandexRequestProvider(ParamsProvider yandexParamsProvider,
                                                  UrlProvider yandexUrlProvider) {
-        RequestProviderImpl bean = new RequestProviderImpl();
-        bean.setEngine(SearchEngine.YANDEX);
-        bean.setConfiguration(configuration);
-        bean.setUrlProvider(yandexUrlProvider);
-        bean.setParamsProvider(yandexParamsProvider);
-        bean.setHeadersProviders(List.of(defaultHeadersProvider(), ajaxHeadersProvider()));
-
-        return bean;
+        return DefaultRequestProvider.builder()
+                .engine(SearchEngine.YANDEX)
+                .configuration(configuration)
+                .uidProvider(uidProvider)
+                .urlProvider(yandexUrlProvider)
+                .paramsProvider(yandexParamsProvider)
+                .headersProviders(List.of(defaultHeadersProvider(), ajaxHeadersProvider()))
+                .build();
     }
 
     @Bean

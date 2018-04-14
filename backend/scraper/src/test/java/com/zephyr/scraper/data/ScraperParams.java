@@ -69,6 +69,13 @@ public final class ScraperParams {
     private static final String YANDEX_START = "b";
     private static final String YANDEX_COUNT = "n";
 
+    public Map<String, List<String>> bingNotLocalizedFirstPage(Query query) {
+        return Map.ofEntries(
+                entry(BING_QUERY, of(query.getQuery())),
+                entry(BING_COUNT, DataUtils.value(BING_PAGE_SIZE))
+        );
+    }
+
     public Map<String, List<String>> bingFirstPage(Query query) {
         return Map.ofEntries(
                 entry(BING_QUERY, of(String.format(BING_QUERY_FORMAT, query.getQuery(), query.getLanguageIso()))),
@@ -80,7 +87,7 @@ public final class ScraperParams {
         return MapUtils.put(bingFirstPage(query), BING_FIRST, DataUtils.value(BING_SECOND_PAGE_OFFSET));
     }
 
-    public Map<String, List<String>> googleFirstPage(Query query) {
+    public Map<String, List<String>> googleNotLocalizedFirstPage(Query query) {
         return Map.ofEntries(
                 entry(GOOGLE_SAFE, of(GOOGLE_IMAGE)),
                 entry(GOOGLE_AD_TEST, of(GOOGLE_ON)),
@@ -88,10 +95,16 @@ public final class ScraperParams {
                 entry(GOOGLE_QUERY, DataUtils.value(query.getQuery())),
                 entry(GOOGLE_NUMBER, DataUtils.value(GOOGLE_PAGE_SIZE)),
                 entry(GOOGLE_PARENT, of(String.format(GOOGLE_PARENT_TEMPLATE, query.getPlace().getParent()))),
-                entry(GOOGLE_LOCATION, DataUtils.value(query.getPlace().getUule())),
+                entry(GOOGLE_LOCATION, DataUtils.value(query.getPlace().getUule()))
+        );
+    }
+
+    public Map<String, List<String>> googleFirstPage(Query query) {
+        Map<String, List<String>> localizationParams = Map.ofEntries(
                 entry(GOOGLE_INTERFACE, DataUtils.value(query.getLanguageIso())),
                 entry(GOOGLE_LANGUAGE, of(String.format(GOOGLE_LANGUAGE_TEMPLATE, query.getLanguageIso())))
         );
+        return MapUtils.merge(googleNotLocalizedFirstPage(query), localizationParams);
     }
 
     public Map<String, List<String>> googleSecondPage(Query query) {
@@ -130,6 +143,6 @@ public final class ScraperParams {
     }
 
     public Map<String, List<String>> yandexSecondPage(Query query) {
-        return MapUtils.put(yahooFirstPage(query), YANDEX_START, DataUtils.value(YANDEX_SECOND_PAGE_OFFSET));
+        return MapUtils.put(yandexFirstPage(query), YANDEX_START, DataUtils.value(YANDEX_SECOND_PAGE_OFFSET));
     }
 }

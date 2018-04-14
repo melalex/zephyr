@@ -26,6 +26,10 @@ public class Page {
         return (int) Math.ceil(count * 1.0 / pageSize) - 1;
     }
 
+    public boolean hasNext() {
+        return page < getLastPage() + 1;
+    }
+
     public boolean isFirst() {
         return page == 0;
     }

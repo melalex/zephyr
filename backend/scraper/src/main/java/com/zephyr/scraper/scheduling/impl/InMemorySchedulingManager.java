@@ -55,7 +55,7 @@ public class InMemorySchedulingManager implements SchedulingManager {
 
         log.info(NEW_TASK_MESSAGE, group, dateTime);
 
-        return Mono.<Void>create(s -> group.addLast(create(s, dateTime)))
+        return Mono.<Void>create(s -> group.addLast(timer(s, dateTime)))
                 .doOnSuccess(ignore -> group.poll());
     }
 
@@ -73,7 +73,7 @@ public class InMemorySchedulingManager implements SchedulingManager {
         log.info(RESCHEDULE_MESSAGE, groupName, duration);
     }
 
-    public MutableTimer create(MonoSink<Void> sink, LocalDateTime dateTime) {
+    public MutableTimer timer(MonoSink<Void> sink, LocalDateTime dateTime) {
         return MutableTimer.builder()
                 .sink(sink)
                 .dateTime(new AtomicReference<>(dateTime))

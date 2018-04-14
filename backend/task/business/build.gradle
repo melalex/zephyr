@@ -8,7 +8,6 @@ dependencies {
     compile libraries['messaging']
     compile libraries['discoveryClient']
 
-    compile utils['commons']
     compile utils['data']
     compile utils['errorsCore']
 
