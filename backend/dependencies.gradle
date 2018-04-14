@@ -118,6 +118,7 @@ ext {
             mongodbDriver         : 'org.mongodb:mongodb-driver-reactivestreams',
             neo4j                 : 'org.springframework.data:spring-data-neo4j:5.0.2.RELEASE',
             test                  : 'org.springframework.boot:spring-boot-starter-test:2.0.0.M7',
+            streamTest            : 'org.springframework.cloud:spring-cloud-stream-test-support',
             jUnit5Api             : 'org.junit.jupiter:junit-jupiter-api',
             jUnit5Engine          : 'org.junit.jupiter:junit-jupiter-engine',
 

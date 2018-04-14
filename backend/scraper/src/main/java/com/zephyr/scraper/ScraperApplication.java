@@ -18,11 +18,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.annotation.Input;
-import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Scheduler;
@@ -56,9 +55,9 @@ public class ScraperApplication {
                 .run(args);
     }
 
-    @StreamListener
-    @Output(Processor.OUTPUT)
-    public Flux<SearchResultDto> receive(@Input(Processor.INPUT) Flux<QueryDto> input) {
+    @SendTo(Processor.OUTPUT)
+    @StreamListener(Processor.INPUT)
+    public Flux<SearchResultDto> receive(Flux<QueryDto> input) {
         return input.doOnNext(LoggingUtils.info(log, NEW_QUERY_MSG))
                 .map(mapper.mapperFor(Query.class))
                 .flatMap(requestConstructor::construct)

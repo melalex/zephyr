@@ -50,6 +50,7 @@ dependencies {
     testCompile utils['test']
 
     testCompile libraries['test']
+    testCompile libraries['streamTest']
     testCompile libraries['lombok']
     testCompile libraries['reactorTest']
     testCompile libraries['jUnit5Api']
