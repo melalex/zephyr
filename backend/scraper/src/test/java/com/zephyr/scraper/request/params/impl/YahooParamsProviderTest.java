@@ -6,12 +6,13 @@ import com.zephyr.commons.support.Page;
 import com.zephyr.scraper.data.ScraperTestData;
 import com.zephyr.scraper.domain.Query;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
 
-@Tag("request")
+@Tags({@Tag("request"), @Tag("unit")})
 class YahooParamsProviderTest {
 
     private YahooParamsProvider testInstance = new YahooParamsProvider();

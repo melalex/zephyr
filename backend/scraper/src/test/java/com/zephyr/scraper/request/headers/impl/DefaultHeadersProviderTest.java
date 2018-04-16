@@ -6,12 +6,13 @@ import com.zephyr.scraper.data.ScraperTestData;
 import com.zephyr.scraper.domain.Query;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
 
-@Tag("request")
+@Tags({@Tag("request"), @Tag("unit")})
 class DefaultHeadersProviderTest {
 
     private DefaultHeadersProvider testInstance = new DefaultHeadersProvider();

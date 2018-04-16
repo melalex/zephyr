@@ -2,12 +2,12 @@ package com.zephyr.scraper.scheduling.impl;
 
 import com.zephyr.commons.TimeUtils;
 import com.zephyr.scraper.scheduling.SchedulingManager;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Setter;
+import lombok.NonNull;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.Disposable;
 import reactor.core.Disposables;
@@ -29,18 +29,19 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 @Component
+@AllArgsConstructor
 public class InMemorySchedulingManager implements SchedulingManager {
 
-    private static final String NEW_TASK_MESSAGE = "Schedule new task for group {} on {}";
-    private static final String RESCHEDULE_MESSAGE = "Reschedule all tasks in group with {} duration";
+    private static final String NEW_TASK_MESSAGE = "Schedule new task for group [{}] on [{}]";
+    private static final String RESCHEDULE_MESSAGE = "Reschedule all tasks in group [{}] with [{}] duration";
 
     private final Map<String, Deque<MutableTimer>> state = new ConcurrentHashMap<>();
     private final Map<String, LocalDateTime> lastAdded = new ConcurrentHashMap<>();
 
-    @Setter(onMethod = @__(@Autowired))
+    @NonNull
     private Scheduler scheduler;
 
-    @Setter(onMethod = @__(@Autowired))
+    @NonNull
     private Clock clock;
 
     @Override
@@ -53,7 +54,7 @@ public class InMemorySchedulingManager implements SchedulingManager {
         Deque<MutableTimer> group = group(groupName);
         LocalDateTime dateTime = pushLast(groupName, duration);
 
-        log.info(NEW_TASK_MESSAGE, group, dateTime);
+        log.info(NEW_TASK_MESSAGE, groupName, dateTime);
 
         return Mono.<Void>create(s -> group.addLast(timer(s, dateTime)))
                 .doOnSuccess(ignore -> group.poll());
@@ -73,7 +74,7 @@ public class InMemorySchedulingManager implements SchedulingManager {
         log.info(RESCHEDULE_MESSAGE, groupName, duration);
     }
 
-    public MutableTimer timer(MonoSink<Void> sink, LocalDateTime dateTime) {
+    private MutableTimer timer(MonoSink<Void> sink, LocalDateTime dateTime) {
         return MutableTimer.builder()
                 .sink(sink)
                 .dateTime(new AtomicReference<>(dateTime))

@@ -9,6 +9,7 @@ import com.zephyr.scraper.request.provider.RequestProvider;
 import com.zephyr.test.extensions.MockitoExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -16,8 +17,8 @@ import reactor.test.StepVerifier;
 
 import java.util.List;
 
-@Tag("request")
 @ExtendWith(MockitoExtension.class)
+@Tags({@Tag("request"), @Tag("unit")})
 class RequestConstructorImplTest {
 
     @Mock

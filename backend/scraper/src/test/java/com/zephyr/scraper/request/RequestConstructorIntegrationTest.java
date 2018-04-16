@@ -3,6 +3,7 @@ package com.zephyr.scraper.request;
 import com.zephyr.scraper.ScraperTestConfiguration;
 import com.zephyr.scraper.data.ScraperTestData;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.test.StepVerifier;
 
-@Tag("request")
 @SpringBootTest
 @ActiveProfiles("requestTest")
 @ExtendWith(SpringExtension.class)
 @Import(ScraperTestConfiguration.class)
+@Tags({@Tag("request"), @Tag("integration")})
 class RequestConstructorIntegrationTest {
 
     @Autowired

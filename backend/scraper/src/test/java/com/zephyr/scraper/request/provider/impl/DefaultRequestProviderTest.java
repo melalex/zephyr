@@ -17,14 +17,15 @@ import com.zephyr.test.extensions.MockitoExtension;
 import com.zephyr.test.mocks.UidProviderMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 
 import java.util.List;
 
-@Tag("request")
 @ExtendWith(MockitoExtension.class)
+@Tags({@Tag("request"), @Tag("unit")})
 class DefaultRequestProviderTest {
 
     private static final SearchEngine SEARCH_ENGINE = SearchEngine.GOOGLE;
@@ -48,7 +49,6 @@ class DefaultRequestProviderTest {
     private HeadersProvider defaultHeadersProvider;
 
     private DefaultRequestProvider testInstance;
-
 
     @BeforeEach
     void setUp() {
