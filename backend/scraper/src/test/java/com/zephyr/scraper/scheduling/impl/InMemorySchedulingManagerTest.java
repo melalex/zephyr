@@ -38,15 +38,15 @@ class InMemorySchedulingManagerTest {
     void shouldScheduleNext() {
         StepVerifier.create(testInstance.scheduleNext(FIRST_GROUP, DURATION))
                 .expectNoEvent(DURATION)
-                .expectComplete();
+                .verifyComplete();
 
         StepVerifier.create(testInstance.scheduleNext(FIRST_GROUP, DURATION))
                 .expectNoEvent(DURATION.plus(DURATION))
-                .expectComplete();
+                .verifyComplete();
 
         StepVerifier.create(testInstance.scheduleNext(SECOND_GROUP, DURATION))
                 .expectNoEvent(DURATION)
-                .expectComplete();
+                .verifyComplete();
     }
 
     @Test
@@ -59,14 +59,14 @@ class InMemorySchedulingManagerTest {
 
         StepVerifier.create(first)
                 .expectNoEvent(DURATION.plus(RESCHEDULE_DURATION))
-                .expectComplete();
+                .verifyComplete();
 
         StepVerifier.create(second)
                 .expectNoEvent(DURATION.plus(DURATION).plus(RESCHEDULE_DURATION))
-                .expectComplete();
+                .verifyComplete();
 
         StepVerifier.create(third)
                 .expectNoEvent(DURATION)
-                .expectComplete();
+                .verifyComplete();
     }
 }
