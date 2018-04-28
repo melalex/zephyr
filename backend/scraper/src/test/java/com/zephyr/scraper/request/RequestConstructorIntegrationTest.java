@@ -35,6 +35,7 @@ class RequestConstructorIntegrationTest {
                 .expectNext(ScraperTestData.requests().yahoo().firstPage())
                 .expectNext(ScraperTestData.requests().yahoo().secondPage())
                 .expectNext(ScraperTestData.requests().yandex().firstPage())
-                .expectNext(ScraperTestData.requests().yandex().secondPage());
+                .expectNext(ScraperTestData.requests().yandex().secondPage())
+                .verifyComplete();
     }
 }

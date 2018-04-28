@@ -22,21 +22,6 @@ ext {
             validation   : project(':backend:util:validation'),
     ]
 
-    cores = [
-            agent   : project(':backend:agent:core'),
-            location: project(':backend:location:core'),
-            rating  : project(':backend:rating:core'),
-            task    : project(':backend:task:core'),
-    ]
-
-    business = [
-            agent   : project(':backend:agent:business'),
-            keyword : project(':backend:keyword:business'),
-            location: project(':backend:location:business'),
-            rating  : project(':backend:rating:business'),
-            task    : project(':backend:task:business'),
-    ]
-
     def lombokVersion = '1.16.20'
     def validationApiVersion = '2.0.0.Final'
     def apacheCommonsVersion = '3.6'

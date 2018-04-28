@@ -21,15 +21,6 @@ include 'backend'
 include 'backend:agent'
 findProject(':backend:agent')?.name = 'agent'
 
-include 'backend:agent:core'
-findProject(':backend:agent:core')?.name = 'core'
-
-include 'backend:agent:business'
-findProject(':backend:agent:service')?.name = 'business'
-
-include 'backend:agent:app'
-findProject(':backend:agent:app')?.name = 'app'
-
 include 'backend:auth'
 findProject(':backend:auth')?.name = 'auth'
 
@@ -42,47 +33,17 @@ findProject(':backend:gateway')?.name = 'gateway'
 include 'backend:jobs'
 findProject(':backend:jobs')?.name = 'jobs'
 
-include 'backend:jobs:mock-data'
-findProject(':backend:jobs:mock-data')?.name = 'mock-data'
-
-include 'backend:jobs:init-data'
-findProject(':backend:jobs:init-data')?.name = 'init-data'
-
 include 'backend:keyword'
 findProject(':backend:keyword')?.name = 'keyword'
 
-include 'backend:keyword:business'
-findProject(':backend:keyword:business')?.name = 'business'
-
-include 'backend:keyword:app'
-findProject(':backend:keyword:app')?.name = 'app'
-
 include 'backend:location'
 findProject(':backend:location')?.name = 'location'
-
-include 'backend:location:core'
-findProject(':backend:location:core')?.name = 'core'
-
-include 'backend:location:business'
-findProject(':backend:location:business')?.name = 'business'
-
-include 'backend:location:app'
-findProject(':backend:location:app')?.name = 'app'
 
 include 'backend:monitoring'
 findProject(':backend:monitoring')?.name = 'monitoring'
 
 include 'backend:rating'
 findProject(':backend:rating')?.name = 'rating'
-
-include 'backend:rating:core'
-findProject(':backend:rating:core')?.name = 'core'
-
-include 'backend:rating:business'
-findProject(':backend:rating:business')?.name = 'business'
-
-include 'backend:rating:app'
-findProject(':backend:rating:app')?.name = 'app'
 
 include 'backend:registry'
 findProject(':backend:registry')?.name = 'registry'
@@ -92,15 +53,6 @@ findProject(':backend:scraper')?.name = 'scraper'
 
 include 'backend:task'
 findProject(':backend:task')?.name = 'task'
-
-include 'backend:task:core'
-findProject(':backend:task:core')?.name = 'core'
-
-include 'backend:task:business'
-findProject(':backend:task:business')?.name = 'business'
-
-include 'backend:task:app'
-findProject(':backend:task:app')?.name = 'app'
 
 include 'backend:util'
 findProject(':backend:util')?.name = 'util'
@@ -119,6 +71,9 @@ findProject(':backend:util:errors:core')?.name = 'core'
 
 include 'backend:util:errors:starter'
 findProject(':backend:util:errors:starter')?.name = 'starter'
+
+include 'backend:jobs:mock-data'
+findProject(':backend:util:mock-data')?.name = 'mock-data'
 
 include 'backend:util:test'
 findProject(':backend:util:test')?.name = 'test'

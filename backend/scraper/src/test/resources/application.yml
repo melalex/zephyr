@@ -1,0 +1,30 @@
+spring:
+  cloud:
+    config:
+      enabled: false
+
+scraper:
+  google:
+    url:
+      base: https://www.google.com
+      path: /search
+
+  bing:
+    url:
+      base: https://www.bing.com
+      path: /search
+
+  yahoo:
+    url:
+      base: https://search.yahoo.com
+      path: /search
+
+  yandex:
+    url:
+      base: https://yandex.ru
+      path:
+
+  duckduckgo:
+    url:
+      base: https://duckduckgo.com
+      path:

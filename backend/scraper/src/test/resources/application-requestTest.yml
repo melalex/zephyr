@@ -1,48 +1,28 @@
-spring:
-  cloud:
-    config:
-      enabled: false
-
 scraper:
   google:
-    url:
-      base: https://www.google.com
-      path: /search
     enabled: true
     first: 0
     resultCount: 200
     pageSize: 100
 
   bing:
-    url:
-      base: https://www.bing.com
-      path: /search
     enabled: true
     first: 1
     resultCount: 20
     pageSize: 10
 
   yahoo:
-    url:
-      base: https://search.yahoo.com
-      path: /search
     enabled: true
     first: 1
     resultCount: 20
     pageSize: 10
 
   yandex:
-    url:
-      base: https://yandex.ru
-      path:
     first: 0
     resultCount: 200
     pageSize: 100
 
   duckduckgo:
-    url:
-      base: https://duckduckgo.com
-      path:
     enabled: true
     first: 0
     resultCount: 200

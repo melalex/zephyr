@@ -5,7 +5,7 @@ import static java.util.Map.entry;
 
 import com.zephyr.commons.MapUtils;
 import com.zephyr.scraper.domain.Query;
-import com.zephyr.scraper.util.DataUtils;
+import com.zephyr.scraper.data.util.DataUtils;
 
 import java.util.List;
 import java.util.Map;
