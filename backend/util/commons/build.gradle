@@ -1,6 +1,5 @@
 plugins {
     id 'io.spring.dependency-management' version '1.0.4.RELEASE'
-    id 'org.junit.platform.gradle.plugin' version '1.0.1'
 }
 
 dependencies {
@@ -18,8 +17,6 @@ dependencies {
 
     testCompile libraries['test']
     testCompile libraries['reactorTest']
-    testCompile libraries['jUnit5Api']
-    testRuntime libraries['jUnit5Engine']
 }
 
 dependencyManagement {

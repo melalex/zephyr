@@ -1,24 +1,21 @@
 package com.zephyr.scraper.request.params.impl;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import com.zephyr.commons.support.Page;
 import com.zephyr.scraper.data.ScraperTestData;
 import com.zephyr.scraper.domain.Query;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
 
-@Tags({@Tag("request"), @Tag("unit")})
-class YandexParamsProviderTest {
+public class YandexParamsProviderTest {
 
     private YandexParamsProvider testInstance = new YandexParamsProvider();
 
     @Test
-    void shouldProvideFirstPage() {
+    public void shouldProvideFirstPage() {
         Query query = ScraperTestData.queries().simple();
         Page page = ScraperTestData.pages().yandexFirstPage();
 
@@ -30,7 +27,7 @@ class YandexParamsProviderTest {
     }
 
     @Test
-    void shouldProvideSecondPage() {
+    public void shouldProvideSecondPage() {
         Query query = ScraperTestData.queries().simple();
         Page page = ScraperTestData.pages().yandexSecondPage();
 

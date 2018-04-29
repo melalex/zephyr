@@ -6,20 +6,17 @@ import com.zephyr.scraper.data.ScraperTestData;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.request.provider.RequestProvider;
-import com.zephyr.test.extensions.MockitoExtension;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import reactor.test.StepVerifier;
 
 import java.util.List;
 
-@ExtendWith(MockitoExtension.class)
-@Tags({@Tag("request"), @Tag("unit")})
-class RequestConstructorImplTest {
+@RunWith(MockitoJUnitRunner.class)
+public class RequestConstructorImplTest {
 
     @Mock
     private RequestProvider bing;
@@ -32,13 +29,13 @@ class RequestConstructorImplTest {
 
     private RequestConstructorImpl testInstance;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         testInstance = new RequestConstructorImpl(List.of(bing, google, yahoo));
     }
 
     @Test
-    void shouldConstruct() {
+    public void shouldConstruct() {
         Query query = ScraperTestData.queries().simple();
 
         EngineRequest bingFirstPage = ScraperTestData.requests().bing().firstPage();

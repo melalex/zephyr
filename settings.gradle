@@ -1,18 +1,3 @@
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        maven { url = ArtifactRepositoryContainer.MAVEN_CENTRAL_URL }
-    }
-
-    resolutionStrategy {
-        eachPlugin {
-            if (requested.id.id == 'org.junit.platform.gradle.plugin') {
-                useModule("org.junit.platform:junit-platform-gradle-plugin:${requested.version}")
-            }
-        }
-    }
-}
-
 rootProject.name = 'zephyr'
 
 include 'frontend'
@@ -72,7 +57,7 @@ findProject(':backend:util:errors:core')?.name = 'core'
 include 'backend:util:errors:starter'
 findProject(':backend:util:errors:starter')?.name = 'starter'
 
-include 'backend:jobs:mock-data'
+include 'backend:util:mock-data'
 findProject(':backend:util:mock-data')?.name = 'mock-data'
 
 include 'backend:util:test'

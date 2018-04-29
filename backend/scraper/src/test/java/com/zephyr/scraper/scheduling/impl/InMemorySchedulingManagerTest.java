@@ -1,11 +1,9 @@
 package com.zephyr.scraper.scheduling.impl;
 
-import com.zephyr.test.extensions.MockitoExtension;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.reactivestreams.Publisher;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
@@ -14,9 +12,8 @@ import reactor.test.StepVerifier;
 import java.time.Clock;
 import java.time.Duration;
 
-@ExtendWith(MockitoExtension.class)
-@Tags({@Tag("scheduling"), @Tag("unit")})
-class InMemorySchedulingManagerTest {
+@RunWith(MockitoJUnitRunner.class)
+public class InMemorySchedulingManagerTest {
 
     private static final String FIRST_GROUP = "FIRST_GROUP";
     private static final String SECOND_GROUP = "SECOND_GROUP";
@@ -26,8 +23,8 @@ class InMemorySchedulingManagerTest {
 
     private InMemorySchedulingManager testInstance;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         Scheduler scheduler = Schedulers.elastic();
         Clock clock = Clock.systemDefaultZone();
 
@@ -35,7 +32,7 @@ class InMemorySchedulingManagerTest {
     }
 
     @Test
-    void shouldScheduleNext() {
+    public void shouldScheduleNext() {
         StepVerifier.create(testInstance.scheduleNext(FIRST_GROUP, DURATION))
                 .expectNoEvent(DURATION)
                 .verifyComplete();
@@ -50,7 +47,7 @@ class InMemorySchedulingManagerTest {
     }
 
     @Test
-    void shouldReSchedule() {
+    public void shouldReSchedule() {
         Publisher<Void> first = testInstance.scheduleNext(FIRST_GROUP, DURATION);
         Publisher<Void> second = testInstance.scheduleNext(FIRST_GROUP, DURATION);
         Publisher<Void> third = testInstance.scheduleNext(SECOND_GROUP, DURATION);

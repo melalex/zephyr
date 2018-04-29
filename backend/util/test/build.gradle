@@ -8,7 +8,6 @@ dependencies {
 
     compileOnly libraries['mockito']
     compileOnly libraries['lombok']
-    compileOnly libraries['jUnit5Api']
 }
 
 dependencyManagement {

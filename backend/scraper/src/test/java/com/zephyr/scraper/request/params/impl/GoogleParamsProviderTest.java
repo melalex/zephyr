@@ -5,20 +5,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.zephyr.commons.support.Page;
 import com.zephyr.scraper.data.ScraperTestData;
 import com.zephyr.scraper.domain.Query;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
 
-@Tags({@Tag("request"), @Tag("unit")})
-class GoogleParamsProviderTest {
+public class GoogleParamsProviderTest {
 
     private GoogleParamsProvider testInstance = new GoogleParamsProvider();
 
     @Test
-    void shouldProvideFirstPage() {
+    public void shouldProvideFirstPage() {
         Query query = ScraperTestData.queries().simpleWithoutLanguage();
         Page page = ScraperTestData.pages().googleFirstPage();
 
@@ -30,7 +27,7 @@ class GoogleParamsProviderTest {
     }
 
     @Test
-    void shouldProvideSecondPageLocalized() {
+    public void shouldProvideSecondPageLocalized() {
         Query query = ScraperTestData.queries().simple();
         Page page = ScraperTestData.pages().googleSecondPage();
 

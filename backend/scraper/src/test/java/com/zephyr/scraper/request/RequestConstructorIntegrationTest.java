@@ -2,29 +2,26 @@ package com.zephyr.scraper.request;
 
 import com.zephyr.scraper.ScraperTestConfiguration;
 import com.zephyr.scraper.data.ScraperTestData;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 import reactor.test.StepVerifier;
 
 @SpringBootTest
 @ActiveProfiles("requestTest")
-@ExtendWith(SpringExtension.class)
+@RunWith(SpringRunner.class)
 @Import(ScraperTestConfiguration.class)
-@Tags({@Tag("request"), @Tag("integration")})
-class RequestConstructorIntegrationTest {
+public class RequestConstructorIntegrationTest {
 
     @Autowired
     private RequestConstructor testInstance;
 
     @Test
-    void shouldConstruct() {
+    public void shouldConstruct() {
         StepVerifier.create(testInstance.construct(ScraperTestData.queries().simple()))
                 .expectNext(ScraperTestData.requests().bing().firstPage())
                 .expectNext(ScraperTestData.requests().bing().secondPage())

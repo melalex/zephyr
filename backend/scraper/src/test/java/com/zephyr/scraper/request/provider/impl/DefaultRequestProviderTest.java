@@ -1,6 +1,6 @@
 package com.zephyr.scraper.request.provider.impl;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import com.zephyr.commons.support.Page;
@@ -13,20 +13,17 @@ import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.request.headers.HeadersProvider;
 import com.zephyr.scraper.request.params.ParamsProvider;
 import com.zephyr.scraper.request.url.UrlProvider;
-import com.zephyr.test.extensions.MockitoExtension;
 import com.zephyr.test.mocks.UidProviderMock;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
-@ExtendWith(MockitoExtension.class)
-@Tags({@Tag("request"), @Tag("unit")})
-class DefaultRequestProviderTest {
+@RunWith(MockitoJUnitRunner.class)
+public class DefaultRequestProviderTest {
 
     private static final SearchEngine SEARCH_ENGINE = SearchEngine.GOOGLE;
     private static final String URI = ScraperRequests.GOOGLE_URI;
@@ -50,8 +47,8 @@ class DefaultRequestProviderTest {
 
     private DefaultRequestProvider testInstance;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         testInstance = DefaultRequestProvider.builder()
                 .engine(SEARCH_ENGINE)
                 .configuration(configuration)
@@ -75,7 +72,7 @@ class DefaultRequestProviderTest {
     }
 
     @Test
-    void shouldProvide() {
+    public void shouldProvide() {
         List<EngineRequest> expected = List.of(
                 ScraperTestData.requests().google().firstPage(query),
                 ScraperTestData.requests().google().secondPage(query)
