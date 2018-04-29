@@ -15,6 +15,7 @@ public final class ScraperTestData {
     private ScraperParams params;
     private ScraperRequests requests;
     private ScraperPages pages;
+    private ScraperResponses responses;
 
     private static ScraperTestData createInstance() {
         ScraperTestData instance = new ScraperTestData();
@@ -28,6 +29,7 @@ public final class ScraperTestData {
         instance.params = new ScraperParams();
         instance.requests = new ScraperRequests(instance.queries, instance.headers, instance.params);
         instance.pages = new ScraperPages();
+        instance.responses = new ScraperResponses();
 
         return instance;
     }
@@ -60,7 +62,11 @@ public final class ScraperTestData {
         return INSTANCE.requests;
     }
 
-    public static  ScraperPages pages() {
+    public static ScraperPages pages() {
         return INSTANCE.pages;
+    }
+
+    public static ScraperResponses responses() {
+        return INSTANCE.responses;
     }
 }

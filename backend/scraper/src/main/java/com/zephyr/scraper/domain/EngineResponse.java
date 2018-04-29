@@ -12,7 +12,8 @@ import java.util.Map;
 public class EngineResponse {
 
     private String id;
+    private int status;
+    private SearchEngine provider;
     private Map<String, List<String>> headers;
     private String body;
-    private SearchEngine provider;
 }

@@ -3,6 +3,10 @@ spring:
     config:
       enabled: false
 
+browser:
+  backoff: 5000
+  retryCount: 2
+
 scraper:
   google:
     url:

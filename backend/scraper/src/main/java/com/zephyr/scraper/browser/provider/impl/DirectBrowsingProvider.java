@@ -27,7 +27,6 @@ public class DirectBrowsingProvider implements BrowsingProvider {
 
     private static final String NEW_REQUEST_MSG = "Scheduled new request with id {}";
     private static final String NEW_RESPONSE_MSG = "Received response for request with id %s";
-    private static final String NEW_RESPONSE_FULL_MSG = "Received response for\n{}";
     private static final String BROWSER_EXCEPTION_MSG = "Exception during request: ";
     private static final String REQUEST_EXCEPTION_MSG = "Exception during request on %s try: ";
 
@@ -65,7 +64,6 @@ public class DirectBrowsingProvider implements BrowsingProvider {
                 .exchange()
                 .flatMap(extractEngineResponse(engineRequest))
                 .doOnNext(LoggingUtils.info(log, EngineResponse::getId, NEW_RESPONSE_MSG))
-                .doOnNext(LoggingUtils.debug(log, NEW_RESPONSE_FULL_MSG))
                 .retryWhen(requestException());
     }
 
@@ -90,6 +88,7 @@ public class DirectBrowsingProvider implements BrowsingProvider {
         return c -> c.bodyToMono(String.class)
                 .map(b -> EngineResponse.builder()
                         .id(engineRequest.getId())
+                        .status(c.statusCode().value())
                         .headers(c.headers().asHttpHeaders())
                         .body(b)
                         .provider(engineRequest.getProvider())

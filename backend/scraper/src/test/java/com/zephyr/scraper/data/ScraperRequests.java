@@ -8,12 +8,15 @@ import com.zephyr.test.mocks.UidProviderMock;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+@Accessors(fluent = true)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public final class ScraperRequests {
 
@@ -25,12 +28,35 @@ public final class ScraperRequests {
     public static final String YAHOO_URL = "https://search.yahoo.com";
     public static final String YAHOO_URI = "/search";
     public static final String YANDEX_URI = "";
+    public static final String FAILED_REQUEST_ID = "Failed";
 
     private ScraperQueries queries;
     private ScraperHeaders headers;
     private ScraperParams params;
 
-    public PageRequests bing() {
+    @Getter(lazy = true)
+    private final PageRequests bing = createBing();
+
+    @Getter(lazy = true)
+    private final PageRequests duckDuckGo = createDuckDuckGo();
+
+    @Getter(lazy = true)
+    private final PageRequests google = createGoogle();
+
+    @Getter(lazy = true)
+    private final PageRequests yahoo = createYahoo();
+
+    @Getter(lazy = true)
+    private final PageRequests yandex = createYandex();
+
+    public EngineRequest failed() {
+        return EngineRequest.builder()
+                .id(FAILED_REQUEST_ID)
+                .provider(SearchEngine.GOOGLE)
+                .build();
+    }
+
+    private PageRequests createBing() {
         return PageRequests.builder()
                 .urls(FunctionUtils.constant(BING_URL))
                 .uri(BING_URI)
@@ -44,7 +70,7 @@ public final class ScraperRequests {
                 .build();
     }
 
-    public PageRequests duckDuckGo() {
+    private PageRequests createDuckDuckGo() {
         return PageRequests.builder()
                 .urls(FunctionUtils.constant(DUCKDUCKGO_URL))
                 .uri(DUCKDUCKGO_URI)
@@ -58,7 +84,7 @@ public final class ScraperRequests {
                 .build();
     }
 
-    public PageRequests google() {
+    private PageRequests createGoogle() {
         return PageRequests.builder()
                 .urls(q -> q.getPlace().getCountry().getLocaleGoogle())
                 .uri(GOOGLE_URI)
@@ -72,7 +98,7 @@ public final class ScraperRequests {
                 .build();
     }
 
-    public PageRequests yahoo() {
+    private PageRequests createYahoo() {
         return PageRequests.builder()
                 .urls(FunctionUtils.constant(YAHOO_URL))
                 .uri(YAHOO_URI)
@@ -86,7 +112,7 @@ public final class ScraperRequests {
                 .build();
     }
 
-    public PageRequests yandex() {
+    private PageRequests createYandex() {
         return PageRequests.builder()
                 .urls(q -> q.getPlace().getCountry().getLocaleYandex())
                 .uri(YANDEX_URI)
