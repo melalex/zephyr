@@ -1,0 +1,24 @@
+scraper:
+  google:
+    enabled: true
+    first: 0
+    resultCount: 100
+    pageSize: 100
+
+  bing:
+    enabled: true
+    first: 1
+    resultCount: 10
+    pageSize: 10
+
+  yahoo:
+    enabled: true
+    first: 1
+    resultCount: 10
+    pageSize: 10
+
+  yandex:
+    enabled: false
+
+  duckduckgo:
+    enabled: false
