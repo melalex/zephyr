@@ -18,7 +18,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.retry.Retry;
 
-import java.time.Duration;
 import java.util.function.Function;
 
 @Slf4j
@@ -74,7 +73,7 @@ public class DirectBrowsingProvider implements BrowsingProvider {
     private Function<Flux<Throwable>, ? extends Publisher<?>> requestException() {
         return Retry.any()
                 .retryMax(configuration.getRetryCount())
-                .fixedBackoff(Duration.ofMillis(configuration.getBackOff()))
+                .fixedBackoff(configuration.getBackOff())
                 .doOnRetry(LoggingUtils.retryableError(log, REQUEST_EXCEPTION_MSG));
     }
 

@@ -20,11 +20,11 @@ public interface ScraperConfigurationService {
 
     Duration getErrorDelay(SearchEngine engine);
 
+    Duration getBackOff();
+
     Page getFirstPage(SearchEngine engine);
 
     RequestType getRequestType(SearchEngine engine);
 
     int getRetryCount();
-
-    long getBackOff();
 }

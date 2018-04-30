@@ -4,14 +4,13 @@ import static org.mockito.Mockito.when;
 
 import com.zephyr.commons.ListUtils;
 import com.zephyr.commons.interfaces.UidProvider;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
+import lombok.experimental.UtilityClass;
 import org.mockito.Mockito;
 
 import java.util.List;
 import java.util.UUID;
 
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@UtilityClass
 public class UidProviderMock {
 
     public static final String DEFAULT_ID = UUID.randomUUID().toString();

@@ -1,8 +1,11 @@
 package com.zephyr.scraper.data;
 
 import com.zephyr.test.CommonTestData;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ScraperTestData {
 
     private static final ScraperTestData INSTANCE = createInstance();

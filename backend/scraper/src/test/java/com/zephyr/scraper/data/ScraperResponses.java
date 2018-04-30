@@ -19,6 +19,7 @@ public final class ScraperResponses {
     private static final String BING_RESPONSE_FILE_NAME = "bing-response.html";
     private static final String DUCKDUCKGO_RESPONSE_FILE_NAME = "duckduckgo-response.json";
     private static final String GOOGLE_RESPONSE_FILE_NAME = "google-response.html";
+    private static final String GOOGLE_FRAUD_RESPONSE_FILE_NAME = "google-fraud.html";
     private static final String YAHOO_RESPONSE_FILE_NAME = "yahoo-response.html";
     private static final String YANDEX_RESPONSE_FILE_NAME = "yandex-response.json";
 
@@ -32,10 +33,14 @@ public final class ScraperResponses {
     private final String googleResponseBody = creteGoogleResponseBody();
 
     @Getter(lazy = true)
+    private final String googleFraudResponseBody = creteGoogleFraudResponseBody();
+
+    @Getter(lazy = true)
     private final String yahooResponseBody = creteYahooResponseBody();
 
     @Getter(lazy = true)
     private final String yandexResponseBody = creteYandexResponseBody();
+
 
     public EngineResponse bing() {
         return EngineResponse.builder()
@@ -62,6 +67,16 @@ public final class ScraperResponses {
                 .status(HttpStatus.OK.value())
                 .id(UidProviderMock.DEFAULT_ID)
                 .body(googleResponseBody())
+                .provider(SearchEngine.GOOGLE)
+                .headers(Map.of())
+                .build();
+    }
+
+    public EngineResponse googleFraud() {
+        return EngineResponse.builder()
+                .status(HttpStatus.OK.value())
+                .id(UidProviderMock.DEFAULT_ID)
+                .body(googleFraudResponseBody())
                 .provider(SearchEngine.GOOGLE)
                 .headers(Map.of())
                 .build();
@@ -101,6 +116,10 @@ public final class ScraperResponses {
 
     private String creteGoogleResponseBody() {
         return ResourceUtils.toString(GOOGLE_RESPONSE_FILE_NAME);
+    }
+
+    private String creteGoogleFraudResponseBody() {
+        return ResourceUtils.toString(GOOGLE_FRAUD_RESPONSE_FILE_NAME);
     }
 
     private String creteYahooResponseBody() {

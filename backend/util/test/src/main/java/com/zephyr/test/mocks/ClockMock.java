@@ -3,12 +3,15 @@ package com.zephyr.test.mocks;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import lombok.experimental.UtilityClass;
+
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
+@UtilityClass
 public class ClockMock {
 
     private static final long CURRENT_TIME = 1510134473134L;

@@ -72,8 +72,8 @@ public class ScraperConfigurationServiceImpl implements ScraperConfigurationServ
     }
 
     @Override
-    public long getBackOff() {
-        return properties.getBrowser().getBackOff();
+    public Duration getBackOff() {
+        return Duration.ofMillis(properties.getBrowser().getBackOff());
     }
 
     private ScraperProperties.EngineProperties getEngineProperties(SearchEngine engine) {

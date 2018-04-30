@@ -28,7 +28,10 @@ public final class ScraperRequests {
     public static final String YAHOO_URL = "https://search.yahoo.com";
     public static final String YAHOO_URI = "/search";
     public static final String YANDEX_URI = "";
-    public static final String FAILED_REQUEST_ID = "Failed";
+    public static final String FAILED_REQUEST_ID = "FAILED_REQUEST_ID";
+    public static final String FAILED_REQUEST_URL = "FAILED_REQUEST_URL";
+    public static final String FRAUD_REQUEST_ID = "FAILED_REQUEST_ID";
+    public static final String FRAUD_REQUEST_URL = "FAILED_REQUEST_URL";
 
     private ScraperQueries queries;
     private ScraperHeaders headers;
@@ -53,6 +56,15 @@ public final class ScraperRequests {
         return EngineRequest.builder()
                 .id(FAILED_REQUEST_ID)
                 .provider(SearchEngine.GOOGLE)
+                .url(FAILED_REQUEST_URL)
+                .build();
+    }
+
+    public EngineRequest googleFraud() {
+        return EngineRequest.builder()
+                .id(FRAUD_REQUEST_ID)
+                .provider(SearchEngine.GOOGLE)
+                .url(FRAUD_REQUEST_URL)
                 .build();
     }
 
