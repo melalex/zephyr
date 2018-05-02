@@ -2,6 +2,7 @@ package com.zephyr.task.controllers;
 
 import com.zephyr.data.protocol.dto.TaskDto;
 import com.zephyr.task.facades.TaskFacade;
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,10 +20,10 @@ import java.security.Principal;
 import javax.validation.Valid;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/v1/tasks")
 public class TaskController {
 
-    @Setter(onMethod = @__(@Autowired))
     private TaskFacade taskFacade;
 
     @PostMapping
@@ -36,14 +37,8 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("#oauth2.hasScope('server')")
     public Mono<TaskDto> findById(@PathVariable("id") String id) {
         return taskFacade.findById(id);
-    }
-
-    @PutMapping
-    public Mono<TaskDto> update(@Valid Mono<TaskDto> task, Principal principal) {
-        return taskFacade.update(task, principal);
     }
 
     @DeleteMapping("/{id}")

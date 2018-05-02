@@ -28,7 +28,7 @@ public class RatingController {
     }
 
     @GetMapping(path = "/{taskId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
-    public Flux<StatisticsDto> findStatisticsAndSubscribeForTask(@PathVariable("taskId") String taskId,
+    public Flux<StatisticsDto> findStatisticsAndSubscribeForTask(@PathVariable String taskId,
                                                                  Principal principal) {
         return ratingService.findStatisticsAndSubscribeForTask(taskId, principal);
     }

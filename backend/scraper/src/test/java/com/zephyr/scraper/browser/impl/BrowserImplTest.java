@@ -15,7 +15,7 @@ import com.zephyr.scraper.domain.EngineResponse;
 import com.zephyr.scraper.exceptions.FraudException;
 import com.zephyr.scraper.factories.SearchResultFactory;
 import com.zephyr.test.CommonTestData;
-import com.zephyr.test.SearchResults;
+import com.zephyr.test.Results;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -51,8 +51,8 @@ public class BrowserImplTest {
     @Before
     public void setUp() {
         when(crawler.crawl(fraudResponse)).thenThrow(new FraudException(fraudResponse));
-        when(crawler.crawl(response)).thenReturn(SearchResults.GOOGLE_LINKS);
-        when(searchResultFactory.create(request, SearchResults.GOOGLE_LINKS)).thenReturn(result);
+        when(crawler.crawl(response)).thenReturn(Results.GOOGLE_LINKS);
+        when(searchResultFactory.create(request, Results.GOOGLE_LINKS)).thenReturn(result);
         when(configurationService.getRequestType(request.getProvider())).thenReturn(RequestType.DIRECT);
         when(browsingManager.manage(RequestType.DIRECT)).thenReturn(browsingProvider);
     }

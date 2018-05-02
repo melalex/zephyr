@@ -6,6 +6,7 @@ import com.zephyr.data.protocol.dto.TaskDto;
 import com.zephyr.task.services.TaskService;
 import com.zephyr.task.domain.Task;
 import com.zephyr.task.facades.TaskFacade;
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Flux;
@@ -14,12 +15,10 @@ import reactor.core.publisher.Mono;
 import java.security.Principal;
 
 @Facade
+@AllArgsConstructor
 public class TaskFacadeImpl implements TaskFacade {
 
-    @Setter(onMethod = @__(@Autowired))
     private TaskService taskService;
-
-    @Setter(onMethod = @__(@Autowired))
     private ExtendedMapper mapper;
 
     @Override
@@ -38,13 +37,6 @@ public class TaskFacadeImpl implements TaskFacade {
     @Override
     public Mono<TaskDto> findById(String id) {
         return taskService.findById(id)
-                .map(mapper.mapperFor(TaskDto.class));
-    }
-
-    @Override
-    public Mono<TaskDto> update(Mono<TaskDto> task, Principal principal) {
-        return task.map(mapper.mapperFor(Task.class))
-                .flatMap(t -> taskService.update(t, principal))
                 .map(mapper.mapperFor(TaskDto.class));
     }
 

@@ -14,7 +14,5 @@ public interface TaskService {
 
     Mono<Task> findById(String id);
 
-    Mono<Task> update(Task task, Principal principal);
-
     Mono<Void> remove(String id, Principal principal);
 }

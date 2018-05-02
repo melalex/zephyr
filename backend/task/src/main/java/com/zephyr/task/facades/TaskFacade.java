@@ -14,7 +14,5 @@ public interface TaskFacade {
 
     Mono<TaskDto> findById(String id);
 
-    Mono<TaskDto> update(Mono<TaskDto> task, Principal principal);
-
     Mono<Void> remove(String id, Principal principal);
 }

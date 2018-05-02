@@ -12,7 +12,9 @@ public final class CommonTestData {
     private UserAgents userAgents = new UserAgents();
     private Places places = new Places(countries);
     private Queries queries = new Queries(places, userAgents);
-    private SearchResults searchResults = new SearchResults(queries);
+    private Results results = new Results(queries);
+    private Criteria criteria = new Criteria(places, userAgents);
+    private Tasks tasks = new Tasks(criteria);
 
     public static Countries countries() {
         return INSTANCE.countries;
@@ -30,7 +32,15 @@ public final class CommonTestData {
         return INSTANCE.queries;
     }
 
-    public static SearchResults searchResults() {
-        return INSTANCE.searchResults;
+    public static Results searchResults() {
+        return INSTANCE.results;
+    }
+
+    public static Criteria criteria() {
+        return INSTANCE.criteria;
+    }
+
+    public static Tasks tasks() {
+        return INSTANCE.tasks;
     }
 }

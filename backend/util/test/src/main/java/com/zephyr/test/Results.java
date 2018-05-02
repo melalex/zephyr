@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-public final class SearchResults {
+public final class Results {
 
     public static final List<String> BING_LINKS = List.of(
             "https://en.wikipedia.org/wiki/Zephyr",

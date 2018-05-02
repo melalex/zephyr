@@ -7,6 +7,7 @@ import com.zephyr.task.services.SearchCriteriaService;
 import com.zephyr.task.services.TaskService;
 import com.zephyr.task.domain.Task;
 import com.zephyr.task.repositories.TaskRepository;
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +19,14 @@ import java.security.Principal;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class TaskServiceImpl implements TaskService {
 
     private static final String CREATE_TASK_MESSAGE = "Received new task: {}";
-    private static final String UPDATE_TASK_MESSAGE = "Updating task: {}";
     private static final String REMOVE_TASK_MESSAGE = "Removing task: {}";
     private static final String USER_ID_FIELD = "userId";
 
-    @Setter(onMethod = @__(@Autowired))
     private SearchCriteriaService searchCriteriaService;
-
-    @Setter(onMethod = @__(@Autowired))
     private TaskRepository taskRepository;
 
     @Override
@@ -50,13 +48,6 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Mono<Task> findById(String id) {
         return findById(id, null, false);
-    }
-
-    @Override
-    public Mono<Task> update(Task task, Principal principal) {
-        return findById(task.getId(), principal.getName(), true)
-                .then(taskRepository.save(task))
-                .doOnNext(LoggingUtils.info(log, Task::getId, UPDATE_TASK_MESSAGE));
     }
 
     @Override

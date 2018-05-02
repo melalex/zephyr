@@ -2,6 +2,7 @@ package com.zephyr.task.controllers;
 
 import com.zephyr.data.protocol.dto.SearchCriteriaDto;
 import com.zephyr.task.facades.SearchCriteriaFacade;
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -13,10 +14,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/v1/search-criteria")
 public class SearchCriteriaController {
 
-    @Setter(onMethod = @__(@Autowired))
     private SearchCriteriaFacade searchCriteriaFacade;
 
     @GetMapping

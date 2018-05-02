@@ -19,6 +19,7 @@ public class TaskConverter implements Converter<TaskDto, Iterable<RequestCriteri
     private ModelMapper modelMapper;
 
     @Override
+    // TODO: Populate from and to fields
     public Iterable<RequestCriteria> convert(@NonNull TaskDto source) {
         RequestCriteria prototype = modelMapper.map(source, RequestCriteria.class);
 

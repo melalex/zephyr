@@ -21,9 +21,6 @@ public class Task {
 
     private Set<SearchEngine> engines;
 
-    private LocalDate from;
-    private LocalDate to;
-
     private boolean isShared;
 
     @DBRef

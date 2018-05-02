@@ -14,7 +14,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
-@DateRange(from = "from", to = "to")
 public class TaskDto {
 
     @URL
@@ -26,9 +25,6 @@ public class TaskDto {
 
     @NotEmpty
     private Set<SearchEngine> engines;
-
-    private LocalDate from;
-    private LocalDate to;
 
     private String userId;
     private boolean isShared;

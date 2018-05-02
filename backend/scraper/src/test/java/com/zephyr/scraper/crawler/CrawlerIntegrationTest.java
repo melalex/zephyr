@@ -6,7 +6,7 @@ import com.zephyr.scraper.ScraperTestConfiguration;
 import com.zephyr.scraper.data.ScraperTestData;
 import com.zephyr.scraper.domain.EngineResponse;
 import com.zephyr.scraper.exceptions.FraudException;
-import com.zephyr.test.SearchResults;
+import com.zephyr.test.Results;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +31,7 @@ public class CrawlerIntegrationTest {
 
         List<String> actual = testInstance.crawl(response);
 
-        Assert.assertEquals(SearchResults.BING_LINKS, actual);
+        Assert.assertEquals(Results.BING_LINKS, actual);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class CrawlerIntegrationTest {
 
         List<String> actual = testInstance.crawl(response);
 
-        Assert.assertEquals(SearchResults.GOOGLE_LINKS, actual);
+        Assert.assertEquals(Results.GOOGLE_LINKS, actual);
 
     }
 
@@ -50,7 +50,7 @@ public class CrawlerIntegrationTest {
 
         List<String> actual = testInstance.crawl(response);
 
-        Assert.assertEquals(SearchResults.YAHOO_LINKS, actual);
+        Assert.assertEquals(Results.YAHOO_LINKS, actual);
     }
 
     @Test
