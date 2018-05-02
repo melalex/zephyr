@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    config:
+      enabled: false
+
+task:
+  cron: 0 0 0 1/1 * ? *
+  batchSize: 100
+  enableUpdates: true
+  relevancePeriod:
+    days: 3
+    hours: 0
+    minutes: 0
+    seconds: 0

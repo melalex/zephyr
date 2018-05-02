@@ -25,8 +25,12 @@ public final class Criteria {
     public static final String NEW_CRITERIA_LANGUAGE_ISO = "en";
     public static final int NEW_CRITERIA_HITS_COUNT = 1;
 
+    public static final String INVALID_PLACE_NAME = "INVALID_PLACE_NAME";
+    public static final String INVALID_COUNTRY = "INVALID_COUNTRY";
+
     public static final LocalDateTime NEW_CRITERIA_LAST_HIT = ClockMock.now();
     public static final LocalDateTime NEW_CRITERIA_LAST_UPDATE = ClockMock.now();
+
 
     private Places places;
     private UserAgents userAgents;
@@ -57,6 +61,22 @@ public final class Criteria {
         criteria.setPlace(toCriteria(places.calgary()));
 
         return criteria;
+    }
+
+    public SearchCriteriaDto withInvalidPlace() {
+        SearchCriteriaDto simple = simple();
+        simple.setUserAgent(toCriteria(userAgents.windowsFirefox()));
+        simple.setPlace(invalidPlace());
+
+        return simple;
+    }
+
+    private SearchCriteriaDto.Place invalidPlace() {
+        SearchCriteriaDto.Place place = new SearchCriteriaDto.Place();
+        place.setPlaceName(INVALID_PLACE_NAME);
+        place.setCountry(INVALID_COUNTRY);
+
+        return place;
     }
 
     private SearchCriteriaDto.UserAgent toCriteria(UserAgentDto userAgentDto) {

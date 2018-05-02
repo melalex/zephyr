@@ -3,15 +3,14 @@ package com.zephyr.task.services.impl;
 import com.zephyr.commons.LoggingUtils;
 import com.zephyr.commons.interfaces.Assembler;
 import com.zephyr.data.internal.dto.QueryDto;
+import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.task.gateways.NewCriteriaGateway;
 import com.zephyr.task.order.PageableProvider;
 import com.zephyr.task.properties.TaskServiceProperties;
-import com.zephyr.task.services.SearchCriteriaService;
-import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.task.repositories.SearchCriteriaRepository;
-import lombok.Setter;
+import com.zephyr.task.services.SearchCriteriaService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -23,24 +22,16 @@ import java.time.temporal.TemporalAmount;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class SearchCriteriaServiceImpl implements SearchCriteriaService {
 
     private static final String UPDATE_USAGE_MESSAGE = "Update usage of searchCriteria: {}";
     private static final String NEW_CRITERIA_MESSAGE = "Save new searchCriteria: {}";
 
-    @Setter(onMethod = @__(@Autowired))
     private SearchCriteriaRepository searchCriteriaRepository;
-
-    @Setter(onMethod = @__(@Autowired))
     private NewCriteriaGateway newCriteriaGateway;
-
-    @Setter(onMethod = @__(@Autowired))
     private TaskServiceProperties properties;
-
-    @Setter(onMethod = @__(@Autowired))
     private PageableProvider pageableProvider;
-
-    @Setter(onMethod = @__(@Autowired))
     private Assembler<SearchCriteria, QueryDto> queryAssembler;
 
     @Override

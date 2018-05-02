@@ -33,7 +33,7 @@ public class ScraperApplicationTests {
     private MessageCollector collector;
 
     @Test
-    public void contextLoads() {
+    public void shouldHandleQuery() {
         Message<QueryDto> testMessage = new GenericMessage<>(CommonTestData.queries().simple());
 
         processor.input().send(testMessage);

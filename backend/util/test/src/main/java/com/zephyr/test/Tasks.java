@@ -5,7 +5,6 @@ import com.zephyr.data.protocol.enums.SearchEngine;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -37,6 +36,13 @@ public final class Tasks {
     private TaskDto withNewCriteria() {
         TaskDto simple = simple();
         simple.setSearchCriteria(List.of(criteria.newCriteria()));
+
+        return simple;
+    }
+
+    private TaskDto withInvalidPlace() {
+        TaskDto simple = simple();
+        simple.setSearchCriteria(List.of(criteria.withInvalidPlace()));
 
         return simple;
     }

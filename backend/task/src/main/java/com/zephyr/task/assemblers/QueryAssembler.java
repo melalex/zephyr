@@ -56,7 +56,8 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
         return Mono.just(source)
                 .map(mapper.mapperFor(QueryDto.class))
                 .transform(ReactorUtils.doOnNextAsync(q -> populatePlace(source, q, errors)))
-                .transform(ReactorUtils.doOnNextAsync(q -> populateAgent(source, q, errors)))
+//                TODO: Uncomment when userAgent service will be able to handle this request
+//                .transform(ReactorUtils.doOnNextAsync(q -> populateAgent(source, q, errors)))
                 .doOnNext(q -> ExceptionUtils.assertErrors(Exceptions.inconsistent(ERROR_MESSAGE), errors))
                 .doOnNext(LoggingUtils.info(log, FINISH_ASSEMBLE_MESSAGE));
     }
@@ -73,7 +74,7 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
     private Publisher<QueryDto> populateAgent(SearchCriteria source, QueryDto query, Collection<Subject> errors) {
         UserAgent agent = source.getUserAgent();
 
-        return agentServiceClient.findByOneExample(agent)
+        return agentServiceClient.findByOneExample(agent.getDevice(), agent.getOsName(), agent.getBrowserName())
                 .doOnNext(query::setUserAgent)
                 .map(p -> query)
                 .switchIfEmpty(Mono.just(query).doOnNext(q -> errors.add(newError(agent))));
