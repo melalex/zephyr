@@ -1,5 +1,6 @@
 package com.zephyr.data.protocol.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
+@JsonIgnoreProperties(value = {"lastHit", "lastUpdate", "hitsCount"}, allowGetters = true)
 public class SearchCriteriaDto {
 
     private String id;

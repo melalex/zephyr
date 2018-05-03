@@ -1,4 +1,8 @@
 spring:
+  data:
+    mongodb:
+      database: tasks
+      port: 0
   cloud:
     config:
       enabled: false

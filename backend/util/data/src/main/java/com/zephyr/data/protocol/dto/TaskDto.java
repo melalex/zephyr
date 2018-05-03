@@ -1,11 +1,10 @@
 package com.zephyr.data.protocol.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zephyr.data.protocol.enums.SearchEngine;
-import com.zephyr.validation.DateRange;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import javax.validation.Valid;
@@ -14,7 +13,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
+@JsonIgnoreProperties(value = {"id", "userId"}, allowGetters = true)
 public class TaskDto {
+
+    private String id;
 
     @URL
     @NotEmpty

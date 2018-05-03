@@ -4,10 +4,9 @@ import com.zephyr.commons.LoggingUtils;
 import com.zephyr.commons.interfaces.Assembler;
 import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.task.domain.SearchCriteria;
-import com.zephyr.task.gateways.NewCriteriaGateway;
-import com.zephyr.task.order.PageableProvider;
-import com.zephyr.task.properties.TaskServiceProperties;
+import com.zephyr.task.integration.gateways.NewCriteriaGateway;
 import com.zephyr.task.repositories.SearchCriteriaRepository;
+import com.zephyr.task.services.ConfigurationService;
 import com.zephyr.task.services.SearchCriteriaService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +29,7 @@ public class SearchCriteriaServiceImpl implements SearchCriteriaService {
 
     private SearchCriteriaRepository searchCriteriaRepository;
     private NewCriteriaGateway newCriteriaGateway;
-    private TaskServiceProperties properties;
-    private PageableProvider pageableProvider;
+    private ConfigurationService configurationService;
     private Assembler<SearchCriteria, QueryDto> queryAssembler;
 
     @Override
@@ -46,8 +44,8 @@ public class SearchCriteriaServiceImpl implements SearchCriteriaService {
 
     @Override
     public Flux<SearchCriteria> findAllForUpdate() {
-        TemporalAmount relevancePeriod = properties.getRelevancePeriod();
-        Pageable pageable = pageableProvider.provide(properties.getBatchSize());
+        TemporalAmount relevancePeriod = configurationService.getRelevancePeriod();
+        Pageable pageable = configurationService.searchCriteriaOrder();
 
         return searchCriteriaRepository.findAllForUpdate(relevancePeriod, pageable);
     }

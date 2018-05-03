@@ -2,7 +2,7 @@ import com.bmuschko.gradle.docker.DockerRemoteApiPlugin
 
 buildscript {
     ext {
-        springBootVersion = '2.0.0.M7'
+        springBootVersion = '2.0.1.RELEASE'
         dockerVersion = '3.1.0'
     }
     repositories {
@@ -31,7 +31,6 @@ mainClassName = 'com.zephyr.task.TaskApplication'
 dependencies {
     compile libraries['webFlux']
     compile libraries['acutator']
-    compile libraries['acutatorDocs']
     compile libraries['configClient']
     compile libraries['discoveryClient']
     compile libraries['modelMapperStarter']
@@ -51,14 +50,22 @@ dependencies {
     compileOnly libraries['lombok']
     compileOnly libraries['configurationProcessor']
 
+    testCompile utils['test']
+
     testCompile libraries['test']
+    testCompile libraries['embeddedMongodb']
+    testCompile libraries['securityTest']
+    testCompile libraries['streamTest']
+    testCompile libraries['lombok']
+    testCompile libraries['reactorTest']
 }
 
 dependencyManagement {
     imports {
-        mavenBom imports.springBootBom
-        mavenBom imports.springCloudBom
-        mavenBom imports.springBusBom
+        mavenBom imports["springBootBom"]
+        mavenBom imports["springCloudBom"]
+        mavenBom imports["netflixBom"]
+        mavenBom imports["springBusBom"]
     }
 }
 

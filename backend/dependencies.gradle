@@ -1,15 +1,17 @@
 ext {
-    def springBusVersion = '2.0.0.M4'
-    def springBootVersion = '2.0.0.M7'
-    def springTaskVersion = '2.0.0.M3'
-    def springCloudVersion = 'Finchley.M4'
-    def springConfigVersion = '2.0.0.M6'
+    def springBusVersion = '2.0.0.RC1'
+    def springTaskVersion = '2.0.0.RC1'
+    def springBootVersion = '2.0.1.RELEASE'
+    def springCloudVersion = 'Finchley.RC1'
+    def springConfigVersion = '2.0.0.RC1'
+    def netflixVersion = '2.0.0.RC1'
 
     imports = [
             springBusBom   : "org.springframework.cloud:spring-cloud-bus:${springBusVersion}",
             springBootBom  : "org.springframework.boot:spring-boot-dependencies:${springBootVersion}",
             springTaskBom  : "org.springframework.cloud:spring-cloud-task-dependencies:${springTaskVersion}",
             springCloudBom : "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}",
+            netflixBom     : "org.springframework.cloud:spring-cloud-netflix:${netflixVersion}",
             springConfigBom: "org.springframework.cloud:spring-cloud-config:${springConfigVersion}",
     ]
 
@@ -33,7 +35,7 @@ ext {
     def jUnitVersion = '4.12'
     def mockitoVersion = '2.9.0'
     def jsonpathVersion = '2.4.0'
-    def embeddedMongodbVersion = '2.0.0'
+    def embeddedMongodbVersion = '2.0.3'
     def rollbarVersion = '0.5.3'
     def slf4jVersion = '1.7.25'
     def reactorVersion = '3.1.2.RELEASE'
@@ -89,20 +91,19 @@ ext {
             javaFaker          : "com.github.javafaker:javafaker:${javaFakerVersion}",
     ]
 
-    // TODO: Remove artifact version
     def springDependencies = [
-            spring                : 'org.springframework.boot:spring-boot-starter:2.0.0.M7',
-            zuul                  : 'org.springframework.cloud:spring-cloud-starter-zuul:2.0.0.M2',
-            feign                 : 'org.springframework.cloud:spring-cloud-starter-feign:2.0.0.M2',
+            spring                : 'org.springframework.boot:spring-boot-starter',
+            zuul                  : 'org.springframework.cloud:spring-cloud-starter-zuul',
+            feign                 : 'org.springframework.cloud:spring-cloud-starter-openfeign',
             dataCommons           : 'org.springframework.data:spring-data-commons',
             messaging             : 'org.springframework.cloud:spring-cloud-starter-bus-amqp',
             configurationProcessor: 'org.springframework.boot:spring-boot-configuration-processor',
             jpa                   : 'org.springframework.boot:spring-boot-starter-data-jpa',
             mysql                 : 'mysql:mysql-connector-java',
-            mongodb               : 'org.springframework.boot:spring-boot-starter-data-mongodb:2.0.0.M7',
+            mongodb               : 'org.springframework.boot:spring-boot-starter-data-mongodb',
             mongodbDriver         : 'org.mongodb:mongodb-driver-reactivestreams',
-            neo4j                 : 'org.springframework.data:spring-data-neo4j:5.0.2.RELEASE',
-            test                  : 'org.springframework.boot:spring-boot-starter-test:2.0.0.M7',
+            neo4j                 : 'org.springframework.data:spring-data-neo4j',
+            test                  : 'org.springframework.boot:spring-boot-starter-test',
             streamTest            : 'org.springframework.cloud:spring-cloud-stream-test-support',
 
             contractStubRunner    : 'org.springframework.cloud:spring-cloud-contract-stub-runner',
@@ -114,21 +115,20 @@ ext {
             batchTest             : 'org.springframework.batch:spring-batch-test',
 
             web                   : 'org.springframework.boot:spring-boot-starter-web',
-            webFlux               : 'org.springframework.boot:spring-boot-starter-webflux:2.0.0.M7',
+            webFlux               : 'org.springframework.boot:spring-boot-starter-webflux',
 
             cache                 : 'org.springframework.boot:spring-boot-starter-cache',
             validation            : 'org.springframework.boot:spring-boot-starter-validation',
 
             acutator              : 'org.springframework.boot:spring-boot-starter-actuator',
-            acutatorDocs          : 'org.springframework.boot:spring-boot-actuator-docs:2.0.0.M3',
 
             vault                 : 'org.springframework.cloud:spring-cloud-starter-vault-config',
             configServer          : 'org.springframework.cloud:spring-cloud-config-server',
             configClient          : 'org.springframework.cloud:spring-cloud-starter-config',
             configMonitor         : 'org.springframework.cloud:spring-cloud-config-monitor',
 
-            discoveryServer       : 'org.springframework.cloud:spring-cloud-starter-eureka-server:2.0.0.M2',
-            discoveryClient       : 'org.springframework.cloud:spring-cloud-starter-eureka:2.0.0.M2',
+            discoveryServer       : 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server',
+            discoveryClient       : 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client',
 
             security              : 'org.springframework.boot:spring-boot-starter-security',
             securityCloud         : 'org.springframework.cloud:spring-cloud-starter-security',
@@ -136,10 +136,10 @@ ext {
             securityTest          : 'org.springframework.security:spring-security-test',
 
             turbine               : 'org.springframework.cloud:spring-cloud-starter-turbine-amqp',
-            turbineStream         : 'org.springframework.cloud:spring-cloud-starter-turbine-stream:2.0.0.M2',
+            turbineStream         : 'org.springframework.cloud:spring-cloud-starter-turbine-stream',
 
             hystrix               : 'org.springframework.cloud:spring-cloud-starter-hystrix',
-            hystrixDashboard      : 'org.springframework.cloud:spring-cloud-starter-hystrix-dashboard:2.0.0.M2',
+            hystrixDashboard      : 'org.springframework.cloud:spring-cloud-starter-hystrix-dashboard',
     ]
 
     libraries = librariesDependencies + springDependencies

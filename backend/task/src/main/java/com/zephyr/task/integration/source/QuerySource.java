@@ -1,4 +1,4 @@
-package com.zephyr.task.source;
+package com.zephyr.task.integration.source;
 
 import com.zephyr.commons.interfaces.Assembler;
 import com.zephyr.data.internal.dto.QueryDto;

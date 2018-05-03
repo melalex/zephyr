@@ -1,4 +1,4 @@
-package com.zephyr.task.gateways;
+package com.zephyr.task.integration.gateways;
 
 import com.zephyr.data.internal.dto.QueryDto;
 import org.springframework.integration.annotation.MessagingGateway;

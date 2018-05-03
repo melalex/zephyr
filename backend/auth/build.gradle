@@ -2,7 +2,7 @@ import com.bmuschko.gradle.docker.DockerRemoteApiPlugin
 
 buildscript {
     ext {
-        springBootVersion = '2.0.0.M7'
+        springBootVersion = '2.0.1.RELEASE'
         dockerVersion = '3.1.0'
     }
     repositories {
@@ -31,7 +31,6 @@ mainClassName = 'com.zephyr.auth.AuthApplication'
 dependencies {
     compile libraries['spring']
     compile libraries['acutator']
-    compile libraries['acutatorDocs']
     compile libraries['security']
     compile libraries['securityOAuth2']
     compile libraries['configClient']
@@ -52,6 +51,7 @@ dependencyManagement {
     imports {
         mavenBom imports['springBootBom']
         mavenBom imports['springCloudBom']
+        mavenBom imports['netflixBom']
         mavenBom imports['springBusBom']
     }
 }

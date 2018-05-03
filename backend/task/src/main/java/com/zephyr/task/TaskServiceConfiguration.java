@@ -2,12 +2,12 @@ package com.zephyr.task;
 
 import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.data.internal.dto.QueryDto;
-import com.zephyr.task.gateways.NewCriteriaGateway;
-import com.zephyr.task.properties.TaskServiceProperties;
+import com.zephyr.task.integration.gateways.NewCriteriaGateway;
+import com.zephyr.task.services.ConfigurationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.context.annotation.Bean;
@@ -42,10 +42,10 @@ public class TaskServiceConfiguration {
 
     @Bean
     @RefreshScope
-    @ConditionalOnProperty("${task.enableUpdates}")
+    @ConditionalOnProperty(value = "task.enableUpdates", havingValue = "true")
     public IntegrationFlow updateRatingFlow(MessageSource<Flux<QueryDto>> querySource,
-                                            TaskServiceProperties properties) {
-        return IntegrationFlows.from(querySource, s -> s.poller(Pollers.cron(properties.getCron())))
+                                            ConfigurationService configurationService) {
+        return IntegrationFlows.from(querySource, s -> s.poller(Pollers.cron(configurationService.getCron())))
                 .split()
                 .enrichHeaders(setPriority(UPDATE_RATING_PRIORITY))
                 .channel(Source.OUTPUT)
