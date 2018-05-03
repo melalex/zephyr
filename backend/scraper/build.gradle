@@ -36,7 +36,7 @@ dependencies {
     compile libraries['jsoup']
     compile libraries['reactor']
     compile libraries['reactorExtra']
-    compile libraries['feign']
+    compile libraries['csv']
 
     compile utils['commons']
     compile utils['data']

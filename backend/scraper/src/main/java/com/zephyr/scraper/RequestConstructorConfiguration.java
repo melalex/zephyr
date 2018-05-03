@@ -1,8 +1,13 @@
 package com.zephyr.scraper;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.zephyr.commons.interfaces.UidProvider;
 import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.scraper.configuration.ScraperConfigurationService;
+import com.zephyr.scraper.domain.Query;
+import com.zephyr.scraper.request.agent.UserAgentProvider;
+import com.zephyr.scraper.request.agent.impl.UserAgentProviderImpl;
 import com.zephyr.scraper.request.headers.HeadersProvider;
 import com.zephyr.scraper.request.headers.impl.DefaultHeadersProvider;
 import com.zephyr.scraper.request.headers.impl.HtmlHeadersProvider;
@@ -13,12 +18,16 @@ import com.zephyr.scraper.request.url.UrlProvider;
 import com.zephyr.scraper.request.url.impl.DefaultUrlProvider;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Configuration
 public class RequestConstructorConfiguration {
@@ -99,6 +108,22 @@ public class RequestConstructorConfiguration {
                 .paramsProvider(yandexParamsProvider)
                 .headersProviders(List.of(defaultHeadersProvider(), ajaxHeadersProvider()))
                 .build();
+    }
+
+    @Bean
+    public UserAgentProvider userAgentProvider(@Value("agents.csv") Resource agents, ObjectMapper csvMapper)
+            throws IOException {
+        CsvSchema schema = CsvSchema.emptySchema().withHeader();
+
+        List<Query.UserAgent> agentList = csvMapper.readerFor(Query.UserAgent.class)
+                .with(schema)
+                .readValues(agents.getFile())
+                .readAll()
+                .stream()
+                .map(Query.UserAgent.class::cast)
+                .collect(Collectors.toList());
+
+        return new UserAgentProviderImpl(agentList);
     }
 
     @Bean

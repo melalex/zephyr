@@ -1,5 +1,7 @@
 package com.zephyr.scraper;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.zephyr.commons.LoggingUtils;
 import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.commons.interfaces.UidProvider;
@@ -66,6 +68,11 @@ public class ScraperApplication {
                 .sequential()
                 .doOnNext(LoggingUtils.debug(log, RECEIVED_SEARCH_RESULT_MSG))
                 .doOnError(LoggingUtils.error(log, UNEXPECTED_EXCEPTION_MSG));
+    }
+
+    @Bean
+    public ObjectMapper csvMapper() {
+        return new CsvMapper();
     }
 
     @Bean
