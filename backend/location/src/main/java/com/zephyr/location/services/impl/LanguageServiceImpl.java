@@ -2,22 +2,19 @@ package com.zephyr.location.services.impl;
 
 import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.data.protocol.dto.LanguageDto;
-import com.zephyr.location.services.LanguageService;
 import com.zephyr.location.repositories.LanguageRepository;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.zephyr.location.services.LanguageService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class LanguageServiceImpl implements LanguageService {
 
-    @Setter(onMethod = @__(@Autowired))
     private LanguageRepository languageRepository;
-
-    @Setter(onMethod = @__(@Autowired))
     private ExtendedMapper mapper;
 
     @Override

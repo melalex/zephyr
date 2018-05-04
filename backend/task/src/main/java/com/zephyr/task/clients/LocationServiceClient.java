@@ -1,15 +1,20 @@
 package com.zephyr.task.clients;
 
 import com.zephyr.data.protocol.dto.PlaceDto;
-import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 @FeignClient("location-service")
 public interface LocationServiceClient {
 
-    @GetMapping("/{iso}/{name}")
-    Flux<PlaceDto> findByCountryIsoAndNameStartsWith(@PathVariable("iso") String iso,
-                                                     @PathVariable("name") String name);
+    @GetMapping
+    List<PlaceDto> findByCountryIsoAndNameStartsWith(String iso, String name);
+
+    // TODO: Feign not supported Reactor yet
+    default Flux<PlaceDto> findByCountryIsoAndNameStartsWithAsync(String iso, String name) {
+        return Flux.fromIterable(findByCountryIsoAndNameStartsWith(iso, name));
+    }
 }

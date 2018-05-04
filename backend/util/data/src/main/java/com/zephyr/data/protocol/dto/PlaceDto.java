@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 public class PlaceDto {
 
-    private long id;
-    private long parent;
+    private Long id;
+    private Long parent;
     private String name;
     private String canonicalName;
     private CountryDto country;

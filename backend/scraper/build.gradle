@@ -48,8 +48,9 @@ dependencies {
 
     testCompile libraries['test']
     testCompile libraries['streamTest']
-    testCompile libraries['lombok']
     testCompile libraries['reactorTest']
+
+    testCompileOnly libraries['lombok']
 }
 
 dependencyManagement {

@@ -11,5 +11,5 @@ public interface CountryRepository extends FunctionalNeo4jRepository<Country, St
     Optional<Country> findByIso(String iso);
 
     @Depth(0)
-    Stream<Country> findByNameStartingWith(String name);
+    Stream<Country> findByNameStartingWithIgnoreCase(String name);
 }

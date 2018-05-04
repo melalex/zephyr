@@ -8,5 +8,5 @@ public interface PlaceService {
 
     PlaceDto findById(long id);
 
-    Set<PlaceDto> findByCountryIsoAndNameStartsWith(String iso, String name);
+    Set<PlaceDto> findAllByCountryIsoAndNameContains(String iso, String name);
 }

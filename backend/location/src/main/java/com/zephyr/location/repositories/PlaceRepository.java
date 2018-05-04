@@ -6,5 +6,5 @@ import java.util.stream.Stream;
 
 public interface PlaceRepository extends FunctionalNeo4jRepository<Place, Long> {
 
-    Stream<Place> findAllByCountryIsoAndNameStartingWith(String iso, String name);
+    Stream<Place> findAllByCountryIsoAndNameContainsIgnoreCase(String iso, String name);
 }

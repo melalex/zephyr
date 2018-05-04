@@ -8,7 +8,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 
 @EnableCaching
-@SpringBootApplication(scanBasePackages = "com.zephyr.location")
+@SpringBootApplication
 public class LocationApplication {
 
     public static void main(String[] args) {
@@ -16,7 +16,12 @@ public class LocationApplication {
     }
 
     @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
+    @Bean
     public ExtendedMapper mapper() {
-        return new ExtendedMapper(new ModelMapper());
+        return new ExtendedMapper(modelMapper());
     }
 }

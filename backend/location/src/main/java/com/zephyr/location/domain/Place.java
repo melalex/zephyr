@@ -1,6 +1,6 @@
 package com.zephyr.location.domain;
 
-import com.zephyr.location.domain.constants.Relations;
+import com.zephyr.location.util.Relations;
 import lombok.Data;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;

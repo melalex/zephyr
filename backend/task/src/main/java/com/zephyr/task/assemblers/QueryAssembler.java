@@ -65,7 +65,7 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
     private Publisher<QueryDto> populatePlace(SearchCriteria source, QueryDto query, Collection<Subject> errors) {
         Place place = source.getPlace();
 
-        return locationServiceClient.findByCountryIsoAndNameStartsWith(place.getCountry(), place.getPlaceName())
+        return locationServiceClient.findByCountryIsoAndNameStartsWithAsync(place.getCountry(), place.getPlaceName())
                 .doOnNext(query::setPlace)
                 .map(p -> query)
                 .switchIfEmpty(Mono.just(query).doOnNext(q -> errors.add(newError(place))));
@@ -74,7 +74,7 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
     private Publisher<QueryDto> populateAgent(SearchCriteria source, QueryDto query, Collection<Subject> errors) {
         UserAgent agent = source.getUserAgent();
 
-        return agentServiceClient.findByOneExample(agent.getDevice(), agent.getOsName(), agent.getBrowserName())
+        return agentServiceClient.findOneByExampleAsync(agent.getDevice(), agent.getOsName(), agent.getBrowserName())
                 .doOnNext(query::setUserAgent)
                 .map(p -> query)
                 .switchIfEmpty(Mono.just(query).doOnNext(q -> errors.add(newError(agent))));

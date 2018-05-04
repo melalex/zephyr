@@ -3,8 +3,7 @@ package com.zephyr.task.repositories.impl;
 import com.zephyr.commons.interfaces.UidProvider;
 import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.task.repositories.SearchCriteriaOperations;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
@@ -19,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.TemporalAmount;
 
 @Repository
+@AllArgsConstructor
 public class SearchCriteriaOperationsImpl implements SearchCriteriaOperations {
 
     private static final String HITS_COUNT_FIELD = "hitsCount";
@@ -27,10 +27,7 @@ public class SearchCriteriaOperationsImpl implements SearchCriteriaOperations {
     private static final String TRANSACTION_ID_FIELD = "transactionId";
     private static final Number INC_VALUE = 1;
 
-    @Setter(onMethod = @__(@Autowired))
     private ReactiveMongoOperations mongo;
-
-    @Setter(onMethod = @__(@Autowired))
     private UidProvider uidProvider;
 
     @Override

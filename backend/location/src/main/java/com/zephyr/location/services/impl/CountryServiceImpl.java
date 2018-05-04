@@ -3,11 +3,10 @@ package com.zephyr.location.services.impl;
 import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.data.protocol.dto.CountryDto;
 import com.zephyr.errors.utils.ExceptionUtils;
-import com.zephyr.location.services.CountryService;
 import com.zephyr.location.domain.Country;
 import com.zephyr.location.repositories.CountryRepository;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.zephyr.location.services.CountryService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,14 +14,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class CountryServiceImpl implements CountryService {
 
     private static final int ZERO_DEPTH = 0;
 
-    @Setter(onMethod = @__(@Autowired))
     private CountryRepository countryRepository;
-
-    @Setter(onMethod = @__(@Autowired))
     private ExtendedMapper mapper;
 
     @Override
@@ -35,7 +32,7 @@ public class CountryServiceImpl implements CountryService {
     @Override
     public Set<CountryDto> findByNameStarts(String name) {
         return Optional.ofNullable(name)
-                .map(countryRepository::findByNameStartingWith)
+                .map(countryRepository::findByNameStartingWithIgnoreCase)
                 .orElseGet(() -> countryRepository.findAllStream(ZERO_DEPTH))
                 .map(mapper.mapperFor(CountryDto.class))
                 .collect(Collectors.toSet());

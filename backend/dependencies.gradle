@@ -36,6 +36,7 @@ ext {
     def mockitoVersion = '2.9.0'
     def jsonpathVersion = '2.4.0'
     def embeddedMongodbVersion = '2.0.3'
+    def embeddedNeo4jVersion = '3.1.0'
     def rollbarVersion = '0.5.3'
     def slf4jVersion = '1.7.25'
     def reactorVersion = '3.1.2.RELEASE'
@@ -66,6 +67,7 @@ ext {
             mockito            : "org.mockito:mockito-core:${mockitoVersion}",
             jsonpath           : "com.jayway.jsonpath:json-path:${jsonpathVersion}",
             embeddedMongodb    : "de.flapdoodle.embed:de.flapdoodle.embed.mongo:${embeddedMongodbVersion}",
+            embeddedNeo4j      : "org.neo4j:neo4j-ogm-embedded-driver:${embeddedNeo4jVersion}",
 
             slf4j              : "org.slf4j:slf4j-api:${slf4jVersion}",
 
@@ -103,6 +105,7 @@ ext {
             mongodb               : 'org.springframework.boot:spring-boot-starter-data-mongodb',
             mongodbDriver         : 'org.mongodb:mongodb-driver-reactivestreams',
             neo4j                 : 'org.springframework.data:spring-data-neo4j',
+            neo4jDriver           : 'org.neo4j:neo4j-ogm-bolt-driver',
             test                  : 'org.springframework.boot:spring-boot-starter-test',
             streamTest            : 'org.springframework.cloud:spring-cloud-stream-test-support',
 

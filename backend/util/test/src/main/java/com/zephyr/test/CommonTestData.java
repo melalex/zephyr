@@ -15,6 +15,7 @@ public final class CommonTestData {
     private Results results = new Results(queries);
     private Criteria criteria = new Criteria(places, userAgents);
     private Tasks tasks = new Tasks(criteria);
+    private Languages languages = new Languages();
 
     public static Countries countries() {
         return INSTANCE.countries;
@@ -42,5 +43,9 @@ public final class CommonTestData {
 
     public static Tasks tasks() {
         return INSTANCE.tasks;
+    }
+
+    public static Languages languages() {
+        return INSTANCE.languages;
     }
 }

@@ -7,13 +7,12 @@ import com.zephyr.commons.FunctionUtils;
 import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.data.protocol.dto.PlaceDto;
 import com.zephyr.errors.utils.ExceptionUtils;
-import com.zephyr.location.services.PlaceService;
 import com.zephyr.location.domain.Place;
 import com.zephyr.location.repositories.PlaceRepository;
-import lombok.Setter;
+import com.zephyr.location.services.PlaceService;
+import lombok.AllArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,17 +22,16 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
+@AllArgsConstructor
 public class PlaceServiceImpl implements PlaceService {
 
     private static final String UULE_FORMAT = "w+CAIQICI%s%s";
 
     private static final int DEFAULT_DEPTH = 1;
+
     private final List<String> secretMap;
 
-    @Setter(onMethod = @__(@Autowired))
     private PlaceRepository placeRepository;
-
-    @Setter(onMethod = @__(@Autowired))
     private ExtendedMapper mapper;
 
     public PlaceServiceImpl() {
@@ -49,8 +47,8 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public Set<PlaceDto> findByCountryIsoAndNameStartsWith(String iso, String name) {
-        return placeRepository.findAllByCountryIsoAndNameStartingWith(iso, name)
+    public Set<PlaceDto> findAllByCountryIsoAndNameContains(String iso, String name) {
+        return placeRepository.findAllByCountryIsoAndNameContainsIgnoreCase(iso, name)
                 .map(toDto())
                 .collect(Collectors.toSet());
     }

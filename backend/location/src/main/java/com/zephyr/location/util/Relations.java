@@ -1,4 +1,4 @@
-package com.zephyr.location.domain.constants;
+package com.zephyr.location.util;
 
 import lombok.experimental.UtilityClass;
 

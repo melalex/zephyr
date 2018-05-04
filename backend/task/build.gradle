@@ -38,6 +38,7 @@ dependencies {
     compile libraries['securityCloud']
     compile libraries['securityOAuth2']
     compile libraries['mongodb']
+    compile libraries['feign']
 
     compile libraries['messaging']
     compile libraries['discoveryClient']
@@ -56,8 +57,9 @@ dependencies {
     testCompile libraries['embeddedMongodb']
     testCompile libraries['securityTest']
     testCompile libraries['streamTest']
-    testCompile libraries['lombok']
     testCompile libraries['reactorTest']
+
+    testCompileOnly libraries['lombok']
 }
 
 dependencyManagement {
