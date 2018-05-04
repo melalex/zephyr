@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.time.temporal.TemporalAmount;
 
 @Slf4j
@@ -31,6 +33,7 @@ public class SearchCriteriaServiceImpl implements SearchCriteriaService {
     private NewCriteriaGateway newCriteriaGateway;
     private ConfigurationService configurationService;
     private Assembler<SearchCriteria, QueryDto> queryAssembler;
+    private Clock clock;
 
     @Override
     public Flux<SearchCriteria> findAll(Pageable pageable) {
@@ -59,6 +62,12 @@ public class SearchCriteriaServiceImpl implements SearchCriteriaService {
     }
 
     private Mono<SearchCriteria> createSearchCriteriaFlow(SearchCriteria searchCriteria) {
+        LocalDateTime now = LocalDateTime.now(clock);
+
+        searchCriteria.setHitsCount(1);
+        searchCriteria.setLastUpdate(now);
+        searchCriteria.setLastHit(now);
+
         return queryAssembler.assemble(searchCriteria)
                 .flatMap(newCriteriaGateway::send)
                 .then(searchCriteriaRepository.save(searchCriteria))

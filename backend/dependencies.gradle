@@ -119,6 +119,8 @@ ext {
 
             web                   : 'org.springframework.boot:spring-boot-starter-web',
             webFlux               : 'org.springframework.boot:spring-boot-starter-webflux',
+            webDocs               : 'org.springframework.restdocs:spring-restdocs-mockmvc',
+            webFluxDocs           : 'org.springframework.restdocs:spring-restdocs-webtestclient',
 
             cache                 : 'org.springframework.boot:spring-boot-starter-cache',
             validation            : 'org.springframework.boot:spring-boot-starter-validation',

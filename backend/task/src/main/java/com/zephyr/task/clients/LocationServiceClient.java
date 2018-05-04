@@ -11,10 +11,10 @@ import java.util.List;
 public interface LocationServiceClient {
 
     @GetMapping
-    List<PlaceDto> findByCountryIsoAndNameStartsWith(String iso, String name);
+    List<PlaceDto> findByCountryIsoAndNameContains(String iso, String name);
 
-    // TODO: Feign not supported Reactor yet
-    default Flux<PlaceDto> findByCountryIsoAndNameStartsWithAsync(String iso, String name) {
-        return Flux.fromIterable(findByCountryIsoAndNameStartsWith(iso, name));
+    // TODO: Feign doesn't supported Reactor
+    default Flux<PlaceDto> findByCountryIsoAndNameContainsAsync(String iso, String name) {
+        return Flux.fromIterable(findByCountryIsoAndNameContains(iso, name));
     }
 }

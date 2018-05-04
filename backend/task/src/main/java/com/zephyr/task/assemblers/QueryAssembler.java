@@ -18,10 +18,9 @@ import com.zephyr.task.clients.LocationServiceClient;
 import com.zephyr.task.domain.Place;
 import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.task.domain.UserAgent;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -30,6 +29,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Slf4j
 @Component
+@AllArgsConstructor
 public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
 
     private static final String BEGIN_ASSEMBLE_MESSAGE = "Start assemble QueryDto for SearchCriteria: {}";
@@ -38,13 +38,8 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
     private static final String PLACE_FIELD = "place";
     private static final String AGENT_FIELD = "agent";
 
-    @Setter(onMethod = @__(@Autowired))
     private AgentServiceClient agentServiceClient;
-
-    @Setter(onMethod = @__(@Autowired))
     private LocationServiceClient locationServiceClient;
-
-    @Setter(onMethod = @__(@Autowired))
     private ExtendedMapper mapper;
 
     @Override
@@ -65,7 +60,7 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
     private Publisher<QueryDto> populatePlace(SearchCriteria source, QueryDto query, Collection<Subject> errors) {
         Place place = source.getPlace();
 
-        return locationServiceClient.findByCountryIsoAndNameStartsWithAsync(place.getCountry(), place.getPlaceName())
+        return locationServiceClient.findByCountryIsoAndNameContainsAsync(place.getCountry(), place.getPlaceName())
                 .doOnNext(query::setPlace)
                 .map(p -> query)
                 .switchIfEmpty(Mono.just(query).doOnNext(q -> errors.add(newError(place))));

@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
-@JsonIgnoreProperties(value = {"lastHit", "lastUpdate", "hitsCount"}, allowGetters = true)
+@JsonIgnoreProperties(value = {"id", "lastHit", "lastUpdate", "hitsCount"}, allowGetters = true)
 public class SearchCriteriaDto {
 
     private String id;
@@ -29,7 +29,6 @@ public class SearchCriteriaDto {
     private Place place;
 
     @Valid
-    @NotNull
     private UserAgent userAgent;
 
     @Data
@@ -46,9 +45,15 @@ public class SearchCriteriaDto {
     public static class UserAgent {
 
         @NotEmpty
+        private String device;
+
+        @NotEmpty
         private String osName;
-        private String osVersion;
+
+        @NotEmpty
         private String browserName;
+
+        private String osVersion;
         private String browserVersion;
     }
 }

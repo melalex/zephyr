@@ -2,10 +2,9 @@ package com.zephyr.task.integration.source;
 
 import com.zephyr.commons.interfaces.Assembler;
 import com.zephyr.data.internal.dto.QueryDto;
-import com.zephyr.task.services.SearchCriteriaService;
 import com.zephyr.task.domain.SearchCriteria;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.zephyr.task.services.SearchCriteriaService;
+import lombok.AllArgsConstructor;
 import org.springframework.integration.core.MessageSource;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
@@ -13,12 +12,10 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
 @Component
+@AllArgsConstructor
 public class QuerySource implements MessageSource<Flux<QueryDto>> {
 
-    @Setter(onMethod = @__(@Autowired))
     private SearchCriteriaService searchCriteriaService;
-
-    @Setter(onMethod = @__(@Autowired))
     private Assembler<SearchCriteria, QueryDto> queryAssembler;
 
     @Override

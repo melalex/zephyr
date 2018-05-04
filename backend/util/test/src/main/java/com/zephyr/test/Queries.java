@@ -29,4 +29,11 @@ public final class Queries {
 
         return result;
     }
+
+    public QueryDto withoutAgent() {
+        QueryDto result = fromNewCriteria();
+        result.setUserAgent(null);
+
+        return result;
+    }
 }

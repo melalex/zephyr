@@ -23,12 +23,8 @@ public final class Tasks {
     private Criteria criteria;
 
     public TaskDto simple() {
-        return simple(SIMPLE_ID);
-    }
-
-    public TaskDto simple(String id) {
         TaskDto result = new TaskDto();
-        result.setId(id);
+        result.setId(SIMPLE_ID);
         result.setUserId(SIMPLE_USER_ID);
         result.setUrl(SIMPLE_URL);
         result.setShared(SIMPLE_IS_SHARED);
@@ -40,11 +36,7 @@ public final class Tasks {
     }
 
     public TaskDto withNewCriteria() {
-        return withNewCriteria(SIMPLE_ID);
-    }
-
-    public TaskDto withNewCriteria(String id) {
-        TaskDto simple = simple(id);
+        TaskDto simple = simple();
         simple.setSearchCriteria(List.of(criteria.newCriteria()));
 
         return simple;

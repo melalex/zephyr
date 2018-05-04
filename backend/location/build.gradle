@@ -15,8 +15,8 @@ buildscript {
         maven { url "https://repo.spring.io/milestone" }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("com.bmuschko:gradle-docker-plugin:${dockerVersion}")
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "com.bmuschko:gradle-docker-plugin:${dockerVersion}"
     }
 }
 
@@ -39,8 +39,6 @@ dependencies {
     compile libraries['modelMapperStarter']
 
     compile utils['data']
-    compile utils['errorsCore']
-    compile utils['errorsStarter']
     compile utils['commons']
 
     compileOnly libraries['lombok']

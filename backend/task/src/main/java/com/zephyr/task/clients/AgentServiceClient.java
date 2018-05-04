@@ -11,8 +11,8 @@ public interface AgentServiceClient {
     @GetMapping
     UserAgentDto findOneByExample(String device, String osName, String browser);
 
-    // TODO: Feign not supported Reactor yet
+    // TODO: Feign doesn't supported Reactor
     default Mono<UserAgentDto> findOneByExampleAsync(String device, String osName, String browser) {
-        return Mono.just(findOneByExample(device, osName, browser));
+        return Mono.justOrEmpty(findOneByExample(device, osName, browser));
     }
 }

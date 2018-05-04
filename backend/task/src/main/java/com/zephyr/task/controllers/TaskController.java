@@ -36,13 +36,13 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public Mono<TaskDto> findById(@PathVariable("id") String id) {
+    public Mono<TaskDto> findById(@PathVariable String id) {
         return taskFacade.findById(id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Mono<Void> remove(@PathVariable("id") String id, Principal principal) {
+    public Mono<Void> remove(@PathVariable String id, Principal principal) {
         return taskFacade.remove(id, principal);
     }
 }

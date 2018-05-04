@@ -1,22 +1,22 @@
 package com.zephyr.task.data;
 
+import com.zephyr.test.CommonTestData;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.modelmapper.ModelMapper;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TaskTestData {
 
-    private static final TaskTestData INSTANCE = createInstance();
+    private static final TaskTestData INSTANCE = new TaskTestData();
 
-    private TaskEntities taskEntities;
+    private CriteriaEntities criteriaEntities =
+            new CriteriaEntities(CommonTestData.places(), CommonTestData.userAgents());
 
-    private static TaskTestData createInstance() {
-        TaskTestData instance = new TaskTestData();
-        ModelMapper modelMapper = new ModelMapper();
-        instance.taskEntities = new TaskEntities(modelMapper);
+    private TaskEntities taskEntities = new TaskEntities(criteriaEntities);
 
-        return instance;
+
+    public static CriteriaEntities criteria() {
+        return INSTANCE.criteriaEntities;
     }
 
     public static TaskEntities tasks() {

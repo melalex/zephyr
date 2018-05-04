@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAmount;
 
@@ -29,6 +30,7 @@ public class SearchCriteriaOperationsImpl implements SearchCriteriaOperations {
 
     private ReactiveMongoOperations mongo;
     private UidProvider uidProvider;
+    private Clock clock;
 
     @Override
     public Mono<SearchCriteria> updateUsage(SearchCriteria searchCriteria) {
@@ -36,7 +38,7 @@ public class SearchCriteriaOperationsImpl implements SearchCriteriaOperations {
 
         Update update = new Update()
                 .inc(HITS_COUNT_FIELD, INC_VALUE)
-                .currentDate(LAST_HIT_FIELD)
+                .set(LAST_HIT_FIELD, LocalDateTime.now(clock))
                 .isolated();
 
         return mongo.findAndModify(query, update, SearchCriteria.class);
@@ -47,7 +49,7 @@ public class SearchCriteriaOperationsImpl implements SearchCriteriaOperations {
         String transactionId = uidProvider.provide();
 
         Query queryUpdate =
-                Query.query(Criteria.where(LAST_UPDATE_FIELD).lt(LocalDateTime.now().minus(relevancePeriod)))
+                Query.query(Criteria.where(LAST_UPDATE_FIELD).lt(LocalDateTime.now(clock).minus(relevancePeriod)))
                         .with(pageable);
 
         Query queryResult = Query.query(Criteria.where(TRANSACTION_ID_FIELD).is(transactionId))

@@ -12,6 +12,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public final class Criteria {
 
+    public static final String QUERY1 = "QUERY1";
+    public static final String QUERY2 = "QUERY2";
+
+    public static final int HIT_HIGHER_PRIORITY = 100;
+    public static final int HIT_LOWER_PRIORITY = 1;
+
     public static final String SIMPLE_ID = "158dc720-51a4-42d8-a33a-9aa79da027f2";
     public static final String SIMPLE_QUERY = "zephyr";
     public static final String SIMPLE_LANGUAGE_ISO = "en";
@@ -82,6 +88,7 @@ public final class Criteria {
     private SearchCriteriaDto.UserAgent toCriteria(UserAgentDto userAgentDto) {
         SearchCriteriaDto.UserAgent userAgent = new SearchCriteriaDto.UserAgent();
 
+        userAgent.setDevice(userAgentDto.getDevice());
         userAgent.setBrowserName(userAgentDto.getBrowserName());
         userAgent.setBrowserVersion(userAgentDto.getBrowserVersion());
         userAgent.setOsName(userAgentDto.getOsName());
