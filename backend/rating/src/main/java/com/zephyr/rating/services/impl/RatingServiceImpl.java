@@ -2,38 +2,33 @@ package com.zephyr.rating.services.impl;
 
 import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.data.protocol.dto.RatingDto;
-import com.zephyr.data.protocol.dto.StatisticsDto;
-import com.zephyr.data.protocol.dto.TaskDto;
-import com.zephyr.rating.bus.RequestUpdatesBus;
-import com.zephyr.rating.cliensts.TaskServiceClient;
 import com.zephyr.rating.domain.Rating;
-import com.zephyr.rating.domain.RequestCriteria;
-import com.zephyr.rating.factories.RatingDtoFactory;
+import com.zephyr.rating.domain.Request;
+import com.zephyr.rating.domain.vo.SearchResultVo;
 import com.zephyr.rating.repository.RatingRepository;
+import com.zephyr.rating.repository.RequestRepository;
+import com.zephyr.rating.services.RatingNotificationService;
 import com.zephyr.rating.services.RatingService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Pageable;
+import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.security.Principal;
+import java.util.function.Function;
 
 @Slf4j
 @Service
 @AllArgsConstructor
 public class RatingServiceImpl implements RatingService {
 
-    private static final String NEW_SUBSCRIPTION_MESSAGE = "New subscription to Task '{}'";
-
-    private RequestUpdatesBus requestUpdatesBus;
     private RatingRepository ratingRepository;
-    private TaskServiceClient taskServiceClient;
-    private RatingDtoFactory ratingDtoFactory;
     private ExtendedMapper mapper;
-    private Converter<TaskDto, Iterable<RequestCriteria>> taskTransformer;
+    private RequestRepository requestRepository;
+    private RatingNotificationService ratingNotificationService;
 
     @Override
     public Flux<RatingDto> findRatingForUrl(String url, Pageable pageable) {
@@ -42,27 +37,24 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public Flux<StatisticsDto> findStatisticsAndSubscribeForTask(String task, Principal principal) {
-        log.info(NEW_SUBSCRIPTION_MESSAGE, task);
-
-        return taskServiceClient.findByUserAndIdAsync(principal.getName(), task)
-                .flatMapIterable(taskTransformer::convert)
-                .flatMap(this::findStatisticsAndSubscribeForTask);
+    @ServiceActivator
+    public void save(SearchResultVo target) {
+        Mono.just(target)
+                .flatMap(findOrSave())
+                .flatMap(this::saveRating)
+                .subscribe(ratingNotificationService::publishRatingUpdatedEvent);
     }
 
-    private Flux<StatisticsDto> findStatisticsAndSubscribeForTask(RequestCriteria criteria) {
-        return toStatistic(ratingRepository.findByCriteria(criteria), criteria)
-                .concatWith(subscribe(criteria));
+    private Function<SearchResultVo, Mono<SearchResultVo>> findOrSave() {
+        return s -> requestRepository.findOne(Example.of(s.getRequest()))
+                .switchIfEmpty(requestRepository.save(s.getRequest()))
+                .map(r -> SearchResultVo.of(r, s.getLinks()));
     }
 
-    private Flux<StatisticsDto> subscribe(RequestCriteria criteria) {
-        return requestUpdatesBus.updatesFor(criteria)
-                .map(r -> ratingRepository.findAllByRequestIdAndUrl(r.getId(), criteria.getUrl()))
-                .flatMap(f -> toStatistic(f, criteria));
-    }
-
-    private Mono<StatisticsDto> toStatistic(Flux<Rating> rating, RequestCriteria criteria) {
-        return rating.collectList()
-                .map(l -> ratingDtoFactory.create(criteria, l));
+    private Mono<Request> saveRating(SearchResultVo target) {
+        return Flux.fromIterable(target.getLinks())
+                .map(r -> new Rating(target.getRequest(), r.getIndex(), r.getElement()))
+                .flatMap(ratingRepository::save)
+                .then(Mono.just(target.getRequest()));
     }
 }

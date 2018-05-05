@@ -2,8 +2,8 @@ package com.zephyr.rating;
 
 import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.data.internal.dto.SearchResultDto;
-import com.zephyr.rating.domain.Rating;
-import com.zephyr.rating.services.RatingSavingService;
+import com.zephyr.rating.domain.vo.SearchResultVo;
+import com.zephyr.rating.services.RatingService;
 import org.intellij.lang.annotations.Language;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
@@ -17,8 +17,6 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.expression.common.LiteralExpression;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
-
-import java.util.List;
 
 @EnableFeignClients
 @SpringBootApplication
@@ -44,12 +42,12 @@ public class RatingApplication {
     }
 
     @Bean
-    public IntegrationFlow updateRatingFlow(Converter<SearchResultDto, List<Rating>> searchResultConverter,
-                                            RatingSavingService ratingSavingService) {
+    public IntegrationFlow updateRatingFlow(Converter<SearchResultDto, SearchResultVo> searchResultConverter,
+                                            RatingService ratingService) {
         return IntegrationFlows.from(Sink.INPUT)
                 .log(new LiteralExpression(NEW_SEARCH_RESULT_MESSAGE))
                 .transform(searchResultConverter::convert)
-                .handle(ratingSavingService)
+                .handle(ratingService)
                 .get();
     }
 }

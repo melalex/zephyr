@@ -1,6 +1,8 @@
 package com.zephyr.task;
 
 import com.zephyr.commons.extensions.ExtendedMapper;
+import com.zephyr.commons.interfaces.UidProvider;
+import com.zephyr.commons.support.DefaultUidProvider;
 import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.task.integration.gateways.NewCriteriaGateway;
 import com.zephyr.task.services.ConfigurationService;
@@ -48,6 +50,11 @@ public class TaskApplication {
     }
 
     @Bean
+    public UidProvider uidProvider() {
+        return new DefaultUidProvider();
+    }
+
+    @Bean
     @RefreshScope
     @ConditionalOnProperty(value = "task.enableUpdates", havingValue = "true")
     public IntegrationFlow updateRatingFlow(MessageSource<Flux<QueryDto>> querySource,
@@ -70,5 +77,4 @@ public class TaskApplication {
     private Consumer<HeaderEnricherSpec> setPriority(String priority) {
         return h -> h.header(PRIORITY_HEADER, priority);
     }
-
 }

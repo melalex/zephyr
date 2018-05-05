@@ -18,7 +18,7 @@ import java.security.Principal;
 @AllArgsConstructor
 public class TaskServiceImpl implements TaskService {
 
-    private static final String CREATE_TASK_MESSAGE = "Received new task: {}";
+    private static final String CREATE_TASK_MESSAGE = "Received new task with id [{}]";
     private static final String REMOVE_TASK_MESSAGE = "Removing task with id [{}] for user [{}]";
 
     private SearchCriteriaService searchCriteriaService;

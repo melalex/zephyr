@@ -1,10 +1,10 @@
 package com.zephyr.keyword.services.provider;
 
-import com.zephyr.data.protocol.criteria.KeywordCriteria;
-import com.zephyr.data.protocol.vo.KeywordVo;
+import com.zephyr.data.protocol.request.KeywordRequest;
+import com.zephyr.data.protocol.dto.KeywordDto;
 import reactor.core.publisher.Flux;
 
 public interface KeywordsProvider {
 
-    Flux<KeywordVo> provide(KeywordCriteria request);
+    Flux<KeywordDto> provide(KeywordRequest request);
 }

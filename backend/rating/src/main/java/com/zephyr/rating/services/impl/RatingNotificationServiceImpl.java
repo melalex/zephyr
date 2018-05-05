@@ -1,22 +1,20 @@
-package com.zephyr.rating.bus;
+package com.zephyr.rating.services.impl;
 
-import com.zephyr.commons.interfaces.EventPublisher;
-import com.zephyr.rating.events.RatingUpdatedEvent;
 import com.zephyr.rating.domain.Request;
+import com.zephyr.rating.events.RatingUpdatedEvent;
+import com.zephyr.rating.services.RatingNotificationService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @Slf4j
-@Component
-@RefreshScope
-public class RatingUpdatePublisher implements EventPublisher<Request> {
+@Service
+public class RatingNotificationServiceImpl implements RatingNotificationService {
 
-    private static final String PUBLISH_RATING_UPDATE_MESSAGE = "Publish update for Rating: {}";
+    private static final String PUBLISH_RATING_UPDATE_MESSAGE = "Publish update for Rating with id [{}]";
 
     @Setter(onMethod = @__(@Autowired))
     private ApplicationEventPublisher publisher;
@@ -25,7 +23,7 @@ public class RatingUpdatePublisher implements EventPublisher<Request> {
     private String serviceName;
 
     @Override
-    public void publish(Request request) {
+    public void publishRatingUpdatedEvent(Request request) {
         RatingUpdatedEvent event = new RatingUpdatedEvent(this, serviceName, serviceName);
         event.setRequest(request);
 

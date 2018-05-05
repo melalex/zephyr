@@ -1,7 +1,7 @@
 package com.zephyr.keyword.services.provider.impl;
 
-import com.zephyr.data.protocol.criteria.KeywordCriteria;
-import com.zephyr.data.protocol.vo.KeywordVo;
+import com.zephyr.data.protocol.request.KeywordRequest;
+import com.zephyr.data.protocol.dto.KeywordDto;
 import com.zephyr.keyword.services.provider.KeywordsProvider;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
@@ -10,7 +10,7 @@ import reactor.core.publisher.Flux;
 public class AdWordsKeywordsProvider implements KeywordsProvider {
 
     @Override
-    public Flux<KeywordVo> provide(KeywordCriteria request) {
+    public Flux<KeywordDto> provide(KeywordRequest request) {
         return Flux.empty();
     }
 }

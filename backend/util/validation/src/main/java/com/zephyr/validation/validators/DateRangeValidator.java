@@ -5,7 +5,7 @@ import lombok.SneakyThrows;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -27,8 +27,8 @@ public class DateRangeValidator implements ConstraintValidator<DateRange, Object
         final String toValue = BeanUtils.getProperty(value, toProperty);
 
         if (StringUtils.isNoneEmpty(fromValue, toValue)) {
-            final LocalDateTime from = LocalDateTime.parse(fromValue);
-            final LocalDateTime to = LocalDateTime.parse(toValue);
+            final LocalDate from = LocalDate.parse(fromValue);
+            final LocalDate to = LocalDate.parse(toValue);
 
             return from.isBefore(to);
         }

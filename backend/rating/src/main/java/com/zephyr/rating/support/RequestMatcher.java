@@ -1,4 +1,4 @@
-package com.zephyr.rating.matchers;
+package com.zephyr.rating.support;
 
 import com.zephyr.commons.ObjectUtils;
 import com.zephyr.commons.interfaces.Matcher;
@@ -9,6 +9,7 @@ import com.zephyr.rating.domain.RequestCriteria;
 import com.zephyr.rating.domain.UserAgent;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -23,23 +24,25 @@ public class RequestMatcher implements Matcher<RequestCriteria, Request> {
     }
 
     private boolean checkQueries(Query example, Query target) {
-        return ObjectUtils.equalsOrNull(example.getQuery(), target.getQuery())
-               && ObjectUtils.equalsOrNull(example.getLanguageIso(), target.getLanguageIso())
-               && checkPlace(example.getPlace(), target.getPlace())
-               && checkUserAgent(example.getUserAgent(), target.getUserAgent());
+        return Objects.isNull(example) || Objects.isNull(target) ||
+               (ObjectUtils.equalsOrNull(example.getQuery(), target.getQuery())
+                && ObjectUtils.equalsOrNull(example.getLanguageIso(), target.getLanguageIso())
+                && checkPlace(example.getPlace(), target.getPlace())
+                && checkUserAgent(example.getUserAgent(), target.getUserAgent()));
     }
 
     private boolean checkPlace(Place example, Place target) {
-        return ObjectUtils.equalsOrNull(example.getCountry(), target.getCountry())
-               && ObjectUtils.equalsOrNull(example.getPlaceName(), target.getPlaceName());
+        return Objects.isNull(example) || Objects.isNull(target) ||
+               (ObjectUtils.equalsOrNull(example.getCountry(), target.getCountry())
+                && ObjectUtils.equalsOrNull(example.getPlaceName(), target.getPlaceName()));
     }
 
     private boolean checkUserAgent(UserAgent example, UserAgent target) {
-        return ObjectUtils.equalsOrNull(example.getOsName(), target.getOsName())
-               && ObjectUtils.equalsOrNull(example.getOsVersion(), target.getOsVersion())
-               && ObjectUtils.equalsOrNull(example.getBrowserName(), target.getBrowserName())
-               && ObjectUtils.equalsOrNull(example.getBrowserVersion(), target.getBrowserVersion());
-
+        return Objects.isNull(example) || Objects.isNull(target) ||
+               (ObjectUtils.equalsOrNull(example.getOsName(), target.getOsName())
+                && ObjectUtils.equalsOrNull(example.getOsVersion(), target.getOsVersion())
+                && ObjectUtils.equalsOrNull(example.getBrowserName(), target.getBrowserName())
+                && ObjectUtils.equalsOrNull(example.getBrowserVersion(), target.getBrowserVersion()));
     }
 
     private boolean checkProvider(RequestCriteria example, Request target) {

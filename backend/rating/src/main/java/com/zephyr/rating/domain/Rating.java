@@ -14,6 +14,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @RequiredArgsConstructor
 public class Rating {
 
+    public static final String COLLECTION_NAME = "Rating";
+    public static final String URL_FIELD = "url";
+    public static final String QUERY_FIELD = "request.query";
+    public static final String TIMESTAMP_FIELD = "request.timestamp";
+    public static final String QUERY_STRING_FIELD = "request.query.query";
+    public static final String PROVIDER_FIELD = "request.provider";
+
     @Id
     private String id;
 

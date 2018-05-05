@@ -1,4 +1,4 @@
-package com.zephyr.rating.factories;
+package com.zephyr.rating.support;
 
 import com.zephyr.data.protocol.dto.SearchCriteriaDto;
 import com.zephyr.data.protocol.dto.StatisticsDto;

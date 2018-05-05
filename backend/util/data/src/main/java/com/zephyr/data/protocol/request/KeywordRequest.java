@@ -1,4 +1,4 @@
-package com.zephyr.data.protocol.criteria;
+package com.zephyr.data.protocol.request;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
@@ -7,7 +7,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class KeywordCriteria {
+public class KeywordRequest {
 
     @URL
     @NotNull

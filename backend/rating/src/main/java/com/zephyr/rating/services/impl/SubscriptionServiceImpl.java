@@ -1,30 +1,31 @@
-package com.zephyr.rating.bus;
+package com.zephyr.rating.services.impl;
 
-import com.zephyr.commons.interfaces.Bus;
 import com.zephyr.commons.interfaces.Matcher;
-import com.zephyr.rating.events.RatingUpdatedEvent;
 import com.zephyr.rating.domain.Request;
 import com.zephyr.rating.domain.RequestCriteria;
-import lombok.Setter;
+import com.zephyr.rating.events.RatingUpdatedEvent;
+import com.zephyr.rating.services.SubscriptionService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.UnicastProcessor;
 
 import javax.annotation.PostConstruct;
 
 @Slf4j
-@Component
-public class RequestUpdatesBus implements Bus<RequestCriteria, Request> {
+@Service
+@RequiredArgsConstructor
+public class SubscriptionServiceImpl implements SubscriptionService {
 
-    private static final String RECEIVED_EVENT_MESSAGE = "Received new Rating: {}";
+    private static final String RECEIVED_EVENT_MESSAGE = "Received new Rating with id [{}]";
 
     private UnicastProcessor<Request> hotSource;
     private Flux<Request> hotFlux;
 
-    @Setter(onMethod = @__(@Autowired))
+    @NonNull
     private Matcher<RequestCriteria, Request> requestMatcher;
 
     @PostConstruct
@@ -41,7 +42,7 @@ public class RequestUpdatesBus implements Bus<RequestCriteria, Request> {
     }
 
     @Override
-    public Flux<Request> updatesFor(RequestCriteria requestCriteria) {
+    public Flux<Request> subscribeOn(RequestCriteria requestCriteria) {
         return hotFlux.filter(r -> requestMatcher.matches(requestCriteria, r));
     }
 }

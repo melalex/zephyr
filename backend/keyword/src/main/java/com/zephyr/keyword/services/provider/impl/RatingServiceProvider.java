@@ -1,7 +1,7 @@
 package com.zephyr.keyword.services.provider.impl;
 
-import com.zephyr.data.protocol.criteria.KeywordCriteria;
-import com.zephyr.data.protocol.vo.KeywordVo;
+import com.zephyr.data.protocol.request.KeywordRequest;
+import com.zephyr.data.protocol.dto.KeywordDto;
 import com.zephyr.keyword.clients.RatingServiceClient;
 import com.zephyr.keyword.services.provider.KeywordsProvider;
 import lombok.Setter;
@@ -16,8 +16,8 @@ public class RatingServiceProvider implements KeywordsProvider {
     private RatingServiceClient ratingServiceClient;
 
     @Override
-    public Flux<KeywordVo> provide(KeywordCriteria request) {
+    public Flux<KeywordDto> provide(KeywordRequest request) {
         return ratingServiceClient.findRatingForUrl(request.getUrl(), request.getPage(), request.getPageSize())
-                .map(r -> KeywordVo.of(r.getQuery().getQuery(), r.getUrl()));
+                .map(r -> new KeywordDto(r.getQuery().getQuery(), r.getUrl()));
     }
 }
