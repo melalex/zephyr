@@ -7,8 +7,6 @@ import com.zephyr.task.services.TaskService;
 import com.zephyr.task.domain.Task;
 import com.zephyr.task.facades.TaskFacade;
 import lombok.AllArgsConstructor;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -35,8 +33,8 @@ public class TaskFacadeImpl implements TaskFacade {
     }
 
     @Override
-    public Mono<TaskDto> findById(String id) {
-        return taskService.findById(id)
+    public Mono<TaskDto> findByUserAndId(String name, String id) {
+        return taskService.findByUserAndId(name, id)
                 .map(mapper.mapperFor(TaskDto.class));
     }
 

@@ -12,7 +12,7 @@ public interface TaskService {
 
     Flux<Task> findAll(Principal principal);
 
-    Mono<Task> findById(String id);
+    Mono<Task> findByUserAndId(String name, String id);
 
     Mono<Void> remove(String id, Principal principal);
 }

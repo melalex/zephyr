@@ -1,8 +1,6 @@
 package com.zephyr.task.services.impl;
 
 import com.zephyr.commons.LoggingUtils;
-import com.zephyr.commons.ReactorUtils;
-import com.zephyr.errors.utils.ExceptionUtils;
 import com.zephyr.task.domain.Task;
 import com.zephyr.task.repositories.TaskRepository;
 import com.zephyr.task.services.SearchCriteriaService;
@@ -21,8 +19,7 @@ import java.security.Principal;
 public class TaskServiceImpl implements TaskService {
 
     private static final String CREATE_TASK_MESSAGE = "Received new task: {}";
-    private static final String REMOVE_TASK_MESSAGE = "Removing task: {}";
-    private static final String USER_ID_FIELD = "userId";
+    private static final String REMOVE_TASK_MESSAGE = "Removing task with id [{}] for user [{}]";
 
     private SearchCriteriaService searchCriteriaService;
     private TaskRepository taskRepository;
@@ -44,26 +41,15 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Mono<Task> findById(String id) {
-        return findById(id, null, false);
+    public Mono<Task> findByUserAndId(String name, String id) {
+        return taskRepository.findByUserIdAndId(name, id);
     }
 
     @Override
     public Mono<Void> remove(String id, Principal principal) {
-        return findById(id, principal.getName(), true)
+        String userId = principal.getName();
+        return findByUserAndId(userId, id)
                 .flatMap(taskRepository::delete)
-                .doOnNext(v -> log.info(REMOVE_TASK_MESSAGE, id));
-    }
-
-    private Mono<Task> findById(String id, String principal, boolean checkOwner) {
-        return taskRepository.findById(id)
-                .doOnNext(ReactorUtils.conditional(checkOwner, t -> checkOwner(t, principal)))
-                .switchIfEmpty(ExceptionUtils.notFound(Task.class, id));
-    }
-
-    private void checkOwner(Task task, String id) {
-        if (!id.equalsIgnoreCase(task.getUserId())) {
-            ExceptionUtils.notOwner(Task.class, USER_ID_FIELD, id);
-        }
+                .doOnNext(v -> log.info(REMOVE_TASK_MESSAGE, id, userId));
     }
 }

@@ -35,9 +35,9 @@ public class TaskController {
         return taskFacade.findAll(principal);
     }
 
-    @GetMapping("/{id}")
-    public Mono<TaskDto> findById(@PathVariable String id) {
-        return taskFacade.findById(id);
+    @GetMapping("/{name}/{id}")
+    public Mono<TaskDto> findByUserAndId(@PathVariable String name, @PathVariable String id) {
+        return taskFacade.findByUserAndId(name, id);
     }
 
     @DeleteMapping("/{id}")

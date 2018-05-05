@@ -75,7 +75,7 @@ public class TaskControllerIntegrationTest {
 
 //        @formatter:off
         TaskDto expected = webTestClient.get()
-                .uri(WebClientUtil.from(id))
+                .uri(WebClientUtil.from(Tasks.SIMPLE_USER_ID, id))
                 .exchange()
                     .expectStatus()
                         .isOk()
@@ -95,7 +95,7 @@ public class TaskControllerIntegrationTest {
                         .isNoContent();
 
         webTestClient.get()
-                .uri(WebClientUtil.from(id))
+                .uri(WebClientUtil.from(Tasks.SIMPLE_USER_ID, id))
                 .exchange()
                     .expectStatus()
                         .isNotFound();

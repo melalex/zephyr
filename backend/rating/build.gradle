@@ -39,6 +39,8 @@ dependencies {
     compile libraries['mongodbDriver']
     compile libraries['messaging']
     compile libraries['discoveryClient']
+    compile libraries['feign']
+    compile libraries['javaxAnnotation']
 
     compile utils['commons']
     compile utils['data']
@@ -50,8 +52,14 @@ dependencies {
     compileOnly libraries['ideaAnnotations']
     compileOnly libraries['lombok']
 
+    testCompile utils['test']
+
     testCompile libraries['test']
-    testCompile libraries['securityTest']
+    testCompile libraries['embeddedMongodb']
+    testCompile libraries['streamTest']
+    testCompile libraries['reactorTest']
+
+    testCompileOnly libraries['lombok']
 }
 
 dependencyManagement {

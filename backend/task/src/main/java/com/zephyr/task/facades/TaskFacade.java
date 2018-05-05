@@ -12,7 +12,7 @@ public interface TaskFacade {
 
     Flux<TaskDto> findAll(Principal principal);
 
-    Mono<TaskDto> findById(String id);
+    Mono<TaskDto> findByUserAndId(String name, String id);
 
     Mono<Void> remove(String id, Principal principal);
 }
