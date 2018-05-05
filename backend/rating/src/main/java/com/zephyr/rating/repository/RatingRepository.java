@@ -6,5 +6,5 @@ import reactor.core.publisher.Flux;
 
 public interface RatingRepository extends ReactiveMongoRepository<Rating, String>, RatingOperations {
 
-    Flux<Rating> findAllByRequestIdAndUrl(String id, String url);
+    Flux<Rating> findAllByRequestIdAndUrlContains(String id, String url);
 }

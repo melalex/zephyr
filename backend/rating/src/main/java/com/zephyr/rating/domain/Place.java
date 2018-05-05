@@ -6,5 +6,5 @@ import lombok.Data;
 public class Place {
 
     private String country;
-    private String placeName;
+    private String name;
 }

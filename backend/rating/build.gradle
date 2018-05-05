@@ -41,6 +41,7 @@ dependencies {
     compile libraries['discoveryClient']
     compile libraries['feign']
     compile libraries['javaxAnnotation']
+    compile libraries['modelMapperStarter']
 
     compile utils['commons']
     compile utils['data']

@@ -8,17 +8,17 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public final class Places {
 
-    public static final int KIEV_ID = 1012852;
+    public static final Long KIEV_ID = 1012852L;
     public static final String KIEV_NAME = "Kiev";
     public static final String KIEV_CANONICAL_NAME = "Kiev,Kyiv city,Ukraine";
-    public static final int KIEV_PARENT = 21118;
+    public static final Long KIEV_PARENT = 21118L;
     public static final PlaceType KIEV_TYPE = PlaceType.CITY;
     public static final String KIEV_UULE = "w+CAIQICIWS2lldixLeWl2IGNpdHksVWtyYWluZQ";
 
-    public static final int CALGARY_ID = 1001801;
+    public static final Long CALGARY_ID = 1001801L;
     public static final String CALGARY_NAME = "Calgary";
     public static final String CALGARY_CANONICAL_NAME = "Calgary,Alberta,Canada";
-    public static final int CALGARY_PARENT = 20113;
+    public static final Long CALGARY_PARENT = 20113L;
     public static final PlaceType CALGARY_TYPE = PlaceType.CITY;
     public static final String CALGARY_UULE = "w+CAIQICIWQ2FsZ2FyeSxBbGJlcnRhLENhbmFkYQ";
 

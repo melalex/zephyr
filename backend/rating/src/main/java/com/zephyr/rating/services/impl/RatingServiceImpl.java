@@ -32,7 +32,7 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public Flux<RatingDto> findRatingForUrl(String url, Pageable pageable) {
-        return ratingRepository.findAllByUrl(url, pageable)
+        return ratingRepository.findAllByUrlStartsWith(url, pageable)
                 .map(mapper.mapperFor(RatingDto.class));
     }
 

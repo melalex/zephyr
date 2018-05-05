@@ -28,7 +28,7 @@ public final class CriteriaEntities {
         return result;
     }
 
-    public SearchCriteria newCriteria(String query, int hitsCount, LocalDateTime lastUpdate) {
+    public SearchCriteria newCriteria(String query, Long hitsCount, LocalDateTime lastUpdate) {
         SearchCriteria criteria = new SearchCriteria();
         criteria.setQuery(query);
         criteria.setHitsCount(hitsCount);
@@ -89,5 +89,4 @@ public final class CriteriaEntities {
 
         return place;
     }
-
 }

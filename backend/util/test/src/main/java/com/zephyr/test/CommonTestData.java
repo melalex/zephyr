@@ -16,6 +16,8 @@ public final class CommonTestData {
     private Criteria criteria = new Criteria(places, userAgents);
     private Tasks tasks = new Tasks(criteria);
     private Languages languages = new Languages();
+    private Statistic statistic = new Statistic(results, criteria);
+    private Ratings ratings = new Ratings(criteria);
 
     public static Countries countries() {
         return INSTANCE.countries;
@@ -47,5 +49,13 @@ public final class CommonTestData {
 
     public static Languages languages() {
         return INSTANCE.languages;
+    }
+
+    public static Statistic statistic() {
+        return INSTANCE.statistic;
+    }
+
+    public static Ratings ratings() {
+        return INSTANCE.ratings;
     }
 }

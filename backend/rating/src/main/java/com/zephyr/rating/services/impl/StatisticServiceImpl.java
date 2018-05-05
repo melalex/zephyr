@@ -5,17 +5,17 @@ import com.zephyr.data.protocol.dto.StatisticsDto;
 import com.zephyr.data.protocol.request.StatisticRequest;
 import com.zephyr.rating.domain.Rating;
 import com.zephyr.rating.domain.RequestCriteria;
-import com.zephyr.rating.support.RatingDtoFactory;
 import com.zephyr.rating.repository.RatingRepository;
 import com.zephyr.rating.services.StatisticService;
 import com.zephyr.rating.services.SubscriptionService;
+import com.zephyr.rating.support.StatisticsDtoFactory;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Set;
+import java.util.List;
 import java.util.function.Function;
 
 @Slf4j
@@ -26,8 +26,8 @@ public class StatisticServiceImpl implements StatisticService {
 
     private SubscriptionService subscriptionService;
     private RatingRepository ratingRepository;
-    private RatingDtoFactory ratingDtoFactory;
-    private Assembler<StatisticRequest, Set<RequestCriteria>> requestCriteriaAssembler;
+    private StatisticsDtoFactory statisticsDtoFactory;
+    private Assembler<StatisticRequest, List<RequestCriteria>> requestCriteriaAssembler;
 
     @Override
     public Flux<StatisticsDto> findStatisticsAndSubscribeForTask(StatisticRequest request) {
@@ -45,12 +45,11 @@ public class StatisticServiceImpl implements StatisticService {
 
     private Flux<StatisticsDto> subscribe(RequestCriteria criteria) {
         return subscriptionService.subscribeOn(criteria)
-                .map(r -> ratingRepository.findAllByRequestIdAndUrl(r.getId(), criteria.getUrl()))
+                .map(r -> ratingRepository.findAllByRequestIdAndUrlContains(r.getId(), criteria.getUrl()))
                 .flatMap(f -> toStatistic(f, criteria));
     }
 
     private Mono<StatisticsDto> toStatistic(Flux<Rating> rating, RequestCriteria criteria) {
-        return rating.collectList()
-                .map(l -> ratingDtoFactory.create(criteria, l));
+        return rating.collectList().map(l -> statisticsDtoFactory.create(criteria, l));
     }
 }

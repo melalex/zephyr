@@ -1,12 +1,14 @@
 package com.zephyr.rating.support;
 
 import com.zephyr.commons.interfaces.Assembler;
+import com.zephyr.data.protocol.dto.SearchCriteriaDto;
 import com.zephyr.data.protocol.dto.TaskDto;
 import com.zephyr.data.protocol.request.StatisticRequest;
 import com.zephyr.rating.cliensts.TaskServiceClient;
 import com.zephyr.rating.domain.Query;
 import com.zephyr.rating.domain.RequestCriteria;
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -29,14 +31,20 @@ public class RequestCriteriaAssembler implements Assembler<StatisticRequest, Lis
     }
 
     private Function<TaskDto, List<RequestCriteria>> toRequestCriteria(StatisticRequest source) {
-        return t -> {
-            RequestCriteria prototype = mapper.map(source, RequestCriteria.class);
-            prototype.setFrom(source.getFrom());
-            prototype.setTo(source.getTo());
+        RequestCriteria prototype = mapper.map(source, RequestCriteria.class);
+        prototype.setFrom(source.getFrom());
+        prototype.setTo(source.getTo());
 
-            return t.getSearchCriteria().stream()
-                    .map(c -> prototype.withQuery(mapper.map(c, Query.class)))
-                    .collect(Collectors.toList());
-        };
+        return t -> t.getSearchCriteria().stream()
+                .map(criteriaFactoryFunction(prototype))
+                .collect(Collectors.toList());
+    }
+
+    @NotNull
+    private Function<SearchCriteriaDto, RequestCriteria> criteriaFactoryFunction(RequestCriteria prototype) {
+        return c -> prototype.toBuilder()
+                .originalCriteriaId(c.getId())
+                .query(mapper.map(c, Query.class))
+                .build();
     }
 }

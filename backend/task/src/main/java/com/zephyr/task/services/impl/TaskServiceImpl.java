@@ -1,6 +1,7 @@
 package com.zephyr.task.services.impl;
 
 import com.zephyr.commons.LoggingUtils;
+import com.zephyr.errors.utils.ExceptionUtils;
 import com.zephyr.task.domain.Task;
 import com.zephyr.task.repositories.TaskRepository;
 import com.zephyr.task.services.SearchCriteriaService;
@@ -42,7 +43,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Mono<Task> findByUserAndId(String name, String id) {
-        return taskRepository.findByUserIdAndIdOrShared(name, id);
+        return taskRepository.findByUserIdAndIdOrShared(name, id)
+                .switchIfEmpty(ExceptionUtils.notFound(Task.class, id));
     }
 
     @Override
@@ -50,6 +52,7 @@ public class TaskServiceImpl implements TaskService {
         String userId = principal.getName();
 
         return taskRepository.findByUserIdAndId(userId, id)
+                .switchIfEmpty(ExceptionUtils.notFound(Task.class, id))
                 .flatMap(taskRepository::delete)
                 .doOnNext(v -> log.info(REMOVE_TASK_MESSAGE, id, userId));
     }

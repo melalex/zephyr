@@ -15,13 +15,13 @@ public final class Criteria {
     public static final String QUERY1 = "QUERY1";
     public static final String QUERY2 = "QUERY2";
 
-    public static final int HIT_HIGHER_PRIORITY = 100;
-    public static final int HIT_LOWER_PRIORITY = 1;
+    public static final Long HIT_HIGHER_PRIORITY = 100L;
+    public static final Long HIT_LOWER_PRIORITY = 1L;
 
     public static final String SIMPLE_ID = "158dc720-51a4-42d8-a33a-9aa79da027f2";
     public static final String SIMPLE_QUERY = "zephyr";
     public static final String SIMPLE_LANGUAGE_ISO = "en";
-    public static final int SIMPLE_HITS_COUNT = 10;
+    public static final Long SIMPLE_HITS_COUNT = 10L;
 
     public static final LocalDateTime SIMPLE_LAST_HIT = LocalDateTime.parse("2018-05-02T15:15:00");
     public static final LocalDateTime SIMPLE_LAST_UPDATE = LocalDateTime.parse("2018-04-02T15:15:00");
@@ -29,7 +29,7 @@ public final class Criteria {
     public static final String NEW_CRITERIA_ID = "23032214-a3f1-4332-9f48-3289b027589b";
     public static final String NEW_CRITERIA_QUERY = "zephyr";
     public static final String NEW_CRITERIA_LANGUAGE_ISO = "en";
-    public static final int NEW_CRITERIA_HITS_COUNT = 1;
+    public static final Long NEW_CRITERIA_HITS_COUNT = 1L;
 
     public static final String INVALID_PLACE_NAME = "INVALID_PLACE_NAME";
     public static final String INVALID_COUNTRY = "INVALID_COUNTRY";
@@ -79,7 +79,7 @@ public final class Criteria {
 
     private SearchCriteriaDto.Place invalidPlace() {
         SearchCriteriaDto.Place place = new SearchCriteriaDto.Place();
-        place.setPlaceName(INVALID_PLACE_NAME);
+        place.setName(INVALID_PLACE_NAME);
         place.setCountry(INVALID_COUNTRY);
 
         return place;
@@ -90,9 +90,7 @@ public final class Criteria {
 
         userAgent.setDevice(userAgentDto.getDevice());
         userAgent.setBrowserName(userAgentDto.getBrowserName());
-        userAgent.setBrowserVersion(userAgentDto.getBrowserVersion());
         userAgent.setOsName(userAgentDto.getOsName());
-        userAgent.setOsVersion(userAgentDto.getOsVersion());
 
         return userAgent;
     }
@@ -101,7 +99,7 @@ public final class Criteria {
         SearchCriteriaDto.Place place = new SearchCriteriaDto.Place();
 
         place.setCountry(placeDto.getCountry().getIso());
-        place.setPlaceName(placeDto.getName());
+        place.setName(placeDto.getName());
 
         return place;
     }

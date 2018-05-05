@@ -7,6 +7,7 @@ import com.zephyr.test.mocks.UidProviderMock;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
@@ -50,6 +51,8 @@ public final class Results {
             "www.zhats.com"
     );
 
+    public static final LocalDateTime SIMPLE_TIMESTAMP = ClockMock.now();
+
     private Queries queries;
 
     public SearchResultDto bing() {
@@ -80,7 +83,7 @@ public final class Results {
         SearchResultDto result = new SearchResultDto();
         result.setId(UidProviderMock.DEFAULT_ID);
         result.setOffset(0);
-        result.setTimestamp(ClockMock.now());
+        result.setTimestamp(SIMPLE_TIMESTAMP);
         result.setQuery(queries.simple());
         return result;
     }

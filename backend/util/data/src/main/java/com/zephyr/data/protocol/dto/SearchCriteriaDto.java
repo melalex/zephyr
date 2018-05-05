@@ -16,7 +16,7 @@ public class SearchCriteriaDto {
 
     private LocalDateTime lastHit;
     private LocalDateTime lastUpdate;
-    private long hitsCount;
+    private Long hitsCount;
 
     @NotEmpty
     private String query;
@@ -38,7 +38,7 @@ public class SearchCriteriaDto {
         private String country;
 
         @NotEmpty
-        private String placeName;
+        private String name;
     }
 
     @Data
@@ -52,8 +52,5 @@ public class SearchCriteriaDto {
 
         @NotEmpty
         private String browserName;
-
-        private String osVersion;
-        private String browserVersion;
     }
 }

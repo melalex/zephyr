@@ -20,8 +20,8 @@ public class RatingOperationsImpl implements RatingOperations {
     private ReactiveMongoOperations mongo;
 
     @Override
-    public Flux<Rating> findAllByUrl(String url, Pageable pageable) {
-        Query query = Query.query(Criteria.where(Rating.URL_FIELD).is(url))
+    public Flux<Rating> findAllByUrlStartsWith(String url, Pageable pageable) {
+        Query query = Query.query(Criteria.where(Rating.URL_FIELD).regex(url))
                 .with(pageable);
 
         return Flux.from(mongo.getCollection(Rating.COLLECTION_NAME)

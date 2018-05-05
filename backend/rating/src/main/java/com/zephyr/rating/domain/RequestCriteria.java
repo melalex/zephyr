@@ -1,9 +1,9 @@
 package com.zephyr.rating.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Wither;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -11,9 +11,10 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder(toBuilder = true)
 public class RequestCriteria {
 
-    @Wither
+    private String originalCriteriaId;
     private Query query;
     private String url;
     private LocalDate from;

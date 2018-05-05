@@ -34,15 +34,14 @@ public class RequestMatcher implements Matcher<RequestCriteria, Request> {
     private boolean checkPlace(Place example, Place target) {
         return Objects.isNull(example) || Objects.isNull(target) ||
                (ObjectUtils.equalsOrNull(example.getCountry(), target.getCountry())
-                && ObjectUtils.equalsOrNull(example.getPlaceName(), target.getPlaceName()));
+                && ObjectUtils.equalsOrNull(example.getName(), target.getName()));
     }
 
     private boolean checkUserAgent(UserAgent example, UserAgent target) {
         return Objects.isNull(example) || Objects.isNull(target) ||
                (ObjectUtils.equalsOrNull(example.getOsName(), target.getOsName())
-                && ObjectUtils.equalsOrNull(example.getOsVersion(), target.getOsVersion())
-                && ObjectUtils.equalsOrNull(example.getBrowserName(), target.getBrowserName())
-                && ObjectUtils.equalsOrNull(example.getBrowserVersion(), target.getBrowserVersion()));
+                && ObjectUtils.equalsOrNull(example.getDevice(), target.getDevice())
+                && ObjectUtils.equalsOrNull(example.getBrowserName(), target.getBrowserName()));
     }
 
     private boolean checkProvider(RequestCriteria example, Request target) {
