@@ -11,6 +11,11 @@ import java.time.LocalDateTime;
 @Document
 public class SearchCriteria {
 
+    public static final String HITS_COUNT_FIELD = "hitsCount";
+    public static final String LAST_HIT_FIELD = "lastHit";
+    public static final String LAST_UPDATE_FIELD = "lastUpdate";
+    public static final String TRANSACTION_ID_FIELD = "transactionId";
+
     @Id
     private String id;
 

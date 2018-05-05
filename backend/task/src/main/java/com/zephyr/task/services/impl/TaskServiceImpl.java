@@ -42,13 +42,14 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Mono<Task> findByUserAndId(String name, String id) {
-        return taskRepository.findByUserIdAndId(name, id);
+        return taskRepository.findByUserIdAndIdOrShared(name, id);
     }
 
     @Override
     public Mono<Void> remove(String id, Principal principal) {
         String userId = principal.getName();
-        return findByUserAndId(userId, id)
+
+        return taskRepository.findByUserIdAndId(userId, id)
                 .flatMap(taskRepository::delete)
                 .doOnNext(v -> log.info(REMOVE_TASK_MESSAGE, id, userId));
     }

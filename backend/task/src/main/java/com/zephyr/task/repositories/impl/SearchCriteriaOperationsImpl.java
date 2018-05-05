@@ -1,5 +1,9 @@
 package com.zephyr.task.repositories.impl;
 
+import static org.springframework.data.mongodb.core.query.Criteria.byExample;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
+
 import com.zephyr.commons.interfaces.UidProvider;
 import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.task.repositories.SearchCriteriaOperations;
@@ -7,7 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
@@ -22,10 +25,6 @@ import java.time.temporal.TemporalAmount;
 @AllArgsConstructor
 public class SearchCriteriaOperationsImpl implements SearchCriteriaOperations {
 
-    private static final String HITS_COUNT_FIELD = "hitsCount";
-    private static final String LAST_HIT_FIELD = "lastHit";
-    private static final String LAST_UPDATE_FIELD = "lastUpdate";
-    private static final String TRANSACTION_ID_FIELD = "transactionId";
     private static final Number INC_VALUE = 1;
 
     private ReactiveMongoOperations mongo;
@@ -34,11 +33,11 @@ public class SearchCriteriaOperationsImpl implements SearchCriteriaOperations {
 
     @Override
     public Mono<SearchCriteria> updateUsage(SearchCriteria searchCriteria) {
-        Query query = Query.query(Criteria.byExample(Example.of(searchCriteria)));
+        Query query = query(byExample(Example.of(searchCriteria)));
 
         Update update = new Update()
-                .inc(HITS_COUNT_FIELD, INC_VALUE)
-                .set(LAST_HIT_FIELD, LocalDateTime.now(clock))
+                .inc(SearchCriteria.HITS_COUNT_FIELD, INC_VALUE)
+                .set(SearchCriteria.LAST_HIT_FIELD, LocalDateTime.now(clock))
                 .isolated();
 
         return mongo.findAndModify(query, update, SearchCriteria.class);
@@ -49,15 +48,15 @@ public class SearchCriteriaOperationsImpl implements SearchCriteriaOperations {
         String transactionId = uidProvider.provide();
 
         Query queryUpdate =
-                Query.query(Criteria.where(LAST_UPDATE_FIELD).lt(LocalDateTime.now(clock).minus(relevancePeriod)))
+                query(where(SearchCriteria.LAST_UPDATE_FIELD).lt(LocalDateTime.now(clock).minus(relevancePeriod)))
                         .with(pageable);
 
-        Query queryResult = Query.query(Criteria.where(TRANSACTION_ID_FIELD).is(transactionId))
+        Query queryResult = query(where(SearchCriteria.TRANSACTION_ID_FIELD).is(transactionId))
                 .with(pageable);
 
         Update update = new Update()
-                .currentTimestamp(LAST_UPDATE_FIELD)
-                .set(TRANSACTION_ID_FIELD, transactionId);
+                .currentTimestamp(SearchCriteria.LAST_UPDATE_FIELD)
+                .set(SearchCriteria.TRANSACTION_ID_FIELD, transactionId);
 
         return mongo.updateMulti(queryUpdate, update, SearchCriteria.class)
                 .thenMany(mongo.find(queryResult, SearchCriteria.class));

@@ -11,9 +11,8 @@ import com.zephyr.rating.domain.RequestCriteria;
 import com.zephyr.rating.factories.RatingDtoFactory;
 import com.zephyr.rating.repository.RatingRepository;
 import com.zephyr.rating.services.RatingService;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,26 +23,16 @@ import java.security.Principal;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class RatingServiceImpl implements RatingService {
 
     private static final String NEW_SUBSCRIPTION_MESSAGE = "New subscription to Task '{}'";
 
-    @Setter(onMethod = @__(@Autowired))
     private RequestUpdatesBus requestUpdatesBus;
-
-    @Setter(onMethod = @__(@Autowired))
     private RatingRepository ratingRepository;
-
-    @Setter(onMethod = @__(@Autowired))
     private TaskServiceClient taskServiceClient;
-
-    @Setter(onMethod = @__(@Autowired))
     private RatingDtoFactory ratingDtoFactory;
-
-    @Setter(onMethod = @__(@Autowired))
     private ExtendedMapper mapper;
-
-    @Setter(onMethod = @__(@Autowired))
     private Converter<TaskDto, Iterable<RequestCriteria>> taskTransformer;
 
     @Override
