@@ -56,7 +56,7 @@ public class TaskControllerIntegrationTest {
     }
 
     @Test
-    @WithMockUser(username = Tasks.SIMPLE_USER_ID)
+    @WithMockUser(Tasks.SIMPLE_USER_ID)
     public void shouldCreateFindAndRemoveTask() {
 //        @formatter:off
         TaskDto actual = webTestClient.post()

@@ -59,6 +59,7 @@ dependencies {
     testCompile libraries['embeddedMongodb']
     testCompile libraries['streamTest']
     testCompile libraries['reactorTest']
+    testCompile libraries['securityTest']
 
     testCompileOnly libraries['lombok']
 }
