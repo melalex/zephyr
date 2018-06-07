@@ -17,6 +17,7 @@ import com.zephyr.scraper.request.provider.impl.DefaultRequestProvider;
 import com.zephyr.scraper.request.url.UrlProvider;
 import com.zephyr.scraper.request.url.impl.DefaultUrlProvider;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -25,7 +26,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -111,8 +111,8 @@ public class RequestConstructorConfiguration {
     }
 
     @Bean
-    public UserAgentProvider userAgentProvider(@Value("agents.csv") Resource agents, ObjectMapper csvMapper)
-            throws IOException {
+    @SneakyThrows
+    public UserAgentProvider userAgentProvider(@Value("classpath:agents.csv") Resource agents, ObjectMapper csvMapper) {
         CsvSchema schema = CsvSchema.emptySchema().withHeader();
 
         List<Query.UserAgent> agentList = csvMapper.readerFor(Query.UserAgent.class)

@@ -34,7 +34,6 @@ dependencies {
     compile libraries['configClient']
     compile libraries['messaging']
     compile libraries['jsoup']
-    compile libraries['reactor']
     compile libraries['reactorExtra']
     compile libraries['csv']
 

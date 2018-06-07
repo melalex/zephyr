@@ -1,10 +1,10 @@
 package com.zephyr.scraper.data;
 
-import static java.util.List.*;
+import static java.util.List.of;
 import static java.util.Map.entry;
 
 import com.zephyr.commons.MapUtils;
-import com.zephyr.test.Queries;
+import com.zephyr.test.Criteria;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 
@@ -34,8 +34,8 @@ public final class ScraperHeaders {
 
     public Map<String, List<String>> htmlHeaders(String baseUrl) {
         return Map.ofEntries(
-                entry(HttpHeaders.REFERER, of(ACCEPT_HTML)),
-                entry(HttpHeaders.ACCEPT, of(baseUrl)),
+                entry(HttpHeaders.REFERER, of(baseUrl)),
+                entry(HttpHeaders.ACCEPT, of(ACCEPT_HTML)),
                 entry(UPGRADE_INSECURE_REQUESTS, of(TRUE))
         );
     }
@@ -55,7 +55,7 @@ public final class ScraperHeaders {
     public Map<String, List<String>> defaultHeaders(String userAgent) {
         return Map.ofEntries(
                 entry(HttpHeaders.USER_AGENT, of(userAgent)),
-                entry(HttpHeaders.ACCEPT_LANGUAGE, of(Queries.SIMPLE_LANGUAGE_ISO)),
+                entry(HttpHeaders.ACCEPT_LANGUAGE, of(Criteria.SIMPLE_LANGUAGE_ISO)),
                 entry(HttpHeaders.ACCEPT_ENCODING, of(ENCODING)),
                 entry(HttpHeaders.CONNECTION, of(KEEP_ALIVE)),
                 entry(DO_NOT_TRACK, of(TRUE))

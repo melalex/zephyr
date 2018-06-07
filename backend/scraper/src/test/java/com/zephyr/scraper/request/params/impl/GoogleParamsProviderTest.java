@@ -1,6 +1,6 @@
 package com.zephyr.scraper.request.params.impl;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import com.zephyr.commons.support.Page;
 import com.zephyr.scraper.data.ScraperTestData;

@@ -52,7 +52,6 @@ public final class Statistic {
         StatisticRequest result = new StatisticRequest();
         result.setPrincipal(PrincipalMock.simple());
         result.setTaskId(Tasks.SIMPLE_ID);
-        result.setTo(SIMPLE_TO);
         result.setFrom(SIMPLE_FROM);
         return result;
     }

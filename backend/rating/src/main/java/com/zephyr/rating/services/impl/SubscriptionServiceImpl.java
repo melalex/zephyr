@@ -20,7 +20,7 @@ import javax.annotation.PostConstruct;
 @RequiredArgsConstructor
 public class SubscriptionServiceImpl implements SubscriptionService {
 
-    private static final String RECEIVED_EVENT_MESSAGE = "Received new Rating with id [{}]";
+    private static final String RECEIVED_EVENT_MESSAGE = "Received new Rating with id [ {} ]";
 
     private UnicastProcessor<Request> hotSource;
     private Flux<Request> hotFlux;

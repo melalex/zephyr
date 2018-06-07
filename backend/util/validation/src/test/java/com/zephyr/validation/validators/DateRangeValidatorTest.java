@@ -6,13 +6,14 @@ import static org.mockito.Mockito.when;
 
 import com.zephyr.validation.DateRange;
 import lombok.Value;
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import javax.validation.ConstraintValidatorContext;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -20,7 +21,8 @@ public class DateRangeValidatorTest {
 
     private static final String FROM_PROPERTY = "from";
     private static final String TO_PROPERTY = "to";
-    private static final long DURATION = 9999;
+    private static final long DURATION_MILLIS = 9999;
+    private static final Duration DURATION = Duration.ofMillis(DURATION_MILLIS);
 
     private static final ConstraintValidatorContext CONSTRAINT_VALIDATOR_CONTEXT = null;
     private final DateRangeValidator testInstance = new DateRangeValidator();
@@ -37,7 +39,7 @@ public class DateRangeValidatorTest {
 
     @Test
     public void shouldReturnTrue() {
-        DateTime now = DateTime.now();
+        LocalDateTime now = LocalDateTime.now();
         TestObject testObject = new TestObject(now, now.plus(DURATION));
 
         assertTrue(testInstance.isValid(testObject, CONSTRAINT_VALIDATOR_CONTEXT));
@@ -45,7 +47,7 @@ public class DateRangeValidatorTest {
 
     @Test
     public void shouldReturnFalse() {
-        DateTime now = DateTime.now();
+        LocalDateTime now = LocalDateTime.now();
         TestObject testObject = new TestObject(now, now.minus(DURATION));
 
         assertFalse(testInstance.isValid(testObject, CONSTRAINT_VALIDATOR_CONTEXT));
@@ -54,7 +56,7 @@ public class DateRangeValidatorTest {
     @Value
     private static class TestObject {
 
-        private DateTime from;
-        private DateTime to;
+        private LocalDateTime from;
+        private LocalDateTime to;
     }
 }

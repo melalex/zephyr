@@ -14,6 +14,7 @@ public final class RatingTestData {
     private QueryEntities queries = new QueryEntities(places, userAgents);
     private RequestEntities requests = new RequestEntities(queries);
     private RatingEntities ratings = new RatingEntities(CommonTestData.criteria());
+    private RequestCriteriaData requestCriteria = new RequestCriteriaData(queries);
 
     public static PlaceEntities places() {
         return INSTANCE.places;
@@ -33,5 +34,9 @@ public final class RatingTestData {
 
     public static RatingEntities ratings() {
         return INSTANCE.ratings;
+    }
+
+    public static RequestCriteriaData requestCriteria() {
+        return INSTANCE.requestCriteria;
     }
 }

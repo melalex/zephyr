@@ -16,13 +16,15 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 @Slf4j
 @Service
 @AllArgsConstructor
 public class StatisticServiceImpl implements StatisticService {
-    private static final String NEW_SUBSCRIPTION_MESSAGE = "New subscription to Task '{}'";
+
+    private static final String NEW_SUBSCRIPTION_MESSAGE = "New subscription to Task [ {} ]";
 
     private SubscriptionService subscriptionService;
     private RatingRepository ratingRepository;
@@ -39,8 +41,14 @@ public class StatisticServiceImpl implements StatisticService {
     }
 
     private Flux<StatisticsDto> findStatisticsAndSubscribeForTask(RequestCriteria criteria) {
-        return toStatistic(ratingRepository.findByCriteria(criteria), criteria)
-                .concatWith(subscribe(criteria));
+        Flux<StatisticsDto> statistics = ratingRepository.findByCriteria(criteria)
+                .transform(m -> toStatistic(m, criteria));
+
+        if (Objects.isNull(criteria.getTo())) {
+            statistics = statistics.concatWith(subscribe(criteria));
+        }
+
+        return statistics;
     }
 
     private Flux<StatisticsDto> subscribe(RequestCriteria criteria) {

@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -19,7 +20,6 @@ import java.util.List;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@Import(ScraperTestConfiguration.class)
 public class CrawlerIntegrationTest {
 
     @Autowired
@@ -59,5 +59,11 @@ public class CrawlerIntegrationTest {
 
         assertThatThrownBy(() -> testInstance.crawl(response))
                 .isExactlyInstanceOf(FraudException.class);
+    }
+
+    @TestConfiguration
+    @Import(ScraperTestConfiguration.class)
+    public static class Configuration {
+
     }
 }

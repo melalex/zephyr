@@ -1,10 +1,10 @@
 ext {
-    def springBusVersion = '2.0.0.RC1'
-    def springTaskVersion = '2.0.0.RC1'
-    def springBootVersion = '2.0.1.RELEASE'
-    def springCloudVersion = 'Finchley.RC1'
-    def springConfigVersion = '2.0.0.RC1'
-    def netflixVersion = '2.0.0.RC1'
+    def springBusVersion = '2.0.0.RC2'
+    def springTaskVersion = '1.0.1'
+    def springBootVersion = '2.0.2.RELEASE'
+    def springCloudVersion = 'Finchley.RC2'
+    def springConfigVersion = '2.0.0.RC2'
+    def netflixVersion = '2.0.0.RC2'
 
     imports = [
             springBusBom   : "org.springframework.cloud:spring-cloud-bus:${springBusVersion}",
@@ -39,12 +39,10 @@ ext {
     def embeddedNeo4jVersion = '3.1.0'
     def rollbarVersion = '0.5.3'
     def slf4jVersion = '1.7.25'
-    def reactorVersion = '3.1.2.RELEASE'
     def jacksonVersion = '2.9.2'
     def adWordsVersion = '3.9.0'
     def hibernateValidatorVersion = '6.0.2.Final'
     def collectionValidatorVersion = '2.2.0'
-    def hateoasVersion = '0.23.0.RELEASE'
     def jsoupVersion = '1.10.3'
     def modelMapperStarter = '1.1.0'
     def ideaAnnotationsVersion = '12.0'
@@ -52,50 +50,7 @@ ext {
     def javaFakerVersion = '0.14'
     def javaxAnnotationVersion = '1.3.2'
 
-    def librariesDependencies = [
-            lombok             : "org.projectlombok:lombok:${lombokVersion}",
-
-            guava              : "com.google.guava:guava:${guavaVersion}",
-            apacheCommons      : "org.apache.commons:commons-lang3:${apacheCommonsVersion}",
-            csv                : "com.fasterxml.jackson.dataformat:jackson-dataformat-csv:${csvVersion}",
-
-            modelMapper        : "org.modelmapper:modelmapper:${modelMapperVersion}",
-            modelMapperStarter : "com.github.jmnarloch:modelmapper-spring-boot-starter:${modelMapperStarter}",
-            beanUtils          : "commons-beanutils:commons-beanutils:${beanutilsVersion}",
-            evo                : "org.atteo:evo-inflector:${evoVersion}",
-
-            jUnit              : "junit:junit:${jUnitVersion}",
-            mockito            : "org.mockito:mockito-core:${mockitoVersion}",
-            jsonpath           : "com.jayway.jsonpath:json-path:${jsonpathVersion}",
-            embeddedMongodb    : "de.flapdoodle.embed:de.flapdoodle.embed.mongo:${embeddedMongodbVersion}",
-            embeddedNeo4j      : "org.neo4j:neo4j-ogm-embedded-driver:${embeddedNeo4jVersion}",
-
-            slf4j              : "org.slf4j:slf4j-api:${slf4jVersion}",
-
-            reactor            : "io.projectreactor:reactor-core:${reactorVersion}",
-            reactorExtra       : "io.projectreactor.addons:reactor-extra:${reactorVersion}",
-            reactorTest        : "io.projectreactor:reactor-test:${reactorVersion}",
-
-            jackson            : "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
-            jacksonAnnotations : "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}",
-
-            adWords            : "com.google.api-ads:ads-lib:${adWordsVersion}",
-            rollbar            : "com.rollbar:rollbar:${rollbarVersion}",
-
-            validationApi      : "javax.validation:validation-api:${validationApiVersion}",
-            hibernateValidator : "org.hibernate:hibernate-validator:${hibernateValidatorVersion}",
-            collectionValidator: "cz.jirutka.validator:validator-collection:${collectionValidatorVersion}",
-
-            hateoas            : "org.springframework.hateoas:spring-hateoas:${hateoasVersion}",
-            jsoup              : "org.jsoup:jsoup:${jsoupVersion}",
-
-            ideaAnnotations    : "com.intellij:annotations:${ideaAnnotationsVersion}",
-            progressBar        : "me.tongfei:progressbar:${progressBarVersion}",
-            javaFaker          : "com.github.javafaker:javafaker:${javaFakerVersion}",
-            javaxAnnotation    : "javax.annotation:javax.annotation-api:${javaxAnnotationVersion}"
-    ]
-
-    def springDependencies = [
+    libraries = [
             spring                : 'org.springframework.boot:spring-boot-starter',
             zuul                  : 'org.springframework.cloud:spring-cloud-starter-zuul',
             feign                 : 'org.springframework.cloud:spring-cloud-starter-openfeign',
@@ -147,7 +102,45 @@ ext {
 
             hystrix               : 'org.springframework.cloud:spring-cloud-starter-hystrix',
             hystrixDashboard      : 'org.springframework.cloud:spring-cloud-starter-hystrix-dashboard',
-    ]
 
-    libraries = librariesDependencies + springDependencies
+            reactor               : "io.projectreactor:reactor-core",
+            reactorExtra          : "io.projectreactor.addons:reactor-extra",
+            reactorTest           : "io.projectreactor:reactor-test",
+
+            lombok                : "org.projectlombok:lombok:${lombokVersion}",
+
+            guava                 : "com.google.guava:guava:${guavaVersion}",
+            apacheCommons         : "org.apache.commons:commons-lang3:${apacheCommonsVersion}",
+            csv                   : "com.fasterxml.jackson.dataformat:jackson-dataformat-csv:${csvVersion}",
+
+            modelMapper           : "org.modelmapper:modelmapper:${modelMapperVersion}",
+            modelMapperStarter    : "com.github.jmnarloch:modelmapper-spring-boot-starter:${modelMapperStarter}",
+            beanUtils             : "commons-beanutils:commons-beanutils:${beanutilsVersion}",
+            evo                   : "org.atteo:evo-inflector:${evoVersion}",
+
+            jUnit                 : "junit:junit:${jUnitVersion}",
+            mockito               : "org.mockito:mockito-core:${mockitoVersion}",
+            jsonpath              : "com.jayway.jsonpath:json-path:${jsonpathVersion}",
+            embeddedMongodb       : "de.flapdoodle.embed:de.flapdoodle.embed.mongo:${embeddedMongodbVersion}",
+            embeddedNeo4j         : "org.neo4j:neo4j-ogm-embedded-driver:${embeddedNeo4jVersion}",
+
+            slf4j                 : "org.slf4j:slf4j-api:${slf4jVersion}",
+
+            jackson               : "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
+            jacksonAnnotations    : "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}",
+
+            adWords               : "com.google.api-ads:ads-lib:${adWordsVersion}",
+            rollbar               : "com.rollbar:rollbar:${rollbarVersion}",
+
+            validationApi         : "javax.validation:validation-api:${validationApiVersion}",
+            hibernateValidator    : "org.hibernate:hibernate-validator:${hibernateValidatorVersion}",
+            collectionValidator   : "cz.jirutka.validator:validator-collection:${collectionValidatorVersion}",
+
+            jsoup                 : "org.jsoup:jsoup:${jsoupVersion}",
+
+            ideaAnnotations       : "com.intellij:annotations:${ideaAnnotationsVersion}",
+            progressBar           : "me.tongfei:progressbar:${progressBarVersion}",
+            javaFaker             : "com.github.javafaker:javafaker:${javaFakerVersion}",
+            javaxAnnotation       : "javax.annotation:javax.annotation-api:${javaxAnnotationVersion}"
+    ]
 }

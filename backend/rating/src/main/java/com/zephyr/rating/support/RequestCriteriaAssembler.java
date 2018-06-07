@@ -4,6 +4,7 @@ import com.zephyr.commons.interfaces.Assembler;
 import com.zephyr.data.protocol.dto.SearchCriteriaDto;
 import com.zephyr.data.protocol.dto.TaskDto;
 import com.zephyr.data.protocol.request.StatisticRequest;
+import com.zephyr.data.util.ConversionUtils;
 import com.zephyr.rating.cliensts.TaskServiceClient;
 import com.zephyr.rating.domain.Query;
 import com.zephyr.rating.domain.RequestCriteria;
@@ -31,13 +32,19 @@ public class RequestCriteriaAssembler implements Assembler<StatisticRequest, Lis
     }
 
     private Function<TaskDto, List<RequestCriteria>> toRequestCriteria(StatisticRequest source) {
-        RequestCriteria prototype = mapper.map(source, RequestCriteria.class);
-        prototype.setFrom(source.getFrom());
-        prototype.setTo(source.getTo());
+        return t -> {
+            RequestCriteria prototype = RequestCriteria.builder()
+                    .engines(ConversionUtils.toString(t.getEngines()))
+                    .url(t.getUrl())
+                    .from(source.getFrom())
+                    .to(source.getTo())
+                    .build();
 
-        return t -> t.getSearchCriteria().stream()
-                .map(criteriaFactoryFunction(prototype))
-                .collect(Collectors.toList());
+            return t.getSearchCriteria()
+                    .stream()
+                    .map(criteriaFactoryFunction(prototype))
+                    .collect(Collectors.toList());
+        };
     }
 
     @NotNull

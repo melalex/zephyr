@@ -18,11 +18,14 @@ import com.zephyr.test.CommonTestData;
 import com.zephyr.test.Results;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+@RunWith(MockitoJUnitRunner.class)
 public class BrowserImplTest {
 
     @Mock

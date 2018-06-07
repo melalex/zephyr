@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -14,7 +15,6 @@ import reactor.test.StepVerifier;
 @SpringBootTest
 @ActiveProfiles("requestTest")
 @RunWith(SpringRunner.class)
-@Import(ScraperTestConfiguration.class)
 public class RequestConstructorIntegrationTest {
 
     @Autowired
@@ -34,5 +34,11 @@ public class RequestConstructorIntegrationTest {
                 .expectNext(ScraperTestData.requests().yandex().firstPage())
                 .expectNext(ScraperTestData.requests().yandex().secondPage())
                 .verifyComplete();
+    }
+
+    @TestConfiguration
+    @Import(ScraperTestConfiguration.class)
+    public static class Configuration {
+
     }
 }

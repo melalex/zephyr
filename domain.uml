@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="129.25" y="146.0">com.zephyr.rating.domain.Query</node>
+    <node x="440.0" y="0.0">com.zephyr.task.domain.UserAgent</node>
+    <node x="616.0" y="11.0">com.zephyr.task.domain.Place</node>
+    <node x="207.0" y="822.0">com.zephyr.location.domain.Language</node>
+    <node x="738.25" y="234.5">com.zephyr.task.domain.SearchEngine</node>
+    <node x="902.25" y="0.0">com.zephyr.location.domain.Place</node>
+    <node x="0.0" y="822.0">com.zephyr.agent.domain.UserAgent</node>
+    <node x="908.75" y="234.0">com.zephyr.location.domain.Country</node>
+    <node x="14.0" y="336.0">com.zephyr.rating.domain.Request</node>
+    <node x="584.25" y="513.0">com.zephyr.task.domain.Task</node>
+    <node x="223.0" y="314.0">com.zephyr.rating.domain.RequestCriteria</node>
+    <node x="210.5" y="0.0">com.zephyr.rating.domain.UserAgent</node>
+    <node x="487.25" y="146.0">com.zephyr.task.domain.SearchCriteria</node>
+    <node x="67.5" y="11.0">com.zephyr.rating.domain.Place</node>
+    <node x="0.0" y="526.0">com.zephyr.rating.domain.Rating</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.zephyr.rating.domain.Request" target="com.zephyr.rating.domain.Query">
+      <point x="0.0" y="-59.0" />
+      <point x="108.5" y="289.0" />
+      <point x="169.0" y="289.0" />
+      <point x="-39.75" y="59.0" />
+    </edge>
+    <edge source="com.zephyr.location.domain.Place" target="com.zephyr.location.domain.Country">
+      <point x="41.25" y="92.0" />
+      <point x="1026.0" y="209.0" />
+      <point x="1022.75" y="209.0" />
+      <point x="38.0" y="-70.0" />
+    </edge>
+    <edge source="com.zephyr.rating.domain.RequestCriteria" target="com.zephyr.rating.domain.Query">
+      <point x="0.0" y="-81.0" />
+      <point x="309.0" y="289.0" />
+      <point x="248.5" y="289.0" />
+      <point x="39.75" y="59.0" />
+    </edge>
+    <edge source="com.zephyr.task.domain.SearchCriteria" target="com.zephyr.task.domain.Place">
+      <point x="57.75" y="-158.5" />
+      <point x="660.5" y="121.0" />
+      <point x="687.5" y="121.0" />
+      <point x="0.0" y="37.0" />
+    </edge>
+    <edge source="com.zephyr.rating.domain.Query" target="com.zephyr.rating.domain.Place">
+      <point x="-39.75" y="-59.0" />
+      <point x="169.0" y="121.0" />
+      <point x="129.0" y="121.0" />
+      <point x="0.0" y="37.0" />
+    </edge>
+    <edge source="com.zephyr.rating.domain.Rating" target="com.zephyr.rating.domain.Request">
+      <point x="0.0" y="-125.5" />
+      <point x="0.0" y="59.0" />
+    </edge>
+    <edge source="com.zephyr.task.domain.Task" target="com.zephyr.task.domain.SearchCriteria">
+      <point x="-58.0" y="-125.5" />
+      <point x="642.25" y="488.0" />
+      <point x="602.75" y="488.0" />
+      <point x="0.0" y="158.5" />
+    </edge>
+    <edge source="com.zephyr.task.domain.Task" target="com.zephyr.task.domain.SearchEngine">
+      <point x="58.0" y="-125.5" />
+      <point x="758.25" y="488.0" />
+      <point x="797.75" y="488.0" />
+      <point x="0.0" y="70.0" />
+    </edge>
+    <edge source="com.zephyr.location.domain.Country" target="com.zephyr.location.domain.Place">
+      <point x="-38.0" y="-70.0" />
+      <point x="946.75" y="209.0" />
+      <point x="943.5" y="209.0" />
+      <point x="-41.25" y="92.0" />
+    </edge>
+    <edge source="com.zephyr.task.domain.SearchCriteria" target="com.zephyr.task.domain.UserAgent">
+      <point x="-57.75" y="-158.5" />
+      <point x="545.0" y="121.0" />
+      <point x="518.0" y="121.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+    <edge source="com.zephyr.rating.domain.Query" target="com.zephyr.rating.domain.UserAgent">
+      <point x="39.75" y="-59.0" />
+      <point x="248.5" y="121.0" />
+      <point x="288.5" y="121.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6276803118908382" x="534.0" y="503.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

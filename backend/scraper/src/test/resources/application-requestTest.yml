@@ -1,23 +1,21 @@
 scraper:
   google:
-    enabled: true
     first: 0
     resultCount: 200
     pageSize: 100
 
   bing:
-    enabled: true
     first: 1
     resultCount: 20
     pageSize: 10
 
   yahoo:
-    enabled: true
     first: 1
     resultCount: 20
     pageSize: 10
 
   yandex:
+    enabled: true
     first: 0
     resultCount: 200
     pageSize: 100

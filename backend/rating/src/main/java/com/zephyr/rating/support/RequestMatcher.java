@@ -10,7 +10,6 @@ import com.zephyr.rating.domain.UserAgent;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
-import java.util.Optional;
 
 @Component
 public class RequestMatcher implements Matcher<RequestCriteria, Request> {
@@ -18,9 +17,7 @@ public class RequestMatcher implements Matcher<RequestCriteria, Request> {
     @Override
     public boolean matches(RequestCriteria example, Request target) {
         return checkProvider(example, target)
-               && checkQueries(example.getQuery(), target.getQuery())
-               && checkDateRangeBefore(example, target)
-               && checkDateRangeAfter(example, target);
+               && checkQueries(example.getQuery(), target.getQuery());
     }
 
     private boolean checkQueries(Query example, Query target) {
@@ -46,17 +43,5 @@ public class RequestMatcher implements Matcher<RequestCriteria, Request> {
 
     private boolean checkProvider(RequestCriteria example, Request target) {
         return example.getEngines().contains(target.getProvider());
-    }
-
-    private boolean checkDateRangeBefore(RequestCriteria example, Request target) {
-        return Optional.ofNullable(example.getTo())
-                .map(t -> target.getTimestamp().toLocalDate().isBefore(t))
-                .orElse(true);
-    }
-
-    private boolean checkDateRangeAfter(RequestCriteria example, Request target) {
-        return Optional.ofNullable(example.getFrom())
-                .map(t -> target.getTimestamp().toLocalDate().isAfter(t))
-                .orElse(true);
     }
 }
