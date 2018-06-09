@@ -39,8 +39,7 @@ dependencies {
     compile libraries['feign']
 
     compile utils['data']
-    compile utils['errorsCore']
-    compile utils['errorsStarter']
+    compile utils['errors']
     compile utils['commons']
 
     compileOnly libraries['lombok']

@@ -45,10 +45,9 @@ dependencies {
 
     compile utils['commons']
     compile utils['data']
-    compile utils['errorsCore']
+    compile utils['errors']
 
-    compile utils['errorsCore']
-    compile utils['errorsStarter']
+    compile utils['errors']
 
     compileOnly libraries['ideaAnnotations']
     compileOnly libraries['lombok']

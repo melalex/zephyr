@@ -2,7 +2,7 @@ package com.zephyr.test;
 
 import com.zephyr.data.internal.dto.SearchResultDto;
 import com.zephyr.data.protocol.enums.SearchEngine;
-import com.zephyr.test.mocks.ClockMock;
+import com.zephyr.test.mocks.TimeMachine;
 import com.zephyr.test.mocks.UidProviderMock;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,6 +12,10 @@ import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public final class Results {
+
+    private static final int BING_FIRST = 1;
+    private static final int GOOGLE_FIRST = 0;
+    private static final int YAHOO_FIRST = 1;
 
     public static final List<String> BING_LINKS = List.of(
             "https://en.wikipedia.org/wiki/Zephyr",
@@ -51,7 +55,7 @@ public final class Results {
             "www.zhats.com"
     );
 
-    public static final LocalDateTime SIMPLE_TIMESTAMP = ClockMock.now();
+    public static final LocalDateTime SIMPLE_TIMESTAMP = TimeMachine.canonicalNow();
 
     private Queries queries;
 
@@ -59,6 +63,7 @@ public final class Results {
         SearchResultDto result = base();
         result.setProvider(SearchEngine.BING);
         result.setLinks(BING_LINKS);
+        result.setOffset(BING_FIRST);
 
         return result;
     }
@@ -67,6 +72,7 @@ public final class Results {
         SearchResultDto result = base();
         result.setProvider(SearchEngine.GOOGLE);
         result.setLinks(GOOGLE_LINKS);
+        result.setOffset(GOOGLE_FIRST);
 
         return result;
     }
@@ -75,6 +81,7 @@ public final class Results {
         SearchResultDto result = base();
         result.setProvider(SearchEngine.YAHOO);
         result.setLinks(YAHOO_LINKS);
+        result.setOffset(YAHOO_FIRST);
 
         return result;
     }
@@ -82,7 +89,6 @@ public final class Results {
     private SearchResultDto base() {
         SearchResultDto result = new SearchResultDto();
         result.setId(UidProviderMock.DEFAULT_ID);
-        result.setOffset(0);
         result.setTimestamp(SIMPLE_TIMESTAMP);
         result.setQuery(queries.simple());
         return result;

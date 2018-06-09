@@ -1,7 +1,17 @@
+plugins {
+    id 'io.spring.dependency-management' version '1.0.4.RELEASE'
+}
+
 dependencies {
     compile utils['validation']
 
     compileOnly libraries['hibernateValidator']
     compileOnly libraries['jacksonAnnotations']
     compileOnly libraries['lombok']
+}
+
+dependencyManagement {
+    imports {
+        mavenBom imports['springBootBom']
+    }
 }

@@ -2,6 +2,13 @@ spring:
   cloud:
     config:
       enabled: false
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+
+eureka:
+  client:
+    enabled: false
 
 browser:
   backoff: 5000
@@ -10,28 +17,39 @@ browser:
 scraper:
   google:
     enabled: true
+    requestType: DIRECT
+    first: 0
+    linkSelector: "#rso > div > div > div> div > div > div > div > div.f.kv._SWb > cite"
     url:
       base: https://www.google.com
       path: /search
 
   bing:
     enabled: true
+    requestType: DIRECT
+    first: 0
+    linkSelector: "#b_results > li > h2 > a"
     url:
       base: https://www.bing.com
       path: /search
 
   yahoo:
     enabled: true
+    requestType: DIRECT
+    first: 0
+    linkSelector: "#web > ol > li > div > div > div > span"
     url:
       base: https://search.yahoo.com
       path: /search
 
   yandex:
+    requestType: DIRECT
     url:
       base: https://yandex.ru
       path:
 
   duckduckgo:
+    requestType: DIRECT
     url:
       base: https://duckduckgo.com
       path:

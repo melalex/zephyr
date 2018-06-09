@@ -3,9 +3,11 @@ plugins {
 }
 
 dependencies {
+    compile libraries['guava']
     compile libraries['validationApi']
 
-    compileOnly utils['errorsCore']
+    compileOnly libraries['reactor']
+    compileOnly libraries['lombok']
 
     compileOnly libraries['webFlux']
     compileOnly libraries['jackson']

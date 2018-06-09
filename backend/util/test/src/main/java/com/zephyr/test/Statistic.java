@@ -3,7 +3,7 @@ package com.zephyr.test;
 import com.zephyr.data.internal.dto.SearchResultDto;
 import com.zephyr.data.protocol.dto.StatisticsDto;
 import com.zephyr.data.protocol.request.StatisticRequest;
-import com.zephyr.test.mocks.ClockMock;
+import com.zephyr.test.mocks.TimeMachine;
 import com.zephyr.test.mocks.PrincipalMock;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.Map;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public final class Statistic {
 
-    public static final LocalDate SIMPLE_TO = ClockMock.now().toLocalDate();
+    public static final LocalDate SIMPLE_TO = TimeMachine.canonicalNow().toLocalDate();
     public static final LocalDate SIMPLE_FROM = SIMPLE_TO.minusYears(1);
 
     public static final int SIMPLE_GOOGLE_POSITION = 0;

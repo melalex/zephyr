@@ -1,5 +1,6 @@
 ext {
     def springBusVersion = '2.0.0.RC2'
+    def springStreamVersion = 'Fishtown.BUILD-SNAPSHOT'
     def springTaskVersion = '1.0.1'
     def springBootVersion = '2.0.2.RELEASE'
     def springCloudVersion = 'Finchley.RC2'
@@ -8,6 +9,7 @@ ext {
 
     imports = [
             springBusBom   : "org.springframework.cloud:spring-cloud-bus:${springBusVersion}",
+            springStreamBom: "org.springframework.cloud:spring-cloud-stream-dependencies:${springStreamVersion}",
             springBootBom  : "org.springframework.boot:spring-boot-dependencies:${springBootVersion}",
             springTaskBom  : "org.springframework.cloud:spring-cloud-task-dependencies:${springTaskVersion}",
             springCloudBom : "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}",
@@ -16,12 +18,11 @@ ext {
     ]
 
     utils = [
-            commons      : project(':backend:util:commons'),
-            data         : project(':backend:util:data'),
-            errorsCore   : project(':backend:util:errors:core'),
-            errorsStarter: project(':backend:util:errors:starter'),
-            test         : project(':backend:util:test'),
-            validation   : project(':backend:util:validation'),
+            commons   : project(':backend:util:commons'),
+            data      : project(':backend:util:data'),
+            errors    : project(':backend:util:errors'),
+            test      : project(':backend:util:test'),
+            validation: project(':backend:util:validation'),
     ]
 
     def lombokVersion = '1.16.20'
@@ -56,6 +57,8 @@ ext {
             feign                 : 'org.springframework.cloud:spring-cloud-starter-openfeign',
             dataCommons           : 'org.springframework.data:spring-data-commons',
             messaging             : 'org.springframework.cloud:spring-cloud-starter-bus-amqp',
+            reactiveMessaging     : 'org.springframework.cloud:spring-cloud-stream-reactive',
+            stream                : 'org.springframework.cloud:spring-cloud-stream',
             configurationProcessor: 'org.springframework.boot:spring-boot-configuration-processor',
             jpa                   : 'org.springframework.boot:spring-boot-starter-data-jpa',
             mysql                 : 'mysql:mysql-connector-java',
@@ -111,7 +114,6 @@ ext {
 
             guava                 : "com.google.guava:guava:${guavaVersion}",
             apacheCommons         : "org.apache.commons:commons-lang3:${apacheCommonsVersion}",
-            csv                   : "com.fasterxml.jackson.dataformat:jackson-dataformat-csv:${csvVersion}",
 
             modelMapper           : "org.modelmapper:modelmapper:${modelMapperVersion}",
             modelMapperStarter    : "com.github.jmnarloch:modelmapper-spring-boot-starter:${modelMapperStarter}",
@@ -126,8 +128,10 @@ ext {
 
             slf4j                 : "org.slf4j:slf4j-api:${slf4jVersion}",
 
-            jackson               : "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
-            jacksonAnnotations    : "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}",
+            jackson               : "com.fasterxml.jackson.core:jackson-databind",
+            jacksonAnnotations    : "com.fasterxml.jackson.core:jackson-annotations",
+            jacksonTime           : "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
+            jacksonCsv                   : "com.fasterxml.jackson.dataformat:jackson-dataformat-csv:${csvVersion}",
 
             adWords               : "com.google.api-ads:ads-lib:${adWordsVersion}",
             rollbar               : "com.rollbar:rollbar:${rollbarVersion}",

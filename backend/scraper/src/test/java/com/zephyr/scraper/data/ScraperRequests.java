@@ -129,7 +129,7 @@ public final class ScraperRequests {
                 .urls(q -> q.getPlace().getCountry().getLocaleYandex())
                 .uri(YANDEX_URI)
                 .firstPageOffset(ScraperParams.YANDEX_FIRST_PAGE_OFFSET)
-                .firstPageOffset(ScraperParams.YANDEX_SECOND_PAGE_OFFSET)
+                .secondPageOffset(ScraperParams.YANDEX_SECOND_PAGE_OFFSET)
                 .queries(queries)
                 .provider(SearchEngine.YANDEX)
                 .headers(headers::ajaxHeadersFull)

@@ -1,10 +1,12 @@
 package com.zephyr.scraper;
 
+import static com.zephyr.test.matchers.StreamMatcher.payload;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.cloud.stream.test.matcher.MessageQueueMatcher.receivesPayloadThat;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zephyr.data.internal.dto.QueryDto;
+import com.zephyr.data.internal.dto.SearchResultDto;
 import com.zephyr.test.CommonTestData;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +34,9 @@ public class ScraperApplicationTests {
     @Autowired
     private MessageCollector collector;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Test
     public void shouldHandleQuery() {
         Message<QueryDto> testMessage = new GenericMessage<>(CommonTestData.queries().simple());
@@ -40,9 +45,13 @@ public class ScraperApplicationTests {
 
         BlockingQueue<Message<?>> actual = collector.forChannel(processor.output());
 
-        assertThat(actual, receivesPayloadThat(is(CommonTestData.searchResults().bing())));
-        assertThat(actual, receivesPayloadThat(is(CommonTestData.searchResults().google())));
-        assertThat(actual, receivesPayloadThat(is(CommonTestData.searchResults().yahoo())));
+        SearchResultDto expectedBing = CommonTestData.searchResults().bing();
+        SearchResultDto expectedGoogle = CommonTestData.searchResults().google();
+        SearchResultDto expectedYahoo = CommonTestData.searchResults().yahoo();
+
+        assertThat(actual, payload(objectMapper, SearchResultDto.class).matches(is(expectedBing)));
+        assertThat(actual, payload(objectMapper, SearchResultDto.class).matches(is(expectedGoogle)));
+        assertThat(actual, payload(objectMapper, SearchResultDto.class).matches(is(expectedYahoo)));
     }
 
     @TestConfiguration

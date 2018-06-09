@@ -10,7 +10,7 @@ import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.task.repositories.SearchCriteriaRepository;
 import com.zephyr.test.CommonTestData;
 import com.zephyr.test.Criteria;
-import com.zephyr.test.mocks.ClockMock;
+import com.zephyr.test.mocks.TimeMachine;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -48,12 +48,15 @@ public class SearchCriteriaServiceIntegrationTest {
     @Autowired
     private ConfigurationService configurationService;
 
+    @Autowired
+    private TimeMachine timeMachine;
+
     private SearchCriteria criteria1;
     private SearchCriteria criteria2;
 
     @Before
     public void setUp() {
-        LocalDateTime unRelevantCriteria = ClockMock.now().minus(configurationService.getRelevancePeriod())
+        LocalDateTime unRelevantCriteria = timeMachine.now().minus(configurationService.getRelevancePeriod())
                 .minusDays(1);
 
         searchCriteriaRepository.save(TaskTestData.criteria()
@@ -79,7 +82,7 @@ public class SearchCriteriaServiceIntegrationTest {
         StepVerifier.create(testInstance.updateSearchCriteria(simple))
                 .consumeNextWith(c -> searchCriteriaRepository.findById(c.getId())
                         .doOnNext(s -> Assert.assertEquals(s.getHitsCount(), Criteria.SIMPLE_HITS_COUNT + 1))
-                        .doOnNext(s -> Assert.assertEquals(s.getLastHit(), ClockMock.now()))
+                        .doOnNext(s -> Assert.assertEquals(s.getLastHit(), timeMachine.now()))
                         .subscribe()
                 )
                 .verifyComplete();
@@ -92,8 +95,8 @@ public class SearchCriteriaServiceIntegrationTest {
         StepVerifier.create(testInstance.updateSearchCriteria(newCriteria))
                 .consumeNextWith(c -> searchCriteriaRepository.findById(c.getId())
                         .doOnNext(s -> Assert.assertEquals(s.getHitsCount(), 1))
-                        .doOnNext(s -> Assert.assertEquals(s.getLastHit(), ClockMock.now()))
-                        .doOnNext(s -> Assert.assertEquals(s.getLastUpdate(), ClockMock.now()))
+                        .doOnNext(s -> Assert.assertEquals(s.getLastHit(), timeMachine.now()))
+                        .doOnNext(s -> Assert.assertEquals(s.getLastUpdate(), timeMachine.now()))
                         .subscribe()
                 )
                 .verifyComplete();

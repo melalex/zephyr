@@ -13,7 +13,7 @@ import java.util.Date;
 @UtilityClass
 public class TimeUtils {
 
-    public long millisToNow(LocalDateTime dateTime, Clock clock) {
+    public long millisFromNow(LocalDateTime dateTime, Clock clock) {
         return Duration.between(LocalDateTime.now(clock), dateTime).toMillis();
     }
 

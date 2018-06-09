@@ -48,7 +48,7 @@ public class CrawlerConfiguration {
         return Map.ofEntries(
                 entry(SearchEngine.BING, defaultFraudAnalysisProvider()),
                 entry(SearchEngine.DUCKDUCKGO, defaultFraudAnalysisProvider()),
-                entry(SearchEngine.GOOGLE, defaultFraudAnalysisProvider()),
+                entry(SearchEngine.GOOGLE, googleFraudAnalysisProvider()),
                 entry(SearchEngine.YAHOO, defaultFraudAnalysisProvider()),
                 entry(SearchEngine.YANDEX, defaultFraudAnalysisProvider())
         );

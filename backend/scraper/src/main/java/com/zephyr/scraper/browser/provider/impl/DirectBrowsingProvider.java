@@ -3,6 +3,7 @@ package com.zephyr.scraper.browser.provider.impl;
 import com.zephyr.commons.LoggingUtils;
 import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.scraper.browser.provider.BrowsingProvider;
+import com.zephyr.scraper.browser.support.WebClientWrapper;
 import com.zephyr.scraper.configuration.ScraperConfigurationService;
 import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.EngineResponse;
@@ -13,10 +14,10 @@ import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ClientResponse;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.retry.Retry;
+import reactor.retry.RetryExhaustedException;
 
 import java.util.function.Function;
 
@@ -25,15 +26,15 @@ import java.util.function.Function;
 public class DirectBrowsingProvider implements BrowsingProvider {
 
     private static final String NEW_REQUEST_MSG = "Scheduled new request with id {}";
-    private static final String NEW_RESPONSE_MSG = "Received response for request with id %s";
-    private static final String BROWSER_EXCEPTION_MSG = "Exception during request: ";
+    private static final String NEW_RESPONSE_MSG = "Received response for request with id {}";
+    private static final String BROWSER_EXCEPTION_MSG = "Exception during request: %s";
     private static final String REQUEST_EXCEPTION_MSG = "Exception during request on %s try: ";
 
     @Setter(onMethod = @__(@Autowired))
     private SchedulingManager schedulingManager;
 
     @Setter(onMethod = @__(@Autowired))
-    private WebClient webClient;
+    private WebClientWrapper webClient;
 
     @Setter(onMethod = @__(@Autowired))
     private ScraperConfigurationService configuration;
@@ -47,8 +48,9 @@ public class DirectBrowsingProvider implements BrowsingProvider {
         return Mono.empty()
                 .delaySubscription(schedulingManager.scheduleNext(engine, configuration.getDelay(engine)))
                 .then(makeRequest(request))
-                .doOnError(LoggingUtils.error(log, BROWSER_EXCEPTION_MSG))
-                .retryWhen(browserException(request));
+                .doOnError(LoggingUtils.error(log, String.format(BROWSER_EXCEPTION_MSG, request)))
+                .retryWhen(browserException(request))
+                .onErrorMap(RetryExhaustedException.class, Throwable::getCause);
     }
 
     @Override
@@ -56,14 +58,12 @@ public class DirectBrowsingProvider implements BrowsingProvider {
         report(response.getProvider());
     }
 
-    private Mono<EngineResponse> makeRequest(EngineRequest engineRequest) {
-        return webClient.get()
-                .uri(engineRequest.getFullPath(), engineRequest.getParams())
-                .headers(h -> h.putAll(engineRequest.getHeaders()))
-                .exchange()
-                .flatMap(extractEngineResponse(engineRequest))
+    private Mono<EngineResponse> makeRequest(EngineRequest request) {
+        return webClient.get(request.getFullPath(), request.getParams(), request.getHeaders())
+                .flatMap(extractEngineResponse(request))
                 .doOnNext(LoggingUtils.info(log, EngineResponse::getId, NEW_RESPONSE_MSG))
-                .retryWhen(requestException());
+                .retryWhen(requestException())
+                .onErrorMap(RetryExhaustedException.class, Throwable::getCause);
     }
 
     private void report(SearchEngine engine) {
@@ -80,6 +80,7 @@ public class DirectBrowsingProvider implements BrowsingProvider {
     private Function<Flux<Throwable>, ? extends Publisher<?>> browserException(EngineRequest engineRequest) {
         return Retry.<EngineRequest>any()
                 .withApplicationContext(engineRequest)
+                .retryMax(Integer.MAX_VALUE)
                 .doOnRetry(c -> report(c.applicationContext().getProvider()));
     }
 

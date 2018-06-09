@@ -45,8 +45,7 @@ dependencies {
 
     compile utils['data']
     compile utils['commons']
-    compile utils['errorsCore']
-    compile utils['errorsStarter']
+    compile utils['errors']
 
     compileOnly libraries['lombok']
     compileOnly libraries['configurationProcessor']

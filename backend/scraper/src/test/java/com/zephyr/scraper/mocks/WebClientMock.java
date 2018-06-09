@@ -1,10 +1,9 @@
 package com.zephyr.scraper.mocks;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.zephyr.scraper.browser.support.WebClientWrapper;
 import com.zephyr.scraper.data.ScraperTestData;
 import com.zephyr.scraper.domain.EngineRequest;
 import lombok.experimental.UtilityClass;
@@ -12,13 +11,12 @@ import org.mockito.Answers;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.reactive.function.client.ClientResponse;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @UtilityClass
 public class WebClientMock {
 
-    public WebClient of() {
+    public WebClientWrapper of() {
         EngineRequest bingRequest = ScraperTestData.requests().bing().firstPage();
         EngineRequest duckDuckGoRequest = ScraperTestData.requests().duckDuckGo().firstPage();
         EngineRequest googleRequest = ScraperTestData.requests().google().firstPage();
@@ -27,7 +25,7 @@ public class WebClientMock {
         EngineRequest yandexRequest = ScraperTestData.requests().yandex().firstPage();
         EngineRequest failedRequest = ScraperTestData.requests().failed();
 
-        WebClient mock = mock(WebClient.class, Answers.RETURNS_DEEP_STUBS);
+        WebClientWrapper mock = mock(WebClientWrapper.class);
 
         configure(mock, bingRequest, ScraperTestData.responses().bingResponseBody());
         configure(mock, googleRequest, ScraperTestData.responses().googleResponseBody());
@@ -40,20 +38,18 @@ public class WebClientMock {
         return mock;
     }
 
-    private void configure(WebClient mock, EngineRequest request, String response) {
+    private void configure(WebClientWrapper mock, EngineRequest request, String response) {
         configure(mock, request, Mono.just(response));
     }
 
-    private void configure(WebClient mock, EngineRequest request, Mono<String> response) {
+    private void configure(WebClientWrapper mock, EngineRequest request, Mono<String> response) {
         ClientResponse clientResponse = mock(ClientResponse.class, Answers.RETURNS_DEEP_STUBS);
+
         when(clientResponse.statusCode()).thenReturn(HttpStatus.OK);
         when(clientResponse.headers().asHttpHeaders()).thenReturn(new HttpHeaders());
         when(clientResponse.bodyToMono(String.class)).thenReturn(response);
 
-        Mono<ClientResponse> exchange = mock.get()
-                .uri(eq(request.getFullPath()), eq(request.getParams()))
-                .header(any())
-                .exchange();
+        Mono<ClientResponse> exchange = mock.get(request.getFullPath(), request.getParams(), request.getHeaders());
 
         when(exchange).thenReturn(Mono.just(clientResponse));
     }

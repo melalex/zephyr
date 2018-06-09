@@ -4,6 +4,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.zephyr.data.protocol.enums.SearchEngine;
+import com.zephyr.scraper.browser.support.WebClientWrapper;
 import com.zephyr.scraper.configuration.ScraperConfigurationService;
 import com.zephyr.scraper.data.ScraperTestData;
 import com.zephyr.scraper.data.ScraperTestProperties;
@@ -14,7 +15,6 @@ import com.zephyr.scraper.mocks.WebClientMock;
 import com.zephyr.scraper.scheduling.SchedulingManager;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -24,7 +24,7 @@ public class DirectBrowsingProviderTest {
 
     @Before
     public void setUp() {
-        WebClient webClient = WebClientMock.of();
+        WebClientWrapper webClient = WebClientMock.of();
         ScraperConfigurationService configuration = ConfigurationMock.of();
         SchedulingManager schedulingManager = mock(SchedulingManager.class);
 
@@ -50,10 +50,16 @@ public class DirectBrowsingProviderTest {
     public void shouldRetryOnRequestException() {
         EngineRequest failed = ScraperTestData.requests().failed();
 
-        StepVerifier.create(testInstance.get(failed))
+        StepVerifier.withVirtualTime(() -> testInstance.get(failed))
+                .expectSubscription()
                 .expectNoEvent(ScraperTestProperties.BACKOFF)
                 .expectNoEvent(ScraperTestProperties.BACKOFF)
                 .expectNoEvent(ScraperTestProperties.BACKOFF)
-                .verifyErrorMatches(ScraperTestData.responses().failed()::equals);
+                .expectNoEvent(ScraperTestProperties.DELAY)
+                .expectNoEvent(ScraperTestProperties.BACKOFF)
+                .expectNoEvent(ScraperTestProperties.BACKOFF)
+                .expectNoEvent(ScraperTestProperties.BACKOFF)
+                .thenCancel()
+                .verify();
     }
 }

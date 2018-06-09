@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     compile libraries['apacheCommons']
+    compile libraries['guava']
     compile libraries['validationApi']
     compile libraries['modelMapper']
 

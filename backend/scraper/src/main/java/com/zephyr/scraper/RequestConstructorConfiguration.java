@@ -9,6 +9,7 @@ import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.request.agent.UserAgentProvider;
 import com.zephyr.scraper.request.agent.impl.UserAgentProviderImpl;
 import com.zephyr.scraper.request.headers.HeadersProvider;
+import com.zephyr.scraper.request.headers.impl.AjaxHeadersProvider;
 import com.zephyr.scraper.request.headers.impl.DefaultHeadersProvider;
 import com.zephyr.scraper.request.headers.impl.HtmlHeadersProvider;
 import com.zephyr.scraper.request.params.ParamsProvider;
@@ -128,7 +129,7 @@ public class RequestConstructorConfiguration {
 
     @Bean
     public HeadersProvider ajaxHeadersProvider() {
-        return new HtmlHeadersProvider();
+        return new AjaxHeadersProvider();
     }
 
     @Bean

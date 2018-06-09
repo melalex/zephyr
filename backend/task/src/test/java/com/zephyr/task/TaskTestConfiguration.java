@@ -11,7 +11,7 @@ import com.zephyr.task.clients.LocationServiceClient;
 import com.zephyr.test.CommonTestData;
 import com.zephyr.test.Countries;
 import com.zephyr.test.Places;
-import com.zephyr.test.mocks.ClockMock;
+import com.zephyr.test.mocks.TimeMachine;
 import com.zephyr.test.mocks.UidProviderMock;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -31,8 +31,14 @@ public class TaskTestConfiguration {
 
     @Bean
     @Primary
+    public TimeMachine timeMachine() {
+        return TimeMachine.create();
+    }
+
+    @Bean
+    @Primary
     public Clock clock() {
-        return ClockMock.of();
+        return timeMachine().clock();
     }
 
     @Bean

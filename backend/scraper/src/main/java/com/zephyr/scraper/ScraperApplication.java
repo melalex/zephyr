@@ -23,6 +23,7 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -63,9 +64,7 @@ public class ScraperApplication {
         return input.doOnNext(LoggingUtils.info(log, NEW_QUERY_MSG))
                 .map(mapper.mapperFor(Query.class))
                 .flatMap(requestConstructor::construct)
-                .parallel()
                 .flatMap(browser::get)
-                .sequential()
                 .doOnNext(LoggingUtils.debug(log, RECEIVED_SEARCH_RESULT_MSG))
                 .doOnError(LoggingUtils.error(log, UNEXPECTED_EXCEPTION_MSG));
     }
@@ -73,6 +72,11 @@ public class ScraperApplication {
     @Bean
     public ObjectMapper csvMapper() {
         return new CsvMapper();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
+        return builder.createXmlMapper(false).build();
     }
 
     @Bean

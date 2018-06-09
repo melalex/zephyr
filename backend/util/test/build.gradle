@@ -3,10 +3,10 @@ plugins {
 }
 
 dependencies {
+    compile libraries['streamTest']
+
     compileOnly utils['data']
     compileOnly utils['commons']
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
-    compile group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.13'
 
     compileOnly libraries['mockito']
     compileOnly libraries['lombok']
@@ -15,5 +15,6 @@ dependencies {
 dependencyManagement {
     imports {
         mavenBom imports['springBootBom']
+        mavenBom imports['springBusBom']
     }
 }

@@ -10,9 +10,9 @@ buildscript {
         mavenCentral()
         jcenter()
 
-        maven { url = "http://repo1.maven.org/maven2/" }
-        maven { url = "https://repo.spring.io/snapshot" }
-        maven { url = "https://repo.spring.io/milestone" }
+        maven { url "http://repo1.maven.org/maven2/" }
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
@@ -33,9 +33,10 @@ dependencies {
     compile libraries['discoveryClient']
     compile libraries['configClient']
     compile libraries['messaging']
+    compile libraries['reactiveMessaging']
     compile libraries['jsoup']
     compile libraries['reactorExtra']
-    compile libraries['csv']
+    compile libraries['jacksonCsv']
 
     compile utils['commons']
     compile utils['data']
@@ -57,7 +58,7 @@ dependencyManagement {
         mavenBom imports['springBootBom']
         mavenBom imports['springCloudBom']
         mavenBom imports['netflixBom']
-        mavenBom imports['springBusBom']
+        mavenBom imports['springStreamBom']
     }
 }
 

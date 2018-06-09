@@ -16,6 +16,8 @@ import java.util.Map;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public final class ScraperResponses {
 
+    public static final String FAILED_MESSAGE = "FAILED_MESSAGE";
+
     private static final String BING_RESPONSE_FILE_NAME = "bing-response.html";
     private static final String DUCKDUCKGO_RESPONSE_FILE_NAME = "duckduckgo-response.json";
     private static final String GOOGLE_RESPONSE_FILE_NAME = "google-response.html";
@@ -103,7 +105,7 @@ public final class ScraperResponses {
     }
 
     public Throwable failed() {
-        return new Throwable();
+        return new Throwable(FAILED_MESSAGE);
     }
 
     private String creteBingResponseBody() {

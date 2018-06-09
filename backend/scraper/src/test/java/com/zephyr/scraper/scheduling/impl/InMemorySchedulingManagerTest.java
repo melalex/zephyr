@@ -4,10 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.reactivestreams.Publisher;
-import reactor.core.scheduler.Scheduler;
-import reactor.core.scheduler.Schedulers;
+import reactor.scheduler.clock.SchedulerClock;
 import reactor.test.StepVerifier;
+import reactor.test.scheduler.VirtualTimeScheduler;
 
 import java.time.Clock;
 import java.time.Duration;
@@ -22,48 +21,57 @@ public class InMemorySchedulingManagerTest {
     private static final Duration DURATION = Duration.ofDays(2);
 
     private InMemorySchedulingManager testInstance;
+    private Clock clock;
 
     @Before
     public void setUp() {
-        Scheduler scheduler = Schedulers.elastic();
-        Clock clock = Clock.systemDefaultZone();
+        VirtualTimeScheduler scheduler = VirtualTimeScheduler.getOrSet();
 
-        testInstance = new InMemorySchedulingManager(scheduler, clock);
+        clock = SchedulerClock.of(scheduler);
+        testInstance = new InMemorySchedulingManager();
+        testInstance.setScheduler(scheduler);
+        testInstance.setClock(clock);
     }
 
     @Test
     public void shouldScheduleNext() {
         StepVerifier.create(testInstance.scheduleNext(FIRST_GROUP, DURATION))
+                .verifyComplete();
+
+        resetInstance();
+
+        StepVerifier.withVirtualTime(() -> testInstance.scheduleNext(FIRST_GROUP, DURATION))
+                .expectSubscription()
                 .expectNoEvent(DURATION)
                 .verifyComplete();
 
-        StepVerifier.create(testInstance.scheduleNext(FIRST_GROUP, DURATION))
-                .expectNoEvent(DURATION.plus(DURATION))
-                .verifyComplete();
+        resetInstance();
 
         StepVerifier.create(testInstance.scheduleNext(SECOND_GROUP, DURATION))
-                .expectNoEvent(DURATION)
                 .verifyComplete();
     }
 
     @Test
     public void shouldReSchedule() {
-        Publisher<Void> first = testInstance.scheduleNext(FIRST_GROUP, DURATION);
-        Publisher<Void> second = testInstance.scheduleNext(FIRST_GROUP, DURATION);
-        Publisher<Void> third = testInstance.scheduleNext(SECOND_GROUP, DURATION);
+        StepVerifier.withVirtualTime(() -> testInstance.scheduleNext(FIRST_GROUP, DURATION))
+                .verifyComplete();
+
+        resetInstance();
 
         testInstance.reSchedule(FIRST_GROUP, RESCHEDULE_DURATION);
 
-        StepVerifier.create(first)
+        StepVerifier.withVirtualTime(() -> testInstance.scheduleNext(FIRST_GROUP, DURATION))
+                .expectSubscription()
                 .expectNoEvent(DURATION.plus(RESCHEDULE_DURATION))
                 .verifyComplete();
+    }
 
-        StepVerifier.create(second)
-                .expectNoEvent(DURATION.plus(DURATION).plus(RESCHEDULE_DURATION))
-                .verifyComplete();
+    private void resetInstance() {
+        VirtualTimeScheduler scheduler = VirtualTimeScheduler.getOrSet();
+        scheduler.advanceTimeTo(clock.instant());
 
-        StepVerifier.create(third)
-                .expectNoEvent(DURATION)
-                .verifyComplete();
+        clock = SchedulerClock.of(scheduler);
+        testInstance.setScheduler(scheduler);
+        testInstance.setClock(clock);
     }
 }

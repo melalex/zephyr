@@ -3,7 +3,7 @@ package com.zephyr.test;
 import com.zephyr.data.protocol.dto.PlaceDto;
 import com.zephyr.data.protocol.dto.SearchCriteriaDto;
 import com.zephyr.data.protocol.dto.UserAgentDto;
-import com.zephyr.test.mocks.ClockMock;
+import com.zephyr.test.mocks.TimeMachine;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -34,8 +34,8 @@ public final class Criteria {
     public static final String INVALID_PLACE_NAME = "INVALID_PLACE_NAME";
     public static final String INVALID_COUNTRY = "INVALID_COUNTRY";
 
-    public static final LocalDateTime NEW_CRITERIA_LAST_HIT = ClockMock.now();
-    public static final LocalDateTime NEW_CRITERIA_LAST_UPDATE = ClockMock.now();
+    public static final LocalDateTime NEW_CRITERIA_LAST_HIT = TimeMachine.canonicalNow();
+    public static final LocalDateTime NEW_CRITERIA_LAST_UPDATE = TimeMachine.canonicalNow();
 
 
     private Places places;

@@ -20,7 +20,7 @@ public final class ScraperPages {
     public static final int YAHOO_PAGE_SIZE = 10;
     public static final int YAHOO_RESULT_COUNT = 20;
 
-    public static final int YANDEX_FIRST_ELEMENT = 1;
+    public static final int YANDEX_FIRST_ELEMENT = 0;
     public static final int YANDEX_PAGE_SIZE = 100;
     public static final int YANDEX_RESULT_COUNT = 200;
 

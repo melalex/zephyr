@@ -30,7 +30,7 @@ public final class ScraperParams {
 
     public static final int YANDEX_PAGE_SIZE = 100;
     public static final int YANDEX_FIRST_PAGE_OFFSET = 0;
-    public static final int YANDEX_SECOND_PAGE_OFFSET = YAHOO_FIRST_PAGE_OFFSET + YANDEX_PAGE_SIZE;
+    public static final int YANDEX_SECOND_PAGE_OFFSET = YANDEX_FIRST_PAGE_OFFSET + YANDEX_PAGE_SIZE;
 
     private static final String BING_QUERY = "q";
     private static final String BING_QUERY_FORMAT = "%s language:%s";

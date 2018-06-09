@@ -46,6 +46,7 @@ dependencyManagement {
         mavenBom imports['springBootBom']
         mavenBom imports['springCloudBom']
         mavenBom imports['springBusBom']
+        mavenBom imports['netflixBom']
     }
 }
 
