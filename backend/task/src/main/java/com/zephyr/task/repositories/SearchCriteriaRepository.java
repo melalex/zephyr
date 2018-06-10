@@ -8,5 +8,5 @@ import reactor.core.publisher.Flux;
 public interface SearchCriteriaRepository
         extends ReactiveMongoRepository<SearchCriteria, String>, SearchCriteriaOperations {
 
-    Flux<SearchCriteria> findAll(Pageable pageable);
+    Flux<SearchCriteria> findAllBy(Pageable pageable);
 }

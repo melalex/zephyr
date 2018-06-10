@@ -37,7 +37,7 @@ public class SearchCriteriaServiceImpl implements SearchCriteriaService {
 
     @Override
     public Flux<SearchCriteria> findAll(Pageable pageable) {
-        return searchCriteriaRepository.findAll(pageable);
+        return searchCriteriaRepository.findAllBy(pageable);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class SearchCriteriaServiceImpl implements SearchCriteriaService {
         searchCriteria.setLastHit(now);
 
         return queryAssembler.assemble(searchCriteria)
-                .flatMap(newCriteriaGateway::send)
+                .doOnNext(newCriteriaGateway::send)
                 .then(searchCriteriaRepository.save(searchCriteria))
                 .doOnNext(LoggingUtils.info(log, NEW_CRITERIA_MESSAGE));
     }

@@ -1,15 +1,20 @@
 package com.zephyr.task.services;
 
+import static com.zephyr.test.CommonTestData.queries;
+import static com.zephyr.test.matchers.StreamMatcher.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.cloud.stream.test.matcher.MessageQueueMatcher.receivesPayloadThat;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.task.TaskTestConfiguration;
 import com.zephyr.task.data.TaskTestData;
 import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.task.repositories.SearchCriteriaRepository;
 import com.zephyr.test.CommonTestData;
 import com.zephyr.test.Criteria;
+import com.zephyr.test.matchers.StreamMatcher;
 import com.zephyr.test.mocks.TimeMachine;
 import org.junit.After;
 import org.junit.Assert;
@@ -18,6 +23,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.cloud.stream.test.binder.MessageCollector;
 import org.springframework.context.annotation.Import;
@@ -30,7 +36,6 @@ import java.util.concurrent.BlockingQueue;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@Import(TaskTestConfiguration.class)
 public class SearchCriteriaServiceIntegrationTest {
 
     @Autowired
@@ -51,6 +56,9 @@ public class SearchCriteriaServiceIntegrationTest {
     @Autowired
     private TimeMachine timeMachine;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     private SearchCriteria criteria1;
     private SearchCriteria criteria2;
 
@@ -59,13 +67,13 @@ public class SearchCriteriaServiceIntegrationTest {
         LocalDateTime unRelevantCriteria = timeMachine.now().minus(configurationService.getRelevancePeriod())
                 .minusDays(1);
 
-        searchCriteriaRepository.save(TaskTestData.criteria()
+        criteria1 = searchCriteriaRepository.save(TaskTestData.criteria()
                 .newCriteria(Criteria.QUERY1, Criteria.HIT_LOWER_PRIORITY, unRelevantCriteria))
-                .subscribe(c -> criteria1 = c);
+                .block();
 
-        searchCriteriaRepository.save(TaskTestData.criteria()
+        criteria2 = searchCriteriaRepository.save(TaskTestData.criteria()
                 .newCriteria(Criteria.QUERY2, Criteria.HIT_HIGHER_PRIORITY, unRelevantCriteria))
-                .subscribe(c -> criteria2 = c);
+                .block();
 
         searchCriteriaRepository.save(TaskTestData.criteria().simple()).subscribe();
     }
@@ -91,6 +99,7 @@ public class SearchCriteriaServiceIntegrationTest {
     @Test
     public void shouldCreateWithNewCriteria() {
         SearchCriteria newCriteria = TaskTestData.criteria().newCriteria();
+        newCriteria.setUserAgent(null);
 
         StepVerifier.create(testInstance.updateSearchCriteria(newCriteria))
                 .consumeNextWith(c -> searchCriteriaRepository.findById(c.getId())
@@ -103,14 +112,21 @@ public class SearchCriteriaServiceIntegrationTest {
 
         BlockingQueue<Message<?>> messages = collector.forChannel(source.output());
 
-        assertThat(messages, receivesPayloadThat(is(CommonTestData.queries().withoutAgent())));
+        assertThat(messages, payload(objectMapper, QueryDto.class).matches(is(queries().withoutAgent())));
     }
 
     @Test
     public void shouldFindAllForUpdate() {
         StepVerifier.create(testInstance.findAllForUpdate())
-                .expectNext(criteria2)
-                .expectNext(criteria1)
+                .consumeNextWith(c -> Assert.assertEquals(criteria2.getId(), c.getId()))
+                .consumeNextWith(c -> Assert.assertEquals(criteria1.getId(), c.getId()))
                 .verifyComplete();
+    }
+
+
+    @TestConfiguration
+    @Import(TaskTestConfiguration.class)
+    public static class Configuration {
+
     }
 }

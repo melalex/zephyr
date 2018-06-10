@@ -3,20 +3,13 @@ spring:
     mongodb:
       database: tasks
       port: 0
-  cloud:
-    config:
-      enabled: false
-      discovery:
-        enabled: false
-
-eureka:
-  client:
-    enabled: false
+  profiles:
+    active: test
 
 task:
-  cron: 0 0 0 1/1 * ? *
+  cron: 0 0 0 1/1 * ?
   batchSize: 100
-  enableUpdates: true
+  enableUpdates: false
   relevancePeriod:
     days: 3
     hours: 0

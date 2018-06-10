@@ -17,9 +17,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
-
-import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QueryAssemblerTest {
@@ -38,11 +37,8 @@ public class QueryAssemblerTest {
 
     @Before
     public void setUp() {
-        when(agentServiceClient.findOneByExample(anyString(), anyString(), anyString()))
-                .thenReturn(null);
-
-        when(locationServiceClient.findByCountryIsoAndNameContains(anyString(), anyString()))
-                .thenReturn(List.of());
+        when(locationServiceClient.findByCountryIsoAndNameContainsAsync(anyString(), anyString()))
+                .thenReturn(Flux.empty());
 
         when(mapper.mapperFor(QueryDto.class))
                 .thenReturn(t -> CommonTestData.queries().simple());

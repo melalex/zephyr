@@ -35,7 +35,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
     @Override
     public TemporalAmount getRelevancePeriod() {
-        return taskServiceProperties.getRelevancePeriod();
+        return taskServiceProperties.getRelevancePeriodDuration();
     }
 
     @Override

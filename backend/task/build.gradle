@@ -38,6 +38,7 @@ dependencies {
     compile libraries['securityCloud']
     compile libraries['securityOAuth2']
     compile libraries['mongodb']
+    compile libraries['mongodbDriver']
     compile libraries['feign']
 
     compile libraries['messaging']

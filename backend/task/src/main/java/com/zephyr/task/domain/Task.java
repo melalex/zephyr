@@ -15,6 +15,7 @@ public class Task {
     public static final String ID_FIELD = "id";
     public static final String USER_ID_FIELD = "userId";
     public static final String SHARED_FIELD = "shared";
+
     @Id
     private String id;
     private String name;

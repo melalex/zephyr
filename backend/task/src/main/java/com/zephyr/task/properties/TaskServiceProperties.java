@@ -6,7 +6,6 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.time.temporal.TemporalAmount;
 
 @Data
 @Component
@@ -17,13 +16,10 @@ public class TaskServiceProperties {
     private int batchSize;
     private boolean enableUpdates;
     private String cron;
-    private RelevancePeriod relevancePeriod;
+    private RelevancePeriod relevancePeriod = new RelevancePeriod();
 
-    public TemporalAmount getRelevancePeriod() {
-        return Duration.ofDays(relevancePeriod.getDays())
-                .plus(Duration.ofHours(relevancePeriod.getHours()))
-                .plus(Duration.ofMinutes(relevancePeriod.getMinutes()))
-                .plus(Duration.ofSeconds(relevancePeriod.getSeconds()));
+    public Duration getRelevancePeriodDuration() {
+        return relevancePeriod.asDuration();
     }
 
     @Data
@@ -33,5 +29,12 @@ public class TaskServiceProperties {
         private int hours;
         private int minutes;
         private int seconds;
+
+        public Duration asDuration() {
+            return Duration.ofDays(days)
+                    .plus(Duration.ofHours(hours))
+                    .plus(Duration.ofMinutes(minutes))
+                    .plus(Duration.ofSeconds(seconds));
+        }
     }
 }
