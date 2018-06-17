@@ -1,4 +1,4 @@
-package com.zephyr.task;
+package com.zephyr.rating;
 
 import org.bson.BsonTimestamp;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Configuration
 @EnableReactiveMongoRepositories
-public class TaskMongoConfiguration {
+public class RatingMongoConfiguration {
 
     @Bean
     public MongoCustomConversions customConversions(Converter<BsonTimestamp, LocalDateTime> converter) {

@@ -13,7 +13,7 @@ public final class Tasks {
 
     public static final String SIMPLE_ID = "df32d581-75d7-4110-a9d0-03782e604eb5";
     public static final String SIMPLE_USER_ID = "fe874e7c-fc0e-4755-b964-082554b6e10a";
-    public static final String SIMPLE_URL = "https://www.getzephyr.com/";
+    public static final String SIMPLE_URL = "www.getzephyr.com";
     public static final String SIMPLE_NAME = "Zephyr";
 
     public static final boolean SIMPLE_IS_SHARED = true;

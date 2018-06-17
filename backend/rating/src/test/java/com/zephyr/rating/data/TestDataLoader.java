@@ -1,12 +1,9 @@
 package com.zephyr.rating.data;
 
 import static com.zephyr.rating.data.RatingTestData.ratings;
-import static com.zephyr.rating.data.RatingTestData.requests;
 
 import com.zephyr.rating.domain.Rating;
-import com.zephyr.rating.domain.Request;
 import com.zephyr.rating.repository.RatingRepository;
-import com.zephyr.rating.repository.RequestRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,9 +13,6 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class TestDataLoader {
-
-    @NonNull
-    private RequestRepository requestRepository;
 
     @NonNull
     private RatingRepository ratingRepository;
@@ -40,19 +34,12 @@ public class TestDataLoader {
     }
 
     public void load() {
-        Request bingRequest = requests().bing();
-        Request googleRequest = requests().google();
-        Request yahooRequest = requests().yahoo();
-
-        List<Rating> bingRating = ratings().bing(bingRequest);
-        List<Rating> googleRating = ratings().google(googleRequest);
-        List<Rating> yahooRating = ratings().yahoo(yahooRequest);
+        List<Rating> bingRating = ratings().bing();
+        List<Rating> googleRating = ratings().google();
+        List<Rating> yahooRating = ratings().yahoo();
 
 //        @formatter:off
-        requestRepository.save(bingRequest)
-                .then(requestRepository.save(googleRequest))
-                .then(requestRepository.save(yahooRequest))
-                .thenMany(ratingRepository.saveAll(bingRating))
+        ratingRepository.saveAll(bingRating)
                     .collectList()
                     .doOnNext(this::setBingRating)
                 .thenMany(ratingRepository.saveAll(googleRating))
@@ -61,14 +48,12 @@ public class TestDataLoader {
                 .thenMany(ratingRepository.saveAll(yahooRating))
                     .collectList()
                     .doOnNext(this::setYahooRating)
-                .subscribe();
+                .block();
 //        @formatter:on
     }
 
     public void clean() {
-        requestRepository.deleteAll()
-                .then(ratingRepository.deleteAll())
-                .subscribe();
+        ratingRepository.deleteAll().block();
     }
 
     private void setBingRating(List<Rating> bingRating) {

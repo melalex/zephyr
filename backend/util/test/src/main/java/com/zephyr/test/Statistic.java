@@ -19,9 +19,9 @@ public final class Statistic {
     public static final LocalDate SIMPLE_FROM = SIMPLE_TO.minusYears(1);
 
     public static final int SIMPLE_GOOGLE_POSITION = 0;
-    public static final int SIMPLE_BING_FIRST_APPEARANCE_POSITION = 2;
-    public static final int SIMPLE_BING_SECOND_APPEARANCE_POSITION = 8;
-    public static final int SIMPLE_YAHOO_POSITION = 4;
+    public static final int SIMPLE_BING_FIRST_APPEARANCE_POSITION = 3;
+    public static final int SIMPLE_BING_SECOND_APPEARANCE_POSITION = 9;
+    public static final int SIMPLE_YAHOO_POSITION = 5;
 
     private Results results;
     private Criteria criteria;

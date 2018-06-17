@@ -1,12 +1,11 @@
 package com.zephyr.test.mocks;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import com.zephyr.test.Tasks;
+import lombok.Value;
 import lombok.experimental.UtilityClass;
 
 import java.security.Principal;
+import javax.security.auth.Subject;
 
 @UtilityClass
 public class PrincipalMock {
@@ -14,9 +13,7 @@ public class PrincipalMock {
     public static final String USER1 = "USER1";
 
     public Principal of(String name) {
-        Principal mock = mock(Principal.class);
-        when(mock.getName()).thenReturn(name);
-        return mock;
+        return new TestPrincipal(name);
     }
 
     public Principal simple() {
@@ -26,4 +23,16 @@ public class PrincipalMock {
     public Principal user1() {
         return of(USER1);
     }
+
+    @Value
+    private static class TestPrincipal implements Principal {
+
+        private String name;
+
+        @Override
+        public boolean implies(Subject subject) {
+            return true;
+        }
+    }
+
 }

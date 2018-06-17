@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class RatingNotificationServiceImpl implements RatingNotificationService {
 
-    private static final String PUBLISH_RATING_UPDATE_MESSAGE = "Publish update for Rating with id [{}]";
+    private static final String PUBLISH_RATING_UPDATE_MESSAGE = "Publish update for Rating: {}";
 
     private ApplicationEventPublisher publisher;
     private ServiceMatcher serviceMatcher;
@@ -26,8 +26,8 @@ public class RatingNotificationServiceImpl implements RatingNotificationService 
 
         event.setRequest(request);
 
-        publisher.publishEvent(event);
+        log.info(PUBLISH_RATING_UPDATE_MESSAGE, request);
 
-        log.info(PUBLISH_RATING_UPDATE_MESSAGE, request.getId());
+        publisher.publishEvent(event);
     }
 }

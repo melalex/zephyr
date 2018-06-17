@@ -8,8 +8,6 @@ import com.zephyr.rating.domain.Request;
 import com.zephyr.rating.domain.RequestCriteria;
 import org.junit.Test;
 
-import java.util.Set;
-
 public class RequestMatcherTest {
 
     private RequestMatcher testInstance = new RequestMatcher();
@@ -27,7 +25,7 @@ public class RequestMatcherTest {
         RequestCriteria targetCriteria = RatingTestData.requestCriteria().simple();
         Request targetRequest = RatingTestData.requests().google();
 
-        targetCriteria.getQuery().setUserAgent(null);
+        targetCriteria.getQueryCriteria().setUserAgent(null);
 
         assertTrue(testInstance.matches(targetCriteria, targetRequest));
     }
@@ -37,7 +35,7 @@ public class RequestMatcherTest {
         RequestCriteria targetCriteria = RatingTestData.requestCriteria().simple();
         Request targetRequest = RatingTestData.requests().google();
 
-        targetCriteria.setEngines(Set.of());
+        targetCriteria.setEngine(null);
 
         assertFalse(testInstance.matches(targetCriteria, targetRequest));
     }

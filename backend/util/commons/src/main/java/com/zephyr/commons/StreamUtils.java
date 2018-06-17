@@ -15,7 +15,7 @@ public class StreamUtils {
 
     public <T> Stream<Indexed<T>> zipWithIndexes(List<T> list, int offset) {
         return IntStream.range(offset, list.size() + offset)
-                .mapToObj(i -> Indexed.of(i, list.get(i)));
+                .mapToObj(i -> Indexed.of(i, list.get(i - offset)));
     }
 
     public <T> Stream<Indexed<T>> zipWithIndexes(List<T> list) {

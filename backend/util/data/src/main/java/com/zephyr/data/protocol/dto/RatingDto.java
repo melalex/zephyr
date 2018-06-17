@@ -13,7 +13,7 @@ public class RatingDto {
     private int position;
     private String url;
 
-    private SearchCriteriaDto query;
+    private SearchCriteriaDto queryCriteria;
     private LocalDateTime timestamp;
     private SearchEngine provider;
 }

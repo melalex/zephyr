@@ -1,6 +1,6 @@
 package com.zephyr.rating.data;
 
-import com.zephyr.data.util.ConversionUtils;
+import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.rating.domain.RequestCriteria;
 import com.zephyr.test.Criteria;
 import com.zephyr.test.Statistic;
@@ -22,9 +22,9 @@ public final class RequestCriteriaData {
         return RequestCriteria.builder()
                 .url(Tasks.SIMPLE_URL)
                 .from(Statistic.SIMPLE_FROM)
-                .query(queries.simple())
+                .queryCriteria(queries.simple())
                 .originalCriteriaId(Criteria.SIMPLE_ID)
-                .engines(ConversionUtils.toString(Tasks.SIMPLE_ENGINES))
+                .engine(SearchEngine.GOOGLE.name())
                 .build();
     }
 }

@@ -3,12 +3,6 @@ spring:
     mongodb:
       database: rating
       port: 0
-  cloud:
-    config:
-      enabled: false
-      discovery:
-        enabled: false
-
-eureka:
-  client:
-    enabled: false
+    web:
+      pageable:
+        max-page-size: 1000

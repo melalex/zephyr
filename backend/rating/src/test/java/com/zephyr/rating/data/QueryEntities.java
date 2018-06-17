@@ -1,6 +1,6 @@
 package com.zephyr.rating.data;
 
-import com.zephyr.rating.domain.Query;
+import com.zephyr.rating.domain.QueryCriteria;
 import com.zephyr.test.Criteria;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -11,8 +11,8 @@ public final class QueryEntities {
     private PlaceEntities places;
     private UserAgentEntities userAgents;
 
-    public Query simple() {
-        Query result = new Query ();
+    public QueryCriteria simple() {
+        QueryCriteria result = new QueryCriteria();
         result.setQuery(Criteria.SIMPLE_QUERY);
         result.setLanguageIso(Criteria.SIMPLE_LANGUAGE_ISO);
         result.setPlace(places.kiev());
@@ -21,8 +21,8 @@ public final class QueryEntities {
         return result;
     }
 
-    public Query withoutAgent() {
-        Query result = simple();
+    public QueryCriteria withoutAgent() {
+        QueryCriteria result = simple();
         result.setUserAgent(null);
 
         return result;

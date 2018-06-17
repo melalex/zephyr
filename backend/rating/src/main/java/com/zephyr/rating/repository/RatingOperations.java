@@ -7,7 +7,7 @@ import reactor.core.publisher.Flux;
 
 public interface RatingOperations {
 
-    Flux<Rating> findAllByUrlStartsWith(String url, Pageable pageable);
+    Flux<String> findAllByUrlStartsWith(String url, Pageable pageable);
 
     Flux<Rating> findByCriteria(RequestCriteria requestCriteria);
 }

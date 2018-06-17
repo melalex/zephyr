@@ -17,7 +17,6 @@ public class RatingServiceProvider implements KeywordsProvider {
 
     @Override
     public Flux<KeywordDto> provide(KeywordRequest request) {
-        return ratingServiceClient.findRatingForUrl(request.getUrl(), request.getPage(), request.getPageSize())
-                .map(r -> new KeywordDto(r.getQuery().getQuery(), r.getUrl()));
+        return ratingServiceClient.findRatingForUrlAsync(request.getUrl(), request.getPage(), request.getPageSize());
     }
 }

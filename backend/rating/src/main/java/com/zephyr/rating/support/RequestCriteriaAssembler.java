@@ -4,9 +4,8 @@ import com.zephyr.commons.interfaces.Assembler;
 import com.zephyr.data.protocol.dto.SearchCriteriaDto;
 import com.zephyr.data.protocol.dto.TaskDto;
 import com.zephyr.data.protocol.request.StatisticRequest;
-import com.zephyr.data.util.ConversionUtils;
 import com.zephyr.rating.cliensts.TaskServiceClient;
-import com.zephyr.rating.domain.Query;
+import com.zephyr.rating.domain.QueryCriteria;
 import com.zephyr.rating.domain.RequestCriteria;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +16,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 @AllArgsConstructor
@@ -34,7 +34,6 @@ public class RequestCriteriaAssembler implements Assembler<StatisticRequest, Lis
     private Function<TaskDto, List<RequestCriteria>> toRequestCriteria(StatisticRequest source) {
         return t -> {
             RequestCriteria prototype = RequestCriteria.builder()
-                    .engines(ConversionUtils.toString(t.getEngines()))
                     .url(t.getUrl())
                     .from(source.getFrom())
                     .to(source.getTo())
@@ -42,16 +41,19 @@ public class RequestCriteriaAssembler implements Assembler<StatisticRequest, Lis
 
             return t.getSearchCriteria()
                     .stream()
-                    .map(criteriaFactoryFunction(prototype))
+                    .flatMap(criteriaFactoryFunction(prototype, t))
                     .collect(Collectors.toList());
         };
     }
 
     @NotNull
-    private Function<SearchCriteriaDto, RequestCriteria> criteriaFactoryFunction(RequestCriteria prototype) {
-        return c -> prototype.toBuilder()
-                .originalCriteriaId(c.getId())
-                .query(mapper.map(c, Query.class))
-                .build();
+    private Function<SearchCriteriaDto, Stream<RequestCriteria>> criteriaFactoryFunction(RequestCriteria prototype,
+                                                                                         TaskDto task) {
+        return c -> task.getEngines().stream()
+                .map(e -> prototype.toBuilder()
+                        .engine(e.name())
+                        .originalCriteriaId(c.getId())
+                        .queryCriteria(mapper.map(c, QueryCriteria.class))
+                        .build());
     }
 }

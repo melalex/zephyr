@@ -1,6 +1,5 @@
 package com.zephyr.rating.data;
 
-import com.zephyr.test.CommonTestData;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +12,7 @@ public final class RatingTestData {
     private UserAgentEntities userAgents = new UserAgentEntities();
     private QueryEntities queries = new QueryEntities(places, userAgents);
     private RequestEntities requests = new RequestEntities(queries);
-    private RatingEntities ratings = new RatingEntities(CommonTestData.criteria());
+    private RatingEntities ratings = new RatingEntities(requests);
     private RequestCriteriaData requestCriteria = new RequestCriteriaData(queries);
 
     public static PlaceEntities places() {

@@ -1,10 +1,9 @@
 package com.zephyr.task.services;
 
 import static com.zephyr.test.CommonTestData.queries;
-import static com.zephyr.test.matchers.StreamMatcher.*;
+import static com.zephyr.test.matchers.StreamMatcher.payload;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.cloud.stream.test.matcher.MessageQueueMatcher.receivesPayloadThat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zephyr.data.internal.dto.QueryDto;
@@ -12,9 +11,7 @@ import com.zephyr.task.TaskTestConfiguration;
 import com.zephyr.task.data.TaskTestData;
 import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.task.repositories.SearchCriteriaRepository;
-import com.zephyr.test.CommonTestData;
 import com.zephyr.test.Criteria;
-import com.zephyr.test.matchers.StreamMatcher;
 import com.zephyr.test.mocks.TimeMachine;
 import org.junit.After;
 import org.junit.Assert;

@@ -6,12 +6,14 @@ import com.zephyr.keyword.services.KeywordService;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
 import javax.validation.Valid;
 
-@RestController("/v1/keywords")
+@RestController
+@RequestMapping("/v1/keywords")
 public class KeywordController {
 
     @Setter(onMethod = @__(@Autowired))

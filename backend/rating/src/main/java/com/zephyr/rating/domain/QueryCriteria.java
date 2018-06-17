@@ -3,7 +3,7 @@ package com.zephyr.rating.domain;
 import lombok.Data;
 
 @Data
-public class Query {
+public class QueryCriteria {
 
     private String query;
     private String languageIso;

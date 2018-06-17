@@ -1,7 +1,12 @@
 package com.zephyr.rating.controllers;
 
-import com.zephyr.data.internal.dto.SearchResultDto;
+import static org.junit.Assert.assertEquals;
+import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.springSecurity;
+import static org.springframework.web.reactive.function.client.ExchangeFilterFunctions.basicAuthentication;
+
+import com.zephyr.commons.support.Profiles;
 import com.zephyr.data.protocol.dto.StatisticsDto;
+import com.zephyr.rating.RatingApplication;
 import com.zephyr.rating.RatingTestConfiguration;
 import com.zephyr.rating.data.TestDataLoader;
 import com.zephyr.test.CommonTestData;
@@ -10,42 +15,44 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cloud.stream.messaging.Sink;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
-import org.springframework.messaging.support.GenericMessage;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import reactor.core.publisher.Flux;
-import reactor.test.StepVerifier;
 
-@SpringBootTest
+import java.time.Duration;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @RunWith(SpringRunner.class)
-@AutoConfigureWebTestClient
-@Import(RatingTestConfiguration.class)
+@ActiveProfiles(Profiles.TEST)
+@ContextConfiguration(classes = {RatingApplication.class, RatingTestConfiguration.class})
 public class StatisticControllerIntegrationTest {
 
     @Autowired
-    private WebTestClient webTestClient;
+    private ApplicationContext applicationContext;
 
     @Autowired
     private TestDataLoader testDataLoader;
 
-    @Autowired
-    private Sink sink;
-
+    private WebTestClient webTestClient;
     private StatisticsDto bingFirstAppearance;
-    private StatisticsDto bingSecondAppearance;
     private StatisticsDto google;
     private StatisticsDto yahoo;
 
     @Before
     public void setUp() {
+        webTestClient = WebTestClient.bindToApplicationContext(applicationContext)
+                .apply(springSecurity())
+                .configureClient()
+                .filter(basicAuthentication())
+                .responseTimeout(Duration.ofDays(1))
+                .build();
+
         bingFirstAppearance = CommonTestData.statistic().bingFirstAppearance();
-        bingSecondAppearance = CommonTestData.statistic().bingSecondAppearance();
         google = CommonTestData.statistic().google();
         yahoo = CommonTestData.statistic().yahoo();
     }
@@ -55,44 +62,17 @@ public class StatisticControllerIntegrationTest {
     public void shouldFindStatistic() {
         testDataLoader.load();
 
-        webTestClient.get()
-                .uri(u -> u.path("/v1/statistic").queryParam("taskId", Tasks.SIMPLE_ID).build())
-                .accept(MediaType.APPLICATION_STREAM_JSON)
-                .exchange()
-                .expectBodyList(StatisticsDto.class)
-                .contains(bingFirstAppearance, bingSecondAppearance, google, yahoo);
-
-        testDataLoader.clean();
-    }
-
-    @Test
-    @WithMockUser(Tasks.SIMPLE_USER_ID)
-    public void shouldSubscribeForTask() {
-        GenericMessage<SearchResultDto> bingSearchResult =
-                new GenericMessage<>(CommonTestData.searchResults().bing());
-        GenericMessage<SearchResultDto> googleSearchResult =
-                new GenericMessage<>(CommonTestData.searchResults().google());
-        GenericMessage<SearchResultDto> yahooSearchResult =
-                new GenericMessage<>(CommonTestData.searchResults().yahoo());
-
-        Flux<StatisticsDto> result = webTestClient.get()
+        Set<StatisticsDto> result = webTestClient.get()
                 .uri(u -> u.path("/v1/statistic").queryParam("taskId", Tasks.SIMPLE_ID).build())
                 .accept(MediaType.APPLICATION_STREAM_JSON)
                 .exchange()
                 .returnResult(StatisticsDto.class)
-                .getResponseBody();
+                .getResponseBody()
+                .toStream()
+                .collect(Collectors.toSet());
 
-        sink.input().send(bingSearchResult);
-        sink.input().send(googleSearchResult);
-        sink.input().send(yahooSearchResult);
+        assertEquals(result, Set.of(bingFirstAppearance, google, yahoo));
 
-        StepVerifier.create(result)
-                .expectNext(bingFirstAppearance)
-                .expectNext(bingSecondAppearance)
-                .expectNext(google)
-                .expectNext(yahoo)
-                .thenCancel()
-                .log()
-                .verify();
+        testDataLoader.clean();
     }
 }

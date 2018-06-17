@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
+import java.security.Principal;
+import javax.validation.Valid;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/v1/statistic")
@@ -18,7 +21,7 @@ public class StatisticController {
     private StatisticService statisticService;
 
     @GetMapping(produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
-    public Flux<StatisticsDto> findStatisticsAndSubscribeForTask(StatisticRequest request) {
-        return statisticService.findStatisticsAndSubscribeForTask(request);
+    public Flux<StatisticsDto> findStatisticsAndSubscribeForTask(@Valid StatisticRequest request, Principal principal) {
+        return statisticService.findStatisticsAndSubscribeForTask(request.withPrincipal(principal));
     }
 }

@@ -5,13 +5,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.springSecurity;
 import static org.springframework.web.reactive.function.client.ExchangeFilterFunctions.basicAuthentication;
 
+import com.zephyr.commons.support.Profiles;
 import com.zephyr.data.protocol.dto.TaskDto;
 import com.zephyr.task.TaskApplication;
 import com.zephyr.task.TaskTestConfiguration;
 import com.zephyr.task.data.TaskTestData;
 import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.task.domain.Task;
-import com.zephyr.task.utils.Profiles;
 import com.zephyr.test.CommonTestData;
 import com.zephyr.test.Tasks;
 import org.junit.After;
@@ -19,7 +19,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -32,7 +31,6 @@ import reactor.core.publisher.Mono;
 import java.time.Duration;
 import java.util.List;
 
-@AutoConfigureWebTestClient
 @RunWith(SpringRunner.class)
 @ActiveProfiles(Profiles.TEST)
 @ContextConfiguration(classes = {TaskApplication.class, TaskTestConfiguration.class})

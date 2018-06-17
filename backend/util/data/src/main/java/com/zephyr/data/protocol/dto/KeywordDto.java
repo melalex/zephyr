@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class KeywordDto {
 
     private String query;
-    private String requestedUrl;
 }

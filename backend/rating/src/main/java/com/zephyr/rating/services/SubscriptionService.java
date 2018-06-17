@@ -6,5 +6,5 @@ import reactor.core.publisher.Flux;
 
 public interface SubscriptionService {
 
-    Flux<Request> subscribeOn(RequestCriteria requestCriteria);
+    Flux<Request> subscribe(RequestCriteria requestCriteria);
 }

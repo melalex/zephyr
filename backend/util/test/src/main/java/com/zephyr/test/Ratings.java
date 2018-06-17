@@ -18,7 +18,7 @@ public final class Ratings {
         RatingDto result = new RatingDto();
         result.setId(SIMPLE_ID);
         result.setPosition(SIMPLE_POSITION);
-        result.setQuery(criteria.simple());
+        result.setQueryCriteria(criteria.simple());
         result.setUrl(Tasks.SIMPLE_URL);
         result.setProvider(SIMPLE_PROVIDER);
         result.setTimestamp(Results.SIMPLE_TIMESTAMP);

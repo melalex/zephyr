@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -15,9 +14,9 @@ import java.util.Set;
 public class RequestCriteria {
 
     private String originalCriteriaId;
-    private Query query;
+    private QueryCriteria queryCriteria;
     private String url;
     private LocalDate from;
     private LocalDate to;
-    private Set<String> engines;
+    private String engine;
 }

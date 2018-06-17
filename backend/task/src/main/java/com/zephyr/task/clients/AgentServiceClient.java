@@ -1,7 +1,7 @@
 package com.zephyr.task.clients;
 
 import com.zephyr.data.protocol.dto.UserAgentDto;
-import com.zephyr.task.utils.Profiles;
+import com.zephyr.commons.support.Profiles;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
