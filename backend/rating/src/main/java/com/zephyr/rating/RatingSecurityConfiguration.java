@@ -1,13 +1,13 @@
 package com.zephyr.rating;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
-@Configuration
-@EnableWebFluxSecurity
+//@Configuration
+//@EnableOAuth2Client
+//@EnableResourceServer
+//@EnableWebFluxSecurity
 public class RatingSecurityConfiguration {
 
     @Bean

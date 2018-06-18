@@ -26,6 +26,7 @@ public class FieldMatchValidatorTest {
 
     private static final ConstraintValidatorContext CONSTRAINT_VALIDATOR_CONTEXT = null;
     private final FieldMatchValidator testInstance = new FieldMatchValidator();
+
     @Mock
     private FieldMatch fieldMatch;
 

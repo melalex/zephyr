@@ -30,11 +30,13 @@ mainClassName = 'com.zephyr.agent.AgentApplication'
 
 dependencies {
     compile libraries['mongodb']
+    compile libraries['mongodbDriver']
     compile libraries['webFlux']
     compile libraries['acutator']
     compile libraries['configClient']
     compile libraries['discoveryClient']
     compile libraries['messaging']
+    compile libraries['modelMapperStarter']
 
     compile utils['data']
     compile utils['errors']
@@ -43,6 +45,8 @@ dependencies {
     compileOnly libraries['lombok']
 
     testCompile libraries['test']
+    testCompile libraries['embeddedMongodb']
+    testCompile libraries['reactorTest']
 }
 
 dependencyManagement {

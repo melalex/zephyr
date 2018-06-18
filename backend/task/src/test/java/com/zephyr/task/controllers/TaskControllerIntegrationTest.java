@@ -13,6 +13,7 @@ import com.zephyr.task.data.TaskTestData;
 import com.zephyr.task.domain.Task;
 import com.zephyr.test.CommonTestData;
 import com.zephyr.test.Tasks;
+import com.zephyr.test.mocks.PrincipalMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +21,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -65,12 +66,12 @@ public class TaskControllerIntegrationTest {
     }
 
     @Test
-    @WithMockUser(Tasks.SIMPLE_USER_ID)
     public void shouldCreateFindAndRemoveTask() {
 //        @formatter:off
         var actual = webTestClient
                 .post()
                 .uri("/v1/tasks")
+                .header(HttpHeaders.AUTHORIZATION, PrincipalMock.getAuthorizationHeader(Tasks.SIMPLE_USER_ID))
                 .body(Mono.just(CommonTestData.tasks().withNewCriteria()), TaskDto.class)
                 .exchange()
                     .expectStatus()
@@ -87,6 +88,7 @@ public class TaskControllerIntegrationTest {
 //        @formatter:off
         var expected = webTestClient.get()
                 .uri("/v1/tasks/{name}/{id}", Tasks.SIMPLE_USER_ID, id)
+                .header(HttpHeaders.AUTHORIZATION, PrincipalMock.getAuthorizationHeader(Tasks.SIMPLE_USER_ID))
                 .exchange()
                     .expectStatus()
                         .isOk()
@@ -101,12 +103,14 @@ public class TaskControllerIntegrationTest {
 
         webTestClient.delete()
                 .uri("/v1/tasks/{id}", id)
+                .header(HttpHeaders.AUTHORIZATION, PrincipalMock.getAuthorizationHeader(Tasks.SIMPLE_USER_ID))
                 .exchange()
                     .expectStatus()
                         .isNoContent();
 
         webTestClient.get()
                 .uri("/v1/tasks/{name}/{id}", Tasks.SIMPLE_USER_ID, id)
+                .header(HttpHeaders.AUTHORIZATION, PrincipalMock.getAuthorizationHeader(Tasks.SIMPLE_USER_ID))
                 .exchange()
                     .expectStatus()
                         .isNotFound();
@@ -114,11 +118,11 @@ public class TaskControllerIntegrationTest {
     }
 
     @Test
-    @WithMockUser(Tasks.SIMPLE_USER_ID)
     public void shouldFindAll() {
 //        @formatter:off
         var actual = webTestClient.get()
                 .uri("/v1/tasks")
+                .header(HttpHeaders.AUTHORIZATION, PrincipalMock.getAuthorizationHeader(Tasks.SIMPLE_USER_ID))
                 .exchange()
                     .expectStatus()
                         .isOk()

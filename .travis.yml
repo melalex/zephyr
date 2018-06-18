@@ -5,7 +5,7 @@ services:
 
 language: java
 jdk:
-  - oraclejdk9
+  - oraclejdk10
 
 before_install:
   - chmod +x gradlew
@@ -27,4 +27,3 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
 
   - bash .travis/deploy_dockerhub.sh
-  - bash .travis/deploy_heroku.sh

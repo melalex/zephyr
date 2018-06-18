@@ -32,7 +32,7 @@ subprojects {
     targetCompatibility = JavaVersion.VERSION_1_10
 
     ext {
-        dockerBaseImage = 'openjdk:9-jre'
+        dockerBaseImage = 'openjdk:10-jre'
         dockerMainteiner = 'Alexander Melashchenko <melalex490@gmail.com>'
         dockerUserName = project.findProperty('dockerUserName')
         dockerPassword = project.findProperty('dockerPassword')

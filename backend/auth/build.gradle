@@ -29,14 +29,19 @@ apply plugin: 'application'
 mainClassName = 'com.zephyr.auth.AuthApplication'
 
 dependencies {
-    compile libraries['spring']
+    compile libraries['web']
+    compile libraries['jpa']
+    compile libraries['mysql']
     compile libraries['acutator']
     compile libraries['security']
-    compile libraries['securityOAuth2']
-    compile libraries['configClient']
-    compile libraries['discoveryClient']
     compile libraries['messaging']
+    compile libraries['jacksonTime']
+    compile libraries['configClient']
+    compile libraries['securityOAuth2']
+    compile libraries['discoveryClient']
+    compile libraries['modelMapperStarter']
 
+    compile utils['data']
     compile utils['commons']
 
     compileOnly libraries['lombok']

@@ -1,5 +1,6 @@
 package com.zephyr.rating.controllers;
 
+import com.zephyr.commons.support.OAuth2Principal;
 import com.zephyr.data.protocol.dto.StatisticsDto;
 import com.zephyr.data.protocol.request.StatisticRequest;
 import com.zephyr.rating.services.StatisticService;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
-import java.security.Principal;
 import javax.validation.Valid;
 
 @RestController
@@ -21,7 +21,8 @@ public class StatisticController {
     private StatisticService statisticService;
 
     @GetMapping(produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
-    public Flux<StatisticsDto> findStatisticsAndSubscribeForTask(@Valid StatisticRequest request, Principal principal) {
-        return statisticService.findStatisticsAndSubscribeForTask(request.withPrincipal(principal));
+    public Flux<StatisticsDto> findStatisticsAndSubscribeForTask(@Valid StatisticRequest request,
+                                                                 OAuth2Principal principal) {
+        return statisticService.findStatisticsAndSubscribeForTask(request.withPrincipal(principal.asPrincipal()));
     }
 }

@@ -50,6 +50,7 @@ dependencies {
 
     compileOnly libraries['lombok']
     compileOnly libraries['configurationProcessor']
+    compileOnly libraries['ideaAnnotations']
 
     testCompile utils['test']
 

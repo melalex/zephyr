@@ -1,5 +1,7 @@
-package com.zephyr.auth.config;
+package com.zephyr.auth;
 
+import com.zephyr.auth.util.GrantTypes;
+import com.zephyr.auth.util.Scopes;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +17,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
 @Configuration
 @EnableAuthorizationServer
@@ -44,13 +45,18 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationServerConfigu
         // @formatter:off
         clients.inMemory()
                     .withClient("browser")
-                    .authorizedGrantTypes("refresh_token", "password")
-                    .scopes("ui")
+                    .authorizedGrantTypes(GrantTypes.REFRESH_TOKEN, GrantTypes.PASSWORD)
+                    .scopes(Scopes.UI)
                 .and()
-                    .withClient("customer-service")
-                    .secret(environment.getProperty("CUSTOMER_SERVICE_PASSWORD"))
-                    .authorizedGrantTypes("client_credentials", "refresh_token")
-                    .scopes("server");
+                    .withClient("task-service")
+                    .secret(environment.getProperty("TASK_SERVICE_PASSWORD"))
+                    .authorizedGrantTypes(GrantTypes.CREDENTIALS, GrantTypes.REFRESH_TOKEN)
+                    .scopes(Scopes.SERVER)
+                .and()
+                    .withClient("rating-service")
+                    .secret(environment.getProperty("RATING_SERVICE_PASSWORD"))
+                    .authorizedGrantTypes(GrantTypes.CREDENTIALS, GrantTypes.REFRESH_TOKEN)
+                    .scopes(Scopes.SERVER);
         // @formatter:on
     }
 
@@ -64,17 +70,7 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationServerConfigu
 
     @Bean
     public TokenStore tokenStore() {
-        return new JwtTokenStore(accessTokenConverter());
-    }
-
-    @Bean
-    public JwtAccessTokenConverter accessTokenConverter() {
-        var converter = new JwtAccessTokenConverter();
-
-        // TODO: store key in vault
-        converter.setSigningKey("123");
-
-        return converter;
+        return new InMemoryTokenStore();
     }
 
     @Bean

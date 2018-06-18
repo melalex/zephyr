@@ -1,13 +1,14 @@
 package com.zephyr.agent;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zephyr.commons.extensions.ExtendedMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
 @SpringBootApplication
+@EnableReactiveMongoRepositories
 public class AgentApplication {
 
     public static void main(String[] args) {
@@ -15,12 +16,7 @@ public class AgentApplication {
     }
 
     @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
-    }
-
-    @Bean
-    public ExtendedMapper extendedMapper() {
-        return new ExtendedMapper(new ModelMapper());
+    public ExtendedMapper extendedMapper(ModelMapper modelMapper) {
+        return new ExtendedMapper(modelMapper);
     }
 }

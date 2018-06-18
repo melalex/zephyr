@@ -1,5 +1,8 @@
 spring:
-  data:
-    mongodb:
-      database: zephyr
-      port: 0
+  jpa:
+    hibernate.ddl-auto: update
+  datasource:
+    url: jdbc:mysql://auth-mysql:3306/zephyr?useSSL=false
+    username: spring
+    password: spring
+    platform: mysql

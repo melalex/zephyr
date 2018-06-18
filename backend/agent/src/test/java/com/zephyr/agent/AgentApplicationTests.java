@@ -1,4 +1,4 @@
-package com.zephyr.agent.app;
+package com.zephyr.agent;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,5 +1,6 @@
 package com.zephyr.task.controllers;
 
+import com.zephyr.commons.support.OAuth2Principal;
 import com.zephyr.data.protocol.dto.TaskDto;
 import com.zephyr.task.facades.TaskFacade;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.security.Principal;
 import javax.validation.Valid;
 
 @RestController
@@ -27,13 +27,13 @@ public class TaskController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<TaskDto> create(@RequestBody @Valid Mono<TaskDto> task, Principal principal) {
-        return taskFacade.create(task, principal);
+    public Mono<TaskDto> create(@RequestBody @Valid Mono<TaskDto> task, OAuth2Principal principal) {
+        return taskFacade.create(task, principal.asPrincipal());
     }
 
     @GetMapping
-    public Flux<TaskDto> findAll(Principal principal) {
-        return taskFacade.findAll(principal);
+    public Flux<TaskDto> findAll(OAuth2Principal principal) {
+        return taskFacade.findAll(principal.asPrincipal());
     }
 
     @GetMapping("/{name}/{id}")
@@ -43,7 +43,7 @@ public class TaskController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Mono<Void> remove(@PathVariable String id, Principal principal) {
-        return taskFacade.remove(id, principal);
+    public Mono<Void> remove(@PathVariable String id, OAuth2Principal principal) {
+        return taskFacade.remove(id, principal.asPrincipal());
     }
 }

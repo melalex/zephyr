@@ -3,8 +3,8 @@ rootProject.name = 'zephyr'
 include 'frontend'
 include 'backend'
 
-//include 'backend:agent'
-//findProject(':backend:agent')?.name = 'agent'
+include 'backend:agent'
+findProject(':backend:agent')?.name = 'agent'
 
 include 'backend:auth'
 findProject(':backend:auth')?.name = 'auth'
@@ -18,8 +18,8 @@ findProject(':backend:gateway')?.name = 'gateway'
 include 'backend:jobs'
 findProject(':backend:jobs')?.name = 'jobs'
 
-//include 'backend:keyword'
-//findProject(':backend:keyword')?.name = 'keyword'
+include 'backend:keyword'
+findProject(':backend:keyword')?.name = 'keyword'
 
 include 'backend:location'
 findProject(':backend:location')?.name = 'location'

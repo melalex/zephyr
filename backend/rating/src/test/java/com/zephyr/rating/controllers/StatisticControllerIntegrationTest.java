@@ -11,13 +11,14 @@ import com.zephyr.rating.RatingTestConfiguration;
 import com.zephyr.rating.data.TestDataLoader;
 import com.zephyr.test.CommonTestData;
 import com.zephyr.test.Tasks;
+import com.zephyr.test.mocks.PrincipalMock;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -58,12 +59,12 @@ public class StatisticControllerIntegrationTest {
     }
 
     @Test
-    @WithMockUser(Tasks.SIMPLE_USER_ID)
     public void shouldFindStatistic() {
         testDataLoader.load();
 
         var result = webTestClient.get()
                 .uri(u -> u.path("/v1/statistic").queryParam("taskId", Tasks.SIMPLE_ID).build())
+                .header(HttpHeaders.AUTHORIZATION, PrincipalMock.getAuthorizationHeader(Tasks.SIMPLE_USER_ID))
                 .accept(MediaType.APPLICATION_STREAM_JSON)
                 .exchange()
                 .returnResult(StatisticsDto.class)
