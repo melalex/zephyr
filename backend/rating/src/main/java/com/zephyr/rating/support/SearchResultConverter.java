@@ -1,7 +1,6 @@
 package com.zephyr.rating.support;
 
 import com.zephyr.commons.StreamUtils;
-import com.zephyr.commons.support.Indexed;
 import com.zephyr.data.internal.dto.SearchResultDto;
 import com.zephyr.rating.domain.Request;
 import com.zephyr.rating.domain.vo.SearchResultVo;
@@ -12,7 +11,6 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -23,9 +21,9 @@ public class SearchResultConverter implements Converter<SearchResultDto, SearchR
 
     @Override
     public SearchResultVo convert(@NonNull SearchResultDto source) {
-        Request request = modelMapper.map(source, Request.class);
+        var request = modelMapper.map(source, Request.class);
 
-        List<Indexed<String>> links = StreamUtils.zipWithIndexes(source.getLinks(), source.getOffset())
+        var links = StreamUtils.zipWithIndexes(source.getLinks(), source.getOffset())
                 .collect(Collectors.toList());
 
         return SearchResultVo.of(request, links);

@@ -11,7 +11,7 @@ public final class Queries {
     private UserAgents userAgents;
 
     public QueryDto simple() {
-        QueryDto result = new QueryDto();
+        var result = new QueryDto();
         result.setQuery(Criteria.SIMPLE_QUERY);
         result.setLanguageIso(Criteria.SIMPLE_LANGUAGE_ISO);
         result.setPlace(places.kiev());
@@ -21,7 +21,7 @@ public final class Queries {
     }
 
     public QueryDto fromNewCriteria() {
-        QueryDto result = new QueryDto();
+        var result = new QueryDto();
         result.setQuery(Criteria.NEW_CRITERIA_QUERY);
         result.setLanguageIso(Criteria.NEW_CRITERIA_LANGUAGE_ISO);
         result.setPlace(places.calgary());
@@ -31,7 +31,7 @@ public final class Queries {
     }
 
     public QueryDto withoutAgent() {
-        QueryDto result = fromNewCriteria();
+        var result = fromNewCriteria();
         result.setUserAgent(null);
 
         return result;

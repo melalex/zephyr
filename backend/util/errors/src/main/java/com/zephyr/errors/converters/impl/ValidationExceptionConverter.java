@@ -57,7 +57,7 @@ public class ValidationExceptionConverter implements ProblemConverter<Constraint
     }
 
     private String getCode(ConstraintViolation violation) {
-        List<String> path = Streams.stream(violation.getPropertyPath())
+        var path = Streams.stream(violation.getPropertyPath())
                 .map(Path.Node::getName)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());

@@ -11,7 +11,7 @@ public class ErrorUtilTest {
 
     @Test
     public void shouldGetValue() {
-        String actual = ErrorUtil.identifier(TestEnum.TEST_VALUE);
+        var actual = ErrorUtil.identifier(TestEnum.TEST_VALUE);
 
         assertEquals(EXPECTED_VALUE, actual);
     }

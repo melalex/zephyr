@@ -12,7 +12,7 @@ import lombok.experimental.UtilityClass;
 public class ConfigurationMock {
 
     public ScraperConfigurationService of() {
-        ScraperConfigurationService mock = mock(ScraperConfigurationService.class);
+        var mock = mock(ScraperConfigurationService.class);
         when(mock.getBackOff()).thenReturn(ScraperTestProperties.BACKOFF);
         when(mock.getDelay(any())).thenReturn(ScraperTestProperties.DELAY);
         when(mock.getErrorDelay(any())).thenReturn(ScraperTestProperties.ERROR_DELAY);

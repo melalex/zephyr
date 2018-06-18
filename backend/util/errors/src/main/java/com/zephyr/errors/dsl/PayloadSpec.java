@@ -19,7 +19,7 @@ public final class PayloadSpec<T> {
     }
 
     public PayloadSpec<T> with(Object payload) {
-        String value = Optional.ofNullable(payload)
+        var value = Optional.ofNullable(payload)
                 .map(ErrorUtil::wrapValue)
                 .orElse(EMPTY);
 

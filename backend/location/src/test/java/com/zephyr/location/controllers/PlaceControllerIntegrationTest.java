@@ -18,11 +18,9 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
 import java.util.Map;
 import java.util.Set;
 
@@ -41,8 +39,8 @@ public class PlaceControllerIntegrationTest {
 
     @Before
     public void setUp() {
-        Place kievData = LocationTestData.places().kiev().withId(null);
-        Place calgaryData = LocationTestData.places().calgary().withId(null);
+        var kievData = LocationTestData.places().kiev().withId(null);
+        var calgaryData = LocationTestData.places().calgary().withId(null);
         kievData.getParent().setId(null);
         calgaryData.getParent().setId(null);
 
@@ -57,10 +55,10 @@ public class PlaceControllerIntegrationTest {
 
     @Test
     public void shouldFindById() {
-        ResponseEntity<PlaceDto> actual =
+        var actual =
                 rest.getForEntity("/v1/places/{id}", PlaceDto.class, Map.of("id", kiev.getId()));
 
-        PlaceDto expected = CommonTestData.places().kiev();
+        var expected = CommonTestData.places().kiev();
         expected.setId(kiev.getId());
         expected.setParent(kiev.getParent().getId());
 
@@ -70,7 +68,7 @@ public class PlaceControllerIntegrationTest {
 
     @Test
     public void shouldNotFindById() {
-        ResponseEntity<PlaceDto> actual =
+        var actual =
                 rest.getForEntity("/v1/places/{id}", PlaceDto.class, Map.of("id", Long.MAX_VALUE));
 
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
@@ -79,22 +77,22 @@ public class PlaceControllerIntegrationTest {
     @Test
     @SuppressWarnings("Convert2Diamond")
     public void shouldFindAllByCountryIsoAndNameContains() {
-        URI uri = UriComponentsBuilder.fromUriString("/v1/places")
+        var uri = UriComponentsBuilder.fromUriString("/v1/places")
                 .queryParam("iso", Countries.CA_ISO)
                 .queryParam("name", "Cal")
                 .build()
                 .toUri();
 
-        RequestEntity<Void> requestEntity = RequestEntity.get(uri)
+        var requestEntity = RequestEntity.get(uri)
                 .build();
 
-        ResponseEntity<Set<PlaceDto>> actual = rest.exchange(
+        var actual = rest.exchange(
                 requestEntity,
                 new ParameterizedTypeReference<Set<PlaceDto>>() {
                 }
         );
 
-        PlaceDto expected = CommonTestData.places().calgary();
+        var expected = CommonTestData.places().calgary();
         expected.setId(calgary.getId());
         expected.setParent(calgary.getParent().getId());
 
@@ -105,21 +103,21 @@ public class PlaceControllerIntegrationTest {
     @Test
     @SuppressWarnings("Convert2Diamond")
     public void shouldGetByCanonicalName() {
-        URI uri = UriComponentsBuilder.fromUriString("/v1/places/canonical")
+        var uri = UriComponentsBuilder.fromUriString("/v1/places/canonical")
                 .queryParam("name", "Cal")
                 .build()
                 .toUri();
 
-        RequestEntity<Void> requestEntity = RequestEntity.get(uri)
+        var requestEntity = RequestEntity.get(uri)
                 .build();
 
-        ResponseEntity<Set<PlaceDto>> actual = rest.exchange(
+        var actual = rest.exchange(
                 requestEntity,
                 new ParameterizedTypeReference<Set<PlaceDto>>() {
                 }
         );
 
-        PlaceDto expected = CommonTestData.places().calgary();
+        var expected = CommonTestData.places().calgary();
         expected.setId(calgary.getId());
         expected.setParent(calgary.getParent().getId());
 

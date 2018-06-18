@@ -26,7 +26,7 @@ public final class UserAgents {
     public static final String MAC_VERSION = "10.11.6";
 
     public UserAgentDto windowsFirefox() {
-        UserAgentDto result = new UserAgentDto();
+        var result = new UserAgentDto();
         result.setId(WINDOWS_FIREFOX_ID);
         result.setHeader(WINDOWS_FIREFOX_HEADER);
         result.setBrowserName(FIREFOX);
@@ -39,7 +39,7 @@ public final class UserAgents {
     }
 
     public UserAgentDto macSafari() {
-        UserAgentDto result = new UserAgentDto();
+        var result = new UserAgentDto();
         result.setId(MAC_SAFARI_ID);
         result.setHeader(MAC_SAFARI_HEADER);
         result.setBrowserName(SAFARI);

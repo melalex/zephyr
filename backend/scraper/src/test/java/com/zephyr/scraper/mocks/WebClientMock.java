@@ -17,15 +17,15 @@ import reactor.core.publisher.Mono;
 public class WebClientMock {
 
     public WebClientWrapper of() {
-        EngineRequest bingRequest = ScraperTestData.requests().bing().firstPage();
-        EngineRequest duckDuckGoRequest = ScraperTestData.requests().duckDuckGo().firstPage();
-        EngineRequest googleRequest = ScraperTestData.requests().google().firstPage();
-        EngineRequest googleFraudRequest = ScraperTestData.requests().googleFraud();
-        EngineRequest yahooRequest = ScraperTestData.requests().yahoo().firstPage();
-        EngineRequest yandexRequest = ScraperTestData.requests().yandex().firstPage();
-        EngineRequest failedRequest = ScraperTestData.requests().failed();
+        var bingRequest = ScraperTestData.requests().bing().firstPage();
+        var duckDuckGoRequest = ScraperTestData.requests().duckDuckGo().firstPage();
+        var googleRequest = ScraperTestData.requests().google().firstPage();
+        var googleFraudRequest = ScraperTestData.requests().googleFraud();
+        var yahooRequest = ScraperTestData.requests().yahoo().firstPage();
+        var yandexRequest = ScraperTestData.requests().yandex().firstPage();
+        var failedRequest = ScraperTestData.requests().failed();
 
-        WebClientWrapper mock = mock(WebClientWrapper.class);
+        var mock = mock(WebClientWrapper.class);
 
         configure(mock, bingRequest, ScraperTestData.responses().bingResponseBody());
         configure(mock, googleRequest, ScraperTestData.responses().googleResponseBody());
@@ -43,13 +43,13 @@ public class WebClientMock {
     }
 
     private void configure(WebClientWrapper mock, EngineRequest request, Mono<String> response) {
-        ClientResponse clientResponse = mock(ClientResponse.class, Answers.RETURNS_DEEP_STUBS);
+        var clientResponse = mock(ClientResponse.class, Answers.RETURNS_DEEP_STUBS);
 
         when(clientResponse.statusCode()).thenReturn(HttpStatus.OK);
         when(clientResponse.headers().asHttpHeaders()).thenReturn(new HttpHeaders());
         when(clientResponse.bodyToMono(String.class)).thenReturn(response);
 
-        Mono<ClientResponse> exchange = mock.get(request.getFullPath(), request.getParams(), request.getHeaders());
+        var exchange = mock.get(request.getFullPath(), request.getParams(), request.getHeaders());
 
         when(exchange).thenReturn(Mono.just(clientResponse));
     }

@@ -23,7 +23,7 @@ public class UserAgentServiceImpl implements UserAgentService {
 
     @Override
     public Mono<UserAgentDto> findOneByExample(String device, String osName, String browser) {
-        UserAgent example = new UserAgent();
+        var example = new UserAgent();
         example.setDevice(device);
         example.setDevice(osName);
         example.setDevice(browser);

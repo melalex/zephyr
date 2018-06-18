@@ -55,7 +55,7 @@ public class RatingControllerIntegrationTest {
 
     @Test
     public void shouldFindRating() {
-        KeywordDto[] expected = Stream.<List<Rating>>builder()
+        var expected = Stream.<List<Rating>>builder()
                 .add(testDataLoader.getBingRating())
                 .add(testDataLoader.getGoogleRating())
                 .add(testDataLoader.getYahooRating())

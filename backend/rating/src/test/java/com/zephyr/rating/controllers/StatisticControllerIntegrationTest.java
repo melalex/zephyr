@@ -62,7 +62,7 @@ public class StatisticControllerIntegrationTest {
     public void shouldFindStatistic() {
         testDataLoader.load();
 
-        Set<StatisticsDto> result = webTestClient.get()
+        var result = webTestClient.get()
                 .uri(u -> u.path("/v1/statistic").queryParam("taskId", Tasks.SIMPLE_ID).build())
                 .accept(MediaType.APPLICATION_STREAM_JSON)
                 .exchange()

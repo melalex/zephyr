@@ -21,8 +21,8 @@ public final class ScraperTestData {
     private ScraperResponses responses;
 
     private static ScraperTestData createInstance() {
-        ScraperTestData instance = new ScraperTestData();
-        ModelMapper modelMapper = new ModelMapper();
+        var instance = new ScraperTestData();
+        var modelMapper = new ModelMapper();
 
         instance.countries = new ScraperCountries(CommonTestData.countries(), modelMapper);
         instance.userAgents = new ScraperUserAgents(CommonTestData.userAgents(), modelMapper);

@@ -32,7 +32,7 @@ public class DefaultRequestProvider implements RequestProvider {
 
     @Override
     public List<EngineRequest> provide(Query query) {
-        Map<String, List<String>> headers = headersProviders.stream()
+        var headers = headersProviders.stream()
                 .map(HeadersProvider.from(query, urlProvider.provideBaseUrl(query)))
                 .flatMap(MapUtils.unwrap())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, StreamUtils.mergeLists()));

@@ -19,7 +19,7 @@ public final class MultiMapBuilder {
     }
 
     public MultiMapBuilder put(String key, String value) {
-        List<String> mapValue = prototype.getOrDefault(key, new LinkedList<>());
+        var mapValue = prototype.getOrDefault(key, new LinkedList<>());
         mapValue.add(value);
         prototype.put(key, mapValue);
         return this;

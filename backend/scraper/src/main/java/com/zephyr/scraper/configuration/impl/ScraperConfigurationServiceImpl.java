@@ -50,8 +50,13 @@ public class ScraperConfigurationServiceImpl implements ScraperConfigurationServ
     }
 
     @Override
+    public Duration getBackOff() {
+        return Duration.ofMillis(properties.getBrowser().getBackOff());
+    }
+
+    @Override
     public Page getFirstPage(SearchEngine engine) {
-        ScraperProperties.EngineProperties engineProperties = getEngineProperties(engine);
+        var engineProperties = getEngineProperties(engine);
 
         return Page.builder()
                 .page(FIRST_PAGE)
@@ -69,11 +74,6 @@ public class ScraperConfigurationServiceImpl implements ScraperConfigurationServ
     @Override
     public int getRetryCount() {
         return properties.getBrowser().getRetryCount();
-    }
-
-    @Override
-    public Duration getBackOff() {
-        return Duration.ofMillis(properties.getBrowser().getBackOff());
     }
 
     private ScraperProperties.EngineProperties getEngineProperties(SearchEngine engine) {

@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
@@ -21,7 +20,6 @@ import reactor.core.publisher.Mono;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAmount;
-import java.util.Date;
 
 @Repository
 @AllArgsConstructor
@@ -35,9 +33,9 @@ public class SearchCriteriaOperationsImpl implements SearchCriteriaOperations {
 
     @Override
     public Mono<SearchCriteria> updateUsage(SearchCriteria searchCriteria) {
-        Query query = query(byExample(Example.of(searchCriteria)));
+        var query = query(byExample(Example.of(searchCriteria)));
 
-        Update update = new Update()
+        var update = new Update()
                 .inc(SearchCriteria.HITS_COUNT_FIELD, INC_VALUE)
                 .set(SearchCriteria.LAST_HIT_FIELD, LocalDateTime.now(clock))
                 .isolated();
@@ -47,17 +45,17 @@ public class SearchCriteriaOperationsImpl implements SearchCriteriaOperations {
 
     @Override
     public Flux<SearchCriteria> findAllForUpdate(TemporalAmount relevancePeriod, Pageable pageable) {
-        String transactionId = uidProvider.provide();
+        var transactionId = uidProvider.provide();
 
-        Date relevanceThreshold = TimeUtils.toDate(LocalDateTime.now(clock).minus(relevancePeriod));
+        var relevanceThreshold = TimeUtils.toDate(LocalDateTime.now(clock).minus(relevancePeriod));
 
-        Query queryUpdate = query(where(SearchCriteria.LAST_UPDATE_FIELD).lt(relevanceThreshold))
+        var queryUpdate = query(where(SearchCriteria.LAST_UPDATE_FIELD).lt(relevanceThreshold))
                 .with(pageable);
 
-        Query queryResult = query(where(SearchCriteria.TRANSACTION_ID_FIELD).is(transactionId))
+        var queryResult = query(where(SearchCriteria.TRANSACTION_ID_FIELD).is(transactionId))
                 .with(pageable);
 
-        Update update = new Update()
+        var update = new Update()
                 .currentTimestamp(SearchCriteria.LAST_UPDATE_FIELD)
                 .set(SearchCriteria.TRANSACTION_ID_FIELD, transactionId);
 

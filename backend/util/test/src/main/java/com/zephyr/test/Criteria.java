@@ -42,7 +42,7 @@ public final class Criteria {
     private UserAgents userAgents;
 
     public SearchCriteriaDto simple() {
-        SearchCriteriaDto criteria = new SearchCriteriaDto();
+        var criteria = new SearchCriteriaDto();
         criteria.setId(SIMPLE_ID);
         criteria.setQuery(SIMPLE_QUERY);
         criteria.setLanguageIso(SIMPLE_LANGUAGE_ISO);
@@ -56,7 +56,7 @@ public final class Criteria {
     }
 
     public SearchCriteriaDto newCriteria() {
-        SearchCriteriaDto criteria = new SearchCriteriaDto();
+        var criteria = new SearchCriteriaDto();
         criteria.setId(NEW_CRITERIA_ID);
         criteria.setQuery(NEW_CRITERIA_QUERY);
         criteria.setLanguageIso(NEW_CRITERIA_LANGUAGE_ISO);
@@ -70,7 +70,7 @@ public final class Criteria {
     }
 
     public SearchCriteriaDto withInvalidPlace() {
-        SearchCriteriaDto simple = simple();
+        var simple = simple();
         simple.setUserAgent(toCriteria(userAgents.windowsFirefox()));
         simple.setPlace(invalidPlace());
 
@@ -78,7 +78,7 @@ public final class Criteria {
     }
 
     private SearchCriteriaDto.Place invalidPlace() {
-        SearchCriteriaDto.Place place = new SearchCriteriaDto.Place();
+        var place = new SearchCriteriaDto.Place();
         place.setName(INVALID_PLACE_NAME);
         place.setCountry(INVALID_COUNTRY);
 
@@ -86,7 +86,7 @@ public final class Criteria {
     }
 
     private SearchCriteriaDto.UserAgent toCriteria(UserAgentDto userAgentDto) {
-        SearchCriteriaDto.UserAgent userAgent = new SearchCriteriaDto.UserAgent();
+        var userAgent = new SearchCriteriaDto.UserAgent();
 
         userAgent.setDevice(userAgentDto.getDevice());
         userAgent.setBrowserName(userAgentDto.getBrowserName());
@@ -96,7 +96,7 @@ public final class Criteria {
     }
 
     private SearchCriteriaDto.Place toCriteria(PlaceDto placeDto) {
-        SearchCriteriaDto.Place place = new SearchCriteriaDto.Place();
+        var place = new SearchCriteriaDto.Place();
 
         place.setCountry(placeDto.getCountry().getIso());
         place.setName(placeDto.getName());

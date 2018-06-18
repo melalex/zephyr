@@ -5,8 +5,6 @@ import com.zephyr.commons.support.MultiMapBuilder;
 import com.zephyr.commons.support.Page;
 import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.request.params.ParamsProvider;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -50,7 +48,7 @@ public class GoogleParamsProvider implements ParamsProvider {
 
     private String getLanguage(Query query) {
         return Optional.ofNullable(query.getLanguageIso())
-               .map(StreamUtils.format(LANGUAGE_TEMPLATE))
-               .orElse(null);
+                .map(StreamUtils.format(LANGUAGE_TEMPLATE))
+                .orElse(null);
     }
 }

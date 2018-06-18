@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.zephyr.commons.support.Profiles;
-import com.zephyr.data.internal.dto.SearchResultDto;
 import com.zephyr.data.protocol.dto.StatisticsDto;
 import com.zephyr.data.protocol.request.StatisticRequest;
 import com.zephyr.rating.RatingTestConfiguration;
@@ -63,8 +62,8 @@ public class StatisticServiceIntegrationTest {
 
     @Test
     public void shouldSubscribeForTask() {
-        StatisticRequest request = new StatisticRequest(Tasks.SIMPLE_ID, PrincipalMock.of(Tasks.SIMPLE_USER_ID));
-        Flux<StatisticsDto> flux = testInstance.findStatisticsAndSubscribeForTask(request);
+        var request = new StatisticRequest(Tasks.SIMPLE_ID, PrincipalMock.of(Tasks.SIMPLE_USER_ID));
+        var flux = testInstance.findStatisticsAndSubscribeForTask(request);
 
         Executors.newSingleThreadExecutor().submit(() -> {
             sink.input().send(new GenericMessage<>(searchResults().bing()));
@@ -72,8 +71,8 @@ public class StatisticServiceIntegrationTest {
             sink.input().send(new GenericMessage<>(searchResults().yahoo()));
         });
 
-        Set<StatisticsDto> actual = flux.toStream().collect(Collectors.toSet());
-        Set<StatisticsDto> expected = Set.of(bingFirstAppearance, google, yahoo);
+        var actual = flux.toStream().collect(Collectors.toSet());
+        var expected = Set.of(bingFirstAppearance, google, yahoo);
 
         assertEquals(expected, actual);
 

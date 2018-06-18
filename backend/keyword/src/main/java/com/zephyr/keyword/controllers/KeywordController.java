@@ -1,7 +1,7 @@
 package com.zephyr.keyword.controllers;
 
-import com.zephyr.data.protocol.request.KeywordRequest;
 import com.zephyr.data.protocol.dto.KeywordDto;
+import com.zephyr.data.protocol.request.KeywordRequest;
 import com.zephyr.keyword.services.KeywordService;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -23,7 +23,7 @@ public final class TimeMachine {
     private Clock clock;
 
     public static TimeMachine create() {
-        Clock clock = mock(Clock.class);
+        var clock = mock(Clock.class);
 
         when(clock.instant()).thenReturn(INSTANT);
         when(clock.getZone()).thenReturn(ZONE_ID);

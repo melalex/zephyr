@@ -12,7 +12,7 @@ public final class QueryEntities {
     private UserAgentEntities userAgents;
 
     public QueryCriteria simple() {
-        QueryCriteria result = new QueryCriteria();
+        var result = new QueryCriteria();
         result.setQuery(Criteria.SIMPLE_QUERY);
         result.setLanguageIso(Criteria.SIMPLE_LANGUAGE_ISO);
         result.setPlace(places.kiev());
@@ -22,7 +22,7 @@ public final class QueryEntities {
     }
 
     public QueryCriteria withoutAgent() {
-        QueryCriteria result = simple();
+        var result = simple();
         result.setUserAgent(null);
 
         return result;

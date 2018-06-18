@@ -49,7 +49,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Mono<Void> remove(String id, Principal principal) {
-        String userId = principal.getName();
+        var userId = principal.getName();
 
         return taskRepository.findByUserIdAndId(userId, id)
                 .switchIfEmpty(ExceptionUtils.notFound(Task.class, id))

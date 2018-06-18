@@ -25,7 +25,7 @@ public final class Places {
     private Countries countries;
 
     public PlaceDto kiev() {
-        PlaceDto result = new PlaceDto();
+        var result = new PlaceDto();
         result.setId(KIEV_ID);
         result.setName(KIEV_NAME);
         result.setCanonicalName(KIEV_CANONICAL_NAME);
@@ -38,7 +38,7 @@ public final class Places {
     }
 
     public PlaceDto calgary() {
-        PlaceDto result = new PlaceDto();
+        var result = new PlaceDto();
         result.setId(CALGARY_ID);
         result.setName(CALGARY_NAME);
         result.setCanonicalName(CALGARY_CANONICAL_NAME);

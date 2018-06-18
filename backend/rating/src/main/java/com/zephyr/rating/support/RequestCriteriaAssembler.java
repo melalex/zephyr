@@ -33,7 +33,7 @@ public class RequestCriteriaAssembler implements Assembler<StatisticRequest, Lis
 
     private Function<TaskDto, List<RequestCriteria>> toRequestCriteria(StatisticRequest source) {
         return t -> {
-            RequestCriteria prototype = RequestCriteria.builder()
+            var prototype = RequestCriteria.builder()
                     .url(t.getUrl())
                     .from(source.getFrom())
                     .to(source.getTo())

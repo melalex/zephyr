@@ -56,7 +56,7 @@ public class StatisticServiceImplTest {
         statistics = CommonTestData.statistic().google();
         statistics.setPosition(Map.of());
 
-        RequestCriteria requestCriteria = RatingTestData.requestCriteria().simple();
+        var requestCriteria = RatingTestData.requestCriteria().simple();
         requestCriteria.setTo(TimeMachine.canonicalNow().toLocalDate());
 
         when(requestCriteriaAssembler.assemble(statisticRequest)).thenReturn(Mono.just(List.of(requestCriteria)));

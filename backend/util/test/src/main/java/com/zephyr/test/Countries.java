@@ -17,7 +17,7 @@ public final class Countries {
     public static final String CA_LOCALE_GOOGLE = "https://www.google.com.ca";
 
     public CountryDto ukraine() {
-        CountryDto result = new CountryDto();
+        var result = new CountryDto();
         result.setIso(UA_ISO);
         result.setName(UA_NAME);
         result.setLocaleGoogle(UA_LOCALE_GOOGLE);
@@ -27,7 +27,7 @@ public final class Countries {
     }
 
     public CountryDto canada() {
-        CountryDto result = new CountryDto();
+        var result = new CountryDto();
         result.setIso(CA_ISO);
         result.setName(CA_NAME);
         result.setLocaleGoogle(CA_LOCALE_GOOGLE);

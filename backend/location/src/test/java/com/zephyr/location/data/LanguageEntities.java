@@ -9,21 +9,21 @@ import lombok.AllArgsConstructor;
 public final class LanguageEntities {
 
     public Language ukrainian() {
-        Language result = new Language();
+        var result = new Language();
         result.setIso(Languages.UKRAINIAN_ISO);
         result.setName(Languages.UKRAINIAN_NAME);
         return result;
     }
 
     public Language russian() {
-        Language result = new Language();
+        var result = new Language();
         result.setIso(Languages.RUSSIAN_ISO);
         result.setName(Languages.RUSSIAN_NAME);
         return result;
     }
 
     public Language english() {
-        Language result = new Language();
+        var result = new Language();
         result.setIso(Languages.ENGLISH_ISO);
         result.setName(Languages.ENGLISH_NAME);
         return result;

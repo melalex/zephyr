@@ -114,9 +114,9 @@ public class RequestConstructorConfiguration {
     @Bean
     @SneakyThrows
     public UserAgentProvider userAgentProvider(@Value("classpath:agents.csv") Resource agents, ObjectMapper csvMapper) {
-        CsvSchema schema = CsvSchema.emptySchema().withHeader();
+        var schema = CsvSchema.emptySchema().withHeader();
 
-        List<Query.UserAgent> agentList = csvMapper.readerFor(Query.UserAgent.class)
+        var agentList = csvMapper.readerFor(Query.UserAgent.class)
                 .with(schema)
                 .readValues(agents.getFile())
                 .readAll()

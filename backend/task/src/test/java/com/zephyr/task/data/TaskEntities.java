@@ -18,7 +18,7 @@ public final class TaskEntities {
     private CriteriaEntities criteria;
 
     public Task simple() {
-        Task result = new Task ();
+        var result = new Task();
         result.setId(Tasks.SIMPLE_ID);
         result.setUserId(Tasks.SIMPLE_USER_ID);
         result.setUrl(Tasks.SIMPLE_URL);
@@ -31,14 +31,14 @@ public final class TaskEntities {
     }
 
     public Task withNewCriteria() {
-        Task simple = simple();
+        var simple = simple();
         simple.setSearchCriteria(List.of(criteria.newCriteria()));
 
         return simple;
     }
 
     public Task withInvalidPlace() {
-        Task simple = simple();
+        var simple = simple();
         simple.setSearchCriteria(List.of(criteria.withInvalidPlace()));
 
         return simple;

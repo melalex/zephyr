@@ -19,7 +19,6 @@ import reactor.core.publisher.Mono;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAmount;
 
 @Slf4j
 @Service
@@ -47,8 +46,8 @@ public class SearchCriteriaServiceImpl implements SearchCriteriaService {
 
     @Override
     public Flux<SearchCriteria> findAllForUpdate() {
-        TemporalAmount relevancePeriod = configurationService.getRelevancePeriod();
-        Pageable pageable = configurationService.searchCriteriaOrder();
+        var relevancePeriod = configurationService.getRelevancePeriod();
+        var pageable = configurationService.searchCriteriaOrder();
 
         return searchCriteriaRepository.findAllForUpdate(relevancePeriod, pageable);
     }
@@ -62,7 +61,7 @@ public class SearchCriteriaServiceImpl implements SearchCriteriaService {
     }
 
     private Mono<SearchCriteria> createSearchCriteriaFlow(SearchCriteria searchCriteria) {
-        LocalDateTime now = LocalDateTime.now(clock);
+        var now = LocalDateTime.now(clock);
 
         searchCriteria.setHitsCount(1);
         searchCriteria.setLastUpdate(now);

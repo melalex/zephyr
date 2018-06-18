@@ -15,7 +15,7 @@ public final class Ratings {
     private Criteria criteria;
 
     public RatingDto simple() {
-        RatingDto result = new RatingDto();
+        var result = new RatingDto();
         result.setId(SIMPLE_ID);
         result.setPosition(SIMPLE_POSITION);
         result.setQueryCriteria(criteria.simple());

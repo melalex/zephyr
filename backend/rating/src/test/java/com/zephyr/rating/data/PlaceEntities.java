@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 public final class PlaceEntities {
 
     public Place kiev() {
-        Place result = new Place();
+        var result = new Place();
         result.setName(Places.KIEV_NAME);
         result.setCountry(Countries.UA_ISO);
 
@@ -18,7 +18,7 @@ public final class PlaceEntities {
     }
 
     public Place calgary() {
-        Place result = new Place();
+        var result = new Place();
         result.setName(Places.CALGARY_NAME);
         result.setCountry(Countries.CA_ISO);
 

@@ -26,7 +26,7 @@ public class SearchResultFactory {
     private ModelMapper modelMapper;
 
     public SearchResultDto create(EngineRequest request, List<String> links) {
-        SearchResultDto searchResult = new SearchResultDto();
+        var searchResult = new SearchResultDto();
         searchResult.setId(uidProvider.provide());
         searchResult.setOffset(request.getOffset());
         searchResult.setQuery(modelMapper.map(request.getQuery(), QueryDto.class));

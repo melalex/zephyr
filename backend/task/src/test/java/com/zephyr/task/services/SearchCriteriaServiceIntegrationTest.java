@@ -24,12 +24,8 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.cloud.stream.test.binder.MessageCollector;
 import org.springframework.context.annotation.Import;
-import org.springframework.messaging.Message;
 import org.springframework.test.context.junit4.SpringRunner;
 import reactor.test.StepVerifier;
-
-import java.time.LocalDateTime;
-import java.util.concurrent.BlockingQueue;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -61,7 +57,7 @@ public class SearchCriteriaServiceIntegrationTest {
 
     @Before
     public void setUp() {
-        LocalDateTime unRelevantCriteria = timeMachine.now().minus(configurationService.getRelevancePeriod())
+        var unRelevantCriteria = timeMachine.now().minus(configurationService.getRelevancePeriod())
                 .minusDays(1);
 
         criteria1 = searchCriteriaRepository.save(TaskTestData.criteria()
@@ -82,7 +78,7 @@ public class SearchCriteriaServiceIntegrationTest {
 
     @Test
     public void shouldCreate() {
-        SearchCriteria simple = TaskTestData.criteria().simple();
+        var simple = TaskTestData.criteria().simple();
 
         StepVerifier.create(testInstance.updateSearchCriteria(simple))
                 .consumeNextWith(c -> searchCriteriaRepository.findById(c.getId())
@@ -95,7 +91,7 @@ public class SearchCriteriaServiceIntegrationTest {
 
     @Test
     public void shouldCreateWithNewCriteria() {
-        SearchCriteria newCriteria = TaskTestData.criteria().newCriteria();
+        var newCriteria = TaskTestData.criteria().newCriteria();
         newCriteria.setUserAgent(null);
 
         StepVerifier.create(testInstance.updateSearchCriteria(newCriteria))
@@ -107,7 +103,7 @@ public class SearchCriteriaServiceIntegrationTest {
                 )
                 .verifyComplete();
 
-        BlockingQueue<Message<?>> messages = collector.forChannel(source.output());
+        var messages = collector.forChannel(source.output());
 
         assertThat(messages, payload(objectMapper, QueryDto.class).matches(is(queries().withoutAgent())));
     }

@@ -175,7 +175,7 @@ public final class ScraperRequests {
         }
 
         private EngineRequest.EngineRequestBuilder base(Query query) {
-            String url = urls.apply(query);
+            var url = urls.apply(query);
             return EngineRequest.builder()
                     .id(UidProviderMock.DEFAULT_ID)
                     .query(query)

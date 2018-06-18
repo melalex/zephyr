@@ -24,7 +24,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
     @Override
     public Pageable searchCriteriaOrder() {
-        Sort sort = Sort.by(
+        var sort = Sort.by(
                 Sort.Order.desc(HITS_COUNT_FIELD),
                 Sort.Order.desc(LAST_HIT_FIELD),
                 Sort.Order.asc(LAST_UPDATE_FIELD)

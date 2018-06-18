@@ -21,7 +21,7 @@ public class RatingOperationsImpl implements RatingOperations {
 
     @Override
     public Flux<String> findAllByUrlStartsWith(String url, Pageable pageable) {
-        Query query = Query.query(Criteria.where(Rating.URL_FIELD).regex(url))
+        var query = Query.query(Criteria.where(Rating.URL_FIELD).regex(url))
                 .with(pageable);
 
         return Flux.from(mongo.getCollection(mongo.getCollectionName(Rating.class))
@@ -30,7 +30,7 @@ public class RatingOperationsImpl implements RatingOperations {
 
     @Override
     public Flux<Rating> findByCriteria(RequestCriteria requestCriteria) {
-        Criteria criteria = Criteria.where(Rating.QUERY_FIELD).is(requestCriteria.getQueryCriteria())
+        var criteria = Criteria.where(Rating.QUERY_FIELD).is(requestCriteria.getQueryCriteria())
                 .and(Rating.URL_FIELD).regex(requestCriteria.getUrl())
                 .and(Rating.PROVIDER_FIELD).is(requestCriteria.getEngine());
 

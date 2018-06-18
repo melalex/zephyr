@@ -4,8 +4,8 @@ import static java.util.List.of;
 import static java.util.Map.entry;
 
 import com.zephyr.commons.MapUtils;
-import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.data.util.ScraperTestDataUtils;
+import com.zephyr.scraper.domain.Query;
 
 import java.util.List;
 import java.util.Map;
@@ -100,7 +100,7 @@ public final class ScraperParams {
     }
 
     public Map<String, List<String>> googleFirstPage(Query query) {
-        Map<String, List<String>> localizationParams = Map.ofEntries(
+        var localizationParams = Map.ofEntries(
                 entry(GOOGLE_INTERFACE, ScraperTestDataUtils.value(query.getLanguageIso())),
                 entry(GOOGLE_LANGUAGE, of(String.format(GOOGLE_LANGUAGE_TEMPLATE, query.getLanguageIso())))
         );
@@ -108,7 +108,8 @@ public final class ScraperParams {
     }
 
     public Map<String, List<String>> googleSecondPage(Query query) {
-        return MapUtils.put(googleFirstPage(query), GOOGLE_START, ScraperTestDataUtils.value(GOOGLE_SECOND_PAGE_OFFSET));
+        return MapUtils
+                .put(googleFirstPage(query), GOOGLE_START, ScraperTestDataUtils.value(GOOGLE_SECOND_PAGE_OFFSET));
     }
 
     public Map<String, List<String>> duckDuckGoFirstPage(Query query) {
@@ -143,6 +144,7 @@ public final class ScraperParams {
     }
 
     public Map<String, List<String>> yandexSecondPage(Query query) {
-        return MapUtils.put(yandexFirstPage(query), YANDEX_START, ScraperTestDataUtils.value(YANDEX_SECOND_PAGE_OFFSET));
+        return MapUtils
+                .put(yandexFirstPage(query), YANDEX_START, ScraperTestDataUtils.value(YANDEX_SECOND_PAGE_OFFSET));
     }
 }

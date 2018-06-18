@@ -58,7 +58,7 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
     }
 
     private Publisher<QueryDto> populatePlace(SearchCriteria source, QueryDto query, Collection<Subject> errors) {
-        Place place = source.getPlace();
+        var place = source.getPlace();
 
         return locationServiceClient.findByCountryIsoAndNameContainsAsync(place.getCountry(), place.getPlaceName())
                 .doOnNext(query::setPlace)
@@ -67,7 +67,7 @@ public class QueryAssembler implements Assembler<SearchCriteria, QueryDto> {
     }
 
     private Publisher<QueryDto> populateAgent(SearchCriteria source, QueryDto query, Collection<Subject> errors) {
-        UserAgent agent = source.getUserAgent();
+        var agent = source.getUserAgent();
 
         return agentServiceClient.findOneByExampleAsync(agent.getDevice(), agent.getOsName(), agent.getBrowserName())
                 .doOnNext(query::setUserAgent)

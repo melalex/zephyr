@@ -21,8 +21,6 @@ import org.springframework.messaging.support.GenericMessage;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.concurrent.BlockingQueue;
-
 @SpringBootTest
 @ActiveProfiles("streamTest")
 @RunWith(SpringRunner.class)
@@ -43,11 +41,11 @@ public class ScraperApplicationTests {
 
         processor.input().send(testMessage);
 
-        BlockingQueue<Message<?>> actual = collector.forChannel(processor.output());
+        var actual = collector.forChannel(processor.output());
 
-        SearchResultDto expectedBing = CommonTestData.searchResults().bing();
-        SearchResultDto expectedGoogle = CommonTestData.searchResults().google();
-        SearchResultDto expectedYahoo = CommonTestData.searchResults().yahoo();
+        var expectedBing = CommonTestData.searchResults().bing();
+        var expectedGoogle = CommonTestData.searchResults().google();
+        var expectedYahoo = CommonTestData.searchResults().yahoo();
 
         assertThat(actual, payload(objectMapper, SearchResultDto.class).matches(is(expectedBing)));
         assertThat(actual, payload(objectMapper, SearchResultDto.class).matches(is(expectedGoogle)));

@@ -61,7 +61,7 @@ public class StatisticServiceImpl implements StatisticService {
 
     @NotNull
     private Example<Rating> ratingExample(RequestCriteria criteria, Request r) {
-        ExampleMatcher exampleMatcher = ExampleMatcher.matching()
+        var exampleMatcher = ExampleMatcher.matching()
                 .withMatcher(Rating.URL_FIELD, contains());
 
         return Example.of(new Rating(r, criteria.getUrl()), exampleMatcher);

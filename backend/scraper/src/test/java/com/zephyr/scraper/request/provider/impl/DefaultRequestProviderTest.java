@@ -3,12 +3,10 @@ package com.zephyr.scraper.request.provider.impl;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-import com.zephyr.commons.support.Page;
 import com.zephyr.data.protocol.enums.SearchEngine;
 import com.zephyr.scraper.configuration.ScraperConfigurationService;
 import com.zephyr.scraper.data.ScraperRequests;
 import com.zephyr.scraper.data.ScraperTestData;
-import com.zephyr.scraper.domain.EngineRequest;
 import com.zephyr.scraper.domain.Query;
 import com.zephyr.scraper.request.headers.HeadersProvider;
 import com.zephyr.scraper.request.params.ParamsProvider;
@@ -58,9 +56,9 @@ public class DefaultRequestProviderTest {
                 .headersProviders(List.of(defaultHeadersProvider, htmlHeadersProvider))
                 .build();
 
-        Page firstPage = ScraperTestData.pages().googleFirstPage();
-        Page secondPage = ScraperTestData.pages().googleSecondPage();
-        String baseUrl = query.getPlace().getCountry().getLocaleGoogle();
+        var firstPage = ScraperTestData.pages().googleFirstPage();
+        var secondPage = ScraperTestData.pages().googleSecondPage();
+        var baseUrl = query.getPlace().getCountry().getLocaleGoogle();
 
         when(configuration.getFirstPage(SEARCH_ENGINE)).thenReturn(firstPage);
         when(htmlHeadersProvider.provide(query, baseUrl)).thenReturn(ScraperTestData.headers().htmlHeaders(baseUrl));
@@ -73,12 +71,12 @@ public class DefaultRequestProviderTest {
 
     @Test
     public void shouldProvide() {
-        List<EngineRequest> expected = List.of(
+        var expected = List.of(
                 ScraperTestData.requests().google().firstPage(query),
                 ScraperTestData.requests().google().secondPage(query)
         );
 
-        List<EngineRequest> actual = testInstance.provide(query);
+        var actual = testInstance.provide(query);
 
         assertEquals(expected, actual);
     }

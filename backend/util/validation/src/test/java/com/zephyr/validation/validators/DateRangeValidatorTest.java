@@ -39,16 +39,16 @@ public class DateRangeValidatorTest {
 
     @Test
     public void shouldReturnTrue() {
-        LocalDateTime now = LocalDateTime.now();
-        TestObject testObject = new TestObject(now, now.plus(DURATION));
+        var now = LocalDateTime.now();
+        var testObject = new TestObject(now, now.plus(DURATION));
 
         assertTrue(testInstance.isValid(testObject, CONSTRAINT_VALIDATOR_CONTEXT));
     }
 
     @Test
     public void shouldReturnFalse() {
-        LocalDateTime now = LocalDateTime.now();
-        TestObject testObject = new TestObject(now, now.minus(DURATION));
+        var now = LocalDateTime.now();
+        var testObject = new TestObject(now, now.minus(DURATION));
 
         assertFalse(testInstance.isValid(testObject, CONSTRAINT_VALIDATOR_CONTEXT));
     }

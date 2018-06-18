@@ -16,11 +16,11 @@ public class ListUtils {
     }
 
     public <T> SafeVarArg<T> toSafeVarArg(List<T> list, Class<T> clazz) {
-        T first = list.stream()
+        var first = list.stream()
                 .findFirst()
                 .orElse(null);
 
-        int size = list.size();
+        var size = list.size();
 
         List<T> subList = Collections.emptyList();
 
@@ -29,7 +29,7 @@ public class ListUtils {
         }
 
         @SuppressWarnings("unchecked")
-        T[] rest = (T[]) Array.newInstance(clazz, subList.size());
+        var rest = (T[]) Array.newInstance(clazz, subList.size());
         rest = subList.toArray(rest);
 
         return SafeVarArg.of(first, rest);
@@ -37,6 +37,7 @@ public class ListUtils {
 
     @Value(staticConstructor = "of")
     public static class SafeVarArg<T> {
+
         private T first;
         private T[] rest;
     }

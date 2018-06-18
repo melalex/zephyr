@@ -25,18 +25,30 @@ public class TestDataLoader {
         return yahooRating;
     }
 
+    private void setYahooRating(List<Rating> yahooRating) {
+        this.yahooRating = yahooRating;
+    }
+
     public List<Rating> getGoogleRating() {
         return googleRating;
+    }
+
+    private void setGoogleRating(List<Rating> googleRating) {
+        this.googleRating = googleRating;
     }
 
     public List<Rating> getBingRating() {
         return bingRating;
     }
 
+    private void setBingRating(List<Rating> bingRating) {
+        this.bingRating = bingRating;
+    }
+
     public void load() {
-        List<Rating> bingRating = ratings().bing();
-        List<Rating> googleRating = ratings().google();
-        List<Rating> yahooRating = ratings().yahoo();
+        var bingRating = ratings().bing();
+        var googleRating = ratings().google();
+        var yahooRating = ratings().yahoo();
 
 //        @formatter:off
         ratingRepository.saveAll(bingRating)
@@ -54,17 +66,5 @@ public class TestDataLoader {
 
     public void clean() {
         ratingRepository.deleteAll().block();
-    }
-
-    private void setBingRating(List<Rating> bingRating) {
-        this.bingRating = bingRating;
-    }
-
-    private void setGoogleRating(List<Rating> googleRating) {
-        this.googleRating = googleRating;
-    }
-
-    private void setYahooRating(List<Rating> yahooRating) {
-        this.yahooRating = yahooRating;
     }
 }

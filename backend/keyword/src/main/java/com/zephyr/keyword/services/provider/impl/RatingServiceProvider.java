@@ -1,7 +1,7 @@
 package com.zephyr.keyword.services.provider.impl;
 
-import com.zephyr.data.protocol.request.KeywordRequest;
 import com.zephyr.data.protocol.dto.KeywordDto;
+import com.zephyr.data.protocol.request.KeywordRequest;
 import com.zephyr.keyword.clients.RatingServiceClient;
 import com.zephyr.keyword.services.provider.KeywordsProvider;
 import lombok.Setter;

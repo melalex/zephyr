@@ -41,7 +41,7 @@ public class DirectBrowsingProvider implements BrowsingProvider {
 
     @Override
     public Mono<EngineResponse> get(EngineRequest request) {
-        SearchEngine engine = request.getProvider();
+        var engine = request.getProvider();
 
         log.info(NEW_REQUEST_MSG, request.getId());
 

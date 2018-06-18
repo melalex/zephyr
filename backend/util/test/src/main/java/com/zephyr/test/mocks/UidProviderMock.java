@@ -17,8 +17,8 @@ public class UidProviderMock {
 
     // TODO: Java 10 migration
     public static UidProvider of(List<String> ids) {
-        UidProvider mock = Mockito.mock(UidProvider.class);
-        ListUtils.SafeVarArg<String> args = ListUtils.toSafeVarArg(ids, String.class);
+        var mock = Mockito.mock(UidProvider.class);
+        var args = ListUtils.toSafeVarArg(ids, String.class);
         when(mock.provide()).thenReturn(args.getFirst(), args.getRest());
         return mock;
     }

@@ -10,7 +10,6 @@ import com.zephyr.data.protocol.dto.TaskDto;
 import com.zephyr.task.TaskApplication;
 import com.zephyr.task.TaskTestConfiguration;
 import com.zephyr.task.data.TaskTestData;
-import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.task.domain.Task;
 import com.zephyr.test.CommonTestData;
 import com.zephyr.test.Tasks;
@@ -46,8 +45,8 @@ public class TaskControllerIntegrationTest {
 
     @Before
     public void setUp() {
-        Task savedTask = TaskTestData.tasks().simple();
-        SearchCriteria savedSearchCriteria = savedTask.getSearchCriteria().get(0);
+        var savedTask = TaskTestData.tasks().simple();
+        var savedSearchCriteria = savedTask.getSearchCriteria().get(0);
 
         webTestClient = WebTestClient.bindToApplicationContext(context)
                 .apply(springSecurity())
@@ -69,7 +68,7 @@ public class TaskControllerIntegrationTest {
     @WithMockUser(Tasks.SIMPLE_USER_ID)
     public void shouldCreateFindAndRemoveTask() {
 //        @formatter:off
-        TaskDto actual = webTestClient
+        var actual = webTestClient
                 .post()
                 .uri("/v1/tasks")
                 .body(Mono.just(CommonTestData.tasks().withNewCriteria()), TaskDto.class)
@@ -83,10 +82,10 @@ public class TaskControllerIntegrationTest {
 
         assertNotNull(actual);
 
-        String id = actual.getId();
+        var id = actual.getId();
 
 //        @formatter:off
-        TaskDto expected = webTestClient.get()
+        var expected = webTestClient.get()
                 .uri("/v1/tasks/{name}/{id}", Tasks.SIMPLE_USER_ID, id)
                 .exchange()
                     .expectStatus()
@@ -118,7 +117,7 @@ public class TaskControllerIntegrationTest {
     @WithMockUser(Tasks.SIMPLE_USER_ID)
     public void shouldFindAll() {
 //        @formatter:off
-        List<TaskDto> actual = webTestClient.get()
+        var actual = webTestClient.get()
                 .uri("/v1/tasks")
                 .exchange()
                     .expectStatus()

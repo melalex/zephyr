@@ -24,7 +24,7 @@ public final class RequestEntities {
     }
 
     public Request simple(String provider) {
-        Request result = new Request();
+        var result = new Request();
         result.setProvider(provider);
         result.setQuery(queries.simple());
         result.setTimestamp(Results.SIMPLE_TIMESTAMP);

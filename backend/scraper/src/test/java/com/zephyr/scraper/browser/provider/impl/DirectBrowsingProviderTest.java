@@ -4,12 +4,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.zephyr.data.protocol.enums.SearchEngine;
-import com.zephyr.scraper.browser.support.WebClientWrapper;
-import com.zephyr.scraper.configuration.ScraperConfigurationService;
 import com.zephyr.scraper.data.ScraperTestData;
 import com.zephyr.scraper.data.ScraperTestProperties;
-import com.zephyr.scraper.domain.EngineRequest;
-import com.zephyr.scraper.domain.EngineResponse;
 import com.zephyr.scraper.mocks.ConfigurationMock;
 import com.zephyr.scraper.mocks.WebClientMock;
 import com.zephyr.scraper.scheduling.SchedulingManager;
@@ -24,9 +20,9 @@ public class DirectBrowsingProviderTest {
 
     @Before
     public void setUp() {
-        WebClientWrapper webClient = WebClientMock.of();
-        ScraperConfigurationService configuration = ConfigurationMock.of();
-        SchedulingManager schedulingManager = mock(SchedulingManager.class);
+        var webClient = WebClientMock.of();
+        var configuration = ConfigurationMock.of();
+        var schedulingManager = mock(SchedulingManager.class);
 
         when(schedulingManager.scheduleNext(SearchEngine.GOOGLE, ScraperTestProperties.DELAY))
                 .thenReturn(Mono.empty());
@@ -38,8 +34,8 @@ public class DirectBrowsingProviderTest {
 
     @Test
     public void shouldGet() {
-        EngineRequest request = ScraperTestData.requests().google().firstPage();
-        EngineResponse response = ScraperTestData.responses().google();
+        var request = ScraperTestData.requests().google().firstPage();
+        var response = ScraperTestData.responses().google();
 
         StepVerifier.create(testInstance.get(request))
                 .expectNext(response)
@@ -48,7 +44,7 @@ public class DirectBrowsingProviderTest {
 
     @Test
     public void shouldRetryOnRequestException() {
-        EngineRequest failed = ScraperTestData.requests().failed();
+        var failed = ScraperTestData.requests().failed();
 
         StepVerifier.withVirtualTime(() -> testInstance.get(failed))
                 .expectSubscription()

@@ -25,7 +25,7 @@ public class InMemorySchedulingManagerTest {
 
     @Before
     public void setUp() {
-        VirtualTimeScheduler scheduler = VirtualTimeScheduler.getOrSet();
+        var scheduler = VirtualTimeScheduler.getOrSet();
 
         clock = SchedulerClock.of(scheduler);
         testInstance = new InMemorySchedulingManager();
@@ -67,7 +67,7 @@ public class InMemorySchedulingManagerTest {
     }
 
     private void resetInstance() {
-        VirtualTimeScheduler scheduler = VirtualTimeScheduler.getOrSet();
+        var scheduler = VirtualTimeScheduler.getOrSet();
         scheduler.advanceTimeTo(clock.instant());
 
         clock = SchedulerClock.of(scheduler);

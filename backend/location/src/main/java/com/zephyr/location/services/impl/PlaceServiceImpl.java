@@ -73,10 +73,10 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     private String generateUule(PlaceDto place) {
-        String canonicalName = place.getCanonicalName();
-        String encodeCanonicalName = Base64.encodeBase64String(canonicalName.getBytes());
+        var canonicalName = place.getCanonicalName();
+        var encodeCanonicalName = Base64.encodeBase64String(canonicalName.getBytes());
 
-        String secretKey = secretMap.get(canonicalName.length() % secretMap.size());
+        var secretKey = secretMap.get(canonicalName.length() % secretMap.size());
 
         return StringUtils.strip(String.format(UULE_FORMAT, secretKey, encodeCanonicalName), "=");
     }

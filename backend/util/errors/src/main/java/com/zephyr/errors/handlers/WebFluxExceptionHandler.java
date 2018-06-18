@@ -18,7 +18,6 @@ import org.springframework.web.server.WebExceptionHandler;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Locale;
 import java.util.Optional;
 import javax.validation.ConstraintViolationException;
 
@@ -46,7 +45,7 @@ public class WebFluxExceptionHandler implements WebExceptionHandler {
     @NonNull
     @Override
     public Mono<Void> handle(@NonNull ServerWebExchange exchange, @NonNull Throwable ex) {
-        Locale locale = LocaleContextHolder.getLocale();
+        var locale = LocaleContextHolder.getLocale();
 
         Problem problem;
 

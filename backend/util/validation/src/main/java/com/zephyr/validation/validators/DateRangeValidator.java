@@ -23,12 +23,12 @@ public class DateRangeValidator implements ConstraintValidator<DateRange, Object
     @Override
     @SneakyThrows
     public boolean isValid(final Object value, final ConstraintValidatorContext context) {
-        final String fromValue = BeanUtils.getProperty(value, fromProperty);
-        final String toValue = BeanUtils.getProperty(value, toProperty);
+        final var fromValue = BeanUtils.getProperty(value, fromProperty);
+        final var toValue = BeanUtils.getProperty(value, toProperty);
 
         if (StringUtils.isNoneEmpty(fromValue, toValue)) {
-            final LocalDate from = LocalDate.parse(fromValue);
-            final LocalDate to = LocalDate.parse(toValue);
+            final var from = LocalDate.parse(fromValue);
+            final var to = LocalDate.parse(toValue);
 
             return from.isBefore(to);
         }

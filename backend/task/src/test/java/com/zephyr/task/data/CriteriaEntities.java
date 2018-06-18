@@ -20,7 +20,7 @@ public final class CriteriaEntities {
     private UserAgents userAgents;
 
     public SearchCriteria simple() {
-        SearchCriteria result =
+        var result =
                 newCriteria(Criteria.SIMPLE_QUERY, Criteria.SIMPLE_HITS_COUNT, Criteria.SIMPLE_LAST_UPDATE);
 
         result.setId(Criteria.SIMPLE_ID);
@@ -29,7 +29,7 @@ public final class CriteriaEntities {
     }
 
     public SearchCriteria newCriteria(String query, Long hitsCount, LocalDateTime lastUpdate) {
-        SearchCriteria criteria = new SearchCriteria();
+        var criteria = new SearchCriteria();
         criteria.setQuery(query);
         criteria.setHitsCount(hitsCount);
         criteria.setLastUpdate(lastUpdate);
@@ -42,7 +42,7 @@ public final class CriteriaEntities {
     }
 
     public SearchCriteria newCriteria() {
-        SearchCriteria criteria = new SearchCriteria();
+        var criteria = new SearchCriteria();
         criteria.setId(Criteria.NEW_CRITERIA_ID);
         criteria.setQuery(Criteria.NEW_CRITERIA_QUERY);
         criteria.setLanguageIso(Criteria.NEW_CRITERIA_LANGUAGE_ISO);
@@ -56,7 +56,7 @@ public final class CriteriaEntities {
     }
 
     public SearchCriteria withInvalidPlace() {
-        SearchCriteria simple = simple();
+        var simple = simple();
         simple.setUserAgent(toCriteria(userAgents.windowsFirefox()));
         simple.setPlace(invalidPlace());
 
@@ -64,7 +64,7 @@ public final class CriteriaEntities {
     }
 
     private Place invalidPlace() {
-        Place place = new Place();
+        var place = new Place();
         place.setPlaceName(Criteria.INVALID_PLACE_NAME);
         place.setCountry(Criteria.INVALID_COUNTRY);
 
@@ -72,7 +72,7 @@ public final class CriteriaEntities {
     }
 
     private UserAgent toCriteria(UserAgentDto userAgentDto) {
-        UserAgent userAgent = new UserAgent();
+        var userAgent = new UserAgent();
 
         userAgent.setDevice(userAgentDto.getDevice());
         userAgent.setBrowserName(userAgentDto.getBrowserName());
@@ -82,7 +82,7 @@ public final class CriteriaEntities {
     }
 
     private Place toCriteria(PlaceDto placeDto) {
-        Place place = new Place();
+        var place = new Place();
 
         place.setCountry(placeDto.getCountry().getIso());
         place.setPlaceName(placeDto.getName());

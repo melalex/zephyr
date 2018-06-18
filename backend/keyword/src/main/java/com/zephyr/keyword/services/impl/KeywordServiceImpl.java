@@ -1,8 +1,8 @@
 package com.zephyr.keyword.services.impl;
 
 import com.zephyr.commons.interfaces.Manager;
-import com.zephyr.data.protocol.request.KeywordRequest;
 import com.zephyr.data.protocol.dto.KeywordDto;
+import com.zephyr.data.protocol.request.KeywordRequest;
 import com.zephyr.keyword.properties.KeywordProperties;
 import com.zephyr.keyword.properties.KeywordSource;
 import com.zephyr.keyword.services.KeywordService;

@@ -11,7 +11,7 @@ public final class PlaceEntities {
     private CountryEntities countries;
 
     public Place kiev() {
-        Place result = new Place();
+        var result = new Place();
         result.setName(Places.KIEV_NAME);
         result.setCanonicalName(Places.KIEV_CANONICAL_NAME);
         result.setParent(new Place());
@@ -22,7 +22,7 @@ public final class PlaceEntities {
     }
 
     public Place calgary() {
-        Place result = new Place();
+        var result = new Place();
         result.setName(Places.CALGARY_NAME);
         result.setCanonicalName(Places.CALGARY_CANONICAL_NAME);
         result.setParent(new Place());

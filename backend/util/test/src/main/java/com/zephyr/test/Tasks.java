@@ -23,7 +23,7 @@ public final class Tasks {
     private Criteria criteria;
 
     public TaskDto simple() {
-        TaskDto result = new TaskDto();
+        var result = new TaskDto();
         result.setId(SIMPLE_ID);
         result.setUserId(SIMPLE_USER_ID);
         result.setUrl(SIMPLE_URL);
@@ -36,14 +36,14 @@ public final class Tasks {
     }
 
     public TaskDto withNewCriteria() {
-        TaskDto simple = simple();
+        var simple = simple();
         simple.setSearchCriteria(List.of(criteria.newCriteria()));
 
         return simple;
     }
 
     public TaskDto withInvalidPlace() {
-        TaskDto simple = simple();
+        var simple = simple();
         simple.setSearchCriteria(List.of(criteria.withInvalidPlace()));
 
         return simple;

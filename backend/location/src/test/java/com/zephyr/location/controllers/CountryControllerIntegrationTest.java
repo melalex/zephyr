@@ -18,7 +18,6 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -51,7 +50,7 @@ public class CountryControllerIntegrationTest {
 
     @Test
     public void shouldFindByIso() {
-        ResponseEntity<CountryDto> actual =
+        var actual =
                 rest.getForEntity("/v1/countries/{iso}", CountryDto.class, Map.of("iso", Countries.UA_ISO));
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
@@ -60,7 +59,7 @@ public class CountryControllerIntegrationTest {
 
     @Test
     public void shouldNotFindByIso() {
-        ResponseEntity<CountryDto> actual =
+        var actual =
                 rest.getForEntity("/v1/countries/{iso}", CountryDto.class, Map.of("iso", "INVALID"));
 
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
@@ -69,13 +68,14 @@ public class CountryControllerIntegrationTest {
     @Test
     @SuppressWarnings("Convert2Diamond")
     public void shouldFind() {
-        RequestEntity<Void> requestEntity = RequestEntity
+        var requestEntity = RequestEntity
                 .get(UriComponentsBuilder.fromUriString("/v1/countries").queryParam("name", "Uk").build().toUri())
                 .build();
 
-        ResponseEntity<Set<CountryDto>> actual = rest.exchange(
+        var actual = rest.exchange(
                 requestEntity,
-                new ParameterizedTypeReference<Set<CountryDto>>() { }
+                new ParameterizedTypeReference<Set<CountryDto>>() {
+                }
         );
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
@@ -85,12 +85,12 @@ public class CountryControllerIntegrationTest {
     @Test
     @SuppressWarnings("Convert2Diamond")
     public void shouldFindWithNullName() {
-        Set<CountryDto> expected = Set.of(
+        var expected = Set.of(
                 CommonTestData.countries().ukraine(),
                 CommonTestData.countries().canada()
         );
 
-        ResponseEntity<Set<CountryDto>> actual = rest.exchange(
+        var actual = rest.exchange(
                 "/v1/countries",
                 HttpMethod.GET,
                 null,

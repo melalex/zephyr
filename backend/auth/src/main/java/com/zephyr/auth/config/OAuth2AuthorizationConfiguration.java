@@ -69,7 +69,7 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationServerConfigu
 
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        var converter = new JwtAccessTokenConverter();
 
         // TODO: store key in vault
         converter.setSigningKey("123");
@@ -80,7 +80,7 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationServerConfigu
     @Bean
     @Primary
     public DefaultTokenServices tokenServices() {
-        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+        var defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setTokenStore(tokenStore());
 
         return defaultTokenServices;

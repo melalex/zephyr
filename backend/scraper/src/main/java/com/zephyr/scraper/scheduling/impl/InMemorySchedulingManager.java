@@ -51,8 +51,8 @@ public class InMemorySchedulingManager implements SchedulingManager {
 
     @Override
     public Publisher<Void> scheduleNext(String groupName, Duration duration) {
-        Deque<MutableTimer> group = group(groupName);
-        LocalDateTime dateTime = pushLast(groupName, duration);
+        var group = group(groupName);
+        var dateTime = pushLast(groupName, duration);
 
         log.info("Schedule new task for group [ {} ] on [ {} ]", groupName, dateTime);
 
@@ -67,7 +67,7 @@ public class InMemorySchedulingManager implements SchedulingManager {
 
     @Override
     public void reSchedule(String groupName, Duration duration) {
-        Deque<MutableTimer> group = group(groupName);
+        var group = group(groupName);
         pushLast(groupName, duration);
         group.forEach(t -> t.reSchedule(duration));
 
@@ -99,7 +99,7 @@ public class InMemorySchedulingManager implements SchedulingManager {
     }
 
     private LocalDateTime nextTriggerTime(Duration duration, LocalDateTime previous) {
-        LocalDateTime now = LocalDateTime.now(clock);
+        var now = LocalDateTime.now(clock);
 
         return Objects.isNull(previous) || previous.plus(duration).isBefore(now)
                ? now
@@ -129,7 +129,7 @@ public class InMemorySchedulingManager implements SchedulingManager {
         }
 
         private Disposable schedule(LocalDateTime dateTime) {
-            long delay = TimeUtils.millisFromNow(dateTime, parent.getClock());
+            var delay = TimeUtils.millisFromNow(dateTime, parent.getClock());
 
             return parent.getScheduler().schedule(sink::success, delay, TimeUnit.MILLISECONDS);
         }

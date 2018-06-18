@@ -10,7 +10,7 @@ public class Exceptions {
 
     public Supplier<ResourceNotFoundException> newNotFoundError(Class<?> clazz, Object id) {
         return () -> {
-            String message = String.format("[ %s ] with id [ %s ] not found", clazz.getSimpleName(), id);
+            var message = String.format("[ %s ] with id [ %s ] not found", clazz.getSimpleName(), id);
             return new ResourceNotFoundException(message);
         };
     }

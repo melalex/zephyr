@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 public final class CountryEntities {
 
     public Country ukraine() {
-        Country result = new Country();
+        var result = new Country();
         result.setIso(Countries.UA_ISO);
         result.setName(Countries.UA_NAME);
         result.setLocaleGoogle(Countries.UA_LOCALE_GOOGLE);
@@ -19,7 +19,7 @@ public final class CountryEntities {
     }
 
     public Country canada() {
-        Country result = new Country();
+        var result = new Country();
         result.setIso(Countries.CA_ISO);
         result.setName(Countries.CA_NAME);
         result.setLocaleGoogle(Countries.CA_LOCALE_GOOGLE);

@@ -21,8 +21,8 @@ public class RatingNotificationServiceImpl implements RatingNotificationService 
 
     @Override
     public void publishRatingUpdatedEvent(Request request) {
-        String serviceId = serviceMatcher.getServiceId();
-        RatingUpdatedEvent event = new RatingUpdatedEvent(this, serviceId, serviceId);
+        var serviceId = serviceMatcher.getServiceId();
+        var event = new RatingUpdatedEvent(this, serviceId, serviceId);
 
         event.setRequest(request);
 

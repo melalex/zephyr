@@ -7,7 +7,6 @@ import com.zephyr.task.domain.Task;
 import com.zephyr.task.repositories.TaskOperations;
 import lombok.AllArgsConstructor;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
@@ -19,7 +18,7 @@ public class TaskOperationsImpl implements TaskOperations {
 
     @Override
     public Mono<Task> findByUserIdAndIdOrShared(String userId, String id) {
-        Criteria criteria = where(Task.ID_FIELD).is(id)
+        var criteria = where(Task.ID_FIELD).is(id)
                 .orOperator(where(Task.USER_ID_FIELD).is(userId), where(Task.SHARED_FIELD).is(true));
 
         return mongo.findOne(query(criteria), Task.class);

@@ -39,14 +39,14 @@ public class FieldMatchValidatorTest {
 
     @Test
     public void shouldReturnTrue() {
-        TestObject testObject = new TestObject(VALID_VALUE, VALID_VALUE);
+        var testObject = new TestObject(VALID_VALUE, VALID_VALUE);
 
         assertTrue(testInstance.isValid(testObject, CONSTRAINT_VALIDATOR_CONTEXT));
     }
 
     @Test
     public void shouldReturnFalse() {
-        TestObject testObject = new TestObject(FIRST_VALUE, SECOND_VALUE);
+        var testObject = new TestObject(FIRST_VALUE, SECOND_VALUE);
 
         assertFalse(testInstance.isValid(testObject, CONSTRAINT_VALIDATOR_CONTEXT));
     }

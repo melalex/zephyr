@@ -4,8 +4,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.zephyr.rating.data.RatingTestData;
-import com.zephyr.rating.domain.Request;
-import com.zephyr.rating.domain.RequestCriteria;
 import org.junit.Test;
 
 public class RequestMatcherTest {
@@ -14,16 +12,16 @@ public class RequestMatcherTest {
 
     @Test
     public void shouldMatch() {
-        RequestCriteria targetCriteria = RatingTestData.requestCriteria().simple();
-        Request targetRequest = RatingTestData.requests().google();
+        var targetCriteria = RatingTestData.requestCriteria().simple();
+        var targetRequest = RatingTestData.requests().google();
 
         assertTrue(testInstance.matches(targetCriteria, targetRequest));
     }
 
     @Test
     public void shouldMatchWhenAgentIsNull() {
-        RequestCriteria targetCriteria = RatingTestData.requestCriteria().simple();
-        Request targetRequest = RatingTestData.requests().google();
+        var targetCriteria = RatingTestData.requestCriteria().simple();
+        var targetRequest = RatingTestData.requests().google();
 
         targetCriteria.getQueryCriteria().setUserAgent(null);
 
@@ -32,8 +30,8 @@ public class RequestMatcherTest {
 
     @Test
     public void shouldReturnFalseWhenProviderNotMatch() {
-        RequestCriteria targetCriteria = RatingTestData.requestCriteria().simple();
-        Request targetRequest = RatingTestData.requests().google();
+        var targetCriteria = RatingTestData.requestCriteria().simple();
+        var targetRequest = RatingTestData.requests().google();
 
         targetCriteria.setEngine(null);
 

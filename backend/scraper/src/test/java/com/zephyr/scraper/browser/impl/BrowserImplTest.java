@@ -28,28 +28,22 @@ import reactor.test.StepVerifier;
 @RunWith(MockitoJUnitRunner.class)
 public class BrowserImplTest {
 
-    @Mock
-    private Crawler crawler;
-
-    @Mock
-    private SearchResultFactory searchResultFactory;
-
-    @Mock
-    private ScraperConfigurationService configurationService;
-
-    @Mock
-    private BrowsingProvider browsingProvider;
-
-    @Mock
-    private Manager<RequestType, BrowsingProvider> browsingManager;
-
-    @InjectMocks
-    private BrowserImpl testInstance;
-
     private final EngineRequest request = ScraperTestData.requests().google().firstPage();
     private final EngineResponse fraudResponse = ScraperTestData.responses().googleFraud();
     private final EngineResponse response = ScraperTestData.responses().google();
     private final SearchResultDto result = CommonTestData.searchResults().google();
+    @Mock
+    private Crawler crawler;
+    @Mock
+    private SearchResultFactory searchResultFactory;
+    @Mock
+    private ScraperConfigurationService configurationService;
+    @Mock
+    private BrowsingProvider browsingProvider;
+    @Mock
+    private Manager<RequestType, BrowsingProvider> browsingManager;
+    @InjectMocks
+    private BrowserImpl testInstance;
 
     @Before
     public void setUp() {

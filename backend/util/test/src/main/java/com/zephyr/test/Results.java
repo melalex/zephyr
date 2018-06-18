@@ -13,10 +13,6 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public final class Results {
 
-    private static final int BING_FIRST = 1;
-    private static final int GOOGLE_FIRST = 0;
-    private static final int YAHOO_FIRST = 1;
-
     public static final List<String> BING_LINKS = List.of(
             "https://en.wikipedia.org/wiki/Zephyr",
             "https://www.merriam-webster.com/dictionary/zephyr",
@@ -29,7 +25,6 @@ public final class Results {
             "https://www.getzephyr.com/insights",
             "https://marketplace.atlassian.com/plugins/com.thed.zephyr.je/cloud/overview"
     );
-
     public static final List<String> GOOGLE_LINKS = List.of(
             "https://www.getzephyr.com/",
             "https://www.zephyrproject.org/",
@@ -41,7 +36,6 @@ public final class Results {
             "https://www.crunchbase.com/organization/zephyr",
             "leagueoflegends.wikia.com/wiki/Zephyr"
     );
-
     public static final List<String> YAHOO_LINKS = List.of(
             "zephyronline.com",
             "www.merriam-webster.com/dictionary/zephyr",
@@ -54,13 +48,14 @@ public final class Results {
             "zephyrre.com",
             "www.zhats.com"
     );
-
     public static final LocalDateTime SIMPLE_TIMESTAMP = TimeMachine.canonicalNow();
-
+    private static final int BING_FIRST = 1;
+    private static final int GOOGLE_FIRST = 0;
+    private static final int YAHOO_FIRST = 1;
     private Queries queries;
 
     public SearchResultDto bing() {
-        SearchResultDto result = base();
+        var result = base();
         result.setProvider(SearchEngine.BING);
         result.setLinks(BING_LINKS);
         result.setOffset(BING_FIRST);
@@ -69,7 +64,7 @@ public final class Results {
     }
 
     public SearchResultDto google() {
-        SearchResultDto result = base();
+        var result = base();
         result.setProvider(SearchEngine.GOOGLE);
         result.setLinks(GOOGLE_LINKS);
         result.setOffset(GOOGLE_FIRST);
@@ -78,7 +73,7 @@ public final class Results {
     }
 
     public SearchResultDto yahoo() {
-        SearchResultDto result = base();
+        var result = base();
         result.setProvider(SearchEngine.YAHOO);
         result.setLinks(YAHOO_LINKS);
         result.setOffset(YAHOO_FIRST);
@@ -87,7 +82,7 @@ public final class Results {
     }
 
     private SearchResultDto base() {
-        SearchResultDto result = new SearchResultDto();
+        var result = new SearchResultDto();
         result.setId(UidProviderMock.DEFAULT_ID);
         result.setTimestamp(SIMPLE_TIMESTAMP);
         result.setQuery(queries.simple());

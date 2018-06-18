@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 public final class UserAgentEntities {
 
     public UserAgent windowsFirefox() {
-        UserAgent result = new UserAgent();
+        var result = new UserAgent();
         result.setBrowserName(UserAgents.FIREFOX);
         result.setOsName(UserAgents.WINDOWS);
         result.setDevice(UserAgents.DESKTOP);

@@ -2,7 +2,6 @@ package com.zephyr.data.protocol.dto;
 
 import com.zephyr.data.protocol.enums.SearchEngine;
 import lombok.Data;
-import org.hibernate.validator.constraints.URL;
 
 import java.util.List;
 import java.util.Set;
@@ -16,7 +15,6 @@ public class TaskDto {
 
     private String id;
 
-    @URL
     @NotEmpty
     private String url;
 

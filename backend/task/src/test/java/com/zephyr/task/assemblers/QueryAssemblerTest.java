@@ -9,7 +9,6 @@ import com.zephyr.errors.exceptions.InconsistentModelException;
 import com.zephyr.task.clients.AgentServiceClient;
 import com.zephyr.task.clients.LocationServiceClient;
 import com.zephyr.task.data.TaskTestData;
-import com.zephyr.task.domain.SearchCriteria;
 import com.zephyr.test.CommonTestData;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,7 +45,7 @@ public class QueryAssemblerTest {
 
     @Test
     public void shouldNotAssemble() {
-        SearchCriteria simple = TaskTestData.criteria().simple();
+        var simple = TaskTestData.criteria().simple();
 
         StepVerifier.create(testInstance.assemble(simple))
                 .expectError(InconsistentModelException.class)

@@ -25,7 +25,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @EventListener
     public void onRatingUpdated(RatingUpdatedEvent event) {
-        Request request = event.getRequest();
+        var request = event.getRequest();
         log.info("Received new Rating: {}", request);
         hotSource.onNext(request);
     }

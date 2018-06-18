@@ -3,10 +3,10 @@ package com.zephyr.task;
 import static org.mockito.Mockito.mock;
 
 import com.zephyr.commons.interfaces.UidProvider;
+import com.zephyr.commons.support.Profiles;
 import com.zephyr.task.clients.AgentServiceClient;
 import com.zephyr.task.clients.LocationServiceClient;
 import com.zephyr.task.mocks.LocationServiceClientConfigurer;
-import com.zephyr.commons.support.Profiles;
 import com.zephyr.test.mocks.TimeMachine;
 import com.zephyr.test.mocks.UidProviderMock;
 import org.springframework.boot.test.context.TestConfiguration;

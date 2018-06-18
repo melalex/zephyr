@@ -17,7 +17,7 @@ public final class ScraperQueries {
     }
 
     public Query simpleWithoutLanguage() {
-        Query simple = simple();
+        var simple = simple();
         simple.setLanguageIso(null);
         return simple;
     }

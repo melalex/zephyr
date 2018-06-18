@@ -16,7 +16,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -50,19 +49,20 @@ public class LanguageControllerIntegrationTest {
     @Test
     @SuppressWarnings("Convert2Diamond")
     public void shouldFindAll() {
-        Set<LanguageDto> expected = Set.of(
+        var expected = Set.of(
                 CommonTestData.languages().ukrainian(),
                 CommonTestData.languages().russian(),
                 CommonTestData.languages().english()
         );
 
-        RequestEntity<Void> requestEntity = RequestEntity
+        var requestEntity = RequestEntity
                 .get(UriComponentsBuilder.fromUriString("/v1/languages").build().toUri())
                 .build();
 
-        ResponseEntity<Set<LanguageDto>> actual = rest.exchange(
+        var actual = rest.exchange(
                 requestEntity,
-                new ParameterizedTypeReference<Set<LanguageDto>>() { }
+                new ParameterizedTypeReference<Set<LanguageDto>>() {
+                }
         );
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());

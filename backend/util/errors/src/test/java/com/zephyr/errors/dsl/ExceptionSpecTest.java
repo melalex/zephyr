@@ -27,7 +27,7 @@ public class ExceptionSpecTest {
     @Test
     public void shouldBuild() {
         // @formatter:off
-        final ParameterizedException exception = Problems.exception(new ParameterizedException(EXCEPTION_MESSAGE))
+        final var exception = Problems.exception(new ParameterizedException(EXCEPTION_MESSAGE))
                 .status(STATUS_CODE)
                 .data()
                     .subjectError()

@@ -15,7 +15,7 @@ public class SearchResultPropertyMap extends PropertyMapConfigurerSupport<Search
 
             @Override
             protected void configure() {
-               map().getQuery().getPlace().setCountry(source.getQuery().getPlace().getCountry().getIso());
+                map().getQuery().getPlace().setCountry(source.getQuery().getPlace().getCountry().getIso());
             }
         };
     }

@@ -21,7 +21,7 @@ public class RatingTestConfiguration {
     @Bean
     @Profile(Profiles.TEST)
     public TaskServiceClient agentServiceClient() {
-        TaskServiceClient mock = mock(TaskServiceClient.class);
+        var mock = mock(TaskServiceClient.class);
         when(mock.findByUserAndIdAsync(Tasks.SIMPLE_USER_ID, Tasks.SIMPLE_ID))
                 .thenReturn(Mono.just(CommonTestData.tasks().simple()));
         return mock;

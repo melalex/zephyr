@@ -37,7 +37,7 @@ public class UnhandledExceptionConverter implements ProblemConverter<Throwable> 
     }
 
     private List<Problem.NestedError> getErrors(Locale locale) {
-        Problem.NestedError error = Problem.NestedError.builder()
+        var error = Problem.NestedError.builder()
                 .message(messageSource.getMessage(INTERNAL_SERVER_ERROR_MESSAGE, locale))
                 .build();
 

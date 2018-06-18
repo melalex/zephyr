@@ -4,7 +4,6 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.startsWith;
 import static org.mockito.Mockito.when;
 
-import com.zephyr.data.protocol.dto.PlaceDto;
 import com.zephyr.task.clients.LocationServiceClient;
 import com.zephyr.test.CommonTestData;
 import com.zephyr.test.Countries;
@@ -16,8 +15,8 @@ import java.util.List;
 public final class LocationServiceClientConfigurer {
 
     public static LocationServiceClient configure(LocationServiceClient mock) {
-        PlaceDto kiev = CommonTestData.places().kiev();
-        PlaceDto calgary = CommonTestData.places().calgary();
+        var kiev = CommonTestData.places().kiev();
+        var calgary = CommonTestData.places().calgary();
 
         when(mock.findByCountryIsoAndNameContains(eq(Countries.UA_ISO), startsWith(Places.KIEV_NAME)))
                 .thenReturn(List.of(kiev));
