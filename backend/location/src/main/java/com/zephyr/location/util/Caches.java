@@ -10,4 +10,5 @@ public class Caches {
     public static final String LANGUAGE_ALL = "LANGUAGE_ALL";
     public static final String PLACE_BY_ID = "PLACE_BY_ID";
     public static final String PLACE_BY_COUNTRY_AND_NAME = "PLACE_BY_COUNTRY_AND_NAME";
+    public static final String PLACE_CANONICAL_NAME = "PLACE_CANONICAL_NAME";
 }

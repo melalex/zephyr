@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     compile libraries['guava']
+    compile libraries['jacksonTime']
     compile libraries['validationApi']
 
     compileOnly libraries['reactor']

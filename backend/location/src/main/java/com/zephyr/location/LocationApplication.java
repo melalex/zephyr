@@ -6,9 +6,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 
 @EnableCaching
 @SpringBootApplication
+@EnableNeo4jRepositories
 public class LocationApplication {
 
     public static void main(String[] args) {
@@ -16,12 +18,7 @@ public class LocationApplication {
     }
 
     @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
-
-    @Bean
-    public ExtendedMapper mapper() {
-        return new ExtendedMapper(modelMapper());
+    public ExtendedMapper mapper(ModelMapper modelMapper) {
+        return new ExtendedMapper(modelMapper);
     }
 }

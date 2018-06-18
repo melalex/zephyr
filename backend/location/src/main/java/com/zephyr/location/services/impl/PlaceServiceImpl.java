@@ -6,13 +6,15 @@ import static com.zephyr.commons.StreamUtils.range;
 import com.zephyr.commons.FunctionUtils;
 import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.data.protocol.dto.PlaceDto;
-import com.zephyr.errors.utils.ExceptionUtils;
 import com.zephyr.location.domain.Place;
 import com.zephyr.location.repositories.PlaceRepository;
 import com.zephyr.location.services.PlaceService;
-import lombok.AllArgsConstructor;
+import com.zephyr.location.util.Exceptions;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,22 +22,27 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javax.annotation.PostConstruct;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PlaceServiceImpl implements PlaceService {
 
     private static final String UULE_FORMAT = "w+CAIQICI%s%s";
 
     private static final int DEFAULT_DEPTH = 1;
 
-    private final List<String> secretMap;
+    private List<String> secretMap;
 
+    @NonNull
     private PlaceRepository placeRepository;
+
+    @NonNull
     private ExtendedMapper mapper;
 
-    public PlaceServiceImpl() {
-        secretMap = concat(range('A', 'Z'), range('a', 'z'), range('0', '9'), Stream.of("-", "_"))
+    @PostConstruct
+    public void init() {
+        this.secretMap = concat(range('A', 'Z'), range('a', 'z'), range('0', '9'), Stream.of("-", "_"))
                 .collect(Collectors.toList());
     }
 
@@ -43,12 +50,19 @@ public class PlaceServiceImpl implements PlaceService {
     public PlaceDto findById(long id) {
         return placeRepository.findById(id, DEFAULT_DEPTH)
                 .map(toDto())
-                .orElseThrow(ExceptionUtils.newNotFoundError(Place.class, id));
+                .orElseThrow(Exceptions.newNotFoundError(Place.class, id));
     }
 
     @Override
     public Set<PlaceDto> findAllByCountryIsoAndNameContains(String iso, String name) {
         return placeRepository.findAllByCountryIsoAndNameContainsIgnoreCase(iso, name)
+                .map(toDto())
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public Set<PlaceDto> findAllByCanonicalNameContains(String name, Pageable pageable) {
+        return placeRepository.findAllByCanonicalNameContains(name, pageable)
                 .map(toDto())
                 .collect(Collectors.toSet());
     }

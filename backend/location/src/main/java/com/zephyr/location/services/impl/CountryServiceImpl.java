@@ -2,10 +2,10 @@ package com.zephyr.location.services.impl;
 
 import com.zephyr.commons.extensions.ExtendedMapper;
 import com.zephyr.data.protocol.dto.CountryDto;
-import com.zephyr.errors.utils.ExceptionUtils;
 import com.zephyr.location.domain.Country;
 import com.zephyr.location.repositories.CountryRepository;
 import com.zephyr.location.services.CountryService;
+import com.zephyr.location.util.Exceptions;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,13 +26,13 @@ public class CountryServiceImpl implements CountryService {
     public CountryDto findByIso(String iso) {
         return countryRepository.findByIso(iso)
                 .map(mapper.mapperFor(CountryDto.class))
-                .orElseThrow(ExceptionUtils.newNotFoundError(Country.class, iso));
+                .orElseThrow(Exceptions.newNotFoundError(Country.class, iso));
     }
 
     @Override
     public Set<CountryDto> findByNameStarts(String name) {
         return Optional.ofNullable(name)
-                .map(countryRepository::findByNameStartingWithIgnoreCase)
+                .map(countryRepository::findByNameStartingWith)
                 .orElseGet(() -> countryRepository.findAllStream(ZERO_DEPTH))
                 .map(mapper.mapperFor(CountryDto.class))
                 .collect(Collectors.toSet());

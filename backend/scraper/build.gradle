@@ -37,6 +37,7 @@ dependencies {
     compile libraries['jsoup']
     compile libraries['reactorExtra']
     compile libraries['jacksonCsv']
+    compile libraries['jacksonTime']
 
     compile utils['commons']
     compile utils['data']

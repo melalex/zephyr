@@ -1,10 +1,7 @@
 package com.zephyr.location.controllers;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.Assert.assertEquals;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zephyr.data.protocol.dto.LanguageDto;
 import com.zephyr.location.data.LocationTestData;
 import com.zephyr.location.repositories.LanguageRepository;
@@ -14,27 +11,27 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.Set;
 
-@SpringBootTest
-@AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LanguageControllerIntegrationTest {
 
     @Autowired
     private LanguageRepository languageRepository;
 
     @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
+    private TestRestTemplate rest;
 
     @Before
     public void setUp() {
@@ -51,14 +48,24 @@ public class LanguageControllerIntegrationTest {
     }
 
     @Test
-    public void shouldFindAll() throws Exception {
+    @SuppressWarnings("Convert2Diamond")
+    public void shouldFindAll() {
         Set<LanguageDto> expected = Set.of(
                 CommonTestData.languages().ukrainian(),
                 CommonTestData.languages().russian(),
                 CommonTestData.languages().english()
         );
-        mockMvc.perform(get("/v1/languages"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+
+        RequestEntity<Void> requestEntity = RequestEntity
+                .get(UriComponentsBuilder.fromUriString("/v1/languages").build().toUri())
+                .build();
+
+        ResponseEntity<Set<LanguageDto>> actual = rest.exchange(
+                requestEntity,
+                new ParameterizedTypeReference<Set<LanguageDto>>() { }
+        );
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertEquals(expected, actual.getBody());
     }
 }

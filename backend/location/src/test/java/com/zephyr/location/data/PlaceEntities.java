@@ -12,10 +12,9 @@ public final class PlaceEntities {
 
     public Place kiev() {
         Place result = new Place();
-        result.setId(Places.KIEV_ID);
         result.setName(Places.KIEV_NAME);
         result.setCanonicalName(Places.KIEV_CANONICAL_NAME);
-        result.setParent(parent(Places.KIEV_PARENT));
+        result.setParent(new Place());
         result.setType(Place.PlaceType.valueOf(Places.KIEV_TYPE.name()));
         result.setCountry(countries.ukraine());
 
@@ -24,19 +23,12 @@ public final class PlaceEntities {
 
     public Place calgary() {
         Place result = new Place();
-        result.setId(Places.CALGARY_ID);
         result.setName(Places.CALGARY_NAME);
         result.setCanonicalName(Places.CALGARY_CANONICAL_NAME);
-        result.setParent(parent(Places.CALGARY_PARENT));
+        result.setParent(new Place());
         result.setType(Place.PlaceType.valueOf(Places.CALGARY_TYPE.name()));
         result.setCountry(countries.canada());
 
-        return result;
-    }
-
-    private Place parent(int id) {
-        Place result = new Place();
-        result.setId(id);
         return result;
     }
 }

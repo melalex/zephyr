@@ -47,6 +47,7 @@ dependencies {
 
     testCompile libraries['test']
     testCompile libraries['embeddedNeo4j']
+    testCompile libraries['neo4jTest']
 
     testCompileOnly libraries['lombok']
 }

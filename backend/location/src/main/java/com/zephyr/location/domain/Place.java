@@ -1,7 +1,12 @@
 package com.zephyr.location.domain;
 
 import com.zephyr.location.util.Relations;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.Wither;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -11,18 +16,23 @@ import java.util.Set;
 
 @Data
 @NodeEntity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Place {
 
     @Id
+    @Wither
     @GeneratedValue
-    private long id;
+    private Long id;
     private String name;
     private String canonicalName;
 
-    @Relationship(type = Relations.RELATIVES, direction = Relationship.INCOMING)
+    @Relationship(type = Relations.RELATIVES)
     private Place parent;
 
-    @Relationship(type = Relations.RELATIVES)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @Relationship(type = Relations.RELATIVES, direction = Relationship.INCOMING)
     private Set<Place> children;
 
     @Relationship(type = Relations.COUNTRY, direction = Relationship.UNDIRECTED)
@@ -30,6 +40,7 @@ public class Place {
 
     private PlaceType type;
 
+    @SuppressWarnings("unused")
     public enum PlaceType {
         AIRPORT,
         AUTONOMOUS_COMMUNITY,

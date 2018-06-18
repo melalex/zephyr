@@ -1,10 +1,7 @@
 package com.zephyr.location.controllers;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.Assert.assertEquals;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zephyr.data.protocol.dto.CountryDto;
 import com.zephyr.location.data.LocationTestData;
 import com.zephyr.location.repositories.CountryRepository;
@@ -15,27 +12,29 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-@SpringBootTest
-@AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CountryControllerIntegrationTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    private TestRestTemplate rest;
 
     @Autowired
     private CountryRepository countryRepository;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Before
     public void setUp() {
@@ -51,34 +50,55 @@ public class CountryControllerIntegrationTest {
     }
 
     @Test
-    public void shouldFindByIso() throws Exception {
-        mockMvc.perform(get("/v1/countries/{iso}", Countries.UA_ISO))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(CommonTestData.countries().ukraine())));
+    public void shouldFindByIso() {
+        ResponseEntity<CountryDto> actual =
+                rest.getForEntity("/v1/countries/{iso}", CountryDto.class, Map.of("iso", Countries.UA_ISO));
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertEquals(CommonTestData.countries().ukraine(), actual.getBody());
     }
 
     @Test
-    public void shouldNotFindByIso() throws Exception {
-        mockMvc.perform(get("/v1/countries/{iso}", "INVALID"))
-                .andExpect(status().isNotFound());
+    public void shouldNotFindByIso() {
+        ResponseEntity<CountryDto> actual =
+                rest.getForEntity("/v1/countries/{iso}", CountryDto.class, Map.of("iso", "INVALID"));
+
+        assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
     }
 
     @Test
-    public void shouldFind() throws Exception {
-        Set<CountryDto> expected = Set.of(CommonTestData.countries().ukraine());
-        mockMvc.perform(get("/v1/countries").param("name", "uk"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+    @SuppressWarnings("Convert2Diamond")
+    public void shouldFind() {
+        RequestEntity<Void> requestEntity = RequestEntity
+                .get(UriComponentsBuilder.fromUriString("/v1/countries").queryParam("name", "Uk").build().toUri())
+                .build();
+
+        ResponseEntity<Set<CountryDto>> actual = rest.exchange(
+                requestEntity,
+                new ParameterizedTypeReference<Set<CountryDto>>() { }
+        );
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertEquals(Set.of(CommonTestData.countries().ukraine()), actual.getBody());
     }
 
     @Test
-    public void shouldFindWithNullName() throws Exception {
+    @SuppressWarnings("Convert2Diamond")
+    public void shouldFindWithNullName() {
         Set<CountryDto> expected = Set.of(
                 CommonTestData.countries().ukraine(),
                 CommonTestData.countries().canada()
         );
-        mockMvc.perform(get("/v1/countries").param("name", "uk"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+
+        ResponseEntity<Set<CountryDto>> actual = rest.exchange(
+                "/v1/countries",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<Set<CountryDto>>() {
+                }
+        );
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertEquals(expected, actual.getBody());
     }
 }

@@ -25,7 +25,7 @@ ext {
             validation: project(':backend:util:validation'),
     ]
 
-    def lombokVersion = '1.16.20'
+    def lombokVersion = '1.18.0'
     def validationApiVersion = '2.0.0.Final'
     def apacheCommonsVersion = '3.6'
     def guavaVersion = '23.6-jre'
@@ -38,6 +38,7 @@ ext {
     def jsonpathVersion = '2.4.0'
     def embeddedMongodbVersion = '2.0.3'
     def embeddedNeo4jVersion = '3.1.0'
+    def neo4jTestVersion = '3.1.0'
     def rollbarVersion = '0.5.3'
     def slf4jVersion = '1.7.25'
     def adWordsVersion = '3.9.0'
@@ -63,8 +64,9 @@ ext {
             mysql                 : 'mysql:mysql-connector-java',
             mongodb               : 'org.springframework.boot:spring-boot-starter-data-mongodb',
             mongodbDriver         : 'org.mongodb:mongodb-driver-reactivestreams',
-            neo4j                 : 'org.springframework.data:spring-data-neo4j',
+            neo4j                 : 'org.springframework.boot:spring-boot-starter-data-neo4j',
             neo4jDriver           : 'org.neo4j:neo4j-ogm-bolt-driver',
+            neo4jTest             : "org.neo4j:neo4j-ogm-test:${neo4jTestVersion}",
             test                  : 'org.springframework.boot:spring-boot-starter-test',
             streamTest            : 'org.springframework.cloud:spring-cloud-stream-test-support',
 
@@ -130,7 +132,7 @@ ext {
             jackson               : "com.fasterxml.jackson.core:jackson-databind",
             jacksonAnnotations    : "com.fasterxml.jackson.core:jackson-annotations",
             jacksonTime           : "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
-            jacksonCsv                   : "com.fasterxml.jackson.dataformat:jackson-dataformat-csv:${csvVersion}",
+            jacksonCsv            : "com.fasterxml.jackson.dataformat:jackson-dataformat-csv:${csvVersion}",
 
             adWords               : "com.google.api-ads:ads-lib:${adWordsVersion}",
             rollbar               : "com.rollbar:rollbar:${rollbarVersion}",
