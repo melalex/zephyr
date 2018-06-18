@@ -1,3 +1,7 @@
+plugins {
+    id 'io.spring.dependency-management' version '1.0.4.RELEASE'
+}
+
 dependencies {
     compile libraries['apacheCommons']
     compile libraries['beanUtils']
@@ -9,4 +13,10 @@ dependencies {
     testCompile libraries['mockito']
 
     testCompileOnly libraries['lombok']
+}
+
+dependencyManagement {
+    imports {
+        mavenBom imports['springBootBom']
+    }
 }

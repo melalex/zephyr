@@ -33,8 +33,6 @@ ext {
     def modelMapperVersion = '2.0.0'
     def beanutilsVersion = '1.9.3'
     def evoVersion = '1.2.2'
-    def jUnitVersion = '4.12'
-    def mockitoVersion = '2.9.0'
     def jsonpathVersion = '2.4.0'
     def embeddedMongodbVersion = '2.0.3'
     def embeddedNeo4jVersion = '3.1.0'
@@ -121,8 +119,8 @@ ext {
             beanUtils             : "commons-beanutils:commons-beanutils:${beanutilsVersion}",
             evo                   : "org.atteo:evo-inflector:${evoVersion}",
 
-            jUnit                 : "junit:junit:${jUnitVersion}",
-            mockito               : "org.mockito:mockito-core:${mockitoVersion}",
+            jUnit                 : "junit:junit",
+            mockito               : "org.mockito:mockito-core",
             jsonpath              : "com.jayway.jsonpath:json-path:${jsonpathVersion}",
             embeddedMongodb       : "de.flapdoodle.embed:de.flapdoodle.embed.mongo:${embeddedMongodbVersion}",
             embeddedNeo4j         : "org.neo4j:neo4j-ogm-embedded-driver:${embeddedNeo4jVersion}",

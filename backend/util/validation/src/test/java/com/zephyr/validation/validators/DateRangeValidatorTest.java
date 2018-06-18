@@ -12,8 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.validation.ConstraintValidatorContext;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -21,11 +20,11 @@ public class DateRangeValidatorTest {
 
     private static final String FROM_PROPERTY = "from";
     private static final String TO_PROPERTY = "to";
-    private static final long DURATION_MILLIS = 9999;
-    private static final Duration DURATION = Duration.ofMillis(DURATION_MILLIS);
 
     private static final ConstraintValidatorContext CONSTRAINT_VALIDATOR_CONTEXT = null;
+
     private final DateRangeValidator testInstance = new DateRangeValidator();
+
     @Mock
     private DateRange dateRange;
 
@@ -39,24 +38,24 @@ public class DateRangeValidatorTest {
 
     @Test
     public void shouldReturnTrue() {
-        var now = LocalDateTime.now();
-        var testObject = new TestObject(now, now.plus(DURATION));
+        var now = LocalDate.now();
+        var testObject = new TestObject(now, now.plusDays(1));
 
         assertTrue(testInstance.isValid(testObject, CONSTRAINT_VALIDATOR_CONTEXT));
     }
 
     @Test
     public void shouldReturnFalse() {
-        var now = LocalDateTime.now();
-        var testObject = new TestObject(now, now.minus(DURATION));
+        var now = LocalDate.now();
+        var testObject = new TestObject(now, now.minusDays(1));
 
         assertFalse(testInstance.isValid(testObject, CONSTRAINT_VALIDATOR_CONTEXT));
     }
 
     @Value
-    private static class TestObject {
+    public static class TestObject {
 
-        private LocalDateTime from;
-        private LocalDateTime to;
+        private LocalDate from;
+        private LocalDate to;
     }
 }

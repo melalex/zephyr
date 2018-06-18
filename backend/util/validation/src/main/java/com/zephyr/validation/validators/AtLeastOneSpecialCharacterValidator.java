@@ -12,12 +12,7 @@ public class AtLeastOneSpecialCharacterValidator implements ConstraintValidator<
     private static final Pattern PATTERN = Pattern.compile(REG_EXP);
 
     @Override
-    public void initialize(AtLeastOneSpecialCharacter constraintAnnotation) {
-
-    }
-
-    @Override
     public boolean isValid(String obj, ConstraintValidatorContext context) {
-        return PATTERN.matcher(obj).matches();
+        return PATTERN.matcher(obj).find();
     }
 }

@@ -25,5 +25,4 @@ public class AtLeastOneUpperCaseLatterValidatorTest {
     public void shouldReturnFalse() {
         assertFalse(testInstance.isValid(INVALID_STRING, CONSTRAINT_VALIDATOR_CONTEXT));
     }
-
 }

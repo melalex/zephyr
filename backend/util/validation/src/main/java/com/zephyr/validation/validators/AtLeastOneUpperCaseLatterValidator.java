@@ -12,12 +12,7 @@ public class AtLeastOneUpperCaseLatterValidator implements ConstraintValidator<A
     private static final Pattern PATTERN = Pattern.compile(REG_EXP);
 
     @Override
-    public void initialize(AtLeastOneUpperCaseLatter constraintAnnotation) {
-
-    }
-
-    @Override
     public boolean isValid(String obj, ConstraintValidatorContext context) {
-        return PATTERN.matcher(obj).matches();
+        return PATTERN.matcher(obj).find();
     }
 }

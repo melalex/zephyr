@@ -30,7 +30,7 @@ public class ErrorUtil {
     }
 
     public String errorCode(@NonNull Class<?> clazz) {
-        return clazz.getName();
+        return clazz.getSimpleName();
     }
 
     public String wrapValue(Object value) {

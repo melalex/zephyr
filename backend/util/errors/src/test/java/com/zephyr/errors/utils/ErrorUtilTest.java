@@ -7,7 +7,7 @@ import org.junit.Test;
 public class ErrorUtilTest {
 
     private static final String EXPECTED_VALUE = "testValue";
-    private static final String EXPECTED_CODE = "errorUtilTest";
+    private static final String EXPECTED_CODE = "ErrorUtilTest";
 
     @Test
     public void shouldGetValue() {
