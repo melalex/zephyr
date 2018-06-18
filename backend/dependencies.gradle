@@ -53,7 +53,7 @@ ext {
 
     libraries = [
             spring                : 'org.springframework.boot:spring-boot-starter',
-            zuul                  : 'org.springframework.cloud:spring-cloud-starter-zuul',
+            zuul                  : 'org.springframework.cloud:spring-cloud-starter-netflix-zuul',
             feign                 : 'org.springframework.cloud:spring-cloud-starter-openfeign',
             dataCommons           : 'org.springframework.data:spring-data-commons',
             messaging             : 'org.springframework.cloud:spring-cloud-starter-bus-amqp',
@@ -101,11 +101,11 @@ ext {
             securityOAuth2        : 'org.springframework.cloud:spring-cloud-starter-oauth2',
             securityTest          : 'org.springframework.security:spring-security-test',
 
-            turbine               : 'org.springframework.cloud:spring-cloud-starter-turbine-amqp',
-            turbineStream         : 'org.springframework.cloud:spring-cloud-starter-turbine-stream',
+            turbine               : 'org.springframework.cloud:spring-cloud-starter-netflix-turbine-amqp',
+            turbineStream         : 'org.springframework.cloud:spring-cloud-starter-netflix-turbine-stream',
 
-            hystrix               : 'org.springframework.cloud:spring-cloud-starter-hystrix',
-            hystrixDashboard      : 'org.springframework.cloud:spring-cloud-starter-hystrix-dashboard',
+            hystrix               : 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix',
+            hystrixDashboard      : 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix-dashboard',
 
             reactor               : "io.projectreactor:reactor-core",
             reactorExtra          : "io.projectreactor.addons:reactor-extra",
