@@ -62,6 +62,7 @@ dependencyManagement {
 }
 
 docker {
+    url = dockerUrl
     registryCredentials {
         username = dockerUserName
         password = dockerPassword
