@@ -6,6 +6,6 @@ spring:
     hibernate.ddl-auto: update
   datasource:
     url: jdbc:mysql://auth-mysql:3306/zephyr?useSSL=false
-    username: spring
-    password: spring
+    username: zephyr
+    password: zephyr
     platform: mysql

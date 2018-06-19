@@ -8,7 +8,7 @@ import reactor.core.publisher.Flux;
 
 import java.util.List;
 
-@FeignClient("task-client")
+@FeignClient("rating")
 public interface RatingServiceClient {
 
     @GetMapping

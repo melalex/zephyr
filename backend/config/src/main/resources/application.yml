@@ -15,4 +15,4 @@ spring:
 
 security:
   user:
-    password: ${CONFIG_SERVER_PASSWORD:secret}
+    password: ${CONFIG_SERVER_PASSWORD}

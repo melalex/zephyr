@@ -23,8 +23,7 @@ buildscript {
 
 apply plugin: DockerRemoteApiPlugin
 apply plugin: 'com.bmuschko.docker-java-application'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.bmuschko.docker-remote-api' apply plugin: 'org.springframework.boot'apply plugin: 'io.spring.dependency-management'
 apply plugin: 'application'
 
 mainClassName = 'com.zephyr.jobs.MockDataApplication'
@@ -61,6 +60,6 @@ registryCredentials {
     javaApplication {
         baseImage = dockerBaseImage
         maintainer = dockerMainteiner
-        tag = dockerTag
+        tag = dockerTag()
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import reactor.core.publisher.Mono;
 
 @Profile(Profiles.NOT_TEST)
-@FeignClient("agent-client")
+@FeignClient("agent")
 public interface AgentServiceClient {
 
     @GetMapping

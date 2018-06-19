@@ -1,9 +1,6 @@
-import com.bmuschko.gradle.docker.DockerRemoteApiPlugin
-
 buildscript {
     ext {
         springBootVersion = '2.0.1.RELEASE'
-        dockerVersion = '3.3.5'
     }
     repositories {
         mavenLocal()
@@ -16,17 +13,22 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("com.bmuschko:gradle-docker-plugin:${dockerVersion}")
     }
 }
 
-apply plugin: DockerRemoteApiPlugin
-apply plugin: 'com.bmuschko.docker-java-application'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-apply plugin: 'application'
 
-mainClassName = 'com.zephyr.agent.AgentApplication'
+ext {
+    port = [8010]
+}
+
+bootJar {
+    baseName = 'agent'
+    version = '0.0.1-SNAPSHOT'
+}
+
+apply from: "${rootProject.projectDir}/backend/docker.gradle"
 
 dependencies {
     compile libraries['mongodb']
@@ -54,19 +56,5 @@ dependencyManagement {
         mavenBom imports['springBootBom']
         mavenBom imports['springCloudBom']
         mavenBom imports['springBusBom']
-    }
-}
-
-docker {
-    url = dockerUrl
-    registryCredentials {
-        username = dockerUserName
-        password = dockerPassword
-    }
-    javaApplication {
-        baseImage = dockerBaseImage
-        maintainer = dockerMainteiner
-        port = 8010
-        tag = dockerTag
     }
 }

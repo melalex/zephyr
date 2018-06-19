@@ -20,44 +20,38 @@ zuul:
     socket-timeout-millis: 20000
 
   routes:
-    auth-service:
-        path: /auth/**
-        url: http://auth-service:5000
-        stripPrefix: false
-        sensitiveHeaders:
+    auth:
+      path: /auth/**
+      url: http://auth:8011
+      stripPrefix: false
+      sensitiveHeaders:
 
-    dictionary-service:
-        path: /dictionary/**
-        serviceId: dictionary-service
-        stripPrefix: false
-        sensitiveHeaders:
+#    agent:
+#      path: /agent/**
+#      serviceId: agent
+#      stripPrefix: false
+#      sensitiveHeaders:
 
-    personalisation-service:
-        path: /personalisation/**
-        serviceId: personalisation-service
-        stripPrefix: false
-        sensitiveHeaders:
+    keyword:
+      path: /keyword/**
+      serviceId: keyword
+      stripPrefix: false
+      sensitiveHeaders:
 
-    proposer-service:
-        path: /proposer/**
-        serviceId: proposer-service
-        stripPrefix: false
-        sensitiveHeaders:
+    location:
+      path: /location/**
+      serviceId: location
+      stripPrefix: false
+      sensitiveHeaders:
 
-    proxy-service:
-        path: /proxy/**
-        serviceId: proxy-service
-        stripPrefix: false
-        sensitiveHeaders:
-
-    rating-service:
-        path: /rating/**
-        serviceId: rating-service
-        stripPrefix: false
-        sensitiveHeaders:
+    rating:
+      path: /rating/**
+      serviceId: rating
+      stripPrefix: false
+      sensitiveHeaders:
 
     task-service:
-        path: /task/**
-        serviceId: task-service
-        stripPrefix: false
-        sensitiveHeaders:
+      path: /task/**
+      serviceId: task
+      stripPrefix: false
+      sensitiveHeaders:

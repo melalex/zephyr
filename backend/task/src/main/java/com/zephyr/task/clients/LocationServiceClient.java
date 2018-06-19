@@ -11,7 +11,7 @@ import reactor.core.publisher.Flux;
 import java.util.List;
 
 @Profile(Profiles.NOT_TEST)
-@FeignClient("location-service")
+@FeignClient("location")
 public interface LocationServiceClient {
 
     @GetMapping

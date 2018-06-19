@@ -7,5 +7,5 @@ spring:
       host: agent-mongodb
       username: user
       password: ${MONGODB_PASSWORD}
-      database: rating
+      database: agent
       port: 27017

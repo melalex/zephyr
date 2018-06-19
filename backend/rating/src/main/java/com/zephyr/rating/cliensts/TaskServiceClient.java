@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import reactor.core.publisher.Mono;
 
 @Profile(Profiles.NOT_TEST)
-@FeignClient("task-client")
+@FeignClient("task")
 public interface TaskServiceClient {
 
     @GetMapping("/{name}/{id}")

@@ -1,2 +1,7 @@
 server:
   port: 8014
+
+spring:
+  neo4j:
+    port: 7474
+    host: location-graphdb
