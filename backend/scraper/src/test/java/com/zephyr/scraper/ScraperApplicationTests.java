@@ -1,13 +1,12 @@
 package com.zephyr.scraper;
 
-import static com.zephyr.test.matchers.StreamMatcher.payload;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zephyr.data.internal.dto.QueryDto;
 import com.zephyr.data.internal.dto.SearchResultDto;
 import com.zephyr.test.CommonTestData;
+import lombok.SneakyThrows;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,9 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Set;
+import java.util.concurrent.BlockingQueue;
 
 @SpringBootTest
 @ActiveProfiles("streamTest")
@@ -41,15 +43,23 @@ public class ScraperApplicationTests {
 
         processor.input().send(testMessage);
 
-        var actual = collector.forChannel(processor.output());
+        var actualQueue = collector.forChannel(processor.output());
 
-        var expectedBing = CommonTestData.searchResults().bing();
-        var expectedGoogle = CommonTestData.searchResults().google();
-        var expectedYahoo = CommonTestData.searchResults().yahoo();
+        var actual = Set.of(fetch(actualQueue), fetch(actualQueue), fetch(actualQueue));
 
-        assertThat(actual, payload(objectMapper, SearchResultDto.class).matches(is(expectedBing)));
-        assertThat(actual, payload(objectMapper, SearchResultDto.class).matches(is(expectedGoogle)));
-        assertThat(actual, payload(objectMapper, SearchResultDto.class).matches(is(expectedYahoo)));
+        var expected = Set.of(
+                CommonTestData.searchResults().bing(),
+                CommonTestData.searchResults().google(),
+                CommonTestData.searchResults().yahoo()
+        );
+
+        assertEquals(expected, actual);
+    }
+
+    @SneakyThrows
+    private SearchResultDto fetch(BlockingQueue<Message<?>> queue) {
+        var content = queue.take().getPayload().toString();
+        return objectMapper.readValue(content, SearchResultDto.class);
     }
 
     @TestConfiguration
