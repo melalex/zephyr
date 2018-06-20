@@ -1,0 +1,195 @@
+version: '3.6'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+    - "5672:5672"
+    - "15672:15672"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  gateway:
+    build: .
+    image: melalex/zephyr-gateway
+    restart: always
+    depends_on:
+      - config
+      - rabbitmq
+    ports:
+      - "8080:8013"
+#    command: [".docker/wait-for-it.sh", "config:8012", "--", "java", "-jar", "/app/gateway.jar"]
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  config:
+    image: melalex/zephyr-config
+    restart: always
+    ports:
+      - "8012:8012"
+    depends_on:
+      - rabbitmq
+#    command: [".docker/wait-for-it.sh", "rabbitmq:5672", "--", "java", "-jar", "/app/config.jar"]
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  monitoring:
+    image: melalex/zephyr-monitoring
+    restart: always
+    depends_on:
+      - config
+      - rabbitmq
+    ports:
+      - "9000:8080"
+      - "8989:8989"
+#    command: [".docker/wait-for-it.sh", "config:8012", "--", "java", "-jar", "/app/monitoring.jar"]
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  registry:
+    image: melalex/zephyr-registry
+    restart: always
+    ports:
+      - "8017:8017"
+#    command: [".docker/wait-for-it.sh", "config:8012", "--", "java", "-jar", "/app/registry.jar"]
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  rating-mongodb:
+    image: mongo:3.2
+    ports:
+      - "26000:27017"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  task-mongodb:
+    image: mongo:3.2
+    ports:
+      - "27000:27017"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  auth-mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: zephyr
+      MYSQL_DATABASE: zephyr
+      MYSQL_USER: zephyr
+      MYSQL_PASSWORD: zephyr
+    ports:
+      - "8019:3306"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  location-graphdb:
+    image: neo4j
+    restart: always
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    logging:
+      options:
+        max-size: 50m
+
+  auth:
+    build: .
+    image: melalex/zephyr-auth
+    ports:
+      - 8011:8011
+    depends_on:
+      - config
+      - rabbitmq
+      - auth-mysql
+#    command: [".docker/wait-for-it.sh", "config:8012", "--", "java", "-jar", "/app/auth.jar"]
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  keyword:
+    build: .
+    image: melalex/zephyr-keyword
+    ports:
+      - 8014:8014
+    depends_on:
+      - config
+      - rating
+      - rabbitmq
+#    command: [".docker/wait-for-it.sh", "config:8012", "--", "java", "-jar", "/app/keyword.jar"]
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  location:
+    build: .
+    image: melalex/zephyr-location
+    ports:
+      - 8015:8015
+    depends_on:
+      - config
+      - rabbitmq
+      - location-graphdb
+#    command: [".docker/wait-for-it.sh", "config:8012", "--", "java", "-jar", "/app/location.jar"]
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  rating:
+    build: .
+    image: melalex/zephyr-rating
+    ports:
+      - 8016:8016
+    depends_on:
+      - config
+      - rabbitmq
+      - rating-mongodb
+#    command: [".docker/wait-for-it.sh", "config:8012", "--", "java", "-jar", "/app/rating.jar"]
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  scraper:
+    build: .
+    image: melalex/zephyr-scraper
+    depends_on:
+      - config
+      - rabbitmq
+#    command: [".docker/wait-for-it.sh", "config:8012", "--", "java", "-jar", "/app/scraper.jar"]
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  task:
+    build: .
+    image: melalex/zephyr-task
+    ports:
+      - 8018:8018
+    depends_on:
+      - config
+      - rabbitmq
+      - task-mongodb
+#    command: [".docker/wait-for-it.sh", "config:8012", "--", "java", "-jar", "/app/task.jar"]
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"

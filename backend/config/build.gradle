@@ -21,6 +21,7 @@ apply plugin: 'io.spring.dependency-management'
 
 ext {
     port = [8012]
+    healthCheck = true
 }
 
 bootJar {

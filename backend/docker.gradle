@@ -13,6 +13,7 @@ buildscript {
 apply plugin: com.bmuschko.gradle.docker.DockerRemoteApiPlugin
 
 def port = project.ext.port
+def healthCheck = project.ext.healthCheck
 def tagVersion = project.hasProperty('docker.tag') ? project.property('docker.tag') : version
 def applicationName = bootJar.baseName
 def dockerUsername = getConfigurationProperty('DOCKER_USERNAME', 'docker.username')
@@ -37,6 +38,11 @@ task createDockerfile(type: Dockerfile) {
     copyFile jar.archiveName, "/app/${applicationName}.jar"
     entryPoint 'java'
     defaultCommand '-jar', "/app/${applicationName}.jar"
+
+    if (healthCheck) {
+        instruction "HEALTHCHECK --interval=10s --timeout=3s CMD curl -f http://localhost:${port[0]}/health || exit 1"
+    }
+
     if (port) {
         exposePort(*port)
     }
